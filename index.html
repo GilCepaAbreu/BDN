@@ -21,6 +21,7 @@
             color: #fff;
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
             min-height: 100vh;
+            perspective: 1000px;
         }
 
         .container {
@@ -37,6 +38,8 @@
             top: 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            transform-style: preserve-3d;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
         .header-content {
@@ -57,16 +60,30 @@
             display: flex;
             align-items: center;
             gap: clamp(0.5rem, 1.5vw, 0.8rem);
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            text-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
         }
 
         .logo:hover {
             color: #ffed4e;
+            transform: perspective(1000px) rotateY(-2deg) rotateX(1deg) translateZ(5px);
+            text-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
         }
 
         .logo-img {
             width: clamp(30px, 6vw, 40px);
             height: clamp(30px, 6vw, 40px);
             object-fit: contain;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 3px 10px rgba(255, 215, 0, 0.3));
+        }
+
+        .logo:hover .logo-img {
+            transform: perspective(1000px) rotateY(360deg) rotateX(15deg) translateZ(5px);
+            filter: drop-shadow(0 5px 20px rgba(255, 215, 0, 0.5));
         }
 
         .mobile-menu-toggle {
@@ -229,6 +246,8 @@
             background: transparent;
             margin-bottom: clamp(2rem, 6vw, 4rem);
             color: white;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         .hero h1 {
@@ -238,6 +257,14 @@
             font-weight: 400;
             color: #ffd700;
             line-height: 1.2;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            transition: all 0.3s ease;
+            text-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .hero:hover h1 {
+            transform: perspective(1000px) rotateY(-1deg) rotateX(1deg) translateZ(10px);
+            text-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
         }
 
         .hero p {
@@ -254,12 +281,34 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(30px) rotateX(15deg);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) rotateX(0deg);
             }
+        }
+
+        @keyframes float3D {
+            0%, 100% {
+                transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(0px);
+            }
+            50% {
+                transform: perspective(1000px) rotateY(2deg) rotateX(1deg) translateZ(5px);
+            }
+        }
+
+        @keyframes rotate3D {
+            0% {
+                transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            }
+            100% {
+                transform: perspective(1000px) rotateY(360deg) rotateX(360deg);
+            }
+        }
+
+        .floating-3d {
+            animation: float3D 4s ease-in-out infinite;
         }
 
         .companies-grid {
@@ -276,12 +325,34 @@
             padding: clamp(1.5rem, 4vw, 3rem);
             transition: all 0.3s ease;
             position: relative;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .company-card:hover {
-            transform: translateY(-5px);
+            transform: perspective(1000px) rotateY(5deg) rotateX(2deg) translateZ(20px);
             border-color: rgba(255, 215, 0, 0.5);
             background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.1);
+        }
+
+        .company-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 8px;
+            transform: translateZ(-1px);
+        }
+
+        .company-card:hover::before {
+            opacity: 1;
         }
 
         .company-card h2 {
@@ -316,6 +387,15 @@
             font-weight: 600;
             font-size: clamp(1rem, 2vw, 1.2rem);
             flex-shrink: 0;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .company-card:hover .company-icon {
+            transform: perspective(1000px) rotateY(360deg) rotateX(15deg) translateZ(10px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
         }
 
         .company-card p {
@@ -366,11 +446,34 @@
             letter-spacing: 1px;
             text-align: center;
             min-width: 120px;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
         .contact-btn:hover {
             background: #ffd700;
             color: #000;
+            transform: perspective(1000px) rotateY(-1deg) rotateX(1deg) translateZ(5px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+            transform: translateZ(1px);
+        }
+
+        .contact-btn:hover::before {
+            left: 100%;
         }
 
         .section {
@@ -400,12 +503,35 @@
             border-radius: 8px;
             padding: clamp(1.5rem, 3vw, 2rem);
             transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
         .project-card:hover {
-            transform: translateY(-3px);
+            transform: perspective(1000px) rotateY(-3deg) rotateX(1deg) translateZ(15px);
             border-color: rgba(255, 215, 0, 0.5);
             background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.08);
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.03), transparent);
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover::after {
+            opacity: 1;
         }
 
         .project-card h4 {
@@ -460,12 +586,16 @@
             justify-content: center;
             overflow: hidden;
             position: relative;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .gallery-item:hover {
-            transform: translateY(-3px);
+            transform: perspective(1000px) rotateY(-2deg) rotateX(1deg) translateZ(10px);
             border-color: rgba(255, 215, 0, 0.5);
             background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.1);
         }
 
         .gallery-item img {
@@ -473,10 +603,11 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
+            transform: translateZ(0);
         }
 
         .gallery-item:hover img {
-            transform: scale(1.05);
+            transform: scale(1.05) translateZ(5px);
         }
 
         .gallery-overlay {
@@ -489,12 +620,13 @@
             padding: 0.5rem;
             font-size: 0.9rem;
             font-weight: 400;
-            transform: translateY(100%);
+            transform: translateY(100%) translateZ(10px);
             transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
         }
 
         .gallery-item:hover .gallery-overlay {
-            transform: translateY(0);
+            transform: translateY(0) translateZ(10px);
         }
 
         .gallery-placeholder {
@@ -577,15 +709,38 @@
             border-bottom: 2px solid transparent;
             white-space: nowrap;
             flex-shrink: 0;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+            position: relative;
+            overflow: hidden;
         }
 
         .nav-tab:hover {
             color: #ffd700;
+            transform: perspective(1000px) rotateY(-1deg) rotateX(1deg) translateZ(2px);
         }
 
         .nav-tab.active {
             color: #ffd700;
             border-bottom-color: #ffd700;
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(3px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+            transform: translateZ(1px);
+        }
+
+        .nav-tab:hover::before {
+            left: 100%;
         }
 
         .tab-content {
@@ -1657,6 +1812,12 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                    // Adicionar classe de animação 3D flutuante para alguns elementos
+                    if (entry.target.classList.contains('company-card')) {
+                        setTimeout(() => {
+                            entry.target.classList.add('floating-3d');
+                        }, 600);
+                    }
                 }
             });
         }, observerOptions);
@@ -1666,6 +1827,26 @@
             const cards = document.querySelectorAll('.company-card, .project-card, .gallery-item');
             cards.forEach(card => {
                 observer.observe(card);
+            });
+
+            // Adicionar efeito de mouse movement 3D
+            const cards3D = document.querySelectorAll('.company-card, .project-card, .gallery-item');
+            cards3D.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 10;
+                    const rotateY = (centerX - x) / 10;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+                });
             });
 
             // Controle do menu hamburger
