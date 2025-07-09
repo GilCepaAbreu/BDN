@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDN - Estúdio de Arquitectura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 clamp(15px, 4vw, 30px);
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: clamp(1rem, 2vw, 1.5rem) 0;
+            position: relative;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+            color: #ffd700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: clamp(0.5rem, 1.5vw, 0.8rem);
+        }
+
+        .logo:hover {
+            color: #ffed4e;
+        }
+
+        .logo-img {
+            width: clamp(30px, 6vw, 40px);
+            height: clamp(30px, 6vw, 40px);
+            object-fit: contain;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+        }
+
+        nav {
+            position: relative;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: clamp(1.5rem, 4vw, 3rem);
+        }
+
+        .desktop-nav {
+            display: flex;
+            list-style: none;
+            gap: clamp(1.5rem, 4vw, 3rem);
+        }
+
+        .nav-menu {
+            display: none;
+        }
+
+        /* Forçar visibilidade do menu mobile quando ativo */
+        .nav-menu.active {
+            display: block !important;
+        }
+
+        /* Overlay para o menu mobile */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Animações de entrada e saída */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeInStagger {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1002;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .hamburger:hover {
+            transform: scale(1.1);
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #ffd700;
+            margin: 3px 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 400;
+            font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ffd700;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: #ffd700;
+        }
+
+        main {
+            margin-top: clamp(80px, 15vw, 100px);
+            padding: clamp(1rem, 3vw, 2rem) 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: clamp(2rem, 8vw, 5rem) 0;
+            background: transparent;
+            margin-bottom: clamp(2rem, 6vw, 4rem);
+            color: white;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            margin-bottom: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 400;
+            color: #ffd700;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            margin-bottom: 1rem;
+            font-weight: 300;
+            color: #ccc;
+            max-width: min(600px, 90vw);
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+            gap: clamp(1.5rem, 4vw, 3rem);
+            margin-top: clamp(2rem, 4vw, 3rem);
+        }
+
+        .company-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            padding: clamp(1.5rem, 4vw, 3rem);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .company-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .company-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            color: #ffd700;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: clamp(0.5rem, 2vw, 1rem);
+        }
+
+        .company-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+            margin-bottom: 1rem;
+            margin-top: clamp(1.5rem, 3vw, 2rem);
+            color: #ffd700;
+            font-weight: 400;
+        }
+
+        .company-icon {
+            width: clamp(30px, 6vw, 40px);
+            height: clamp(30px, 6vw, 40px);
+            border-radius: 50%;
+            background: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 600;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            flex-shrink: 0;
+        }
+
+        .company-card p {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .services {
+            list-style: none;
+            padding: 0;
+        }
+
+        .services li {
+            background: transparent;
+            margin: 0.8rem 0;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+            color: #ccc;
+        }
+
+        .services li:hover {
+            color: #ffd700;
+            border-bottom-color: #ffd700;
+        }
+
+        .services li:last-child {
+            border-bottom: none;
+        }
+
+        .contact-btn {
+            background: transparent;
+            color: #ffd700;
+            border: 2px solid #ffd700;
+            padding: clamp(0.6rem, 1.5vw, 0.8rem) clamp(1.5rem, 3vw, 2rem);
+            border-radius: 4px;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .contact-btn:hover {
+            background: #ffd700;
+            color: #000;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+            gap: clamp(1rem, 3vw, 2rem);
+            margin-top: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .project-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .project-card h4 {
+            font-family: 'Playfair Display', serif;
+            color: #ffd700;
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .project-card p {
+            color: #aaa;
+            font-size: clamp(0.85rem, 1.5vw, 0.9rem);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: transparent;
+            color: #ffd700;
+            padding: 0.2rem 0.8rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+            gap: clamp(1rem, 2vw, 1.5rem);
+            margin-top: clamp(1.5rem, 3vw, 2rem);
+        }
+
+        .gallery-item {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            padding: 0;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: clamp(150px, 30vw, 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 215, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: #ffd700;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-placeholder {
+            color: #ffd700;
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-logo-img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: #ffd700;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: clamp(2rem, 4vw, 3rem);
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            background: transparent;
+            color: #aaa;
+            border: none;
+            padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .nav-tab:hover {
+            color: #ffd700;
+        }
+
+        .nav-tab.active {
+            color: #ffd700;
+            border-bottom-color: #ffd700;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Responsive Design - Mobile First */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .desktop-nav {
+                display: none;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.98);
+                backdrop-filter: blur(20px);
+                padding-top: 100px;
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1001;
+                border-left: 1px solid rgba(255, 215, 0, 0.2);
+                animation: slideOutRight 0.4s ease-in-out;
+            }
+
+            .nav-menu.active {
+                right: 0;
+                animation: slideInRight 0.4s ease-in-out;
+            }
+
+            .nav-menu.closing {
+                animation: slideOutRight 0.4s ease-in-out;
+            }
+
+            .nav-menu ul {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                width: 100%;
+                padding: 0;
+                list-style: none;
+            }
+
+            .nav-menu li {
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.3s ease;
+            }
+
+            .nav-menu.active li {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .nav-menu.active li:nth-child(1) {
+                transition-delay: 0.1s;
+            }
+
+            .nav-menu.active li:nth-child(2) {
+                transition-delay: 0.2s;
+            }
+
+            .nav-menu.active li:nth-child(3) {
+                transition-delay: 0.3s;
+            }
+
+            .nav-menu.active li:nth-child(4) {
+                transition-delay: 0.4s;
+            }
+
+            .nav-menu a {
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 1.2rem 2rem;
+                font-size: 1.1rem;
+                color: #ffd700;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .nav-menu a::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+                transition: left 0.5s ease;
+            }
+
+            .nav-menu a:hover::before {
+                left: 100%;
+            }
+
+            .nav-menu a:hover {
+                background: rgba(255, 215, 0, 0.1);
+                color: #fff;
+                transform: translateX(5px);
+            }
+
+            .nav-menu a::after {
+                display: none;
+            }
+
+            .nav-menu li:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .header-content {
+                gap: 1rem;
+                padding: 0.8rem 0;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .logo-img {
+                width: 30px;
+                height: 30px;
+            }
+
+            nav ul {
+                width: 200px;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+                padding: 0.8rem;
+            }
+
+            main {
+                margin-top: 70px;
+                padding: 1rem 0;
+            }
+
+            .hero {
+                padding: 2rem 0;
+                margin-bottom: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .companies-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-top: 2rem;
+            }
+
+            .company-card {
+                padding: 1.5rem;
+            }
+
+            .company-card h2 {
+                font-size: 1.4rem;
+                margin-bottom: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .company-card h3 {
+                font-size: 1.2rem;
+                margin-top: 1.5rem;
+            }
+
+            .company-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .project-card {
+                padding: 1.5rem;
+            }
+
+            .project-card h4 {
+                font-size: 1.1rem;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .gallery-item {
+                height: 150px;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .nav-tab {
+                padding: 0.8rem 1rem;
+                font-size: 0.8rem;
+                border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+                border-right: none;
+            }
+
+            .nav-tab.active {
+                border-bottom-color: #ffd700;
+            }
+
+            .contact-btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.8rem;
+                margin-top: 1rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .footer-logo-img {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        /* Tablet Portrait */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1.2rem;
+                padding: 1rem 0;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: row;
+                gap: 2rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            nav a {
+                font-size: 0.9rem;
+            }
+
+            main {
+                margin-top: 90px;
+            }
+
+            .hero {
+                padding: 3rem 0;
+                margin-bottom: 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .companies-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .company-card {
+                padding: 2rem;
+            }
+
+            .company-card h2 {
+                font-size: 1.6rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.2rem;
+            }
+
+            .gallery-item {
+                height: 180px;
+            }
+
+            .nav-tabs {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                justify-content: center;
+            }
+
+            .nav-tab {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .footer-links {
+                flex-direction: row;
+                gap: 1.5rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Tablet Landscape */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                max-width: 900px;
+                padding: 0 30px;
+            }
+
+            .header-content {
+                padding: 1.2rem 0;
+            }
+
+            .logo {
+                font-size: 1.9rem;
+            }
+
+            nav ul {
+                gap: 2.5rem;
+            }
+
+            nav a {
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 4rem 0;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .companies-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2.5rem;
+            }
+
+            .company-card {
+                padding: 2.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+
+            .gallery-item {
+                height: 180px;
+            }
+
+            .nav-tabs {
+                justify-content: center;
+            }
+
+            .nav-tab {
+                padding: 1rem 1.8rem;
+                font-size: 0.9rem;
+            }
+
+            .footer-content {
+                gap: 2rem;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 1025px) and (max-width: 1200px) {
+            .container {
+                max-width: 1000px;
+            }
+
+            .companies-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .gallery {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Large Desktop */
+        @media (min-width: 1201px) {
+            .container {
+                max-width: 1200px;
+            }
+
+            .companies-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .gallery {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Ultra-wide screens */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1400px;
+            }
+
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .companies-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 4rem;
+            }
+
+            .company-card {
+                padding: 3.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2.5rem;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        /* Touch-friendly enhancements */
+        @media (pointer: coarse) {
+            .contact-btn {
+                padding: 1rem 2.5rem;
+                font-size: 1rem;
+            }
+
+            .nav-tab {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            nav a {
+                padding: 0.8rem 0;
+            }
+
+            .gallery-item {
+                min-height: 200px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            header {
+                position: static;
+                background: white;
+                color: black;
+            }
+
+            .hero {
+                page-break-inside: avoid;
+            }
+
+            .company-card {
+                page-break-inside: avoid;
+                background: white;
+                border: 1px solid #000;
+            }
+
+            .gallery-item {
+                page-break-inside: avoid;
+            }
+
+            .contact-btn {
+                display: none;
+            }
+        }
+
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* High contrast mode */
+        @media (prefers-contrast: high) {
+            .company-card {
+                border: 2px solid #ffd700;
+            }
+
+            .contact-btn {
+                border: 3px solid #ffd700;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo" onclick="showSection('home')">
+                    <img src="BDN_logo.png" alt="BDN Arquitectura" class="logo-img">
+                    BDN
+                </a>
+                <nav>
+                    <div class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="nav-overlay" id="nav-overlay"></div>
+                    <div class="nav-menu" id="nav-menu">
+                        <ul>
+                            <li><a href="#" onclick="showSection('home')">Início</a></li>
+                            <li><a href="#" onclick="showSection('empresa1')">Projectos Empresa 1</a></li>
+                            <li><a href="#" onclick="showSection('empresa2')">Projectos Empresa 2</a></li>
+                            <li><a href="#" onclick="showSection('contato')">Contacto</a></li>
+                        </ul>
+                    </div>
+                    <ul class="desktop-nav">
+                        <li><a href="#" onclick="showSection('home')">Início</a></li>
+                        <li><a href="#" onclick="showSection('empresa1')">Projectos Empresa 1</a></li>
+                        <li><a href="#" onclick="showSection('empresa2')">Projectos Empresa 2</a></li>
+                        <li><a href="#" onclick="showSection('contato')">Contacto</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <br>
+        <br>
+        <!-- Seção Home -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>BDN Arquitectura</h1>
+                <p>Criando espaços únicos que inspiram e transformam</p>
+                <p>Descubra os nossos projectos arquitectónicos inovadores e como podemos dar vida aos seus sonhos</p>
+            </div>
+
+            <!-- Secção Sobre o Estúdio -->
+            <div class="company-card" style="margin-bottom: 4rem;">
+                <h2>Sobre a BDN Arquitectura</h2>
+                <p>A BDN Arquitectura nasceu da paixão por criar espaços que transformam vidas e comunidades. Fundado por uma equipa de arquitectos visionários, o nosso estúdio combina criatividade, tecnologia e sustentabilidade para desenvolver projectos arquitectónicos que transcendem o tempo e inspiram gerações.</p>
+                
+                <p>Com mais de uma década de experiência no mercado, especializamo-nos em projectos residenciais e comerciais que reflectem a personalidade dos nossos clientes e contribuem para o desenvolvimento urbano sustentável.</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div>
+                        <h3>A Nossa Missão</h3>
+                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Criar espaços únicos e funcionais que reflectem a personalidade dos nossos clientes, contribuindo para a melhoria da qualidade de vida através da arquitectura de excelência.</p>
+                    </div>
+                    <div>
+                        <h3>A Nossa Visão</h3>
+                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Ser reconhecido como o estúdio de arquitectura de referência, conhecido pela inovação, sustentabilidade e capacidade de transformar sonhos em realidade.</p>
+                    </div>
+                    <div>
+                        <h3>Os Nossos Valores</h3>
+                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Criatividade, sustentabilidade, excelência técnica, personalização, funcionalidade e integridade em todos os nossos projectos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="companies-grid">
+                <div class="company-card">
+                    <h2>
+                        <div class="company-icon">🏠</div>
+                        Projectos Empresa 1
+                    </h2>
+                    <p>Especializados em residências modernas e funcionais, criamos lares que reflectem a personalidade e estilo de vida dos nossos clientes, com foco na sustentabilidade e conforto.</p>
+                    <ul class="services">
+                        <li>Casas Unifamiliares Contemporâneas</li>
+                        <li>Apartamentos e Lofts Modernos</li>
+                        <li>Remodelações e Ampliações Residenciais</li>
+                        <li>Design de Interiores Integrado</li>
+                    </ul>
+                    <a href="#" class="contact-btn" onclick="showSection('empresa1')">Ver Projectos</a>
+                </div>
+
+                <div class="company-card">
+                    <h2>
+                        <div class="company-icon">🏢</div>
+                        Projectos Empresa 2
+                    </h2>
+                    <p>Desenvolvemos espaços comerciais inovadores que combinam funcionalidade com estética, criando ambientes que potencializam o sucesso dos negócios dos nossos clientes.</p>
+                    <ul class="services">
+                        <li>Escritórios Corporativos Modernos</li>
+                        <li>Lojas e Centros Comerciais</li>
+                        <li>Restaurantes e Espaços Gastronómicos</li>
+                        <li>Hotéis e Espaços de Alojamento</li>
+                    </ul>
+                    <a href="#" class="contact-btn" onclick="showSection('empresa2')">Ver Portfólio</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Secção Projectos Residenciais -->
+        <section id="empresa1" class="section">
+            <br>
+            <div class="hero">
+                <h1>Projectos Residenciais</h1>
+                <p>Transformando sonhos em realidade através da arquitectura</p>
+            </div>
+
+            <div class="nav-tabs">
+                <div class="nav-tab active" onclick="showTab('empresa1', 'sobre')">Sobre</div>
+                <div class="nav-tab" onclick="showTab('empresa1', 'projetos')">Projectos</div>
+                <div class="nav-tab" onclick="showTab('empresa1', 'galeria')">Galeria</div>
+                <div class="nav-tab" onclick="showTab('empresa1', 'servicos')">Serviços</div>
+            </div>
+
+            <div id="empresa1-sobre" class="tab-content active">
+                <div class="company-card">
+                    <h2>
+                        <div class="company-icon">🏠</div>
+                        Arquitectura Residencial
+                    </h2>
+                    <p>A nossa divisão residencial especializa-se em criar lares únicos que reflectem a personalidade e necessidades dos nossos clientes. Combinamos design contemporâneo com funcionalidade, sustentabilidade e conforto para desenvolver projectos que transcendem o tempo.</p>
+                    
+                    <h3>A Nossa Abordagem</h3>
+                    <ul class="services">
+                        <li><strong>Design Personalizado:</strong> Cada projecto é único e adaptado ao cliente</li>
+                        <li><strong>Sustentabilidade:</strong> Soluções ecológicas e eficiência energética</li>
+                        <li><strong>Tecnologia Integrada:</strong> Automação e soluções inteligentes</li>
+                        <li><strong>Conforto Térmico:</strong> Estudo de orientação solar e ventilação natural</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="empresa1-projetos" class="tab-content">
+                <div class="company-card">
+                    <h2>Projectos Residenciais em Destaque</h2>
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <h4>Casa Moderna Minimalista</h4>
+                            <p>Residência unifamiliar de 350m² com design contemporâneo, integração interior-exterior e soluções sustentáveis.</p>
+                            <div class="project-tags">
+                                <span class="tag">Minimalista</span>
+                                <span class="tag">Sustentável</span>
+                                <span class="tag">350m²</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h4>Loft Industrial Convertido</h4>
+                            <p>Transformação de antigo armazém em residência moderna, preservando elementos industriais originais.</p>
+                            <div class="project-tags">
+                                <span class="tag">Industrial</span>
+                                <span class="tag">Conversão</span>
+                                <span class="tag">Loft</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h4>Casa de Campo Contemporânea</h4>
+                            <p>Residência rural com arquitectura contemporânea integrada na paisagem natural, com terraços e jardins.</p>
+                            <div class="project-tags">
+                                <span class="tag">Rural</span>
+                                <span class="tag">Paisagismo</span>
+                                <span class="tag">Terraços</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h4>Apartamento Luxury</h4>
+                            <p>Remodelação completa de penthouse com vista panorâmica, integrando design moderno e materiais nobres.</p>
+                            <div class="project-tags">
+                                <span class="tag">Penthouse</span>
+                                <span class="tag">Luxury</span>
+                                <span class="tag">Vista</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="empresa1-galeria" class="tab-content">
+                <div class="company-card">
+                    <h2>Galeria de Projectos Residenciais</h2>
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Fachada Moderna">
+                            <div class="gallery-overlay">Fachadas Modernas</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Interior Minimalista">
+                            <div class="gallery-overlay">Interiores Minimalistas</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Jardim Integrado">
+                            <div class="gallery-overlay">Jardins Integrados</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cozinha Gourmet">
+                            <div class="gallery-overlay">Cozinhas Gourmet</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Suíte Master">
+                            <div class="gallery-overlay">Suítes Master</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Área Social">
+                            <div class="gallery-overlay">Áreas Sociais</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="empresa1-servicos" class="tab-content">
+                <div class="company-card">
+                    <h2>Serviços Residenciais</h2>
+                    <ul class="services">
+                        <li><strong>Projecto Arquitectónico:</strong> Desenvolvimento completo do projecto</li>
+                        <li><strong>Design de Interiores:</strong> Ambientação e decoração integrada</li>
+                        <li><strong>Acompanhamento de Obra:</strong> Supervisão técnica durante a execução</li>
+                        <li><strong>Projecto Paisagístico:</strong> Jardins e áreas externas</li>
+                        <li><strong>Consultoria Sustentável:</strong> Soluções eco-friendly e eficiência energética</li>
+                        <li><strong>Automação Residencial:</strong> Integração de tecnologia smart home</li>
+                        <li><strong>Remodelações e Ampliações:</strong> Modernização de espaços existentes</li>
+                        <li><strong>Projectos Complementares:</strong> Estrutural, eléctrico, hidráulico</li>
+                    </ul>
+                    <a href="#" class="contact-btn" onclick="showSection('contato')">Solicitar Orçamento</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Secção Projectos Comerciais -->
+        <section id="empresa2" class="section">
+            <br>
+            <div class="hero">
+                <h1>Projectos Comerciais</h1>
+                <p>Espaços comerciais que impulsionam o sucesso dos negócios</p>
+            </div>
+
+            <div class="nav-tabs">
+                <div class="nav-tab active" onclick="showTab('empresa2', 'sobre')">Sobre</div>
+                <div class="nav-tab" onclick="showTab('empresa2', 'projetos')">Projectos</div>
+                <div class="nav-tab" onclick="showTab('empresa2', 'galeria')">Galeria</div>
+                <div class="nav-tab" onclick="showTab('empresa2', 'servicos')">Serviços</div>
+            </div>
+
+            <div id="empresa2-sobre" class="tab-content active">
+                <div class="company-card">
+                    <h2>
+                        <div class="company-icon">🏢</div>
+                        Arquitectura Comercial
+                    </h2>
+                    <p>A nossa divisão comercial especializa-se em criar espaços de negócios inovadores que combinam funcionalidade, estética e eficiência. Desenvolvemos projectos que não apenas impressionam, mas também optimizam a produtividade e experiência dos utilizadores.</p>
+                    
+                    <h3>A Nossa Especialidade</h3>
+                    <ul class="services">
+                        <li><strong>Design Corporativo:</strong> Ambientes que reflectem a identidade da marca</li>
+                        <li><strong>Optimização de Espaços:</strong> Máxima eficiência e produtividade</li>
+                        <li><strong>Experiência do Cliente:</strong> Ambientes que encantam e convertem</li>
+                        <li><strong>Sustentabilidade Comercial:</strong> Soluções eco-friendly e economia operacional</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="empresa2-projetos" class="tab-content">
+                <div class="company-card">
+                    <h2>Projectos Comerciais Realizados</h2>
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <h4>Sede Corporativa Tech</h4>
+                            <p>Escritório corporativo moderno de 2.500m² com espaços colaborativos, salas de reunião e áreas de descompressão.</p>
+                            <div class="project-tags">
+                                <span class="tag">Corporativo</span>
+                                <span class="tag">Colaborativo</span>
+                                <span class="tag">2.500m²</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h4>Restaurante Gourmet</h4>
+                            <p>Espaço gastronómico sofisticado com cozinha aberta, wine bar e terraço com vista panorâmica.</p>
+                            <div class="project-tags">
+                                <span class="tag">Gastronomia</span>
+                                <span class="tag">Wine Bar</span>
+                                <span class="tag">Terraço</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h4>Loja Conceito Fashion</h4>
+                            <p>Flagship store com design inovador, iluminação cénica e layout optimizado para experiência de compra.</p>
+                            <div class="project-tags">
+                                <span class="tag">Retail</span>
+                                <span class="tag">Fashion</span>
+                                <span class="tag">Experiência</span>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <h4>Hotel Boutique</h4>
+                            <p>Projecto completo de hotel boutique com 45 suítes, spa, restaurante e espaços para eventos.</p>
+                            <div class="project-tags">
+                                <span class="tag">Hotelaria</span>
+                                <span class="tag">Boutique</span>
+                                <span class="tag">Spa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="empresa2-galeria" class="tab-content">
+                <div class="company-card">
+                    <h2>Portfólio Comercial</h2>
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Escritório Corporativo">
+                            <div class="gallery-overlay">Escritórios Corporativos</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1592861956120-e524fc739696?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Restaurante">
+                            <div class="gallery-overlay">Restaurantes</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Loja">
+                            <div class="gallery-overlay">Lojas e Showrooms</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Hotel">
+                            <div class="gallery-overlay">Hotéis</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1567522218056-d1c8f3b4a009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Centro Comercial">
+                            <div class="gallery-overlay">Centros Comerciais</div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Espaço Corporativo">
+                            <div class="gallery-overlay">Espaços Corporativos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="empresa2-servicos" class="tab-content">
+                <div class="company-card">
+                    <h2>Serviços Comerciais</h2>
+                    <ul class="services">
+                        <li><strong>Arquitectura Corporativa:</strong> Escritórios e sedes empresariais</li>
+                        <li><strong>Design de Interiores Comerciais:</strong> Ambientação profissional</li>
+                        <li><strong>Projectos de Restaurantes:</strong> Gastronomia e food service</li>
+                        <li><strong>Retail e Showrooms:</strong> Espaços comerciais e lojas</li>
+                        <li><strong>Hotelaria e Alojamento:</strong> Hotéis, pousadas e resorts</li>
+                        <li><strong>Espaços de Eventos:</strong> Centros de convenções e salões</li>
+                        <li><strong>Consultoria em Branding:</strong> Identidade visual no espaço</li>
+                        <li><strong>Gestão de Projectos:</strong> Acompanhamento completo da obra</li>
+                    </ul>
+                    <a href="#" class="contact-btn" onclick="showSection('contato')">Agendar Consulta</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Secção Sobre BDN -->
+        <section id="sobre" class="section">
+            <div class="hero">
+                <h1>Sobre a BDN Arquitectura</h1>
+                <p>Tradição, Inovação e Excelência em Arquitectura</p>
+            </div>
+
+            <div class="company-card">
+                <h2>A Nossa História</h2>
+                <p>A BDN Arquitectura nasceu da paixão por criar espaços que transformam vidas e comunidades. Fundado por uma equipa de arquitectos visionários, o nosso estúdio combina criatividade, tecnologia e sustentabilidade para desenvolver projectos arquitectónicos que transcendem o tempo e inspiram gerações.</p>
+                
+                <h3>Missão</h3>
+                <p>Criar espaços únicos e funcionais que reflectem a personalidade dos nossos clientes, contribuindo para o desenvolvimento urbano sustentável e a melhoria da qualidade de vida através da arquitectura de excelência.</p>
+                
+                <h3>Visão</h3>
+                <p>Ser reconhecido como o estúdio de arquitectura de referência, conhecido pela inovação, sustentabilidade e pela capacidade de transformar sonhos em realidade através de projectos arquitectónicos excepcionais.</p>
+                
+                <h3>Os Nossos Valores</h3>
+                <ul class="services">
+                    <li><strong>Criatividade e Inovação:</strong> Soluções arquitectónicas únicas e contemporâneas</li>
+                    <li><strong>Sustentabilidade:</strong> Compromisso com o meio ambiente e eficiência energética</li>
+                    <li><strong>Excelência Técnica:</strong> Qualidade superior em todos os projectos</li>
+                    <li><strong>Personalização:</strong> Cada projecto é único e adaptado ao cliente</li>
+                    <li><strong>Funcionalidade:</strong> Espaços que atendem às necessidades reais dos utilizadores</li>
+                    <li><strong>Integridade:</strong> Transparência e ética em todas as relações</li>
+                </ul>
+
+                <h3>Prémios e Reconhecimentos</h3>
+                <ul class="services">
+                    <li>Prémio Nacional de Arquitectura Sustentável 2024</li>
+                    <li>Certificação LEED Gold em projectos comerciais</li>
+                    <li>Prémio Arquitectura Residencial Inovadora 2023</li>
+                    <li>Reconhecimento OA - Ordem dos Arquitectos</li>
+                    <li>Membro da International Union of Architects (UIA)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Secção Contacto -->
+        <section id="contato" class="section">
+            <div class="hero">
+                <h1>Contacto</h1>
+                <p>Entre em contacto connosco para dar vida ao seu projecto</p>
+            </div>
+
+            <div class="company-card" style="text-align: center; max-width: 600px; margin: 0 auto;">
+                <h2>BDN Arquitectura</h2>
+                <p style="margin-bottom: 2rem; font-size: 1.1rem;">Transforme os seus sonhos em realidade com projectos arquitectónicos personalizados</p>
+                
+                <div style="margin-bottom: 2rem;">
+                    <ul class="services" style="text-align: left; max-width: 400px; margin: 0 auto;">
+                        <li><strong>Morada:</strong> Avenida da Liberdade, 1234, Lisboa</li>
+                        <li><strong>Telefone:</strong> +351 21 123 4567</li>
+                        <li><strong>Email:</strong> contacto@bdnarquitectura.pt</li>
+                        <li><strong>Horário:</strong> Segunda a Sexta, 9h às 18h</li>
+                    </ul>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="#" class="contact-btn">Solicitar Orçamento</a>
+                    <a href="#" class="contact-btn">Agendar Consulta</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="BDN_logo.png" alt="BDN Arquitectura" class="footer-logo-img">
+                    <div>
+                        <p>&copy; 2025 BDN Arquitectura. Todos os direitos reservados.</p>
+                    </div>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Utilização</a></li>
+                    <li><a href="#">Política de Cookies</a></li>
+                    <li><a href="#">Livro de Reclamações</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Esconder todas as seções
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Mostrar a seção selecionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Scroll para o topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showTab(empresa, tabId) {
+            // Esconder todas as tabs da empresa
+            const tabs = document.querySelectorAll(`#${empresa} .tab-content`);
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remover classe active de todos os nav-tabs
+            const navTabs = document.querySelectorAll(`#${empresa} .nav-tab`);
+            navTabs.forEach(navTab => {
+                navTab.classList.remove('active');
+            });
+            
+            // Mostrar a tab selecionada
+            document.getElementById(`${empresa}-${tabId}`).classList.add('active');
+            
+            // Adicionar classe active ao nav-tab clicado
+            event.target.classList.add('active');
+        }
+
+        // Smooth scroll para elementos internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+            });
+        });
+
+        // Efeito de paralaxe suave
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            if (parallax) {
+                const speed = scrolled * 0.5;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Animação de entrada para cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observar todos os cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.company-card, .project-card, .gallery-item');
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Controle do menu hamburger
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            const navOverlay = document.getElementById('nav-overlay');
+            
+            if (hamburger && navMenu) {
+                let isAnimating = false;
+                
+                hamburger.addEventListener('click', function() {
+                    if (isAnimating) return;
+                    
+                    hamburger.classList.toggle('active');
+                    
+                    if (navMenu.classList.contains('active')) {
+                        // Fechar menu com animação
+                        closeMenu();
+                    } else {
+                        // Abrir menu com animação
+                        openMenu();
+                    }
+                });
+
+                function openMenu() {
+                    isAnimating = true;
+                    navMenu.classList.remove('closing');
+                    navMenu.classList.add('active');
+                    if (navOverlay) {
+                        navOverlay.classList.add('active');
+                    }
+                    
+                    // Prevenir scroll do body
+                    document.body.style.overflow = 'hidden';
+                    
+                    setTimeout(() => {
+                        isAnimating = false;
+                    }, 400);
+                }
+
+                function closeMenu() {
+                    isAnimating = true;
+                    navMenu.classList.add('closing');
+                    hamburger.classList.remove('active');
+                    
+                    setTimeout(() => {
+                        navMenu.classList.remove('active', 'closing');
+                        if (navOverlay) {
+                            navOverlay.classList.remove('active');
+                        }
+                        
+                        // Restaurar scroll do body
+                        document.body.style.overflow = '';
+                        isAnimating = false;
+                    }, 400);
+                }
+
+                // Fechar menu ao clicar nos links
+                const navLinks = navMenu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        if (!isAnimating) {
+                            closeMenu();
+                        }
+                    });
+                });
+
+                // Fechar menu ao clicar no overlay
+                if (navOverlay) {
+                    navOverlay.addEventListener('click', function() {
+                        if (!isAnimating) {
+                            closeMenu();
+                        }
+                    });
+                }
+
+                // Fechar menu ao clicar fora
+                document.addEventListener('click', function(e) {
+                    if (!hamburger.contains(e.target) && !navMenu.contains(e.target) && !isAnimating) {
+                        if (navMenu.classList.contains('active')) {
+                            closeMenu();
+                        }
+                    }
+                });
+
+                // Fechar menu ao pressionar ESC
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && navMenu.classList.contains('active') && !isAnimating) {
+                        closeMenu();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
