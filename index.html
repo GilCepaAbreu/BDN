@@ -21,7 +21,7 @@
             color: #fff;
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
             min-height: 100vh;
-            perspective: 1000px;
+            padding-top: 80px; /* Espaço para a navbar fixa */
         }
 
         .container {
@@ -30,24 +30,67 @@
             padding: 0 clamp(15px, 4vw, 30px);
         }
 
-        header {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
+        .header-container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
             width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-            transform-style: preserve-3d;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        header {
+            background: transparent;
+            backdrop-filter: none;
+            position: fixed !important;        /* Esta propriedade mantém a navbar fixa */
+            width: 100% !important;           /* Ocupa toda a largura */
+            top: 0 !important;                /* Posicionada no topo */
+            left: 0 !important;               /* Posicionada à esquerda */
+            z-index: 9999 !important;         /* Acima de todos os outros elementos */
+            border-bottom: none;
+            box-shadow: none;
+            transition: none;
+            display: block !important;        /* Garantir que sempre está visível */
+            visibility: visible !important;   /* Garantir que sempre está visível */
+            opacity: 1 !important;            /* Garantir que sempre está visível */
+        }
+
+        header.scrolled {
+            background: transparent !important;
+            backdrop-filter: none;
+            border-bottom: none;
+            box-shadow: none;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            z-index: 9999 !important;
+        }
+
+        /* CSS adicional para garantir que o header seja sempre visível */
+        header,
+        header.scrolled,
+        header:before,
+        header:after {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            z-index: 9999 !important;
         }
 
         .header-content {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             padding: clamp(1rem, 2vw, 1.5rem) 0;
             position: relative;
+            gap: 2rem;
+            max-width: none;
+            margin: 0;
+            width: 100%;
+            padding-left: 0;
         }
 
         .logo {
@@ -56,34 +99,161 @@
             font-weight: 600;
             color: #ffd700;
             text-decoration: none;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: clamp(0.5rem, 1.5vw, 0.8rem);
-            transform-style: preserve-3d;
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-            text-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+            position: relative;
+            z-index: inherit;
+            margin-left: clamp(15px, 4vw, 30px);
+            padding-left: 0;
         }
 
         .logo:hover {
-            color: #ffed4e;
-            transform: perspective(1000px) rotateY(-2deg) rotateX(1deg) translateZ(5px);
-            text-shadow: 0 5px 20px rgba(255, 215, 0, 0.5);
+            opacity: 0.8;
         }
 
         .logo-img {
             width: clamp(30px, 6vw, 40px);
             height: clamp(30px, 6vw, 40px);
             object-fit: contain;
-            transform-style: preserve-3d;
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-            transition: all 0.3s ease;
-            filter: drop-shadow(0 3px 10px rgba(255, 215, 0, 0.3));
+            cursor: pointer;
         }
 
         .logo:hover .logo-img {
-            transform: perspective(1000px) rotateY(360deg) rotateX(15deg) translateZ(5px);
-            filter: drop-shadow(0 5px 20px rgba(255, 215, 0, 0.5));
+            opacity: 0.8;
+        }
+
+        .logo {
+            position: relative;
+        }
+
+        .logo-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0, 0, 0, 0.95);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+            padding: 0.5rem 0;
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .logo-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .logo-dropdown ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .logo-dropdown li {
+            margin: 0;
+        }
+
+        .logo-dropdown a {
+            display: block;
+            padding: 0.7rem 1.2rem;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .logo-dropdown a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #FFD700;
+            transform: translateX(5px);
+        }
+
+        .logo-dropdown li:last-child a {
+            border-bottom: none;
+        }
+
+        .desktop-nav.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.4s ease;
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem 0;
+            min-width: 250px;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1002;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dropdown-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dropdown-menu li {
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #ffd700;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 400;
+            position: relative;
+        }
+
+        .dropdown-menu a:hover {
+            background: rgba(255, 215, 0, 0.1);
+            color: #fff;
+        }
+
+        .dropdown-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .dropdown-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         .mobile-menu-toggle {
@@ -92,6 +262,8 @@
 
         nav {
             position: relative;
+            margin-left: auto;
+            margin-right: clamp(15px, 4vw, 30px);
         }
 
         nav ul {
@@ -103,7 +275,10 @@
         .desktop-nav {
             display: flex;
             list-style: none;
-            gap: clamp(1.5rem, 4vw, 3rem);
+            justify-content: space-between;
+            width: 100%;
+            transition: all 0.4s ease;
+            transform: translateY(0);
         }
 
         .nav-menu {
@@ -126,7 +301,8 @@
             z-index: 999;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
+            backdrop-filter: blur(2px);
         }
 
         .nav-overlay.active {
@@ -134,39 +310,7 @@
             visibility: visible;
         }
 
-        /* Animações de entrada e saída */
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
 
-        @keyframes slideOutRight {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-        }
-
-        @keyframes fadeInStagger {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
         .hamburger {
             display: none;
@@ -175,11 +319,13 @@
             padding: 0.5rem;
             z-index: 1002;
             position: relative;
-            transition: transform 0.3s ease;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
 
         .hamburger:hover {
-            transform: scale(1.1);
+            background: rgba(255, 215, 0, 0.1);
+            transform: scale(1.05);
         }
 
         .hamburger span {
@@ -187,21 +333,21 @@
             height: 3px;
             background: #ffd700;
             margin: 3px 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: center;
+            transition: all 0.3s ease;
+            border-radius: 2px;
         }
 
         .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+            transform: rotate(45deg) translate(9px, 9px);
         }
 
         .hamburger.active span:nth-child(2) {
             opacity: 0;
-            transform: scale(0);
+            transform: translateX(20px);
         }
 
         .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
+            transform: rotate(-45deg) translate(9px, -9px);
         }
 
         nav a {
@@ -209,30 +355,19 @@
             color: #fff;
             font-weight: 400;
             font-size: clamp(0.8rem, 1.5vw, 0.95rem);
-            padding: 0.5rem 0;
-            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
             position: relative;
             text-transform: uppercase;
             letter-spacing: 1px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
 
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #ffd700;
-            transition: width 0.3s ease;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        nav a:hover {
+        nav a:hover,
+        nav a.active {
             color: #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
         }
 
         main {
@@ -246,8 +381,6 @@
             background: transparent;
             margin-bottom: clamp(2rem, 6vw, 4rem);
             color: white;
-            transform-style: preserve-3d;
-            perspective: 1000px;
         }
 
         .hero h1 {
@@ -257,14 +390,6 @@
             font-weight: 400;
             color: #ffd700;
             line-height: 1.2;
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-            transition: all 0.3s ease;
-            text-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-        }
-
-        .hero:hover h1 {
-            transform: perspective(1000px) rotateY(-1deg) rotateX(1deg) translateZ(10px);
-            text-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
         }
 
         .hero p {
@@ -278,38 +403,7 @@
             line-height: 1.6;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px) rotateX(15deg);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) rotateX(0deg);
-            }
-        }
 
-        @keyframes float3D {
-            0%, 100% {
-                transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(0px);
-            }
-            50% {
-                transform: perspective(1000px) rotateY(2deg) rotateX(1deg) translateZ(5px);
-            }
-        }
-
-        @keyframes rotate3D {
-            0% {
-                transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-            }
-            100% {
-                transform: perspective(1000px) rotateY(360deg) rotateX(360deg);
-            }
-        }
-
-        .floating-3d {
-            animation: float3D 4s ease-in-out infinite;
-        }
 
         .companies-grid {
             display: grid;
@@ -323,36 +417,7 @@
             border: 1px solid rgba(255, 215, 0, 0.2);
             border-radius: 8px;
             padding: clamp(1.5rem, 4vw, 3rem);
-            transition: all 0.3s ease;
             position: relative;
-            transform-style: preserve-3d;
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .company-card:hover {
-            transform: perspective(1000px) rotateY(5deg) rotateX(2deg) translateZ(20px);
-            border-color: rgba(255, 215, 0, 0.5);
-            background: rgba(0, 0, 0, 0.6);
-            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.1);
-        }
-
-        .company-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.05), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 8px;
-            transform: translateZ(-1px);
-        }
-
-        .company-card:hover::before {
-            opacity: 1;
         }
 
         .company-card h2 {
@@ -387,15 +452,6 @@
             font-weight: 600;
             font-size: clamp(1rem, 2vw, 1.2rem);
             flex-shrink: 0;
-            transform-style: preserve-3d;
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-        }
-
-        .company-card:hover .company-icon {
-            transform: perspective(1000px) rotateY(360deg) rotateX(15deg) translateZ(10px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.5);
         }
 
         .company-card p {
@@ -416,13 +472,7 @@
             margin: 0.8rem 0;
             padding: 1rem 0;
             border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-            transition: all 0.3s ease;
             color: #ccc;
-        }
-
-        .services li:hover {
-            color: #ffd700;
-            border-bottom-color: #ffd700;
         }
 
         .services li:last-child {
@@ -438,7 +488,6 @@
             font-size: clamp(0.8rem, 1.5vw, 0.9rem);
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
             margin-top: 1.5rem;
@@ -446,48 +495,17 @@
             letter-spacing: 1px;
             text-align: center;
             min-width: 120px;
-            transform-style: preserve-3d;
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
             position: relative;
-            overflow: hidden;
         }
 
         .contact-btn:hover {
             background: #ffd700;
             color: #000;
-            transform: perspective(1000px) rotateY(-1deg) rotateX(1deg) translateZ(5px);
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-        }
-
-        .contact-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-            transform: translateZ(1px);
-        }
-
-        .contact-btn:hover::before {
-            left: 100%;
         }
 
         .section {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .section.active {
             display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            padding: clamp(3rem, 6vw, 5rem) 0;
         }
 
         .projects-grid {
@@ -502,36 +520,7 @@
             border: 1px solid rgba(255, 215, 0, 0.2);
             border-radius: 8px;
             padding: clamp(1.5rem, 3vw, 2rem);
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             position: relative;
-            overflow: hidden;
-        }
-
-        .project-card:hover {
-            transform: perspective(1000px) rotateY(-3deg) rotateX(1deg) translateZ(15px);
-            border-color: rgba(255, 215, 0, 0.5);
-            background: rgba(0, 0, 0, 0.6);
-            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.08);
-        }
-
-        .project-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.03), transparent);
-            transform: rotate(45deg);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .project-card:hover::after {
-            opacity: 1;
         }
 
         .project-card h4 {
@@ -579,35 +568,18 @@
             border-radius: 8px;
             padding: 0;
             text-align: center;
-            transition: all 0.3s ease;
             height: clamp(150px, 30vw, 200px);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             position: relative;
-            transform-style: preserve-3d;
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .gallery-item:hover {
-            transform: perspective(1000px) rotateY(-2deg) rotateX(1deg) translateZ(10px);
-            border-color: rgba(255, 215, 0, 0.5);
-            background: rgba(0, 0, 0, 0.6);
-            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.1);
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
-            transform: translateZ(0);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.05) translateZ(5px);
         }
 
         .gallery-overlay {
@@ -620,13 +592,7 @@
             padding: 0.5rem;
             font-size: 0.9rem;
             font-weight: 400;
-            transform: translateY(100%) translateZ(10px);
-            transition: transform 0.3s ease;
             backdrop-filter: blur(5px);
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            transform: translateY(0) translateZ(10px);
         }
 
         .gallery-placeholder {
@@ -701,7 +667,6 @@
             border: none;
             padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
             cursor: pointer;
-            transition: all 0.3s ease;
             font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -709,51 +674,40 @@
             border-bottom: 2px solid transparent;
             white-space: nowrap;
             flex-shrink: 0;
-            transform-style: preserve-3d;
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
             position: relative;
-            overflow: hidden;
         }
 
         .nav-tab:hover {
             color: #ffd700;
-            transform: perspective(1000px) rotateY(-1deg) rotateX(1deg) translateZ(2px);
         }
 
         .nav-tab.active {
             color: #ffd700;
             border-bottom-color: #ffd700;
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(3px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
-        }
-
-        .nav-tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-            transition: left 0.5s ease;
-            transform: translateZ(1px);
-        }
-
-        .nav-tab:hover::before {
-            left: 100%;
         }
 
         .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .tab-content.active {
             display: block;
         }
 
         /* Responsive Design - Mobile First */
         @media (max-width: 768px) {
+            .header-content {
+                justify-content: space-between;
+                gap: 1rem;
+                padding: clamp(1rem, 2vw, 1.5rem) 0;
+                padding-left: 0;
+            }
+
+            .logo {
+                margin-left: 15px;
+                padding-left: 0;
+            }
+
+            nav {
+                margin-right: 15px;
+            }
+
             .hamburger {
                 display: flex;
             }
@@ -768,22 +722,17 @@
                 right: -100%;
                 width: 280px;
                 height: 100vh;
-                background: rgba(0, 0, 0, 0.98);
-                backdrop-filter: blur(20px);
+                background: rgba(0, 0, 0, 0.95);
                 padding-top: 100px;
-                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 z-index: 1001;
-                border-left: 1px solid rgba(255, 215, 0, 0.2);
-                animation: slideOutRight 0.4s ease-in-out;
+                border-left: 1px solid rgba(255, 215, 0, 0.3);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                backdrop-filter: blur(10px);
             }
 
             .nav-menu.active {
                 right: 0;
-                animation: slideInRight 0.4s ease-in-out;
-            }
-
-            .nav-menu.closing {
-                animation: slideOutRight 0.4s ease-in-out;
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
             }
 
             .nav-menu ul {
@@ -798,30 +747,6 @@
             .nav-menu li {
                 width: 100%;
                 border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-                opacity: 0;
-                transform: translateY(20px);
-                transition: all 0.3s ease;
-            }
-
-            .nav-menu.active li {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            .nav-menu.active li:nth-child(1) {
-                transition-delay: 0.1s;
-            }
-
-            .nav-menu.active li:nth-child(2) {
-                transition-delay: 0.2s;
-            }
-
-            .nav-menu.active li:nth-child(3) {
-                transition-delay: 0.3s;
-            }
-
-            .nav-menu.active li:nth-child(4) {
-                transition-delay: 0.4s;
             }
 
             .nav-menu a {
@@ -832,38 +757,27 @@
                 font-size: 1.1rem;
                 color: #ffd700;
                 text-decoration: none;
-                transition: all 0.3s ease;
                 position: relative;
-                overflow: hidden;
-            }
-
-            .nav-menu a::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-                transition: left 0.5s ease;
-            }
-
-            .nav-menu a:hover::before {
-                left: 100%;
             }
 
             .nav-menu a:hover {
                 background: rgba(255, 215, 0, 0.1);
                 color: #fff;
-                transform: translateX(5px);
-            }
-
-            .nav-menu a::after {
-                display: none;
             }
 
             .nav-menu li:last-child {
                 border-bottom: none;
+            }
+
+            /* Logo dropdown styles for mobile */
+            .logo-dropdown {
+                min-width: 180px;
+                left: -20px;
+            }
+
+            .logo-dropdown a {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
             }
         }
 
@@ -875,10 +789,17 @@
             .header-content {
                 gap: 1rem;
                 padding: 0.8rem 0;
+                padding-left: 0;
             }
 
             .logo {
                 font-size: 1.5rem;
+                margin-left: 15px;
+                padding-left: 0;
+            }
+
+            nav {
+                margin-right: 15px;
             }
 
             .logo-img {
@@ -1265,9 +1186,9 @@
         /* Print styles */
         @media print {
             header {
-                position: static;
-                background: white;
-                color: black;
+                position: static !important;
+                background: white !important;
+                color: black !important;
             }
 
             .hero {
@@ -1312,50 +1233,60 @@
 </head>
 <body>
     <header>
-        <div class="container">
+        <div class="header-container">
             <div class="header-content">
-                <a href="#" class="logo" onclick="showSection('home')">
+                <div class="logo" id="logo">
                     <img src="BDN_logo.png" alt="BDN Arquitectura" class="logo-img">
-                    BDN
-                </a>
+                    <div class="logo-dropdown" id="logo-dropdown">
+                        <ul>
+                            <li><a href="#home">Início</a></li>
+                            <li><a href="#sobre-empresa">Sobre</a></li>
+                            <li><a href="#empresa1">Residenciais</a></li>
+                            <li><a href="#empresa2">Comerciais</a></li>
+                            <li><a href="#contato">Contacto</a></li>
+                        </ul>
+                    </div>
+                </div>
                 <nav>
                     <div class="hamburger" id="hamburger">
                         <span></span>
                         <span></span>
                         <span></span>
                     </div>
-                    <div class="nav-overlay" id="nav-overlay"></div>
+                    <ul class="desktop-nav">
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#sobre-empresa">Sobre</a></li>
+                        <li><a href="#empresa1">Residenciais</a></li>
+                        <li><a href="#empresa2">Comerciais</a></li>
+                        <li><a href="#contato">Contacto</a></li>
+                    </ul>
                     <div class="nav-menu" id="nav-menu">
                         <ul>
-                            <li><a href="#" onclick="showSection('home')">Início</a></li>
-                            <li><a href="#" onclick="showSection('empresa1')">Projectos Empresa 1</a></li>
-                            <li><a href="#" onclick="showSection('empresa2')">Projectos Empresa 2</a></li>
-                            <li><a href="#" onclick="showSection('contato')">Contacto</a></li>
+                            <li><a href="#home">Início</a></li>
+                            <li><a href="#sobre-empresa">Sobre</a></li>
+                            <li><a href="#empresa1">Residenciais</a></li>
+                            <li><a href="#empresa2">Comerciais</a></li>
+                            <li><a href="#contato">Contacto</a></li>
                         </ul>
                     </div>
-                    <ul class="desktop-nav">
-                        <li><a href="#" onclick="showSection('home')">Início</a></li>
-                        <li><a href="#" onclick="showSection('empresa1')">Projectos Empresa 1</a></li>
-                        <li><a href="#" onclick="showSection('empresa2')">Projectos Empresa 2</a></li>
-                        <li><a href="#" onclick="showSection('contato')">Contacto</a></li>
-                    </ul>
+                    <div class="nav-overlay" id="nav-overlay"></div>
                 </nav>
             </div>
         </div>
     </header>
 
     <main class="container">
-        <br>
-        <br>
         <!-- Seção Home -->
-        <section id="home" class="section active">
+        <section id="home">
             <div class="hero">
-                <h1>BDN Arquitectura</h1>
+                <h1>BDN</h1>
                 <p>Criando espaços únicos que inspiram e transformam</p>
                 <p>Descubra os nossos projectos arquitectónicos inovadores e como podemos dar vida aos seus sonhos</p>
             </div>
+        </section>
 
-            <!-- Secção Sobre o Estúdio -->
+        <!-- Secção Sobre o Estúdio -->
+        <section id="sobre-empresa">
             <div class="company-card" style="margin-bottom: 4rem;">
                 <h2>Sobre a BDN Arquitectura</h2>
                 <p>A BDN Arquitectura nasceu da paixão por criar espaços que transformam vidas e comunidades. Fundado por uma equipa de arquitectos visionários, o nosso estúdio combina criatividade, tecnologia e sustentabilidade para desenvolver projectos arquitectónicos que transcendem o tempo e inspiram gerações.</p>
@@ -1377,291 +1308,227 @@
                     </div>
                 </div>
             </div>
-
-            <div class="companies-grid">
-                <div class="company-card">
-                    <h2>
-                        <div class="company-icon">🏠</div>
-                        Projectos Empresa 1
-                    </h2>
-                    <p>Especializados em residências modernas e funcionais, criamos lares que reflectem a personalidade e estilo de vida dos nossos clientes, com foco na sustentabilidade e conforto.</p>
-                    <ul class="services">
-                        <li>Casas Unifamiliares Contemporâneas</li>
-                        <li>Apartamentos e Lofts Modernos</li>
-                        <li>Remodelações e Ampliações Residenciais</li>
-                        <li>Design de Interiores Integrado</li>
-                    </ul>
-                    <a href="#" class="contact-btn" onclick="showSection('empresa1')">Ver Projectos</a>
-                </div>
-
-                <div class="company-card">
-                    <h2>
-                        <div class="company-icon">🏢</div>
-                        Projectos Empresa 2
-                    </h2>
-                    <p>Desenvolvemos espaços comerciais inovadores que combinam funcionalidade com estética, criando ambientes que potencializam o sucesso dos negócios dos nossos clientes.</p>
-                    <ul class="services">
-                        <li>Escritórios Corporativos Modernos</li>
-                        <li>Lojas e Centros Comerciais</li>
-                        <li>Restaurantes e Espaços Gastronómicos</li>
-                        <li>Hotéis e Espaços de Alojamento</li>
-                    </ul>
-                    <a href="#" class="contact-btn" onclick="showSection('empresa2')">Ver Portfólio</a>
-                </div>
-            </div>
         </section>
 
         <!-- Secção Projectos Residenciais -->
-        <section id="empresa1" class="section">
-            <br>
+        <section id="empresa1">
             <div class="hero">
                 <h1>Projectos Residenciais</h1>
                 <p>Transformando sonhos em realidade através da arquitectura</p>
             </div>
 
-            <div class="nav-tabs">
-                <div class="nav-tab active" onclick="showTab('empresa1', 'sobre')">Sobre</div>
-                <div class="nav-tab" onclick="showTab('empresa1', 'projetos')">Projectos</div>
-                <div class="nav-tab" onclick="showTab('empresa1', 'galeria')">Galeria</div>
-                <div class="nav-tab" onclick="showTab('empresa1', 'servicos')">Serviços</div>
+            <div class="company-card">
+                <h2>
+                    <div class="company-icon">🏠</div>
+                    Arquitectura Residencial
+                </h2>
+                <p>A nossa divisão residencial especializa-se em criar lares únicos que reflectem a personalidade e necessidades dos nossos clientes. Combinamos design contemporâneo com funcionalidade, sustentabilidade e conforto para desenvolver projectos que transcendem o tempo.</p>
+                
+                <h3>A Nossa Abordagem</h3>
+                <ul class="services">
+                    <li><strong>Design Personalizado:</strong> Cada projecto é único e adaptado ao cliente</li>
+                    <li><strong>Sustentabilidade:</strong> Soluções ecológicas e eficiência energética</li>
+                    <li><strong>Tecnologia Integrada:</strong> Automação e soluções inteligentes</li>
+                    <li><strong>Conforto Térmico:</strong> Estudo de orientação solar e ventilação natural</li>
+                </ul>
             </div>
 
-            <div id="empresa1-sobre" class="tab-content active">
-                <div class="company-card">
-                    <h2>
-                        <div class="company-icon">🏠</div>
-                        Arquitectura Residencial
-                    </h2>
-                    <p>A nossa divisão residencial especializa-se em criar lares únicos que reflectem a personalidade e necessidades dos nossos clientes. Combinamos design contemporâneo com funcionalidade, sustentabilidade e conforto para desenvolver projectos que transcendem o tempo.</p>
-                    
-                    <h3>A Nossa Abordagem</h3>
-                    <ul class="services">
-                        <li><strong>Design Personalizado:</strong> Cada projecto é único e adaptado ao cliente</li>
-                        <li><strong>Sustentabilidade:</strong> Soluções ecológicas e eficiência energética</li>
-                        <li><strong>Tecnologia Integrada:</strong> Automação e soluções inteligentes</li>
-                        <li><strong>Conforto Térmico:</strong> Estudo de orientação solar e ventilação natural</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="empresa1-projetos" class="tab-content">
-                <div class="company-card">
-                    <h2>Projectos Residenciais em Destaque</h2>
-                    <div class="projects-grid">
-                        <div class="project-card">
-                            <h4>Casa Moderna Minimalista</h4>
-                            <p>Residência unifamiliar de 350m² com design contemporâneo, integração interior-exterior e soluções sustentáveis.</p>
-                            <div class="project-tags">
-                                <span class="tag">Minimalista</span>
-                                <span class="tag">Sustentável</span>
-                                <span class="tag">350m²</span>
-                            </div>
+            <div class="company-card">
+                <h2>Projectos Residenciais em Destaque</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h4>Casa Moderna Minimalista</h4>
+                        <p>Residência unifamiliar de 350m² com design contemporâneo, integração interior-exterior e soluções sustentáveis.</p>
+                        <div class="project-tags">
+                            <span class="tag">Minimalista</span>
+                            <span class="tag">Sustentável</span>
+                            <span class="tag">350m²</span>
                         </div>
-                        <div class="project-card">
-                            <h4>Loft Industrial Convertido</h4>
-                            <p>Transformação de antigo armazém em residência moderna, preservando elementos industriais originais.</p>
-                            <div class="project-tags">
-                                <span class="tag">Industrial</span>
-                                <span class="tag">Conversão</span>
-                                <span class="tag">Loft</span>
-                            </div>
+                    </div>
+                    <div class="project-card">
+                        <h4>Loft Industrial Convertido</h4>
+                        <p>Transformação de antigo armazém em residência moderna, preservando elementos industriais originais.</p>
+                        <div class="project-tags">
+                            <span class="tag">Industrial</span>
+                            <span class="tag">Conversão</span>
+                            <span class="tag">Loft</span>
                         </div>
-                        <div class="project-card">
-                            <h4>Casa de Campo Contemporânea</h4>
-                            <p>Residência rural com arquitectura contemporânea integrada na paisagem natural, com terraços e jardins.</p>
-                            <div class="project-tags">
-                                <span class="tag">Rural</span>
-                                <span class="tag">Paisagismo</span>
-                                <span class="tag">Terraços</span>
-                            </div>
+                    </div>
+                    <div class="project-card">
+                        <h4>Casa de Campo Contemporânea</h4>
+                        <p>Residência rural com arquitectura contemporânea integrada na paisagem natural, com terraços e jardins.</p>
+                        <div class="project-tags">
+                            <span class="tag">Rural</span>
+                            <span class="tag">Paisagismo</span>
+                            <span class="tag">Terraços</span>
                         </div>
-                        <div class="project-card">
-                            <h4>Apartamento Luxury</h4>
-                            <p>Remodelação completa de penthouse com vista panorâmica, integrando design moderno e materiais nobres.</p>
-                            <div class="project-tags">
-                                <span class="tag">Penthouse</span>
-                                <span class="tag">Luxury</span>
-                                <span class="tag">Vista</span>
-                            </div>
+                    </div>
+                    <div class="project-card">
+                        <h4>Apartamento Luxury</h4>
+                        <p>Remodelação completa de penthouse com vista panorâmica, integrando design moderno e materiais nobres.</p>
+                        <div class="project-tags">
+                            <span class="tag">Penthouse</span>
+                            <span class="tag">Luxury</span>
+                            <span class="tag">Vista</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="empresa1-galeria" class="tab-content">
-                <div class="company-card">
-                    <h2>Galeria de Projectos Residenciais</h2>
-                    <div class="gallery">
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Fachada Moderna">
-                            <div class="gallery-overlay">Fachadas Modernas</div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Interior Minimalista">
-                            <div class="gallery-overlay">Interiores Minimalistas</div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Jardim Integrado">
-                            <div class="gallery-overlay">Jardins Integrados</div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cozinha Gourmet">
-                            <div class="gallery-overlay">Cozinhas Gourmet</div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Suíte Master">
-                            <div class="gallery-overlay">Suítes Master</div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Área Social">
-                            <div class="gallery-overlay">Áreas Sociais</div>
-                        </div>
+            <div class="company-card">
+                <h2>Galeria de Projectos Residenciais</h2>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Fachada Moderna">
+                        <div class="gallery-overlay">Fachadas Modernas</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Interior Minimalista">
+                        <div class="gallery-overlay">Interiores Minimalistas</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Jardim Integrado">
+                        <div class="gallery-overlay">Jardins Integrados</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cozinha Gourmet">
+                        <div class="gallery-overlay">Cozinhas Gourmet</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Suíte Master">
+                        <div class="gallery-overlay">Suítes Master</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Área Social">
+                        <div class="gallery-overlay">Áreas Sociais</div>
                     </div>
                 </div>
             </div>
 
-            <div id="empresa1-servicos" class="tab-content">
-                <div class="company-card">
-                    <h2>Serviços Residenciais</h2>
-                    <ul class="services">
-                        <li><strong>Projecto Arquitectónico:</strong> Desenvolvimento completo do projecto</li>
-                        <li><strong>Design de Interiores:</strong> Ambientação e decoração integrada</li>
-                        <li><strong>Acompanhamento de Obra:</strong> Supervisão técnica durante a execução</li>
-                        <li><strong>Projecto Paisagístico:</strong> Jardins e áreas externas</li>
-                        <li><strong>Consultoria Sustentável:</strong> Soluções eco-friendly e eficiência energética</li>
-                        <li><strong>Automação Residencial:</strong> Integração de tecnologia smart home</li>
-                        <li><strong>Remodelações e Ampliações:</strong> Modernização de espaços existentes</li>
-                        <li><strong>Projectos Complementares:</strong> Estrutural, eléctrico, hidráulico</li>
-                    </ul>
-                    <a href="#" class="contact-btn" onclick="showSection('contato')">Solicitar Orçamento</a>
-                </div>
+            <div class="company-card">
+                <h2>Serviços Residenciais</h2>
+                <ul class="services">
+                    <li><strong>Projecto Arquitectónico:</strong> Desenvolvimento completo do projecto</li>
+                    <li><strong>Design de Interiores:</strong> Ambientação e decoração integrada</li>
+                    <li><strong>Acompanhamento de Obra:</strong> Supervisão técnica durante a execução</li>
+                    <li><strong>Projecto Paisagístico:</strong> Jardins e áreas externas</li>
+                    <li><strong>Consultoria Sustentável:</strong> Soluções eco-friendly e eficiência energética</li>
+                    <li><strong>Automação Residencial:</strong> Integração de tecnologia smart home</li>
+                    <li><strong>Remodelações e Ampliações:</strong> Modernização de espaços existentes</li>
+                    <li><strong>Projectos Complementares:</strong> Estrutural, eléctrico, hidráulico</li>
+                </ul>
+                <a href="#contato" class="contact-btn">Solicitar Orçamento</a>
             </div>
         </section>
 
         <!-- Secção Projectos Comerciais -->
         <section id="empresa2" class="section">
-            <br>
             <div class="hero">
                 <h1>Projectos Comerciais</h1>
                 <p>Espaços comerciais que impulsionam o sucesso dos negócios</p>
             </div>
 
-            <div class="nav-tabs">
-                <div class="nav-tab active" onclick="showTab('empresa2', 'sobre')">Sobre</div>
-                <div class="nav-tab" onclick="showTab('empresa2', 'projetos')">Projectos</div>
-                <div class="nav-tab" onclick="showTab('empresa2', 'galeria')">Galeria</div>
-                <div class="nav-tab" onclick="showTab('empresa2', 'servicos')">Serviços</div>
+            <div class="company-card">
+                <h2>
+                    <div class="company-icon">🏢</div>
+                    Arquitectura Comercial
+                </h2>
+                <p>A nossa divisão comercial especializa-se em criar espaços de negócios inovadores que combinam funcionalidade, estética e eficiência. Desenvolvemos projectos que não apenas impressionam, mas também optimizam a produtividade e experiência dos utilizadores.</p>
+                
+                <h3>A Nossa Especialidade</h3>
+                <ul class="services">
+                    <li><strong>Design Corporativo:</strong> Ambientes que reflectem a identidade da marca</li>
+                    <li><strong>Optimização de Espaços:</strong> Máxima eficiência e produtividade</li>
+                    <li><strong>Experiência do Cliente:</strong> Ambientes que encantam e convertem</li>
+                    <li><strong>Sustentabilidade Comercial:</strong> Soluções eco-friendly e economia operacional</li>
+                </ul>
             </div>
 
-            <div id="empresa2-sobre" class="tab-content active">
-                <div class="company-card">
-                    <h2>
-                        <div class="company-icon">🏢</div>
-                        Arquitectura Comercial
-                    </h2>
-                    <p>A nossa divisão comercial especializa-se em criar espaços de negócios inovadores que combinam funcionalidade, estética e eficiência. Desenvolvemos projectos que não apenas impressionam, mas também optimizam a produtividade e experiência dos utilizadores.</p>
-                    
-                    <h3>A Nossa Especialidade</h3>
-                    <ul class="services">
-                        <li><strong>Design Corporativo:</strong> Ambientes que reflectem a identidade da marca</li>
-                        <li><strong>Optimização de Espaços:</strong> Máxima eficiência e produtividade</li>
-                        <li><strong>Experiência do Cliente:</strong> Ambientes que encantam e convertem</li>
-                        <li><strong>Sustentabilidade Comercial:</strong> Soluções eco-friendly e economia operacional</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div id="empresa2-projetos" class="tab-content">
-                <div class="company-card">
-                    <h2>Projectos Comerciais Realizados</h2>
-                    <div class="projects-grid">
-                        <div class="project-card">
-                            <h4>Sede Corporativa Tech</h4>
-                            <p>Escritório corporativo moderno de 2.500m² com espaços colaborativos, salas de reunião e áreas de descompressão.</p>
-                            <div class="project-tags">
-                                <span class="tag">Corporativo</span>
-                                <span class="tag">Colaborativo</span>
-                                <span class="tag">2.500m²</span>
-                            </div>
+            <div class="company-card">
+                <h2>Projectos Comerciais Realizados</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h4>Sede Corporativa Tech</h4>
+                        <p>Escritório corporativo moderno de 2.500m² com espaços colaborativos, salas de reunião e áreas de descompressão.</p>
+                        <div class="project-tags">
+                            <span class="tag">Corporativo</span>
+                            <span class="tag">Colaborativo</span>
+                            <span class="tag">2.500m²</span>
                         </div>
-                        <div class="project-card">
-                            <h4>Restaurante Gourmet</h4>
-                            <p>Espaço gastronómico sofisticado com cozinha aberta, wine bar e terraço com vista panorâmica.</p>
-                            <div class="project-tags">
-                                <span class="tag">Gastronomia</span>
-                                <span class="tag">Wine Bar</span>
-                                <span class="tag">Terraço</span>
-                            </div>
+                    </div>
+                    <div class="project-card">
+                        <h4>Restaurante Gourmet</h4>
+                        <p>Espaço gastronómico sofisticado com cozinha aberta, wine bar e terraço com vista panorâmica.</p>
+                        <div class="project-tags">
+                            <span class="tag">Gastronomia</span>
+                            <span class="tag">Wine Bar</span>
+                            <span class="tag">Terraço</span>
                         </div>
-                        <div class="project-card">
-                            <h4>Loja Conceito Fashion</h4>
-                            <p>Flagship store com design inovador, iluminação cénica e layout optimizado para experiência de compra.</p>
-                            <div class="project-tags">
-                                <span class="tag">Retail</span>
-                                <span class="tag">Fashion</span>
-                                <span class="tag">Experiência</span>
-                            </div>
+                    </div>
+                    <div class="project-card">
+                        <h4>Loja Conceito Fashion</h4>
+                        <p>Flagship store com design inovador, iluminação cénica e layout optimizado para experiência de compra.</p>
+                        <div class="project-tags">
+                            <span class="tag">Retail</span>
+                            <span class="tag">Fashion</span>
+                            <span class="tag">Experiência</span>
                         </div>
-                        <div class="project-card">
-                            <h4>Hotel Boutique</h4>
-                            <p>Projecto completo de hotel boutique com 45 suítes, spa, restaurante e espaços para eventos.</p>
-                            <div class="project-tags">
-                                <span class="tag">Hotelaria</span>
-                                <span class="tag">Boutique</span>
-                                <span class="tag">Spa</span>
-                            </div>
+                    </div>
+                    <div class="project-card">
+                        <h4>Hotel Boutique</h4>
+                        <p>Projecto completo de hotel boutique com 45 suítes, spa, restaurante e espaços para eventos.</p>
+                        <div class="project-tags">
+                            <span class="tag">Hotelaria</span>
+                            <span class="tag">Boutique</span>
+                            <span class="tag">Spa</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="empresa2-galeria" class="tab-content">
-                <div class="company-card">
-                    <h2>Portfólio Comercial</h2>
-                    <div class="gallery">
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Escritório Corporativo">
-                            <div class="gallery-overlay">Escritórios Corporativos</div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1592861956120-e524fc739696?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Restaurante">
-                            <div class="gallery-overlay">Restaurantes</div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Loja">
-                            <div class="gallery-overlay">Lojas e Showrooms</div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Hotel">
-                            <div class="gallery-overlay">Hotéis</div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1567522218056-d1c8f3b4a009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Centro Comercial">
-                            <div class="gallery-overlay">Centros Comerciais</div>
-                        </div>
-                        <div class="gallery-item">
-                            <img src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Espaço Corporativo">
-                            <div class="gallery-overlay">Espaços Corporativos</div>
-                        </div>
+            <div class="company-card">
+                <h2>Portfólio Comercial</h2>
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Escritório Corporativo">
+                        <div class="gallery-overlay">Escritórios Corporativos</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1592861956120-e524fc739696?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Restaurante">
+                        <div class="gallery-overlay">Restaurantes</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Loja">
+                        <div class="gallery-overlay">Lojas e Showrooms</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Hotel">
+                        <div class="gallery-overlay">Hotéis</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1567522218056-d1c8f3b4a009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Centro Comercial">
+                        <div class="gallery-overlay">Centros Comerciais</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Espaço Corporativo">
+                        <div class="gallery-overlay">Espaços Corporativos</div>
                     </div>
                 </div>
             </div>
 
-            <div id="empresa2-servicos" class="tab-content">
-                <div class="company-card">
-                    <h2>Serviços Comerciais</h2>
-                    <ul class="services">
-                        <li><strong>Arquitectura Corporativa:</strong> Escritórios e sedes empresariais</li>
-                        <li><strong>Design de Interiores Comerciais:</strong> Ambientação profissional</li>
-                        <li><strong>Projectos de Restaurantes:</strong> Gastronomia e food service</li>
-                        <li><strong>Retail e Showrooms:</strong> Espaços comerciais e lojas</li>
-                        <li><strong>Hotelaria e Alojamento:</strong> Hotéis, pousadas e resorts</li>
-                        <li><strong>Espaços de Eventos:</strong> Centros de convenções e salões</li>
-                        <li><strong>Consultoria em Branding:</strong> Identidade visual no espaço</li>
-                        <li><strong>Gestão de Projectos:</strong> Acompanhamento completo da obra</li>
-                    </ul>
-                    <a href="#" class="contact-btn" onclick="showSection('contato')">Agendar Consulta</a>
-                </div>
+            <div class="company-card">
+                <h2>Serviços Comerciais</h2>
+                <ul class="services">
+                    <li><strong>Arquitectura Corporativa:</strong> Escritórios e sedes empresariais</li>
+                    <li><strong>Design de Interiores Comerciais:</strong> Ambientação profissional</li>
+                    <li><strong>Projectos de Restaurantes:</strong> Gastronomia e food service</li>
+                    <li><strong>Retail e Showrooms:</strong> Espaços comerciais e lojas</li>
+                    <li><strong>Hotelaria e Alojamento:</strong> Hotéis, pousadas e resorts</li>
+                    <li><strong>Espaços de Eventos:</strong> Centros de convenções e salões</li>
+                    <li><strong>Consultoria em Branding:</strong> Identidade visual no espaço</li>
+                    <li><strong>Gestão de Projectos:</strong> Acompanhamento completo da obra</li>
+                </ul>
+                <a href="#contato" class="contact-btn">Agendar Consulta</a>
             </div>
         </section>
 
@@ -1724,8 +1591,8 @@
                 </div>
 
                 <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="#" class="contact-btn">Solicitar Orçamento</a>
-                    <a href="#" class="contact-btn">Agendar Consulta</a>
+                    <a href="#contato" class="contact-btn">Solicitar Orçamento</a>
+                    <a href="#contato" class="contact-btn">Agendar Consulta</a>
                 </div>
             </div>
         </section>
@@ -1751,194 +1618,172 @@
     </footer>
 
     <script>
-        function showSection(sectionId) {
-            // Esconder todas as seções
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Mostrar a seção selecionada
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Scroll para o topo
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Garantir que o header está sempre visível
+        function ensureHeaderVisibility() {
+            const header = document.querySelector('header');
+            if (header) {
+                header.style.position = 'fixed';
+                header.style.top = '0';
+                header.style.left = '0';
+                header.style.width = '100%';
+                header.style.zIndex = '9999';
+                header.style.display = 'block';
+                header.style.visibility = 'visible';
+                header.style.opacity = '1';
+            }
         }
 
-        function showTab(empresa, tabId) {
-            // Esconder todas as tabs da empresa
-            const tabs = document.querySelectorAll(`#${empresa} .tab-content`);
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Remover classe active de todos os nav-tabs
-            const navTabs = document.querySelectorAll(`#${empresa} .nav-tab`);
-            navTabs.forEach(navTab => {
-                navTab.classList.remove('active');
-            });
-            
-            // Mostrar a tab selecionada
-            document.getElementById(`${empresa}-${tabId}`).classList.add('active');
-            
-            // Adicionar classe active ao nav-tab clicado
-            event.target.classList.add('active');
-        }
-
-        // Smooth scroll para elementos internos
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-            });
-        });
-
-        // Efeito de paralaxe suave
+        // Efeito de transparência no header ao fazer scroll (sem animações)
         window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
             const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.hero');
-            if (parallax) {
-                const speed = scrolled * 0.5;
-                parallax.style.transform = `translateY(${speed}px)`;
+            
+            // Garantir que o header está sempre visível
+            ensureHeaderVisibility();
+            
+            if (scrolled > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
             }
         });
 
-        // Animação de entrada para cards
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
-                    // Adicionar classe de animação 3D flutuante para alguns elementos
-                    if (entry.target.classList.contains('company-card')) {
-                        setTimeout(() => {
-                            entry.target.classList.add('floating-3d');
-                        }, 600);
+        // Executar ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            ensureHeaderVisibility();
+            
+            // Funcionalidade para destacar seção ativa
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav a[href^="#"], .logo-dropdown a[href^="#"]');
+            
+            function updateActiveLink() {
+                const scrollPosition = window.scrollY + 100; // Offset para header
+                
+                sections.forEach(section => {
+                    const top = section.offsetTop;
+                    const bottom = top + section.offsetHeight;
+                    const id = section.getAttribute('id');
+                    
+                    if (scrollPosition >= top && scrollPosition < bottom) {
+                        // Remove active de todos os links
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        
+                        // Adiciona active ao link correspondente
+                        const activeLink = document.querySelector(`nav a[href="#${id}"], .logo-dropdown a[href="#${id}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
                     }
+                });
+            }
+            
+            // Atualizar ao fazer scroll
+            window.addEventListener('scroll', updateActiveLink);
+            
+            // Atualizar inicialmente
+            updateActiveLink();
+        });
+
+        // Scroll suave para elementos internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Ajustar para a altura da navbar
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    
+                    // Scroll suave
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
                 }
             });
-        }, observerOptions);
+        });
 
-        // Observar todos os cards
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.company-card, .project-card, .gallery-item');
-            cards.forEach(card => {
-                observer.observe(card);
-            });
-
-            // Adicionar efeito de mouse movement 3D
-            const cards3D = document.querySelectorAll('.company-card, .project-card, .gallery-item');
-            cards3D.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = (y - centerY) / 10;
-                    const rotateY = (centerX - x) / 10;
-                    
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
-                });
-            });
-
-            // Controle do menu hamburger
+        // Mobile menu functionality (simplificada)
+        function toggleMobileMenu() {
             const hamburger = document.getElementById('hamburger');
             const navMenu = document.getElementById('nav-menu');
             const navOverlay = document.getElementById('nav-overlay');
             
-            if (hamburger && navMenu) {
-                let isAnimating = false;
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+        }
+
+        // Event listeners para o menu mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger');
+            const navOverlay = document.getElementById('nav-overlay');
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            
+            if (hamburger) {
+                hamburger.addEventListener('click', toggleMobileMenu);
+            }
+            
+            if (navOverlay) {
+                navOverlay.addEventListener('click', toggleMobileMenu);
+            }
+            
+            // Fechar menu quando clicar em um link
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    // Fechar menu mobile sempre que clicar em um link
+                    toggleMobileMenu();
+                });
+            });
+
+            // Funcionalidade do dropdown do logo
+            const logo = document.getElementById('logo');
+            const logoDropdown = document.getElementById('logo-dropdown');
+            const desktopNav = document.querySelector('.desktop-nav');
+            let isScrolled = false;
+
+            // Detectar scroll para mostrar/esconder navbar links
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 
-                hamburger.addEventListener('click', function() {
-                    if (isAnimating) return;
-                    
-                    hamburger.classList.toggle('active');
-                    
-                    if (navMenu.classList.contains('active')) {
-                        // Fechar menu com animação
-                        closeMenu();
-                    } else {
-                        // Abrir menu com animação
-                        openMenu();
-                    }
-                });
-
-                function openMenu() {
-                    isAnimating = true;
-                    navMenu.classList.remove('closing');
-                    navMenu.classList.add('active');
-                    if (navOverlay) {
-                        navOverlay.classList.add('active');
-                    }
-                    
-                    // Prevenir scroll do body
-                    document.body.style.overflow = 'hidden';
-                    
-                    setTimeout(() => {
-                        isAnimating = false;
-                    }, 400);
+                if (scrollTop > 50 && !isScrolled) {
+                    isScrolled = true;
+                    desktopNav.classList.add('hidden');
+                } else if (scrollTop <= 50 && isScrolled) {
+                    isScrolled = false;
+                    desktopNav.classList.remove('hidden');
+                    // Esconder dropdown quando volta ao topo
+                    logoDropdown.classList.remove('show');
                 }
+            });
 
-                function closeMenu() {
-                    isAnimating = true;
-                    navMenu.classList.add('closing');
-                    hamburger.classList.remove('active');
+            // Toggle dropdown do logo
+            if (logo) {
+                logo.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     
-                    setTimeout(() => {
-                        navMenu.classList.remove('active', 'closing');
-                        if (navOverlay) {
-                            navOverlay.classList.remove('active');
-                        }
-                        
-                        // Restaurar scroll do body
-                        document.body.style.overflow = '';
-                        isAnimating = false;
-                    }, 400);
-                }
-
-                // Fechar menu ao clicar nos links
-                const navLinks = navMenu.querySelectorAll('a');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        if (!isAnimating) {
-                            closeMenu();
-                        }
-                    });
-                });
-
-                // Fechar menu ao clicar no overlay
-                if (navOverlay) {
-                    navOverlay.addEventListener('click', function() {
-                        if (!isAnimating) {
-                            closeMenu();
-                        }
-                    });
-                }
-
-                // Fechar menu ao clicar fora
-                document.addEventListener('click', function(e) {
-                    if (!hamburger.contains(e.target) && !navMenu.contains(e.target) && !isAnimating) {
-                        if (navMenu.classList.contains('active')) {
-                            closeMenu();
-                        }
-                    }
-                });
-
-                // Fechar menu ao pressionar ESC
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && navMenu.classList.contains('active') && !isAnimating) {
-                        closeMenu();
+                    // Só mostrar dropdown se estiver com scroll
+                    if (isScrolled) {
+                        logoDropdown.classList.toggle('show');
                     }
                 });
             }
+
+            // Fechar dropdown quando clicar fora
+            document.addEventListener('click', function(e) {
+                if (!logo.contains(e.target)) {
+                    logoDropdown.classList.remove('show');
+                }
+            });
+
+            // Fechar dropdown quando clicar em um link do dropdown
+            const logoDropdownLinks = logoDropdown.querySelectorAll('a');
+            logoDropdownLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    logoDropdown.classList.remove('show');
+                });
+            });
         });
     </script>
 </body>
