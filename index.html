@@ -3,1235 +3,1359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BDN - Estúdio de Arquitectura</title>
+    <title>BDN - Projetamos | Arquitetamos | Construímos</title>
     <link rel="icon" type="image/png" href="bdn_fabicon.png">
     <link rel="shortcut icon" type="image/png" href="bdn_fabicon.png">
     <link rel="apple-touch-icon" href="bdn_fabicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            line-height: 1.6;
-            color: #fff;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
-            min-height: 100vh;
-            padding-top: 80px; /* Espaço para a navbar fixa */
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 clamp(15px, 4vw, 30px);
-        }
-
-        .header-container {
-            max-width: 100%;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-        }
-
-        header {
-            background: transparent;
-            backdrop-filter: none;
-            position: fixed !important;        /* Esta propriedade mantém a navbar fixa */
-            width: 100% !important;           /* Ocupa toda a largura */
-            top: 0 !important;                /* Posicionada no topo */
-            left: 0 !important;               /* Posicionada à esquerda */
-            z-index: 9999 !important;         /* Acima de todos os outros elementos */
-            border-bottom: none;
-            box-shadow: none;
-            transition: none;
-            display: block !important;        /* Garantir que sempre está visível */
-            visibility: visible !important;   /* Garantir que sempre está visível */
-            opacity: 1 !important;            /* Garantir que sempre está visível */
-        }
-
-        header.scrolled {
-            background: transparent !important;
-            backdrop-filter: none;
-            border-bottom: none;
-            box-shadow: none;
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            z-index: 9999 !important;
-        }
-
-        /* CSS adicional para garantir que o header seja sempre visível */
-        header,
-        header.scrolled,
-        header:before,
-        header:after {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            z-index: 9999 !important;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            padding: clamp(1rem, 2vw, 1.5rem) 0;
-            position: relative;
-            gap: 2rem;
-            max-width: none;
-            margin: 0;
-            width: 100%;
-            padding-left: 0;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            font-weight: 600;
-            color: #ffd700;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: clamp(0.5rem, 1.5vw, 0.8rem);
-            cursor: pointer;
-            position: relative;
-            z-index: inherit;
-            margin-left: clamp(15px, 4vw, 30px);
-            padding-left: 0;
-        }
-
-        .logo:hover {
-            opacity: 0.8;
-        }
-
-        .logo-img {
-            width: clamp(30px, 6vw, 40px);
-            height: clamp(30px, 6vw, 40px);
-            object-fit: contain;
-            cursor: pointer;
-        }
-
-        .logo:hover .logo-img {
-            opacity: 0.8;
-        }
-
-        .logo {
-            position: relative;
-        }
-
-        .logo-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: rgba(0, 0, 0, 0.95);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 4px;
-            padding: 0.5rem 0;
-            min-width: 200px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .logo-dropdown.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .logo-dropdown ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .logo-dropdown li {
-            margin: 0;
-        }
-
-        .logo-dropdown a {
-            display: block;
-            padding: 0.7rem 1.2rem;
-            color: white;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 400;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .logo-dropdown a:hover {
-            background: rgba(255, 215, 0, 0.1);
-            color: #FFD700;
-            transform: translateX(5px);
-        }
-
-        .logo-dropdown li:last-child a {
-            border-bottom: none;
-        }
-
-        .desktop-nav.hidden {
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.4s ease;
-        }
-
-        /* Dropdown Menu */
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 8px;
-            padding: 1rem 0;
-            min-width: 250px;
-            opacity: 0;
-            visibility: hidden;
-            z-index: 1002;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
-        }
-
-        .dropdown-menu.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .dropdown-menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .dropdown-menu li {
-            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-        }
-
-        .dropdown-menu li:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-menu a {
-            display: block;
-            padding: 1rem 1.5rem;
-            color: #ffd700;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 400;
-            position: relative;
-        }
-
-        .dropdown-menu a:hover {
-            background: rgba(255, 215, 0, 0.1);
-            color: #fff;
-        }
-
-        .dropdown-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: 1001;
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .dropdown-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-        }
-
-        nav {
-            position: relative;
-            margin-left: auto;
-            margin-right: clamp(15px, 4vw, 30px);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: clamp(1.5rem, 4vw, 3rem);
-        }
-
-        .desktop-nav {
-            display: flex;
-            list-style: none;
-            justify-content: space-between;
-            width: 100%;
-            transition: all 0.4s ease;
-            transform: translateY(0);
-        }
-
-        .nav-menu {
-            display: none;
-        }
-
-        /* Forçar visibilidade do menu mobile quando ativo */
-        .nav-menu.active {
-            display: block !important;
-        }
-
-        /* Overlay para o menu mobile */
-        .nav-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(2px);
-        }
-
-        .nav-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 0.5rem;
-            z-index: 1002;
-            position: relative;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger:hover {
-            background: rgba(255, 215, 0, 0.1);
-            transform: scale(1.05);
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #ffd700;
-            margin: 3px 0;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(9px, 9px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-            transform: translateX(20px);
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(9px, -9px);
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #fff;
-            font-weight: 400;
-            font-size: clamp(0.8rem, 1.5vw, 0.95rem);
-            padding: 0.5rem 1rem;
-            position: relative;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        nav a:hover,
-        nav a.active {
-            color: #ffd700;
-            background: rgba(255, 215, 0, 0.1);
-            transform: translateY(-2px);
-        }
-
-        main {
-            margin-top: clamp(80px, 15vw, 100px);
-            padding: clamp(1rem, 3vw, 2rem) 0;
-        }
-
-        .hero {
-            text-align: center;
-            padding: clamp(2rem, 8vw, 5rem) 0;
-            background: transparent;
-            margin-bottom: clamp(2rem, 6vw, 4rem);
-            color: white;
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            margin-bottom: clamp(1rem, 3vw, 1.5rem);
-            font-weight: 400;
-            color: #ffd700;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
-            margin-bottom: 1rem;
-            font-weight: 300;
-            color: #ccc;
-            max-width: min(600px, 90vw);
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
-        }
-
-
-
-        .companies-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
-            gap: clamp(1.5rem, 4vw, 3rem);
-            margin-top: clamp(2rem, 4vw, 3rem);
-        }
-
-        .company-card {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 8px;
-            padding: clamp(1.5rem, 4vw, 3rem);
-            position: relative;
-        }
-
-        .company-card h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.4rem, 3vw, 1.8rem);
-            margin-bottom: clamp(1rem, 2vw, 1.5rem);
-            color: #ffd700;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-            gap: clamp(0.5rem, 2vw, 1rem);
-        }
-
-        .company-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.2rem, 2.5vw, 1.4rem);
-            margin-bottom: 1rem;
-            margin-top: clamp(1.5rem, 3vw, 2rem);
-            color: #ffd700;
-            font-weight: 400;
-        }
-
-        .company-icon {
-            width: clamp(30px, 6vw, 40px);
-            height: clamp(30px, 6vw, 40px);
-            border-radius: 50%;
-            background: #ffd700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-weight: 600;
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            flex-shrink: 0;
-        }
-
-        .company-card p {
-            color: #aaa;
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-            font-weight: 300;
-            line-height: 1.7;
-        }
-
-        .services {
-            list-style: none;
-            padding: 0;
-        }
-
-        .services li {
-            background: transparent;
-            margin: 0.8rem 0;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-            color: #ccc;
-        }
-
-        .services li:last-child {
-            border-bottom: none;
-        }
-
-        .contact-btn {
-            background: transparent;
-            color: #ffd700;
-            border: 2px solid #ffd700;
-            padding: clamp(0.6rem, 1.5vw, 0.8rem) clamp(1.5rem, 3vw, 2rem);
-            border-radius: 4px;
-            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-align: center;
-            min-width: 120px;
-            position: relative;
-        }
-
-        .contact-btn:hover {
-            background: #ffd700;
-            color: #000;
-        }
-
-        .section {
-            display: block;
-            padding: clamp(3rem, 6vw, 5rem) 0;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-            gap: clamp(1rem, 3vw, 2rem);
-            margin-top: clamp(1.5rem, 3vw, 2rem);
-        }
-
-        .project-card {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 8px;
-            padding: clamp(1.5rem, 3vw, 2rem);
-            position: relative;
-        }
-
-        .project-card h4 {
-            font-family: 'Playfair Display', serif;
-            color: #ffd700;
-            font-size: clamp(1.1rem, 2vw, 1.3rem);
-            margin-bottom: 1rem;
-            font-weight: 400;
-        }
-
-        .project-card p {
-            color: #aaa;
-            font-size: clamp(0.85rem, 1.5vw, 0.9rem);
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .tag {
-            background: transparent;
-            color: #ffd700;
-            padding: 0.2rem 0.8rem;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 400;
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
-            gap: clamp(1rem, 2vw, 1.5rem);
-            margin-top: clamp(1.5rem, 3vw, 2rem);
-        }
-
-        .gallery-item {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 8px;
-            padding: 0;
-            text-align: center;
-            height: clamp(150px, 30vw, 200px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.8);
-            color: #ffd700;
-            padding: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 400;
-            backdrop-filter: blur(5px);
-        }
-
-        .gallery-placeholder {
-            color: #ffd700;
-            font-size: 1rem;
-            font-weight: 400;
-        }
-
-        footer {
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            text-align: center;
-            padding: 3rem 0;
-            margin-top: 4rem;
-            border-top: 1px solid rgba(255, 215, 0, 0.2);
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .footer-logo-img {
-            width: 30px;
-            height: 30px;
-            object-fit: contain;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .footer-links a {
-            color: #aaa;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .footer-links a:hover {
-            color: #ffd700;
-        }
-
-        .nav-tabs {
-            display: flex;
-            gap: 0;
-            margin-bottom: clamp(2rem, 4vw, 3rem);
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .nav-tabs::-webkit-scrollbar {
-            display: none;
-        }
-
-        .nav-tab {
-            background: transparent;
-            color: #aaa;
-            border: none;
-            padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
-            cursor: pointer;
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-            border-bottom: 2px solid transparent;
-            white-space: nowrap;
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .nav-tab:hover {
-            color: #ffd700;
-        }
-
-        .nav-tab.active {
-            color: #ffd700;
-            border-bottom-color: #ffd700;
-        }
-
-        .tab-content {
-            display: block;
-        }
-
-        /* Responsive Design - Mobile First */
-        @media (max-width: 768px) {
-            .header-content {
-                justify-content: space-between;
-                gap: 1rem;
-                padding: clamp(1rem, 2vw, 1.5rem) 0;
-                padding-left: 0;
-            }
-
-            .logo {
-                margin-left: 15px;
-                padding-left: 0;
-            }
-
-            nav {
-                margin-right: 15px;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .desktop-nav {
-                display: none;
-            }
-
-            .nav-menu {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 280px;
-                height: 100vh;
-                background: rgba(0, 0, 0, 0.95);
-                padding-top: 100px;
-                z-index: 1001;
-                border-left: 1px solid rgba(255, 215, 0, 0.3);
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                backdrop-filter: blur(10px);
-            }
-
-            .nav-menu.active {
-                right: 0;
-                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-            }
-
-            .nav-menu ul {
-                display: flex;
-                flex-direction: column;
-                gap: 0;
-                width: 100%;
-                padding: 0;
-                list-style: none;
-            }
-
-            .nav-menu li {
-                width: 100%;
-                border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-            }
-
-            .nav-menu a {
-                display: block;
-                width: 100%;
-                text-align: center;
-                padding: 1.2rem 2rem;
-                font-size: 1.1rem;
-                color: #ffd700;
-                text-decoration: none;
-                position: relative;
-            }
-
-            .nav-menu a:hover {
-                background: rgba(255, 215, 0, 0.1);
-                color: #fff;
-            }
-
-            .nav-menu li:last-child {
-                border-bottom: none;
-            }
-
-            /* Logo dropdown styles for mobile */
-            .logo-dropdown {
-                min-width: 180px;
-                left: -20px;
-            }
-
-            .logo-dropdown a {
-                padding: 0.6rem 1rem;
-                font-size: 0.85rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
-
-            .header-content {
-                gap: 1rem;
-                padding: 0.8rem 0;
-                padding-left: 0;
-            }
-
-            .logo {
-                font-size: 1.5rem;
-                margin-left: 15px;
-                padding-left: 0;
-            }
-
-            nav {
-                margin-right: 15px;
-            }
-
-            .logo-img {
-                width: 30px;
-                height: 30px;
-            }
-
-            nav ul {
-                width: 200px;
-            }
-
-            nav a {
-                font-size: 0.85rem;
-                padding: 0.8rem;
-            }
-
-            main {
-                margin-top: 70px;
-                padding: 1rem 0;
-            }
-
-            .hero {
-                padding: 2rem 0;
-                margin-bottom: 2rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-                margin-bottom: 1rem;
-            }
-
-            .hero p {
-                font-size: 0.9rem;
-                margin-bottom: 0.8rem;
-            }
-
-            .companies-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-                margin-top: 2rem;
-            }
-
-            .company-card {
-                padding: 1.5rem;
-            }
-
-            .company-card h2 {
-                font-size: 1.4rem;
-                margin-bottom: 1rem;
-                flex-direction: column;
-                gap: 0.5rem;
-                text-align: center;
-            }
-
-            .company-card h3 {
-                font-size: 1.2rem;
-                margin-top: 1.5rem;
-            }
-
-            .company-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .project-card {
-                padding: 1.5rem;
-            }
-
-            .project-card h4 {
-                font-size: 1.1rem;
-            }
-
-            .gallery {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .gallery-item {
-                height: 150px;
-            }
-
-            .nav-tabs {
-                flex-direction: column;
-                gap: 0;
-            }
-
-            .nav-tab {
-                padding: 0.8rem 1rem;
-                font-size: 0.8rem;
-                border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-                border-right: none;
-            }
-
-            .nav-tab.active {
-                border-bottom-color: #ffd700;
-            }
-
-            .contact-btn {
-                padding: 0.7rem 1.5rem;
-                font-size: 0.8rem;
-                margin-top: 1rem;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-
-            .footer-links {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .footer-logo-img {
-                width: 25px;
-                height: 25px;
-            }
-        }
-
-        /* Tablet Portrait */
-        @media (min-width: 481px) and (max-width: 768px) {
-            .container {
-                padding: 0 20px;
-            }
-
-            .header-content {
-                flex-direction: column;
-                gap: 1.2rem;
-                padding: 1rem 0;
-            }
-
-            .logo {
-                font-size: 1.8rem;
-            }
-
-            nav ul {
-                flex-direction: row;
-                gap: 2rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            nav a {
-                font-size: 0.9rem;
-            }
-
-            main {
-                margin-top: 90px;
-            }
-
-            .hero {
-                padding: 3rem 0;
-                margin-bottom: 3rem;
-            }
-
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .companies-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .company-card {
-                padding: 2rem;
-            }
-
-            .company-card h2 {
-                font-size: 1.6rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-
-            .gallery {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.2rem;
-            }
-
-            .gallery-item {
-                height: 180px;
-            }
-
-            .nav-tabs {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-                justify-content: center;
-            }
-
-            .nav-tab {
-                padding: 0.8rem 1.5rem;
-                font-size: 0.85rem;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 1.5rem;
-            }
-
-            .footer-links {
-                flex-direction: row;
-                gap: 1.5rem;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-        }
-
-        /* Tablet Landscape */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .container {
-                max-width: 900px;
-                padding: 0 30px;
-            }
-
-            .header-content {
-                padding: 1.2rem 0;
-            }
-
-            .logo {
-                font-size: 1.9rem;
-            }
-
-            nav ul {
-                gap: 2.5rem;
-            }
-
-            nav a {
-                font-size: 0.9rem;
-            }
-
-            .hero {
-                padding: 4rem 0;
-            }
-
-            .hero h1 {
-                font-size: 3rem;
-            }
-
-            .companies-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2.5rem;
-            }
-
-            .company-card {
-                padding: 2.5rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-            }
-
-            .gallery {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 1.5rem;
-            }
-
-            .gallery-item {
-                height: 180px;
-            }
-
-            .nav-tabs {
-                justify-content: center;
-            }
-
-            .nav-tab {
-                padding: 1rem 1.8rem;
-                font-size: 0.9rem;
-            }
-
-            .footer-content {
-                gap: 2rem;
-            }
-        }
-
-        /* Desktop */
-        @media (min-width: 1025px) and (max-width: 1200px) {
-            .container {
-                max-width: 1000px;
-            }
-
-            .companies-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 3rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-
-            .gallery {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        /* Large Desktop */
-        @media (min-width: 1201px) {
-            .container {
-                max-width: 1200px;
-            }
-
-            .companies-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .projects-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-
-            .gallery {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        /* Ultra-wide screens */
-        @media (min-width: 1400px) {
-            .container {
-                max-width: 1400px;
-            }
-
-            .hero h1 {
-                font-size: 4rem;
-            }
-
-            .hero p {
-                font-size: 1.2rem;
-            }
-
-            .companies-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 4rem;
-            }
-
-            .company-card {
-                padding: 3.5rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 2.5rem;
-            }
-
-            .gallery {
-                grid-template-columns: repeat(5, 1fr);
-            }
-        }
-
-        /* Touch-friendly enhancements */
-        @media (pointer: coarse) {
-            .contact-btn {
-                padding: 1rem 2.5rem;
-                font-size: 1rem;
-            }
-
-            .nav-tab {
-                padding: 1rem 2rem;
-                font-size: 1rem;
-            }
-
-            nav a {
-                padding: 0.8rem 0;
-            }
-
-            .gallery-item {
-                min-height: 200px;
-            }
-        }
-
-        /* Print styles */
-        @media print {
-            header {
-                position: static !important;
-                background: white !important;
-                color: black !important;
-            }
-
-            .hero {
-                page-break-inside: avoid;
-            }
-
-            .company-card {
-                page-break-inside: avoid;
-                background: white;
-                border: 1px solid #000;
-            }
-
-            .gallery-item {
-                page-break-inside: avoid;
-            }
-
-            .contact-btn {
-                display: none;
-            }
-        }
-
-        /* Accessibility improvements */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* High contrast mode */
-        @media (prefers-contrast: high) {
-            .company-card {
-                border: 2px solid #ffd700;
-            }
-
-            .contact-btn {
-                border: 3px solid #ffd700;
-            }
-        }
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none;
+}
+
+/* Cursor personalizado - bola branca animada */
+body, html {
+    cursor: none;
+}
+
+.custom-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 70%, rgba(255,255,255,0.3) 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transition: transform 0.1s ease;
+    box-shadow: 0 0 15px rgba(255,255,255,0.6), 0 0 30px rgba(255,255,255,0.4);
+    animation: pulse 2s infinite;
+}
+
+.custom-cursor.hover {
+    transform: scale(1.5);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 70%, rgba(255,255,255,0.5) 100%);
+    box-shadow: 0 0 25px rgba(255,255,255,0.8), 0 0 50px rgba(255,255,255,0.6);
+    animation: pulseHover 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 15px rgba(255,255,255,0.6), 0 0 30px rgba(255,255,255,0.4);
+        opacity: 1;
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.6);
+        opacity: 0.8;
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(255,255,255,0.6), 0 0 30px rgba(255,255,255,0.4);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseHover {
+    0% {
+        box-shadow: 0 0 25px rgba(255,255,255,0.8), 0 0 50px rgba(255,255,255,0.6);
+        transform: scale(1.5);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(255,255,255,1), 0 0 70px rgba(255,255,255,0.8);
+        transform: scale(1.7);
+    }
+    100% {
+        box-shadow: 0 0 25px rgba(255,255,255,0.8), 0 0 50px rgba(255,255,255,0.6);
+        transform: scale(1.5);
+    }
+}
+
+a, button, .contact-btn, .logo, .hamburger, .nav-tab {
+    cursor: none !important;
+}
+
+input, textarea, select {
+    cursor: none;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    color: #fff;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    min-height: 100vh;
+    padding-top: 80px; /* Espaço para a navbar fixa */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(15px, 4vw, 30px);
+}
+
+.header-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+header {
+    background: transparent;
+    backdrop-filter: none;
+    position: fixed !important;        /* Esta propriedade mantém a navbar fixa */
+    width: 100% !important;           /* Ocupa toda a largura */
+    top: 0 !important;                /* Posicionada no topo */
+    left: 0 !important;               /* Posicionada à esquerda */
+    z-index: 9999 !important;         /* Acima de todos os outros elementos */
+    border-bottom: none;
+    box-shadow: none;
+    transition: none;
+    display: block !important;        /* Garantir que sempre está visível */
+    visibility: visible !important;   /* Garantir que sempre está visível */
+    opacity: 1 !important;            /* Garantir que sempre está visível */
+}
+
+header.scrolled {
+    background: transparent !important;
+    backdrop-filter: none;
+    border-bottom: none;
+    box-shadow: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important;
+}
+
+/* CSS adicional para garantir que o header seja sempre visível */
+header,
+header.scrolled,
+header:before,
+header:after {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important;
+}
+
+.header-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: clamp(1rem, 2vw, 1.5rem) 0;
+    position: relative;
+    gap: 2rem;
+    max-width: none;
+    margin: 0;
+    width: 100%;
+    padding-left: 0;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    color: #ffd700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 1.5vw, 0.8rem);
+    cursor: none;
+    position: relative;
+    z-index: inherit;
+    margin-left: clamp(15px, 4vw, 30px);
+    padding-left: 0;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.logo-img {
+    width: clamp(30px, 6vw, 40px);
+    height: clamp(30px, 6vw, 40px);
+    object-fit: contain;
+    cursor: none;
+}
+
+.logo:hover .logo-img {
+    opacity: 0.8;
+}
+
+.logo {
+    position: relative;
+}
+
+.logo-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 4px;
+    padding: 0.5rem 0;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.logo-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.logo-dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.logo-dropdown li {
+    margin: 0;
+}
+
+.logo-dropdown a {
+    display: block;
+    padding: 0.7rem 1.2rem;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: none;
+}
+
+.logo-dropdown a:hover {
+    background: rgba(255, 215, 0, 0.1);
+    color: #FFD700;
+    transform: translateX(5px);
+}
+
+.logo-dropdown li:last-child a {
+    border-bottom: none;
+}
+
+.desktop-nav.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    padding: 1rem 0;
+    min-width: 250px;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1002;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-menu li {
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.dropdown-menu li:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 1rem 1.5rem;
+    color: #ffd700;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
+    position: relative;
+    cursor: none;
+}
+
+.dropdown-menu a:hover {
+    background: rgba(255, 215, 0, 0.1);
+    color: #fff;
+}
+
+.dropdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dropdown-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-menu-toggle {
+    display: none;
+}
+
+nav {
+    position: relative;
+    margin-left: auto;
+    margin-right: clamp(15px, 4vw, 30px);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.desktop-nav {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    width: 100%;
+    transition: all 0.4s ease;
+    transform: translateY(0);
+}
+
+.nav-menu {
+    display: none;
+}
+
+/* Forçar visibilidade do menu mobile quando ativo */
+.nav-menu.active {
+    display: block !important;
+}
+
+/* Overlay para o menu mobile */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(2px);
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: none;
+    padding: 0.5rem;
+    z-index: 1002;
+    position: relative;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+    background: rgba(255, 215, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #ffd700;
+    margin: 3px 0;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(9px, 9px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(9px, -9px);
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 400;
+    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+    padding: 0.5rem 1rem;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: none;
+}
+
+nav a:hover,
+nav a.active {
+    color: #ffd700;
+    background: rgba(255, 215, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+main {
+    margin-top: clamp(80px, 15vw, 100px);
+    padding: clamp(1rem, 3vw, 2rem) 0;
+}
+
+.hero {
+    text-align: center;
+    padding: clamp(2rem, 8vw, 5rem) 0;
+    background: transparent;
+    margin-bottom: clamp(2rem, 6vw, 4rem);
+    color: white;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    margin-bottom: clamp(1rem, 3vw, 1.5rem);
+    font-weight: 400;
+    color: #ffd700;
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    margin-bottom: 1rem;
+    font-weight: 300;
+    color: #ccc;
+    max-width: min(600px, 90vw);
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.companies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+    gap: clamp(1.5rem, 4vw, 3rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.company-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    position: relative;
+}
+
+.company-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    color: #ffd700;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 2vw, 1rem);
+}
+
+.company-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+    margin-bottom: 1rem;
+    margin-top: clamp(1.5rem, 3vw, 2rem);
+    color: #ffd700;
+    font-weight: 400;
+}
+
+.company-icon {
+    width: clamp(30px, 6vw, 40px);
+    height: clamp(30px, 6vw, 40px);
+    border-radius: 50%;
+    background: #ffd700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: 600;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    flex-shrink: 0;
+}
+
+.company-card p {
+    color: #aaa;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+}
+
+.services {
+    list-style: none;
+    padding: 0;
+}
+
+.services li {
+    background: transparent;
+    margin: 0.8rem 0;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    color: #ccc;
+}
+
+.services li:last-child {
+    border-bottom: none;
+}
+
+.contact-btn {
+    background: transparent;
+    color: #ffd700;
+    border: 2px solid #ffd700;
+    padding: clamp(0.6rem, 1.5vw, 0.8rem) clamp(1.5rem, 3vw, 2rem);
+    border-radius: 4px;
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    font-weight: 500;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    min-width: 120px;
+    position: relative;
+}
+
+.contact-btn:hover {
+    background: #ffd700;
+    color: #000;
+}
+
+.section {
+    display: block;
+    padding: clamp(3rem, 6vw, 5rem) 0;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: clamp(1rem, 3vw, 2rem);
+    margin-top: clamp(1.5rem, 3vw, 2rem);
+}
+
+.project-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    position: relative;
+}
+
+.project-card h4 {
+    font-family: 'Playfair Display', serif;
+    color: #ffd700;
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+.project-card p {
+    color: #aaa;
+    font-size: clamp(0.85rem, 1.5vw, 0.9rem);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tag {
+    background: transparent;
+    color: #ffd700;
+    padding: 0.2rem 0.8rem;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+    margin-top: clamp(1.5rem, 3vw, 2rem);
+}
+
+.gallery-item {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: 0;
+    text-align: center;
+    height: clamp(150px, 30vw, 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    cursor: none;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffd700;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    backdrop-filter: blur(5px);
+}
+
+.gallery-placeholder {
+    color: #ffd700;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+footer {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    text-align: center;
+    padding: 3rem 0;
+    margin-top: 4rem;
+    border-top: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.footer-logo-img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.footer-links a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    cursor: none;
+}
+
+.footer-links a:hover {
+    color: #ffd700;
+}
+
+.nav-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.nav-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-tab {
+    background: transparent;
+    color: #aaa;
+    border: none;
+    padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+    cursor: none;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.nav-tab:hover {
+    color: #ffd700;
+}
+
+.nav-tab.active {
+    color: #ffd700;
+    border-bottom-color: #ffd700;
+}
+
+.tab-content {
+    display: block;
+}
+
+/* Responsive Design - Mobile First */
+@media (max-width: 768px) {
+    .header-content {
+        justify-content: space-between;
+        gap: 1rem;
+        padding: clamp(1rem, 2vw, 1.5rem) 0;
+        padding-left: 0;
+    }
+
+    .logo {
+        margin-left: 15px;
+        padding-left: 0;
+    }
+
+    nav {
+        margin-right: 15px;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .desktop-nav {
+        display: none;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        padding-top: 100px;
+        z-index: 1001;
+        border-left: 1px solid rgba(255, 215, 0, 0.3);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
+    }
+
+    .nav-menu.active {
+        right: 0;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-menu ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        padding: 0;
+        list-style: none;
+    }
+
+    .nav-menu li {
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+    }
+
+    .nav-menu a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 1.2rem 2rem;
+        font-size: 1.1rem;
+        color: #ffd700;
+        text-decoration: none;
+        position: relative;
+        cursor: none;
+    }
+
+    .nav-menu a:hover {
+        background: rgba(255, 215, 0, 0.1);
+        color: #fff;
+    }
+
+    .nav-menu li:last-child {
+        border-bottom: none;
+    }
+
+    /* Logo dropdown styles for mobile */
+    .logo-dropdown {
+        min-width: 180px;
+        left: -20px;
+    }
+
+    .logo-dropdown a {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .header-content {
+        gap: 1rem;
+        padding: 0.8rem 0;
+        padding-left: 0;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        margin-left: 15px;
+        padding-left: 0;
+    }
+
+    nav {
+        margin-right: 15px;
+    }
+
+    .logo-img {
+        width: 30px;
+        height: 30px;
+    }
+
+    nav ul {
+        width: 200px;
+    }
+
+    nav a {
+        font-size: 0.85rem;
+        padding: 0.8rem;
+    }
+
+    main {
+        margin-top: 70px;
+        padding: 1rem 0;
+    }
+
+    .hero {
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero p {
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .companies-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .company-card {
+        padding: 1.5rem;
+    }
+
+    .company-card h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .company-card h3 {
+        font-size: 1.2rem;
+        margin-top: 1.5rem;
+    }
+
+    .company-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .project-card {
+        padding: 1.5rem;
+    }
+
+    .project-card h4 {
+        font-size: 1.1rem;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .gallery-item {
+        height: 150px;
+    }
+
+    .nav-tabs {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .nav-tab {
+        padding: 0.8rem 1rem;
+        font-size: 0.8rem;
+        border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        border-right: none;
+    }
+
+    .nav-tab.active {
+        border-bottom-color: #ffd700;
+    }
+
+    .contact-btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.8rem;
+        margin-top: 1rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .footer-logo-img {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+/* Tablet Portrait */
+@media (min-width: 481px) and (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: 1.2rem;
+        padding: 1rem 0;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+    }
+
+    nav ul {
+        flex-direction: row;
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav a {
+        font-size: 0.9rem;
+    }
+
+    main {
+        margin-top: 90px;
+    }
+
+    .hero {
+        padding: 3rem 0;
+        margin-bottom: 3rem;
+    }
+
+    .hero h1 {
+        font-size: 2.8rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .companies-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .company-card {
+        padding: 2rem;
+    }
+
+    .company-card h2 {
+        font-size: 1.6rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+
+    .gallery-item {
+        height: 180px;
+    }
+
+    .nav-tabs {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .nav-tab {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.85rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .footer-links {
+        flex-direction: row;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+/* Tablet Landscape */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        max-width: 900px;
+        padding: 0 30px;
+    }
+
+    .header-content {
+        padding: 1.2rem 0;
+    }
+
+    .logo {
+        font-size: 1.9rem;
+    }
+
+    nav ul {
+        gap: 2.5rem;
+    }
+
+    nav a {
+        font-size: 0.9rem;
+    }
+
+    .hero {
+        padding: 4rem 0;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+    }
+
+    .companies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+    }
+
+    .company-card {
+        padding: 2.5rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    .gallery-item {
+        height: 180px;
+    }
+
+    .nav-tabs {
+        justify-content: center;
+    }
+
+    .nav-tab {
+        padding: 1rem 1.8rem;
+        font-size: 0.9rem;
+    }
+
+    .footer-content {
+        gap: 2rem;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1025px) and (max-width: 1200px) {
+    .container {
+        max-width: 1000px;
+    }
+
+    .companies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .gallery {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Large Desktop */
+@media (min-width: 1201px) {
+    .container {
+        max-width: 1200px;
+    }
+
+    .companies-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .gallery {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Ultra-wide screens */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1400px;
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+    }
+
+    .companies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4rem;
+    }
+
+    .company-card {
+        padding: 3.5rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2.5rem;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+/* Touch-friendly enhancements */
+@media (pointer: coarse) {
+    .contact-btn {
+        padding: 1rem 2.5rem;
+        font-size: 1rem;
+    }
+
+    .nav-tab {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+
+    nav a {
+        padding: 0.8rem 0;
+    }
+
+    .gallery-item {
+        min-height: 200px;
+    }
+}
+
+/* Print styles */
+@media print {
+    header {
+        position: static !important;
+        background: white !important;
+        color: black !important;
+    }
+
+    .hero {
+        page-break-inside: avoid;
+    }
+
+    .company-card {
+        page-break-inside: avoid;
+        background: white;
+        border: 1px solid #000;
+    }
+
+    .gallery-item {
+        page-break-inside: avoid;
+    }
+
+    .contact-btn {
+        display: none;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .company-card {
+        border: 2px solid #ffd700;
+    }
+
+    .contact-btn {
+        border: 3px solid #ffd700;
+    }
+}
+
+/* Estilos para Ana Duarte Interiores */
+.ana-duarte-section {
+    background: linear-gradient(135deg, #2c1810 0%, #3d241a 50%, #2c1810 100%);
+}
+
+.ana-duarte-section .company-card {
+    background: rgba(139, 69, 19, 0.15);
+    border: 1px solid rgba(139, 69, 19, 0.4);
+}
+
+.ana-duarte-section .company-card h2 {
+    color: #D2691E;
+}
+
+.ana-duarte-section .company-card h3 {
+    color: #D2691E;
+}
+
+.ana-duarte-section .company-icon {
+    background: #D2691E;
+    color: #000;
+}
+
+.ana-duarte-section .hero h1 {
+    color: #D2691E;
+}
+
+.ana-duarte-section .contact-btn {
+    color: #D2691E;
+    border: 2px solid #D2691E;
+}
+
+.ana-duarte-section .contact-btn:hover {
+    background: #D2691E;
+    color: #000;
+}
+
+.ana-duarte-section .tag {
+    color: #D2691E;
+    border: 1px solid rgba(210, 105, 30, 0.3);
+}
+
+.ana-duarte-section .project-card h4 {
+    color: #D2691E;
+}
+
+.ana-duarte-section .gallery-overlay {
+    background: rgba(0, 0, 0, 0.8);
+    color: #D2691E;
+}
+
+.ana-duarte-section .services li {
+    border-bottom: 1px solid rgba(210, 105, 30, 0.2);
+}
     </style>
 </head>
 <body>
+    <!-- Cursor personalizado -->
+    <div class="custom-cursor" id="customCursor"></div>
+    
     <header>
         <div class="header-container">
             <div class="header-content">
@@ -1240,9 +1364,9 @@
                     <div class="logo-dropdown" id="logo-dropdown">
                         <ul>
                             <li><a href="#home">Início</a></li>
-                            <li><a href="#sobre-empresa">Sobre</a></li>
-                            <li><a href="#empresa1">Residenciais</a></li>
-                            <li><a href="#empresa2">Comerciais</a></li>
+                            <li><a href="#sobre-empresa">Sobre BDN</a></li>
+                            <li><a href="#empresa1">BDN Arquitetura</a></li>
+                            <li><a href="#empresa2">Ana Duarte Interiores</a></li>
                             <li><a href="#contato">Contacto</a></li>
                         </ul>
                     </div>
@@ -1255,17 +1379,17 @@
                     </div>
                     <ul class="desktop-nav">
                         <li><a href="#home">Início</a></li>
-                        <li><a href="#sobre-empresa">Sobre</a></li>
-                        <li><a href="#empresa1">Residenciais</a></li>
-                        <li><a href="#empresa2">Comerciais</a></li>
+                        <li><a href="#sobre-empresa">Sobre BDN</a></li>
+                        <li><a href="#empresa1">BDN Arquitetura</a></li>
+                        <li><a href="#empresa2">Ana Duarte Interiores</a></li>
                         <li><a href="#contato">Contacto</a></li>
                     </ul>
                     <div class="nav-menu" id="nav-menu">
                         <ul>
                             <li><a href="#home">Início</a></li>
-                            <li><a href="#sobre-empresa">Sobre</a></li>
-                            <li><a href="#empresa1">Residenciais</a></li>
-                            <li><a href="#empresa2">Comerciais</a></li>
+                            <li><a href="#sobre-empresa">Sobre BDN</a></li>
+                            <li><a href="#empresa1">BDN Arquitetura</a></li>
+                            <li><a href="#empresa2">Ana Duarte Interiores</a></li>
                             <li><a href="#contato">Contacto</a></li>
                         </ul>
                     </div>
@@ -1280,293 +1404,272 @@
         <section id="home">
             <div class="hero">
                 <h1>BDN</h1>
-                <p>Criando espaços únicos que inspiram e transformam</p>
-                <p>Descubra os nossos projectos arquitectónicos inovadores e como podemos dar vida aos seus sonhos</p>
+                <p><strong>Projetamos | Arquitetamos | Construímos</strong></p>
+                <p>Grupo empresarial dedicado à criação de espaços únicos que inspiram e transformam</p>
+                <p>Descubra as nossas empresas especializadas e como podemos dar vida aos seus projetos</p>
             </div>
         </section>
 
-        <!-- Secção Sobre o Estúdio -->
+        <!-- Secção Sobre o Grupo BDN -->
         <section id="sobre-empresa">
             <div class="company-card" style="margin-bottom: 4rem;">
-                <h2>Sobre a BDN Arquitectura</h2>
-                <p>A BDN Arquitectura nasceu da paixão por criar espaços que transformam vidas e comunidades. Fundado por uma equipa de arquitectos visionários, o nosso estúdio combina criatividade, tecnologia e sustentabilidade para desenvolver projectos arquitectónicos que transcendem o tempo e inspiram gerações.</p>
+                <h2>Sobre o Grupo BDN</h2>
+                <p><strong>"Projetamos | Arquitetamos | Construímos"</strong> - Este é o lema que guia o Grupo BDN, uma empresa dedicada à criação de espaços únicos que transformam vidas e comunidades. Fundado por uma equipa de profissionais visionários, o nosso grupo combina criatividade, tecnologia e sustentabilidade para desenvolver projetos que transcendem o tempo e inspiram gerações.</p>
                 
-                <p>Com mais de uma década de experiência no mercado, especializamo-nos em projectos residenciais e comerciais que reflectem a personalidade dos nossos clientes e contribuem para o desenvolvimento urbano sustentável.</p>
+                <p>Com mais de uma década de experiência no mercado, especializamo-nos através das nossas duas empresas distintas, cada uma com a sua área de expertise, oferecendo soluções completas desde a arquitetura até aos interiores.</p>
                 
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
                     <div>
                         <h3>A Nossa Missão</h3>
-                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Criar espaços únicos e funcionais que reflectem a personalidade dos nossos clientes, contribuindo para a melhoria da qualidade de vida através da arquitectura de excelência.</p>
+                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Projetar, arquitetar e construir espaços únicos e funcionais que reflectem a personalidade dos nossos clientes, contribuindo para a melhoria da qualidade de vida através da excelência técnica e criativa.</p>
                     </div>
                     <div>
                         <h3>A Nossa Visão</h3>
-                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Ser reconhecido como o estúdio de arquitectura de referência, conhecido pela inovação, sustentabilidade e capacidade de transformar sonhos em realidade.</p>
+                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Ser reconhecido como o grupo empresarial de referência no setor, conhecido pela inovação, sustentabilidade e capacidade de transformar sonhos em realidade através de projetos excepcionais.</p>
                     </div>
                     <div>
                         <h3>Os Nossos Valores</h3>
-                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Criatividade, sustentabilidade, excelência técnica, personalização, funcionalidade e integridade em todos os nossos projectos.</p>
+                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Criatividade, sustentabilidade, excelência técnica, personalização, funcionalidade e integridade em todos os nossos projetos, desde a conceção até à execução.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem;">
+                    <h3>As Nossas Empresas</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 1.5rem;">
+                        <div style="padding: 1.5rem; border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 8px;">
+                            <h4 style="color: #ffd700; margin-bottom: 1rem;">🏗️ BDN Arquitetura</h4>
+                            <p style="color: #aaa; font-size: 0.9rem; line-height: 1.6;">Especializada em projetos arquitetónicos residenciais e comerciais, desenvolvendo soluções completas desde a conceção até à execução da obra.</p>
+                        </div>
+                        <div style="padding: 1.5rem; border: 1px solid rgba(139, 69, 19, 0.5); border-radius: 8px; background: rgba(139, 69, 19, 0.1);">
+                            <h4 style="color: #8B4513; margin-bottom: 1rem;">🎨 Ana Duarte Arquitetura de Interiores</h4>
+                            <p style="color: #aaa; font-size: 0.9rem; line-height: 1.6;">Focada exclusivamente em design de interiores, criando ambientes sofisticados com uma paleta de cores de preto e terra cotta.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Secção Projectos Residenciais -->
+        <!-- Secção BDN Arquitetura -->
         <section id="empresa1">
             <div class="hero">
-                <h1>Projectos Residenciais</h1>
-                <p>Transformando sonhos em realidade através da arquitectura</p>
+                <h1>BDN Arquitetura</h1>
+                <p><strong>Projetamos | Arquitetamos | Construímos</strong></p>
+                <p>Soluções arquitetónicas completas desde a conceção até à execução</p>
             </div>
 
             <div class="company-card">
                 <h2>
-                    <div class="company-icon">🏠</div>
-                    Arquitectura Residencial
+                    <div class="company-icon">�️</div>
+                    BDN Arquitetura
                 </h2>
-                <p>A nossa divisão residencial especializa-se em criar lares únicos que reflectem a personalidade e necessidades dos nossos clientes. Combinamos design contemporâneo com funcionalidade, sustentabilidade e conforto para desenvolver projectos que transcendem o tempo.</p>
+                <p>A BDN Arquitetura materializa o lema do grupo <strong>"Projetamos | Arquitetamos | Construímos"</strong>, oferecendo soluções arquitetónicas completas para projetos residenciais e comerciais. A nossa equipa especializada acompanha cada projeto desde a conceção inicial até à entrega final da obra, garantindo qualidade e excelência em todas as fases.</p>
                 
-                <h3>A Nossa Abordagem</h3>
+                <h3>A Nossa Abordagem Integrada</h3>
                 <ul class="services">
-                    <li><strong>Design Personalizado:</strong> Cada projecto é único e adaptado ao cliente</li>
+                    <li><strong>Projetamos:</strong> Desenvolvimento de conceitos únicos e personalizados</li>
+                    <li><strong>Arquitetamos:</strong> Criação de soluções técnicas e estéticas inovadoras</li>
+                    <li><strong>Construímos:</strong> Execução com controlo de qualidade e prazos</li>
                     <li><strong>Sustentabilidade:</strong> Soluções ecológicas e eficiência energética</li>
-                    <li><strong>Tecnologia Integrada:</strong> Automação e soluções inteligentes</li>
-                    <li><strong>Conforto Térmico:</strong> Estudo de orientação solar e ventilação natural</li>
                 </ul>
             </div>
 
             <div class="company-card">
-                <h2>Projectos Residenciais em Destaque</h2>
+                <h2>Projetos Arquitetónicos em Destaque</h2>
                 <div class="projects-grid">
                     <div class="project-card">
-                        <h4>Casa Moderna Minimalista</h4>
-                        <p>Residência unifamiliar de 350m² com design contemporâneo, integração interior-exterior e soluções sustentáveis.</p>
+                        <h4>Residência Contemporânea</h4>
+                        <p>Casa moderna de 350m² com design inovador, integração interior-exterior e soluções sustentáveis aplicando o conceito completo do grupo.</p>
                         <div class="project-tags">
-                            <span class="tag">Minimalista</span>
+                            <span class="tag">Residencial</span>
                             <span class="tag">Sustentável</span>
                             <span class="tag">350m²</span>
                         </div>
                     </div>
                     <div class="project-card">
-                        <h4>Loft Industrial Convertido</h4>
-                        <p>Transformação de antigo armazém em residência moderna, preservando elementos industriais originais.</p>
+                        <h4>Complexo Comercial</h4>
+                        <p>Edifício comercial multifuncional projetado, arquitetado e construído pela equipa BDN, integrando escritórios e espaços comerciais.</p>
                         <div class="project-tags">
-                            <span class="tag">Industrial</span>
-                            <span class="tag">Conversão</span>
-                            <span class="tag">Loft</span>
+                            <span class="tag">Comercial</span>
+                            <span class="tag">Multifuncional</span>
+                            <span class="tag">Obra Completa</span>
                         </div>
                     </div>
                     <div class="project-card">
-                        <h4>Casa de Campo Contemporânea</h4>
-                        <p>Residência rural com arquitectura contemporânea integrada na paisagem natural, com terraços e jardins.</p>
+                        <h4>Moradia Unifamiliar</h4>
+                        <p>Projeto residencial completo com acompanhamento desde o desenho inicial até à entrega das chaves, incluindo paisagismo.</p>
                         <div class="project-tags">
-                            <span class="tag">Rural</span>
+                            <span class="tag">Unifamiliar</span>
                             <span class="tag">Paisagismo</span>
-                            <span class="tag">Terraços</span>
+                            <span class="tag">Turnkey</span>
                         </div>
                     </div>
                     <div class="project-card">
-                        <h4>Apartamento Luxury</h4>
-                        <p>Remodelação completa de penthouse com vista panorâmica, integrando design moderno e materiais nobres.</p>
+                        <h4>Edifício Corporativo</h4>
+                        <p>Sede empresarial com soluções arquitetónicas inovadoras, espaços colaborativos e tecnologia integrada.</p>
                         <div class="project-tags">
-                            <span class="tag">Penthouse</span>
-                            <span class="tag">Luxury</span>
-                            <span class="tag">Vista</span>
+                            <span class="tag">Corporativo</span>
+                            <span class="tag">Tecnologia</span>
+                            <span class="tag">Inovação</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="company-card">
-                <h2>Galeria de Projectos Residenciais</h2>
+                <h2>Portfólio BDN Arquitetura</h2>
                 <div class="gallery">
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Fachada Moderna">
-                        <div class="gallery-overlay">Fachadas Modernas</div>
+                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Projeto Arquitetónico">
+                        <div class="gallery-overlay">Projetos Residenciais</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Interior Minimalista">
-                        <div class="gallery-overlay">Interiores Minimalistas</div>
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Edifício Comercial">
+                        <div class="gallery-overlay">Projetos Comerciais</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Jardim Integrado">
-                        <div class="gallery-overlay">Jardins Integrados</div>
+                        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Paisagismo">
+                        <div class="gallery-overlay">Paisagismo Integrado</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cozinha Gourmet">
-                        <div class="gallery-overlay">Cozinhas Gourmet</div>
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Construção">
+                        <div class="gallery-overlay">Execução de Obras</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Suíte Master">
-                        <div class="gallery-overlay">Suítes Master</div>
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Sustentabilidade">
+                        <div class="gallery-overlay">Soluções Sustentáveis</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Área Social">
-                        <div class="gallery-overlay">Áreas Sociais</div>
+                        <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Inovação">
+                        <div class="gallery-overlay">Inovação Técnica</div>
                     </div>
                 </div>
             </div>
 
             <div class="company-card">
-                <h2>Serviços Residenciais</h2>
+                <h2>Serviços BDN Arquitetura</h2>
                 <ul class="services">
-                    <li><strong>Projecto Arquitectónico:</strong> Desenvolvimento completo do projecto</li>
-                    <li><strong>Design de Interiores:</strong> Ambientação e decoração integrada</li>
-                    <li><strong>Acompanhamento de Obra:</strong> Supervisão técnica durante a execução</li>
-                    <li><strong>Projecto Paisagístico:</strong> Jardins e áreas externas</li>
+                    <li><strong>Projeto Arquitetónico:</strong> Desenvolvimento completo do projeto desde o conceito</li>
+                    <li><strong>Arquitetura de Execução:</strong> Plantas técnicas e detalhamento construtivo</li>
+                    <li><strong>Gestão de Obra:</strong> Acompanhamento e supervisão durante toda a construção</li>
+                    <li><strong>Projeto Paisagístico:</strong> Jardins e áreas externas integradas</li>
                     <li><strong>Consultoria Sustentável:</strong> Soluções eco-friendly e eficiência energética</li>
-                    <li><strong>Automação Residencial:</strong> Integração de tecnologia smart home</li>
-                    <li><strong>Remodelações e Ampliações:</strong> Modernização de espaços existentes</li>
-                    <li><strong>Projectos Complementares:</strong> Estrutural, eléctrico, hidráulico</li>
+                    <li><strong>Projetos Complementares:</strong> Coordenação de especialidades (estrutural, MEP)</li>
+                    <li><strong>Licenciamento:</strong> Apoio nos processos de aprovação municipal</li>
+                    <li><strong>Entrega Chave na Mão:</strong> Solução completa até à entrega final</li>
                 </ul>
-                <a href="#contato" class="contact-btn">Solicitar Orçamento</a>
+                <a href="#contato" class="contact-btn">Solicitar Projeto Completo</a>
             </div>
         </section>
 
-        <!-- Secção Projectos Comerciais -->
-        <section id="empresa2" class="section">
+        <!-- Secção Ana Duarte Arquitetura de Interiores -->
+        <section id="empresa2" class="section ana-duarte-section">
             <div class="hero">
-                <h1>Projectos Comerciais</h1>
-                <p>Espaços comerciais que impulsionam o sucesso dos negócios</p>
+                <h1>Ana Duarte Arquitetura de Interiores</h1>
+                <p><strong>Design de Interiores Sofisticado</strong></p>
+                <p>Criando ambientes únicos com a elegância do preto e a calidez da terra cotta</p>
             </div>
 
             <div class="company-card">
                 <h2>
-                    <div class="company-icon">🏢</div>
-                    Arquitectura Comercial
+                    <div class="company-icon">�</div>
+                    Ana Duarte Arquitetura de Interiores
                 </h2>
-                <p>A nossa divisão comercial especializa-se em criar espaços de negócios inovadores que combinam funcionalidade, estética e eficiência. Desenvolvemos projectos que não apenas impressionam, mas também optimizam a produtividade e experiência dos utilizadores.</p>
+                <p>A Ana Duarte Arquitetura de Interiores é uma empresa especializada exclusivamente em design de interiores, criando ambientes sofisticados e únicos. Com uma assinatura distintiva que combina a elegância do preto com a calidez da terra cotta, desenvolvemos projetos que refletem personalidade e estilo.</p>
                 
-                <h3>A Nossa Especialidade</h3>
+                <h3>A Nossa Assinatura Visual</h3>
                 <ul class="services">
-                    <li><strong>Design Corporativo:</strong> Ambientes que reflectem a identidade da marca</li>
-                    <li><strong>Optimização de Espaços:</strong> Máxima eficiência e produtividade</li>
-                    <li><strong>Experiência do Cliente:</strong> Ambientes que encantam e convertem</li>
-                    <li><strong>Sustentabilidade Comercial:</strong> Soluções eco-friendly e economia operacional</li>
+                    <li><strong>Paleta Preto & Terra Cotta:</strong> Combinação elegante e acolhedora</li>
+                    <li><strong>Design Personalizado:</strong> Cada ambiente reflete a personalidade do cliente</li>
+                    <li><strong>Materiais Nobres:</strong> Seleção cuidadosa de texturas e acabamentos</li>
+                    <li><strong>Iluminação Ambiente:</strong> Criação de atmosferas únicas e aconchegantes</li>
                 </ul>
             </div>
 
             <div class="company-card">
-                <h2>Projectos Comerciais Realizados</h2>
+                <h2>Projetos de Interiores em Destaque</h2>
                 <div class="projects-grid">
                     <div class="project-card">
-                        <h4>Sede Corporativa Tech</h4>
-                        <p>Escritório corporativo moderno de 2.500m² com espaços colaborativos, salas de reunião e áreas de descompressão.</p>
+                        <h4>Apartamento Contemporâneo</h4>
+                        <p>Design de interiores moderno com a assinatura preto e terra cotta, criando um ambiente sofisticado e acolhedor.</p>
                         <div class="project-tags">
-                            <span class="tag">Corporativo</span>
-                            <span class="tag">Colaborativo</span>
-                            <span class="tag">2.500m²</span>
+                            <span class="tag">Contemporâneo</span>
+                            <span class="tag">Preto & Terra Cotta</span>
+                            <span class="tag">Apartamento</span>
                         </div>
                     </div>
                     <div class="project-card">
-                        <h4>Restaurante Gourmet</h4>
-                        <p>Espaço gastronómico sofisticado com cozinha aberta, wine bar e terraço com vista panorâmica.</p>
+                        <h4>Casa de Campo Elegante</h4>
+                        <p>Interiores rústicos modernos utilizando texturas naturais em harmonia com a paleta característica da marca.</p>
                         <div class="project-tags">
-                            <span class="tag">Gastronomia</span>
-                            <span class="tag">Wine Bar</span>
-                            <span class="tag">Terraço</span>
+                            <span class="tag">Rústico Moderno</span>
+                            <span class="tag">Texturas Naturais</span>
+                            <span class="tag">Casa de Campo</span>
                         </div>
                     </div>
                     <div class="project-card">
-                        <h4>Loja Conceito Fashion</h4>
-                        <p>Flagship store com design inovador, iluminação cénica e layout optimizado para experiência de compra.</p>
+                        <h4>Loft Urbano</h4>
+                        <p>Transformação de espaço industrial em habitação sofisticada, destacando elementos arquitetónicos originais.</p>
                         <div class="project-tags">
-                            <span class="tag">Retail</span>
-                            <span class="tag">Fashion</span>
-                            <span class="tag">Experiência</span>
+                            <span class="tag">Industrial Chic</span>
+                            <span class="tag">Loft</span>
+                            <span class="tag">Urbano</span>
                         </div>
                     </div>
                     <div class="project-card">
-                        <h4>Hotel Boutique</h4>
-                        <p>Projecto completo de hotel boutique com 45 suítes, spa, restaurante e espaços para eventos.</p>
+                        <h4>Penthouse de Luxo</h4>
+                        <p>Design de interiores exclusivo para penthouse, combinando elegância clássica com toques contemporâneos.</p>
                         <div class="project-tags">
-                            <span class="tag">Hotelaria</span>
-                            <span class="tag">Boutique</span>
-                            <span class="tag">Spa</span>
+                            <span class="tag">Luxury</span>
+                            <span class="tag">Penthouse</span>
+                            <span class="tag">Exclusivo</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="company-card">
-                <h2>Portfólio Comercial</h2>
+                <h2>Portfólio Ana Duarte Interiores</h2>
                 <div class="gallery">
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Escritório Corporativo">
-                        <div class="gallery-overlay">Escritórios Corporativos</div>
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Sala de Estar">
+                        <div class="gallery-overlay">Salas de Estar</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1592861956120-e524fc739696?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Restaurante">
-                        <div class="gallery-overlay">Restaurantes</div>
+                        <img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Cozinha Gourmet">
+                        <div class="gallery-overlay">Cozinhas de Design</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Loja">
-                        <div class="gallery-overlay">Lojas e Showrooms</div>
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Quarto Principal">
+                        <div class="gallery-overlay">Quartos Elegantes</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Hotel">
-                        <div class="gallery-overlay">Hotéis</div>
+                        <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Escritório">
+                        <div class="gallery-overlay">Home Office</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1567522218056-d1c8f3b4a009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Centro Comercial">
-                        <div class="gallery-overlay">Centros Comerciais</div>
+                        <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Casa de Banho">
+                        <div class="gallery-overlay">Casas de Banho Spa</div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Espaço Corporativo">
-                        <div class="gallery-overlay">Espaços Corporativos</div>
+                        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Sala de Jantar">
+                        <div class="gallery-overlay">Salas de Jantar</div>
                     </div>
                 </div>
             </div>
 
             <div class="company-card">
-                <h2>Serviços Comerciais</h2>
+                <h2>Serviços de Design de Interiores</h2>
                 <ul class="services">
-                    <li><strong>Arquitectura Corporativa:</strong> Escritórios e sedes empresariais</li>
-                    <li><strong>Design de Interiores Comerciais:</strong> Ambientação profissional</li>
-                    <li><strong>Projectos de Restaurantes:</strong> Gastronomia e food service</li>
-                    <li><strong>Retail e Showrooms:</strong> Espaços comerciais e lojas</li>
-                    <li><strong>Hotelaria e Alojamento:</strong> Hotéis, pousadas e resorts</li>
-                    <li><strong>Espaços de Eventos:</strong> Centros de convenções e salões</li>
-                    <li><strong>Consultoria em Branding:</strong> Identidade visual no espaço</li>
-                    <li><strong>Gestão de Projectos:</strong> Acompanhamento completo da obra</li>
+                    <li><strong>Conceito e Planeamento:</strong> Desenvolvimento da identidade visual do espaço</li>
+                    <li><strong>Seleção de Materiais:</strong> Curadoria de texturas, cores e acabamentos</li>
+                    <li><strong>Mobiliário Personalizado:</strong> Peças únicas desenhadas à medida</li>
+                    <li><strong>Iluminação de Ambiente:</strong> Criação de atmosferas através da luz</li>
+                    <li><strong>Decoração e Styling:</strong> Objetos decorativos e arte integrada</li>
+                    <li><strong>Coordenação de Obra:</strong> Acompanhamento da execução dos interiores</li>
+                    <li><strong>Consultoria de Cor:</strong> Aplicação da paleta preto e terra cotta</li>
+                    <li><strong>Home Staging:</strong> Preparação de espaços para venda ou aluguer</li>
                 </ul>
-                <a href="#contato" class="contact-btn">Agendar Consulta</a>
-            </div>
-        </section>
-
-        <!-- Secção Sobre BDN -->
-        <section id="sobre" class="section">
-            <div class="hero">
-                <h1>Sobre a BDN Arquitectura</h1>
-                <p>Tradição, Inovação e Excelência em Arquitectura</p>
-            </div>
-
-            <div class="company-card">
-                <h2>A Nossa História</h2>
-                <p>A BDN Arquitectura nasceu da paixão por criar espaços que transformam vidas e comunidades. Fundado por uma equipa de arquitectos visionários, o nosso estúdio combina criatividade, tecnologia e sustentabilidade para desenvolver projectos arquitectónicos que transcendem o tempo e inspiram gerações.</p>
-                
-                <h3>Missão</h3>
-                <p>Criar espaços únicos e funcionais que reflectem a personalidade dos nossos clientes, contribuindo para o desenvolvimento urbano sustentável e a melhoria da qualidade de vida através da arquitectura de excelência.</p>
-                
-                <h3>Visão</h3>
-                <p>Ser reconhecido como o estúdio de arquitectura de referência, conhecido pela inovação, sustentabilidade e pela capacidade de transformar sonhos em realidade através de projectos arquitectónicos excepcionais.</p>
-                
-                <h3>Os Nossos Valores</h3>
-                <ul class="services">
-                    <li><strong>Criatividade e Inovação:</strong> Soluções arquitectónicas únicas e contemporâneas</li>
-                    <li><strong>Sustentabilidade:</strong> Compromisso com o meio ambiente e eficiência energética</li>
-                    <li><strong>Excelência Técnica:</strong> Qualidade superior em todos os projectos</li>
-                    <li><strong>Personalização:</strong> Cada projecto é único e adaptado ao cliente</li>
-                    <li><strong>Funcionalidade:</strong> Espaços que atendem às necessidades reais dos utilizadores</li>
-                    <li><strong>Integridade:</strong> Transparência e ética em todas as relações</li>
-                </ul>
-
-                <h3>Prémios e Reconhecimentos</h3>
-                <ul class="services">
-                    <li>Prémio Nacional de Arquitectura Sustentável 2024</li>
-                    <li>Certificação LEED Gold em projectos comerciais</li>
-                    <li>Prémio Arquitectura Residencial Inovadora 2023</li>
-                    <li>Reconhecimento OA - Ordem dos Arquitectos</li>
-                    <li>Membro da International Union of Architects (UIA)</li>
-                </ul>
+                <a href="#contato" class="contact-btn">Consulta de Design</a>
             </div>
         </section>
 
@@ -1574,25 +1677,32 @@
         <section id="contato" class="section">
             <div class="hero">
                 <h1>Contacto</h1>
-                <p>Entre em contacto connosco para dar vida ao seu projecto</p>
+                <p>Entre em contacto connosco para dar vida ao seu projeto</p>
             </div>
 
             <div class="company-card" style="text-align: center; max-width: 600px; margin: 0 auto;">
-                <h2>BDN Arquitectura</h2>
-                <p style="margin-bottom: 2rem; font-size: 1.1rem;">Transforme os seus sonhos em realidade com projectos arquitectónicos personalizados</p>
+                <h2>Grupo BDN</h2>
+                <p style="margin-bottom: 2rem; font-size: 1.1rem;"><strong>Projetamos | Arquitetamos | Construímos</strong></p>
                 
                 <div style="margin-bottom: 2rem;">
                     <ul class="services" style="text-align: left; max-width: 400px; margin: 0 auto;">
                         <li><strong>Morada:</strong> Avenida da Liberdade, 1234, Lisboa</li>
-                        <li><strong>Telefone:</strong> +351 21 123 4567</li>
-                        <li><strong>Email:</strong> contacto@bdnarquitectura.pt</li>
+                        <li><strong>Telefone BDN:</strong> +351 21 123 4567</li>
+                        <li><strong>Email BDN:</strong> contacto@bdnarquitectura.pt</li>
+                        <li><strong>Email Ana Duarte:</strong> info@anadurateinteriores.pt</li>
                         <li><strong>Horário:</strong> Segunda a Sexta, 9h às 18h</li>
                     </ul>
                 </div>
 
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="#contato" class="contact-btn">Solicitar Orçamento</a>
-                    <a href="#contato" class="contact-btn">Agendar Consulta</a>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+                    <a href="#contato" class="contact-btn">BDN Arquitetura</a>
+                    <a href="#contato" class="contact-btn">Ana Duarte Interiores</a>
+                </div>
+
+                <div style="background: rgba(139, 69, 19, 0.1); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(139, 69, 19, 0.3);">
+                    <h3 style="color: #D2691E; margin-bottom: 1rem;">Projetos Completos</h3>
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 1rem;">Para projetos que necessitem tanto de arquitetura quanto de design de interiores, oferecemos um serviço integrado entre as duas empresas do grupo.</p>
+                    <a href="#contato" style="background: #D2691E; color: #000; border: none; padding: 0.8rem 2rem; border-radius: 4px; text-decoration: none; display: inline-block; font-weight: 500;">Projeto Integrado</a>
                 </div>
             </div>
         </section>
@@ -1604,7 +1714,8 @@
                 <div class="footer-logo">
                     <img src="BDN_logo.png" alt="BDN Arquitectura" class="footer-logo-img">
                     <div>
-                        <p>&copy; 2025 BDN Arquitectura. Todos os direitos reservados.</p>
+                        <p>&copy; 2025 Grupo BDN. Todos os direitos reservados.</p>
+                        <p style="font-size: 0.8rem; color: #888;">Projetamos | Arquitetamos | Construímos</p>
                     </div>
                 </div>
                 <ul class="footer-links">
@@ -1618,6 +1729,52 @@
     </footer>
 
     <script>
+        // Cursor personalizado - bola branca animada
+        const customCursor = document.getElementById('customCursor');
+        
+        // Atualizar posição do cursor
+        document.addEventListener('mousemove', (e) => {
+            customCursor.style.left = e.clientX - 10 + 'px';
+            customCursor.style.top = e.clientY - 10 + 'px';
+        });
+        
+        // Efeito hover em elementos clicáveis
+        const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .gallery-item, .project-card');
+        
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                customCursor.classList.add('hover');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                customCursor.classList.remove('hover');
+            });
+        });
+        
+        // Esconder cursor quando sair da página
+        document.addEventListener('mouseleave', () => {
+            customCursor.style.opacity = '0';
+        });
+        
+        document.addEventListener('mouseenter', () => {
+            customCursor.style.opacity = '1';
+        });
+
+        // Função para inicializar eventos do cursor personalizado
+        function initCustomCursor() {
+            const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .gallery-item, .project-card');
+            
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    customCursor.classList.add('hover');
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    customCursor.classList.remove('hover');
+                });
+            });
+        }
+
         // Garantir que o header está sempre visível
         function ensureHeaderVisibility() {
             const header = document.querySelector('header');
@@ -1651,6 +1808,9 @@
         // Executar ao carregar a página
         document.addEventListener('DOMContentLoaded', function() {
             ensureHeaderVisibility();
+            
+            // Reinicializar eventos do cursor personalizado
+            initCustomCursor();
             
             // Funcionalidade para destacar seção ativa
             const sections = document.querySelectorAll('section[id]');
