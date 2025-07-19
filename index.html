@@ -208,22 +208,28 @@ header:after {
     position: absolute;
     top: 100%;
     left: 0;
-    background: rgba(0, 0, 0, 0.95);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 4px;
-    padding: 0.5rem 0;
-    min-width: 200px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    border-radius: 12px;
+    padding: 0.8rem 0;
+    min-width: 220px;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-10px);
+    transform: translateY(-15px) scale(0.95);
     z-index: 1000;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.3),
+        0 6px 12px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 215, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .logo-dropdown.show {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+    animation: dropdownBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .logo-dropdown ul {
@@ -234,28 +240,91 @@ header:after {
 
 .logo-dropdown li {
     margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-dropdown li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: bottom;
+}
+
+.logo-dropdown li:hover::before {
+    transform: scaleY(1);
+    transform-origin: top;
 }
 
 .logo-dropdown a {
     display: block;
-    padding: 0.7rem 1.2rem;
-    color: white;
+    padding: 0.9rem 1.5rem;
+    color: #f0f0f0;
     text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 400;
-    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     cursor: url('bdn_fabicon.png') 16 16, pointer;
+    position: relative;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.05) 0%, transparent 0%);
+    background-size: 300% 100%;
+}
+
+.logo-dropdown a::after {
+    content: '→';
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+    opacity: 0;
+    color: #FFD700;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
 }
 
 .logo-dropdown a:hover {
-    background: rgba(255, 215, 0, 0.1);
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.12) 50%, rgba(255, 215, 0, 0.08) 100%);
+    background-size: 100% 100%;
     color: #FFD700;
-    transform: translateX(5px);
+    transform: translateX(8px);
+    padding-left: 2rem;
+}
+
+.logo-dropdown a:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
 }
 
 .logo-dropdown li:last-child a {
     border-bottom: none;
+    border-radius: 0 0 8px 8px;
+}
+
+.logo-dropdown li:first-child a {
+    border-radius: 8px 8px 0 0;
+}
+
+/* Animação de entrada do dropdown */
+@keyframes dropdownBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+    }
+    60% {
+        opacity: 0.8;
+        transform: translateY(5px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .desktop-nav.hidden {
@@ -1050,13 +1119,23 @@ footer {
 
     /* Logo dropdown styles for mobile */
     .logo-dropdown {
-        min-width: 180px;
-        left: -20px;
+        min-width: 200px;
+        left: -30px;
+        border-radius: 10px;
+        padding: 0.6rem 0;
+        box-shadow: 
+            0 8px 20px rgba(0, 0, 0, 0.4),
+            0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     .logo-dropdown a {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .logo-dropdown a:hover {
+        transform: translateX(6px);
+        padding-left: 1.8rem;
     }
 }
 
@@ -1588,6 +1667,34 @@ footer {
     }
 }
 
+/* Lema com destaque simples */
+.hero-motto {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #FFD700;
+    text-align: center;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 2rem 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+    .hero-motto {
+        font-size: 1.5rem;
+        margin: 1.5rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-motto {
+        font-size: 1.2rem;
+        margin: 1rem 0;
+        letter-spacing: 0.05em;
+    }
+}
+
 /* Estilos para Ana Duarte Interiores */
 .ana-duarte-section {
     background: linear-gradient(135deg, #2c1810 0%, #3d241a 50%, #2c1810 100%);
@@ -1607,7 +1714,7 @@ footer {
     margin-right: auto;
     border-left: 4px solid #ffd700;
     border-radius: 0 8px 8px 0;
-    transform: translateX(-10%);
+    transform: translateX(-15%);
 }
 
 #empresa1 .company-card:nth-child(even) {
@@ -1615,7 +1722,7 @@ footer {
     margin-right: 0;
     border-right: 4px solid #ffd700;
     border-radius: 8px 0 0 8px;
-    transform: translateX(10%);
+    transform: translateX(15%);
 }
 
 .ana-duarte-section .company-card {
@@ -1743,16 +1850,17 @@ footer {
     width: 50%;
     height: 100%;
     pointer-events: auto;
-    cursor: none;
     z-index: 10001;
 }
 
 .lightbox-nav-left {
     left: 0;
+    cursor: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M20 24L12 16L20 8" stroke="%23FFD700" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') 16 16, w-resize;
 }
 
 .lightbox-nav-right {
     right: 0;
+    cursor: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M12 24L20 16L12 8" stroke="%23FFD700" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') 16 16, e-resize;
 }
 
 .lightbox-prev,
@@ -1900,24 +2008,11 @@ footer {
     text-shadow: 0 0 3px rgba(255,215,0,0.8);
 }
 
-/* Cursor personalizado com z-index alto no lightbox */
+/* Cursor personalizado escondido no lightbox */
 .lightbox.show .custom-cursor {
-    z-index: 10002 !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: block !important;
-    position: fixed !important;
-    pointer-events: none !important;
-}
-
-/* Garantir que as setas sejam visíveis */
-.lightbox.show .custom-cursor.arrow-left,
-.lightbox.show .custom-cursor.arrow-right {
-    visibility: visible !important;
-    opacity: 1 !important;
-    display: block !important;
-    z-index: 10002 !important;
-    position: fixed !important;
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
 }
     </style>
 </head>
@@ -1975,7 +2070,7 @@ footer {
                 <div class="hero-logo">
                     <img src="BDN_logo.png" alt="BDN" class="hero-logo-img">
                 </div>
-                <p><strong>PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</strong></p>
+                <div class="hero-motto">PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</div>
                 <p>Grupo empresarial dedicado à criação de espaços únicos que inspiram e transformam</p>
                 <p>Descubra as nossas empresas especializadas e como podemos dar vida aos seus projetos</p>
             </div>
@@ -2691,28 +2786,12 @@ footer {
                 // Mostrar lightbox
                 lightbox.classList.add('show');
                 document.body.style.overflow = 'hidden';
-                
-                // Forçar visibilidade do cursor personalizado
-                if (customCursor) {
-                    customCursor.style.zIndex = '10002';
-                    customCursor.style.visibility = 'visible';
-                    customCursor.style.opacity = '1';
-                    customCursor.style.display = 'block';
-                    customCursor.style.pointerEvents = 'none';
-                    customCursor.style.position = 'fixed';
-                }
             }
             
             // Função para fechar lightbox
             function closeLightbox() {
                 lightbox.classList.remove('show');
                 document.body.style.overflow = 'auto';
-                
-                // Resetar cursor personalizado
-                if (customCursor) {
-                    customCursor.style.zIndex = '10000';
-                    customCursor.classList.remove('arrow-left', 'arrow-right');
-                }
             }
             
             // Função para próxima imagem
@@ -2734,76 +2813,10 @@ footer {
                 });
             });
             
-            // Event listeners para controles do lightbox
+            // Event listeners para controles do lightbox (com cursores nativos)
             lightboxClose.addEventListener('click', closeLightbox);
             lightboxNavLeft.addEventListener('click', prevImage);
             lightboxNavRight.addEventListener('click', nextImage);
-            
-            // Navegação por zonas com cursor personalizado
-            lightboxNavLeft.addEventListener('mouseenter', () => {
-                if (customCursor) {
-                    customCursor.classList.remove('arrow-right', 'hover');
-                    customCursor.classList.add('arrow-left');
-                }
-            });
-            
-            lightboxNavRight.addEventListener('mouseenter', () => {
-                if (customCursor) {
-                    customCursor.classList.remove('arrow-left', 'hover');
-                    customCursor.classList.add('arrow-right');
-                }
-            });
-            
-            lightboxNavLeft.addEventListener('mouseleave', () => {
-                if (customCursor) {
-                    customCursor.classList.remove('arrow-left');
-                }
-            });
-            
-            lightboxNavRight.addEventListener('mouseleave', () => {
-                if (customCursor) {
-                    customCursor.classList.remove('arrow-right');
-                }
-            });
-
-            // Detectar posição do mouse para mostrar setas
-            lightbox.addEventListener('mousemove', (e) => {
-                if (customCursor && lightbox.classList.contains('show')) {
-                    const rect = lightbox.getBoundingClientRect();
-                    const mouseX = e.clientX - rect.left;
-                    const lightboxWidth = rect.width;
-                    const centerX = lightboxWidth / 2;
-                    
-                    // Atualizar posição do cursor
-                    customCursor.style.left = e.clientX - 17 + 'px';
-                    customCursor.style.top = e.clientY - 17 + 'px';
-                    customCursor.style.visibility = 'visible';
-                    customCursor.style.opacity = '1';
-                    customCursor.style.display = 'block';
-                    customCursor.style.zIndex = '10002';
-                    
-                    // Verificar se estamos sobre o botão fechar
-                    const closeButton = lightboxClose.getBoundingClientRect();
-                    const mouseOverClose = (e.clientX >= closeButton.left && e.clientX <= closeButton.right &&
-                                          e.clientY >= closeButton.top && e.clientY <= closeButton.bottom);
-                    
-                    if (mouseOverClose) {
-                        // Cursor hover para botão fechar
-                        customCursor.classList.remove('arrow-left', 'arrow-right');
-                        customCursor.classList.add('hover');
-                    } else {
-                        // Remover hover e adicionar seta baseada na posição
-                        customCursor.classList.remove('hover');
-                        customCursor.classList.remove('arrow-left', 'arrow-right');
-                        
-                        if (mouseX < centerX) {
-                            customCursor.classList.add('arrow-left');
-                        } else {
-                            customCursor.classList.add('arrow-right');
-                        }
-                    }
-                }
-            });
             
             // Fechar lightbox ao clicar fora da imagem
             lightbox.addEventListener('click', (e) => {
@@ -2831,29 +2844,6 @@ footer {
 
             // Tracking adicional para a imagem - removido para evitar conflitos
 
-            // Garantir que o cursor seja visível ao entrar no lightbox
-            lightbox.addEventListener('mouseenter', () => {
-                if (customCursor && lightbox.classList.contains('show')) {
-                    customCursor.style.visibility = 'visible';
-                    customCursor.style.opacity = '1';
-                    customCursor.style.display = 'block';
-                    customCursor.style.zIndex = '10002';
-                }
-            });
-
-            // Eventos hover para botão fechar
-            lightboxClose.addEventListener('mouseenter', () => {
-                if (customCursor) {
-                    customCursor.classList.remove('arrow-left', 'arrow-right');
-                    customCursor.classList.add('hover');
-                }
-            });
-            
-            lightboxClose.addEventListener('mouseleave', () => {
-                if (customCursor) {
-                    customCursor.classList.remove('hover');
-                }
-            });
         }
 
         // Scroll suave para elementos internos
