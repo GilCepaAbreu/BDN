@@ -687,9 +687,15 @@ main {
     padding: clamp(5rem, 8vw, 7rem) 0;
 }
 
-/* Reduzir espaçamento superior da seção de contactos */
+/* Remover completamente o espaçamento superior da seção de contactos */
 #contato.section {
-    padding-top: clamp(0.5rem, 1.5vw, 1rem);
+    padding-top: 0;
+}
+
+/* Remover espaçamento inferior da seção empresa1 */
+#empresa1 {
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 .projects-grid {
@@ -1295,7 +1301,7 @@ footer {
     width: 100vw;
     margin: 0;
     padding: 0;
-    min-height: 3600px; /* Aumentar para acomodar a nova imagem (Projeto 13) */
+    min-height: 4000px; /* Aumentar para acomodar a nova imagem (Projeto 15) */
     left: 50%;
     transform: translateX(-50%);
     overflow: hidden; /* Garantir que elementos não ultrapassem */
@@ -1512,6 +1518,24 @@ footer {
     max-width: calc(35vw);
 }
 
+/* Última imagem (Projeto 14) - lado esquerdo, antes dos contactos */
+.work-item:nth-child(14) {
+    left: 5%; /* Lado esquerdo */
+    top: 3500px; /* Mais abaixo da 13ª imagem */
+    transform: none;
+    width: 480px; /* Tamanho large */
+    max-width: calc(40vw);
+}
+
+/* Imagem paralela (Projeto 15) - lado direito, paralela à 14ª */
+.work-item:nth-child(15) {
+    right: 5%; /* Lado direito */
+    top: 3500px; /* Mesma altura da 14ª imagem para ficarem paralelas */
+    transform: none;
+    width: 480px; /* Tamanho large igual à 14ª */
+    max-width: calc(40vw);
+}
+
 .work-image-container {
     position: relative;
     width: 100%;
@@ -1543,6 +1567,11 @@ footer {
 /* Altura específica para a última imagem da segunda linha */
 .work-item:nth-child(6) .work-image-container {
     height: 325px; /* Última imagem da segunda linha: 250px × 1.3 = 325px */
+}
+
+/* Altura específica para a décima imagem */
+.work-item:nth-child(10) .work-image-container {
+    height: 325px; /* Décima imagem: aumentada para 325px (30% maior que padrão) */
 }
 
 .work-image {
@@ -1625,7 +1654,7 @@ footer {
 /* Masonry-like layout for larger screens */
 @media (min-width: 1200px) {
     .work-grid {
-        min-height: 3800px; /* Aumentar para acomodar a nova imagem (Projeto 13) */
+        min-height: 4300px; /* Aumentar para acomodar a nova imagem (Projeto 15) */
     }
     
     .work-item.size-small {
@@ -1732,6 +1761,11 @@ footer {
         height: 390px; /* Última imagem da segunda linha proporcional para telas grandes */
     }
     
+    /* Altura específica para a décima imagem em telas grandes */
+    .work-item:nth-child(10) .work-image-container {
+        height: 390px; /* Décima imagem: aumentada proporcionalmente para telas grandes */
+    }
+    
     /* Ajustar quinta linha para telas grandes */
     .work-item:nth-child(11) {
         right: 5%; /* Lado direito */
@@ -1754,11 +1788,27 @@ footer {
         width: 500px !important;
         max-width: calc(35vw);
     }
+    
+    /* Última imagem (Projeto 14) para telas grandes */
+    .work-item:nth-child(14) {
+        left: 5%; /* Lado esquerdo */
+        top: 3700px; /* Mais abaixo da 13ª imagem */
+        width: 550px !important;
+        max-width: calc(40vw);
+    }
+    
+    /* Imagem paralela (Projeto 15) para telas grandes */
+    .work-item:nth-child(15) {
+        right: 5%; /* Lado direito */
+        top: 3700px; /* Mesma altura da 14ª para ficarem paralelas */
+        width: 550px !important;
+        max-width: calc(40vw);
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
     .work-grid {
-        min-height: 3700px; /* Aumentar para tablets com nova imagem (Projeto 13) */
+        min-height: 4100px; /* Aumentar para tablets com nova imagem (Projeto 15) */
         width: 100vw;
     }
     
@@ -1866,6 +1916,11 @@ footer {
         height: 325px; /* Última imagem da segunda linha: mantém proporção */
     }
     
+    /* Altura específica para a décima imagem em tablets */
+    .work-item:nth-child(10) .work-image-container {
+        height: 325px; /* Décima imagem: aumentada para tablets */
+    }
+    
     /* Ajustar quinta linha para tablets */
     .work-item:nth-child(11) {
         right: 5%; /* Lado direito */
@@ -1887,6 +1942,22 @@ footer {
         top: 3250px; /* Mais abaixo */
         width: 400px !important;
         max-width: calc(35vw);
+    }
+    
+    /* Última imagem (Projeto 14) para tablets */
+    .work-item:nth-child(14) {
+        left: 5%; /* Lado esquerdo */
+        top: 3600px; /* Mais abaixo da 13ª imagem */
+        width: 450px !important;
+        max-width: calc(38vw);
+    }
+    
+    /* Imagem paralela (Projeto 15) para tablets */
+    .work-item:nth-child(15) {
+        right: 5%; /* Lado direito */
+        top: 3600px; /* Mesma altura da 14ª para ficarem paralelas */
+        width: 450px !important;
+        max-width: calc(38vw);
     }
 }
 
@@ -2214,9 +2285,7 @@ footer {
                     <p class="work-description">Soluções arquitetónicas completas desde a conceção até à execução</p>
                 </div>
             </div>
-            <br>
-            <br>
-            <br>
+            <br><br>
             <!-- Portfolio Grid Profissional -->
             <div class="work-grid">
                 <!-- Projeto 1 -->
@@ -2307,6 +2376,20 @@ footer {
                 <div class="work-item size-large bounce-in" data-category="residential">
                     <div class="work-image-container">
                         <img src="img/habitacao2.png" alt="Casa Moderna" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 14 - Última imagem antes dos contactos, posicionada no lado esquerdo -->
+                <div class="work-item size-large slide-left" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="img/habitacao6.png" alt="Projeto Final" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 15 - Imagem paralela à última, posicionada no lado direito -->
+                <div class="work-item size-large slide-right" data-category="commercial">
+                    <div class="work-image-container">
+                        <img src="img/habitacao7.png" alt="Projeto Paralelo" class="work-image" >
                     </div>
                 </div>
             </div>
@@ -3052,7 +3135,7 @@ footer {
                 <div class="lightbox-nav-right" id="lightbox-nav-right"></div>
             </div>
             <div class="lightbox-counter">
-                <span id="lightbox-current">1</span> / <span id="lightbox-total">12</span>
+                <span id="lightbox-current">1</span> / <span id="lightbox-total">15</span>
             </div>
         </div>
     </div>
