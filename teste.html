@@ -1,0 +1,2778 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDN - Projetamos | Arquitetamos | Construímos</title>
+    <link rel="icon" type="image/png" href="bdn_fabicon.png">
+    <link rel="shortcut icon" type="image/png" href="bdn_fabicon.png">
+    <link rel="apple-touch-icon" href="bdn_fabicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none;
+}
+
+/* Cursor personalizado - bola amarelada com efeitos */
+body, html {
+    cursor: none;
+}
+
+.custom-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(255,215,0,0.9) 0%, rgba(255,193,7,0.7) 70%, rgba(255,165,0,0.3) 100%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transition: transform 0.1s ease;
+    box-shadow: 0 0 15px rgba(255,215,0,0.6), 0 0 30px rgba(255,193,7,0.4);
+    animation: pulseYellow 2s infinite;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.custom-cursor.hover {
+    transform: scale(1.5);
+    background: radial-gradient(circle, rgba(255,215,0,1) 0%, rgba(255,193,7,0.8) 70%, rgba(255,165,0,0.5) 100%);
+    box-shadow: 0 0 25px rgba(255,215,0,0.8), 0 0 50px rgba(255,193,7,0.6);
+    animation: pulseHoverYellow 1s infinite;
+}
+
+@keyframes pulseYellow {
+    0% {
+        box-shadow: 0 0 15px rgba(255,215,0,0.6), 0 0 30px rgba(255,193,7,0.4);
+        opacity: 1;
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255,215,0,0.8), 0 0 40px rgba(255,193,7,0.6);
+        opacity: 0.8;
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(255,215,0,0.6), 0 0 30px rgba(255,193,7,0.4);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseHoverYellow {
+    0% {
+        box-shadow: 0 0 25px rgba(255,215,0,0.8), 0 0 50px rgba(255,193,7,0.6);
+        transform: scale(1.5);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(255,215,0,1), 0 0 70px rgba(255,193,7,0.8);
+        transform: scale(1.7);
+    }
+    100% {
+        box-shadow: 0 0 25px rgba(255,215,0,0.8), 0 0 50px rgba(255,193,7,0.6);
+        transform: scale(1.5);
+    }
+}
+
+a, button, .contact-btn, .logo, .hamburger, .nav-tab {
+    cursor: none !important;
+}
+
+input, textarea, select {
+    cursor: none;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    color: #fff;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    min-height: 100vh;
+    padding-top: 80px; /* Espaço para a navbar fixa */
+    overflow-x: hidden; /* Prevenir scroll horizontal */
+    max-width: 100vw; /* Limitar largura máxima */
+}
+
+/* Regra adicional para garantir que nenhum elemento ultrapasse */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.work-grid, .work-item {
+    max-width: 100vw;
+}
+
+/* Espaçamento entre seções principais */
+section {
+    margin-bottom: clamp(4rem, 8vw, 6rem);
+}
+
+section:last-child {
+    margin-bottom: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(15px, 4vw, 30px);
+}
+
+.header-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+header {
+    background: transparent;
+    backdrop-filter: none;
+    position: fixed !important;        /* Esta propriedade mantém a navbar fixa */
+    width: 100% !important;           /* Ocupa toda a largura */
+    top: 0 !important;                /* Posicionada no topo */
+    left: 0 !important;               /* Posicionada à esquerda */
+    z-index: 9999 !important;         /* Acima de todos os outros elementos */
+    border-bottom: none;
+    box-shadow: none;
+    transition: none;
+    display: block !important;        /* Garantir que sempre está visível */
+    visibility: visible !important;   /* Garantir que sempre está visível */
+    opacity: 1 !important;            /* Garantir que sempre está visível */
+}
+
+header.scrolled {
+    background: transparent !important;
+    backdrop-filter: none;
+    border-bottom: none;
+    box-shadow: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important;
+}
+
+/* CSS adicional para garantir que o header seja sempre visível */
+header,
+header.scrolled,
+header:before,
+header:after {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important;
+}
+
+.header-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: clamp(1rem, 2vw, 1.5rem) 0;
+    position: relative;
+    gap: 2rem;
+    max-width: none;
+    margin: 0;
+    width: 100%;
+    padding-left: 0;
+}
+
+.logo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    color: #ffd700;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 1.5vw, 0.8rem);
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+    position: relative;
+    z-index: inherit;
+    margin-left: clamp(15px, 4vw, 30px);
+    padding-left: 0;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.logo-img {
+    width: clamp(30px, 6vw, 40px);
+    height: clamp(30px, 6vw, 40px);
+    object-fit: contain;
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+}
+
+.logo:hover .logo-img {
+    opacity: 0.8;
+}
+
+.logo {
+    position: relative;
+}
+
+.logo-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    border-radius: 12px;
+    padding: 0.8rem 0;
+    min-width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-15px) scale(0.95);
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.3),
+        0 6px 12px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 215, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.logo-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    animation: dropdownBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.logo-dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.logo-dropdown li {
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-dropdown li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: bottom;
+}
+
+.logo-dropdown li:hover::before {
+    transform: scaleY(1);
+    transform-origin: top;
+}
+
+.logo-dropdown a {
+    display: block;
+    padding: 0.9rem 1.5rem;
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+    position: relative;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.05) 0%, transparent 0%);
+    background-size: 300% 100%;
+}
+
+.logo-dropdown a::after {
+    content: '→';
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%) translateX(10px);
+    opacity: 0;
+    color: #FFD700;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.logo-dropdown a:hover {
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.12) 50%, rgba(255, 215, 0, 0.08) 100%);
+    background-size: 100% 100%;
+    color: #FFD700;
+    transform: translateX(8px);
+    padding-left: 2rem;
+}
+
+.logo-dropdown a:hover::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+.logo-dropdown li:last-child a {
+    border-bottom: none;
+    border-radius: 0 0 8px 8px;
+}
+
+.logo-dropdown li:first-child a {
+    border-radius: 8px 8px 0 0;
+}
+
+/* Animação de entrada do dropdown */
+@keyframes dropdownBounce {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+    }
+    60% {
+        opacity: 0.8;
+        transform: translateY(5px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.desktop-nav.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 8px;
+    padding: 1rem 0;
+    min-width: 250px;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1002;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-menu li {
+    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.dropdown-menu li:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 1rem 1.5rem;
+    color: #ffd700;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
+    position: relative;
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+}
+
+.dropdown-menu a:hover {
+    background: rgba(255, 215, 0, 0.1);
+    color: #fff;
+}
+
+.dropdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dropdown-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-menu-toggle {
+    display: none;
+}
+
+nav {
+    position: relative;
+    margin-left: auto;
+    margin-right: clamp(15px, 4vw, 30px);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.desktop-nav {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    width: 100%;
+    transition: all 0.4s ease;
+    transform: translateY(0);
+}
+
+.nav-menu {
+    display: none;
+}
+
+/* Forçar visibilidade do menu mobile quando ativo */
+.nav-menu.active {
+    display: block !important;
+}
+
+/* Overlay para o menu mobile */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(2px);
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+    padding: 0.5rem;
+    z-index: 1002;
+    position: relative;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+    background: rgba(255, 215, 0, 0.1);
+    transform: scale(1.05);
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #ffd700;
+    margin: 3px 0;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(9px, 9px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(9px, -9px);
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 400;
+    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+    padding: 0.5rem 1rem;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+}
+
+nav a:hover,
+nav a.active {
+    color: #ffd700;
+    background: rgba(255, 215, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+main {
+    margin-top: clamp(80px, 15vw, 100px);
+    padding: clamp(1rem, 3vw, 2rem) 0;
+}
+
+.hero {
+    text-align: center;
+    padding: clamp(3rem, 10vw, 6rem) 0;
+    background: transparent;
+    margin-bottom: clamp(3rem, 8vw, 5rem);
+    color: white;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    margin-bottom: clamp(1rem, 3vw, 1.5rem);
+    font-weight: 400;
+    color: #ffd700;
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    margin-bottom: 1rem;
+    font-weight: 300;
+    color: #ccc;
+    max-width: min(600px, 90vw);
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.hero-logo {
+    text-align: center;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.hero-logo-img {
+    width: clamp(150px, 20vw, 300px);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+    transition: all 0.3s ease;
+}
+
+.hero-logo-img:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+}
+
+.companies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+    gap: clamp(1.5rem, 4vw, 3rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.company-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+    position: relative;
+}
+
+.company-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    color: #ffd700;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 2vw, 1rem);
+}
+
+.company-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+    margin-bottom: 1rem;
+    margin-top: clamp(1.5rem, 3vw, 2rem);
+    color: #ffd700;
+    font-weight: 400;
+}
+
+.company-icon {
+    width: clamp(30px, 6vw, 40px);
+    height: clamp(30px, 6vw, 40px);
+    border-radius: 50%;
+    background: #ffd700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: 600;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    flex-shrink: 0;
+}
+
+.company-card p {
+    color: #aaa;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+}
+
+.services {
+    list-style: none;
+    padding: 0;
+}
+
+.services li {
+    background: transparent;
+    margin: 0.8rem 0;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    color: #ccc;
+}
+
+.services li:last-child {
+    border-bottom: none;
+}
+
+.contact-btn {
+    background: transparent;
+    color: #ffd700;
+    border: 2px solid #ffd700;
+    padding: clamp(0.6rem, 1.5vw, 0.8rem) clamp(1.5rem, 3vw, 2rem);
+    border-radius: 4px;
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    font-weight: 500;
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    min-width: 120px;
+    position: relative;
+}
+
+.contact-btn:hover {
+    background: #ffd700;
+    color: #000;
+}
+
+.section {
+    display: block;
+    padding: clamp(5rem, 8vw, 7rem) 0;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: clamp(1rem, 3vw, 2rem);
+    margin-top: clamp(1.5rem, 3vw, 2rem);
+}
+
+.project-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    position: relative;
+}
+
+.project-card h4 {
+    font-family: 'Playfair Display', serif;
+    color: #ffd700;
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    margin-bottom: 1rem;
+    font-weight: 400;
+}
+
+.project-card p {
+    color: #aaa;
+    font-size: clamp(0.85rem, 1.5vw, 0.9rem);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tag {
+    background: transparent;
+    color: #ffd700;
+    padding: 0.2rem 0.8rem;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+    margin-top: clamp(1.5rem, 3vw, 2rem);
+}
+
+.gallery-item {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: 0;
+    text-align: center;
+    height: clamp(150px, 30vw, 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffd700;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    backdrop-filter: blur(5px);
+}
+
+.gallery-placeholder {
+    color: #ffd700;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+footer {
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 4rem 0 2rem;
+    margin-top: 4rem;
+    border-top: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+    color: #ffd700;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.footer-about .footer-logo {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-about .footer-logo h3 {
+    color: #ffd700;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.footer-logo-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.contact-info p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.contact-info a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+    color: #ffd700;
+}
+
+.contact-icon {
+    font-size: 1rem;
+    min-width: 20px;
+}
+
+.service-list {
+    list-style: none;
+    padding: 0;
+}
+
+.service-list li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #ccc;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.service-list li:before {
+    content: "▶";
+    color: #ffd700;
+    position: absolute;
+    left: 0;
+    font-size: 0.8rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.social-links a {
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+}
+
+.social-links a:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+}
+
+.footer-links a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.85rem;
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+}
+
+.footer-links a:hover {
+    color: #ffd700;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 215, 0, 0.1);
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.footer-bottom p {
+    margin-bottom: 0.5rem;
+}
+
+.nav-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.nav-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-tab {
+    background: transparent;
+    color: #aaa;
+    border: none;
+    padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.nav-tab:hover {
+    color: #ffd700;
+}
+
+.nav-tab.active {
+    color: #ffd700;
+    border-bottom-color: #ffd700;
+}
+
+.tab-content {
+    display: block;
+}
+
+/* Informações de Contacto */
+.contact-info {
+    margin-top: clamp(3rem, 6vw, 4rem);
+    margin-bottom: clamp(3rem, 6vw, 4rem);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+    gap: clamp(2rem, 4vw, 3rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.contact-item {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    border-color: rgba(255, 215, 0, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.1);
+}
+
+.contact-icon {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.contact-details h3 {
+    color: #ffd700;
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.contact-details p {
+    color: #ccc;
+    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.contact-details a {
+    color: #ffd700;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    display: inline-block;
+    max-width: 100%;
+}
+
+.contact-details a:hover {
+    color: #ffed4e;
+    text-decoration: underline;
+}
+
+/* Formulário de Contacto */
+.contact-form {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: clamp(2rem, 4vw, 3rem);
+    margin-top: clamp(3rem, 6vw, 4rem);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-form h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: #ffd700;
+    text-align: center;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.form-group {
+    margin-bottom: clamp(1.5rem, 3vw, 2rem);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ffd700;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: clamp(0.8rem, 2vw, 1rem);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-group.error input,
+.form-group.error textarea {
+    border-color: #ff4444;
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+}
+
+.error-message {
+    color: #ff4444;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+    display: none;
+}
+
+.form-group.error .error-message {
+    display: block;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #000;
+    border: none;
+    padding: clamp(1rem, 2.5vw, 1.2rem) clamp(2rem, 5vw, 3rem);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(135deg, #ffed4e, #ffd700);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+}
+
+.submit-btn:disabled {
+    background: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.success-message {
+    background: rgba(76, 175, 80, 0.2);
+    border: 1px solid rgba(76, 175, 80, 0.5);
+    color: #4caf50;
+    padding: 1rem;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 1rem;
+    display: none;
+}
+
+/* Professional Work Portfolio Styles - Skylab Inspired */
+.work-header {
+    text-align: center;
+    padding: 4rem 2rem 6rem;
+    background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+    position: relative;
+}
+
+.work-hero {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.work-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    color: #fff;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    font-family: 'Playfair Display', serif;
+}
+
+.work-subtitle {
+    margin-bottom: 2rem;
+}
+
+.work-tagline {
+    color: #ffd700;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    border: 1px solid #ffd700;
+    padding: 0.5rem 1.5rem;
+    display: inline-block;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.work-description {
+    color: #ccc;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.6;
+    margin: 0;
+    font-style: italic;
+}
+
+.work-grid {
+    position: relative;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    min-height: 3200px; /* Aumentar para acomodar imagens maiores da quarta linha */
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden; /* Garantir que elementos não ultrapassem */
+    max-width: 100vw; /* Limitar largura máxima */
+}
+
+.work-item {
+    position: absolute;
+    width: 400px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+    /* IMAGENS SEMPRE VISÍVEIS - SEM ANIMAÇÕES */
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Tamanhos diferentes para as imagens */
+.work-item.size-small {
+    width: 320px;
+}
+
+.work-item.size-medium {
+    width: 400px;
+}
+
+.work-item.size-large {
+    width: 480px;
+}
+
+.work-item.size-xlarge {
+    width: 550px;
+}
+
+.work-item.size-xxlarge {
+    width: 650px; /* Novo tamanho explicitamente maior */
+}
+
+/* Efeitos de entrada - REMOVIDOS */
+/* Todas as animações de entrada foram removidas */
+
+/* Animações keyframes - REMOVIDAS */
+/* Todas as animações @keyframes foram removidas */
+
+/* Hover effects - REMOVIDOS */
+/* Todos os efeitos de hover foram removidos */
+
+/* Posicionamento específico para ocupar toda a largura da tela */
+/* Primeira linha - alinhamento específico conforme solicitado */
+.work-item:nth-child(1) {
+    left: 5%;
+    top: 0;
+    width: 550px; /* Forçar tamanho maior para a primeira imagem */
+    max-width: calc(90vw - 40px); /* Garantir que não ultrapasse viewport */
+}
+
+.work-item:nth-child(2) {
+    left: calc(5% + 550px + 40px); /* Alinhar com espaçamento de 40px */
+    top: 180px; /* Mais abaixo */
+    transform: none;
+    max-width: calc(30vw - 40px); /* Limitar largura */
+}
+
+.work-item:nth-child(3) {
+    left: calc(5% + 550px + 40px + 400px + 40px); /* Alinhar com espaçamento de 40px */
+    top: 280px; /* Ainda mais abaixo */
+    width: 550px; /* Forçar tamanho maior para a terceira imagem */
+    transform: none;
+    max-width: calc(25vw); /* Garantir que caiba na viewport */
+}
+
+/* Segunda linha - inverso da primeira (direita para esquerda) */
+.work-item:nth-child(4) {
+    right: 5%; /* Começar pela direita */
+    top: 680px;
+    width: 550px; /* Imagem grande */
+    max-width: calc(35vw); /* Limitar largura */
+}
+
+.work-item:nth-child(5) {
+    right: calc(5% + 35vw + 40px); /* Usar vw para o cálculo */
+    top: 860px; /* Mais abaixo */
+    transform: none;
+    max-width: calc(25vw); /* Limitar largura */
+}
+
+.work-item:nth-child(6) {
+    right: calc(5% + 35vw + 40px + 25vw + 40px); /* Continuar alinhamento com vw */
+    top: 960px; /* Ainda mais abaixo */
+    width: 550px; /* Imagem grande */
+    max-width: calc(25vw); /* Limitar largura */
+}
+
+/* Terceira linha - apenas duas imagens grandes lado a lado */
+.work-item:nth-child(7) {
+    left: 10%; /* Mais margem para centrar melhor */
+    top: 1360px;
+    width: 550px; /* Reduzir para metade do tamanho (de xxlarge para xlarge) */
+    max-width: calc(30vw); /* Reduzir largura máxima */
+}
+
+.work-item:nth-child(8) {
+    right: 3%; /* Mais à direita */
+    top: 1360px; /* Mesma altura - lado a lado */
+    transform: none;
+    width: 650px; /* Manter tamanho grande */
+    max-width: calc(35vw); /* Ajustar largura máxima */
+}
+
+.work-item:nth-child(9) {
+    /* Esta imagem será movida para a quarta linha */
+    left: 5%;
+    top: 1840px;
+}
+
+/* Quarta linha - duas imagens: primeira na extremidade esquerda, segunda no lado direito mais abaixo */
+.work-item:nth-child(9) {
+    left: 5%; /* Extremidade esquerda */
+    top: 1940px;
+    width: 650px; /* Aumentar em 2x: de ~325px para 650px */
+    max-width: calc(45vw); /* Aumentar proporcionalmente */
+}
+
+.work-item:nth-child(10) {
+    right: 5%; /* Lado direito */
+    top: 2200px; /* Mais abaixo que a primeira */
+    transform: none;
+    width: 550px; /* Aumentar em 2x: de ~275px para 550px */
+    max-width: calc(40vw); /* Aumentar proporcionalmente */
+}
+
+/* Quinta linha - duas imagens: primeira no lado direito, segunda na extremidade esquerda mais abaixo */
+.work-item:nth-child(11) {
+    right: 5%; /* Lado direito */
+    top: 2550px; /* Ajustar para ficar abaixo da nova altura das imagens da quarta linha */
+    transform: none;
+    max-width: calc(25vw);
+}
+
+.work-item:nth-child(12) {
+    left: 5%; /* Extremidade esquerda */
+    top: 2820px; /* Ajustar posição para acomodar o tamanho maior */
+    transform: none;
+    width: 650px; /* Aumentar para size-xxlarge */
+    max-width: calc(45vw); /* Aumentar proporcionalmente */
+}
+
+.work-image-container {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+/* Altura especial para imagens XXLarge da terceira linha e quarta linha (projeto 9) */
+.work-item.size-xxlarge .work-image-container {
+    height: 350px; /* Significativamente mais alta que as outras */
+}
+
+.work-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Transição removida */
+}
+
+/* Hover effect na imagem - REMOVIDO */
+/* .work-item:hover .work-image foi removido */
+
+.work-info {
+    padding: 1.5rem;
+    background: #fff;
+}
+
+.work-project-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.work-location {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.work-tag {
+    background: #f5f5f5;
+    color: #555;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+    transition: all 0.2s ease;
+}
+
+.work-tag:hover {
+    background: #ffd700;
+    color: #000;
+}
+
+.work-footer {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #f8f8f8;
+}
+
+.work-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, #ffd700, #ffed4a);
+    color: #000;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.work-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    background: linear-gradient(135deg, #ffed4a, #ffd700);
+}
+
+/* Masonry-like layout for larger screens */
+@media (min-width: 1200px) {
+    .work-grid {
+        min-height: 3450px; /* Aumentar para acomodar a imagem maior da quinta linha */
+    }
+    
+    .work-item.size-small {
+        width: 370px;
+    }
+    
+    .work-item.size-medium {
+        width: 450px;
+    }
+    
+    .work-item.size-large {
+        width: 530px;
+    }
+    
+    .work-item.size-xlarge {
+        width: 600px;
+    }
+    
+    .work-item.size-xxlarge {
+        width: 700px; /* Ainda maior em telas grandes */
+    }
+    
+    /* Ajustar primeira linha para telas grandes */
+    .work-item:nth-child(1) {
+        width: 600px !important;
+    }
+    
+    .work-item:nth-child(2) {
+        left: calc(5% + 600px + 50px); /* Mais espaçamento em telas grandes */
+        top: 200px;
+    }
+    
+    .work-item:nth-child(3) {
+        left: calc(5% + 600px + 50px + 450px + 50px);
+        top: 320px;
+        width: 600px !important;
+    }
+    
+    /* Ajustar segunda linha (inverso) para telas grandes */
+    .work-item:nth-child(4) {
+        width: 600px !important;
+        top: 720px;
+    }
+    
+    .work-item:nth-child(5) {
+        right: calc(5% + 600px + 50px);
+        top: 900px;
+    }
+    
+    .work-item:nth-child(6) {
+        right: calc(5% + 600px + 50px + 450px + 50px);
+        top: 1000px;
+        width: 600px !important;
+    }
+    
+    /* Ajustar terceira linha (duas imagens grandes) */
+    .work-item:nth-child(7) {
+        width: 600px !important; /* Reduzir para metade em desktop */
+        left: 8%;
+        max-width: calc(30vw);
+    }
+    
+    .work-item:nth-child(8) {
+        right: 3%; /* Mais à direita */
+        width: 700px !important;
+        max-width: calc(35vw);
+    }
+    
+    /* Ajustar quarta linha para telas grandes - tamanhos aumentados em 2x */
+    .work-item:nth-child(9) {
+        width: 700px !important; /* Aumentar para tamanho xxlarge */
+        left: 5%;
+        max-width: calc(45vw);
+    }
+    
+    .work-item:nth-child(10) {
+        width: 600px !important; /* Aumentar para tamanho xlarge */
+        right: 5%;
+        max-width: calc(40vw);
+    }
+    
+    /* Altura maior para imagens XXLarge em telas grandes */
+    .work-item.size-xxlarge .work-image-container {
+        height: 400px;
+    }
+    
+    /* Ajustar quinta linha para telas grandes */
+    .work-item:nth-child(11) {
+        right: 5%; /* Lado direito */
+        top: 2650px; /* Ajustar para nova posição em telas grandes */
+        max-width: calc(28vw);
+    }
+    
+    .work-item:nth-child(12) {
+        left: 5%; /* Extremidade esquerda */
+        top: 2920px; /* Ajustar para o tamanho maior */
+        transform: none;
+        width: 700px !important; /* Aumentar para xxlarge em desktop */
+        max-width: calc(45vw);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .work-grid {
+        min-height: 3350px; /* Aumentar para tablets com imagem maior da quinta linha */
+        width: 100vw;
+    }
+    
+    .work-item.size-small {
+        width: 300px;
+    }
+    
+    .work-item.size-medium {
+        width: 350px;
+    }
+    
+    .work-item.size-large {
+        width: 400px;
+    }
+    
+    .work-item.size-xlarge {
+        width: 450px;
+    }
+    
+    .work-item.size-xxlarge {
+        width: 500px; /* Proporcional para tablets */
+    }
+    
+    /* Ajustar primeira linha para telas médias */
+    .work-item:nth-child(1) {
+        width: 450px !important;
+    }
+    
+    .work-item:nth-child(2) {
+        left: calc(5% + 450px + 30px); /* Espaçamento proporcional */
+        top: 160px;
+    }
+    
+    .work-item:nth-child(3) {
+        left: calc(5% + 450px + 30px + 350px + 30px);
+        top: 240px;
+        width: 450px !important;
+    }
+    
+    /* Ajustar segunda linha (inverso) para telas médias */
+    .work-item:nth-child(4) {
+        width: 450px !important;
+        top: 700px;
+    }
+    
+    .work-item:nth-child(5) {
+        right: calc(5% + 450px + 30px);
+        top: 880px;
+    }
+    
+    .work-item:nth-child(6) {
+        right: calc(5% + 450px + 30px + 350px + 30px);
+        top: 980px;
+        width: 450px !important;
+    }
+    
+    /* Ajustar terceira linha para tablets */
+    .work-item:nth-child(7) {
+        width: 450px !important; /* Proporcional para tablets */
+        left: 6%;
+        max-width: calc(30vw);
+    }
+    
+    .work-item:nth-child(8) {
+        right: 3%; /* Mais à direita */
+        width: 500px !important;
+        max-width: calc(35vw);
+    }
+    
+    /* Ajustar quarta linha para tablets - tamanhos aumentados em 2x */
+    .work-item:nth-child(9) {
+        width: 500px !important; /* Proporcional para tablets */
+        left: 5%;
+        max-width: calc(42vw);
+    }
+    
+    .work-item:nth-child(10) {
+        width: 450px !important; /* Proporcional para tablets */
+        right: 5%;
+        max-width: calc(38vw);
+    }
+    
+    /* Altura proporcional para tablets */
+    .work-item.size-xxlarge .work-image-container {
+        height: 320px;
+    }
+    
+    /* Ajustar quinta linha para tablets */
+    .work-item:nth-child(11) {
+        right: 5%; /* Lado direito */
+        top: 2630px; /* Ajustar para nova posição em tablets */
+        max-width: calc(30vw);
+    }
+    
+    .work-item:nth-child(12) {
+        left: 5%; /* Extremidade esquerda */
+        top: 2900px; /* Ajustar para o tamanho maior */
+        transform: none;
+        width: 500px !important; /* Proporcional para tablets */
+        max-width: calc(42vw);
+    }
+}
+
+@media (max-width: 767px) {
+    .work-grid {
+        position: static;
+        min-height: auto;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        width: 100%;
+        transform: none;
+        left: auto;
+    }
+    
+    .work-item {
+        position: static;
+        width: 100%;
+        max-width: 350px;
+        transform: none !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+    }
+    
+    .work-header {
+        padding: 3rem 1rem 4rem;
+    }
+    
+    .work-image-container {
+        height: 200px;
+    }
+    
+    .work-footer {
+        padding: 3rem 1rem;
+    }
+}
+
+/* Lightbox Styles */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+}
+
+.lightbox.show {
+    display: flex;
+    opacity: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.lightbox-image {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    transition: transform 0.3s ease;
+    position: relative;
+    cursor: default;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    color: #ffd700;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.lightbox-close:hover {
+    color: #ffed4e;
+    background: rgba(255, 215, 0, 0.2);
+    border-color: #ffd700;
+    transform: scale(1.1);
+}
+
+.lightbox-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    pointer-events: none;
+}
+
+.lightbox-nav-left,
+.lightbox-nav-right {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    pointer-events: all;
+    cursor: w-resize; /* Cursor seta esquerda por padrão */
+}
+
+.lightbox-nav-right {
+    cursor: e-resize; /* Cursor seta direita */
+}
+
+/* Áreas invisíveis para navegação por cursor */
+.lightbox-nav-left:hover,
+.lightbox-nav-right:hover {
+    background: transparent;
+}
+
+/* Overlay sutil para indicar área de navegação */
+.lightbox-content::before,
+.lightbox-content::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.lightbox-content::before {
+    left: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffd700' viewBox='0 0 24 24'%3E%3Cpath d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+
+.lightbox-content::after {
+    right: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffd700' viewBox='0 0 24 24'%3E%3Cpath d='M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+
+.lightbox-content:hover::before,
+.lightbox-content:hover::after {
+    opacity: 1;
+}
+
+.lightbox-caption {
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffd700;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.lightbox-counter {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffd700;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* Responsive Lightbox */
+@media (max-width: 768px) {
+    .lightbox-content {
+        max-width: 95%;
+        max-height: 95%;
+    }
+    
+    .lightbox-image {
+        max-height: 70vh;
+    }
+    
+    .lightbox-close {
+        top: -40px;
+        font-size: 30px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .lightbox-caption {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .lightbox-counter {
+        bottom: -50px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Manter navegação por cursor em dispositivos móveis */
+    .lightbox-nav-left,
+    .lightbox-nav-right {
+        cursor: pointer;
+    }
+}
+
+/* Animações suaves para o lightbox */
+@keyframes lightboxFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.lightbox.show .lightbox-content {
+    animation: lightboxFadeIn 0.3s ease-out;
+}
+    </style>
+</head>
+<body>
+    <!-- Cursor personalizado amarelado -->
+    <div class="custom-cursor" id="customCursor"></div>
+    
+    <header>
+        <div class="header-container">
+            <div class="header-content">
+                <div class="logo" id="logo">
+                    <img src="BDN_logo.png" alt="BDN Arquitectura" class="logo-img">
+                    <div class="logo-dropdown" id="logo-dropdown">
+                        <ul>
+                            <li><a href="#home">Início</a></li>
+                            <li><a href="#empresa1">BDN - Projects</a></li>
+                            <li><a href="#contato">Contacto</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <nav>
+                    <div class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <ul class="desktop-nav">
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#empresa1">BDN -  Projects</a></li>
+                        <li><a href="#contato">Contacto</a></li>
+                    </ul>
+                    <div class="nav-menu" id="nav-menu">
+                        <ul>
+                            <li><a href="#home">Início</a></li>
+                            <li><a href="#empresa1">BDN - Projects</a></li>
+                            <li><a href="#contato">Contacto</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-overlay" id="nav-overlay"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Seção Home -->
+        <section id="home">
+            <div class="hero">
+                <div class="hero-logo">
+                    <img src="BDN_logo.png" alt="BDN" class="hero-logo-img">
+                </div>
+                <div class="hero-motto">PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</div>
+                <p>Grupo empresarial dedicado à criação de espaços únicos que inspiram e transformam</p>
+                <p>Descubra as nossas empresas especializadas e como podemos dar vida aos seus projetos</p>
+            </div>
+        </section>
+
+        <!-- Secção BDN Arquitetura -->
+        <section id="empresa1">
+            <!-- Header da Seção -->
+            <div class="work-header">
+                <div class="work-hero">
+                    <h1 class="work-title">BDN - Projects</h1>
+                    <div class="work-subtitle">
+                        <span class="work-tagline">PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</span>
+                    </div>
+                    <p class="work-description">Soluções arquitetónicas completas desde a conceção até à execução</p>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <!-- Portfolio Grid Profissional -->
+            <div class="work-grid">
+                <!-- Projeto 1 -->
+                <div class="work-item size-xlarge bounce-in" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="img/habitacao1.png" alt="Vila Contemporânea" class="work-image">
+                    </div>
+                </div>
+
+                <!-- Projeto 2 -->
+                <div class="work-item size-medium slide-left" data-category="commercial">
+                    <div class="work-image-container">
+                        <img src="img/habitacao15.png" alt="Centro Empresarial" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 3 -->
+                <div class="work-item size-xlarge flip-in" data-category="workspace">
+                    <div class="work-image-container">
+                        <img src="img/habitacao14.png" alt="Sede Corporativa" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 4 -->
+                <div class="work-item size-medium zoom-rotate" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="img/habitacao13.png" alt="Casa da Ria" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 5 -->
+                <div class="work-item size-medium elastic-in" data-category="hospitality">
+                    <div class="work-image-container">
+                        <img src="img/habitacao11.png" alt="Hotel Quinta do Vale" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 6 -->
+                <div class="work-item size-xlarge slide-right" data-category="retail">
+                    <div class="work-image-container">
+                        <img src="img/habitacao10.png" alt="Espaço Comercial" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 7 -->
+                <div class="work-item size-xlarge bounce-in" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="img/habitacao9.png" alt="Moradia Atlântico" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 8 -->
+                <div class="work-item size-xxlarge flip-in" data-category="commercial">
+                    <div class="work-image-container">
+                        <img src="img/habitacao8.png" alt="Torre Moderna" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 9 -->
+                <div class="work-item size-xxlarge zoom-rotate" data-category="cultural">
+                    <div class="work-image-container">
+                        <img src="img/habitacao7.png" alt="Centro Cultural" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 10 -->
+                <div class="work-item size-xlarge elastic-in" data-category="hospitality">
+                    <div class="work-image-container">
+                        <img src="img/habitacao5.png" alt="Resort Costeiro" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 11 - Quinta linha, primeira imagem (alinhada com meio da imagem 10) -->
+                <div class="work-item size-large elastic-in" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="img/habitacao4.png" alt="Moradia do Minho" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 12 - Quinta linha, segunda imagem (centralizada na página) -->
+                <div class="work-item size-xxlarge bounce-in" data-category="commercial">
+                    <div class="work-image-container">
+                        <img src="img/habitacao3.png" alt="Edifício Moderno" class="work-image" >
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Secção Contacto -->
+        <section id="contato" class="section">
+            <div class="hero">
+                <h1>Contacto</h1>
+                <p><strong>PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</strong></p>
+                <p>Entre em contacto connosco para dar vida ao seu projeto</p>
+            </div>
+
+            <!-- Informações de Contacto -->
+            <div class="contact-info">
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h3>Morada</h3>
+                            <p>Av. Comendador Francisco Alves Quintas<br>
+                            Zona Industrial de Gandra<br>
+                            4740-010 Esposende</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h3>Contactos Telefónicos</h3>
+                            <p><a href="tel:+351911504793">911 504 793</a></p>
+                            <p><a href="tel:+351253131797">253 131 797</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p><a href="mailto:jaimebermudes@projectobdn.com">jaimebermudes@projectobdn.com</a></p>
+                            <p><a href="mailto:joaobermudes@projectobdn.com">joaobermudes@projectobdn.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">🌐</div>
+                        <div class="contact-details">
+                            <h3>Redes Sociais</h3>
+                            <p><a href="https://www.facebook.com/projectoBDN/?fref=ts" target="_blank">Facebook</a></p>
+                            <p><a href="https://www.google.pt/maps/place/BDN/@41.5320682,-8.7647711,17z/data=!3m1!4b1!4m2!3m1!1s0xd244b916d62e69f:0x6aa246b2fb81a52c" target="_blank">Ver no Google Maps</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Formulário de Contacto -->
+            <div class="contact-form">
+                <h3>Envie-nos uma Mensagem</h3>
+                <form id="contactForm" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">Primeiro Nome *</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                            <div class="error-message">Por favor, insira o seu primeiro nome.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Último Nome *</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                            <div class="error-message">Por favor, insira o seu último nome.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error-message">Por favor, insira um email válido.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Contacto Telefónico *</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+351 XXX XXX XXX" required>
+                        <div class="error-message">Por favor, insira um número de telefone válido.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Mensagem *</label>
+                        <textarea id="message" name="message" placeholder="Descreva o seu projeto ou questão..." required></textarea>
+                        <div class="error-message">Por favor, escreva uma mensagem.</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Enviar Mensagem</button>
+                    
+                    <div class="success-message" id="successMessage">
+                        Mensagem enviada com sucesso! Entraremos em contacto consigo brevemente.
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section footer-about">
+                    <div class="footer-logo">
+                        <img src="BDN_logo.png" alt="BDN Arquitectura" class="footer-logo-img">
+                        <div>
+                            <h3>BDN Arquitectura</h3>
+                            <p style="font-size: 0.9rem; color: #ffd700; margin-bottom: 0.5rem;">PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</p>
+                            <p style="font-size: 0.8rem; color: #aaa;">Transformamos sonhos em realidade através de projetos arquitetónicos inovadores e sustentáveis.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section footer-contact">
+                    <h4>Contactos</h4>
+                    <div class="contact-info">
+                        <p><i class="contact-icon">✉</i> <a href="mailto:geral@bdn.pt">geral@bdn.pt</a></p>
+                        <p><i class="contact-icon">☎</i> <a href="tel:+351912345678">+351 912 345 678</a></p>
+                        <p><i class="contact-icon">☏</i> <a href="tel:+351123456789">+351 123 456 789</a></p>
+                        <p><i class="contact-icon">⌖</i> Rua dos Arquitectos, 123<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4000-123 Porto, Portugal</p>
+                    </div>
+                </div>
+                
+                <div class="footer-section footer-services">
+                    <h4>Serviços</h4>
+                    <ul class="service-list">
+                        <li>Projetos de Arquitetura</li>
+                        <li>Licenciamento</li>
+                        <li>Construção</li>
+                        <li>Remodelações</li>
+                        <li>Consultoria</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section footer-social">
+                    <h4>Siga-nos</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">◉</a>
+                        <a href="#" aria-label="Instagram">◈</a>
+                        <a href="#" aria-label="LinkedIn">◎</a>
+                        <a href="#" aria-label="YouTube">▶</a>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#">Política de Privacidade</a>
+                        <a href="#">Termos de Utilização</a>
+                        <a href="#">Livro de Reclamações</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Grupo BDN. Todos os direitos reservados.</p>
+                <p style="font-size: 0.8rem; color: #888;">Desenvolvido com excelência em arquitetura</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Validação do Formulário de Contacto
+        function validateForm() {
+            const form = document.getElementById('contactForm');
+            const firstName = document.getElementById('firstName');
+            const lastName = document.getElementById('lastName');
+            const email = document.getElementById('email');
+            const phone = document.getElementById('phone');
+            const message = document.getElementById('message');
+            
+            let isValid = true;
+            
+            // Validar primeiro nome
+            if (!firstName.value.trim()) {
+                showError(firstName, 'Por favor, insira o seu primeiro nome.');
+                isValid = false;
+            } else if (firstName.value.trim().length < 2) {
+                showError(firstName, 'O primeiro nome deve ter pelo menos 2 caracteres.');
+                isValid = false;
+            } else {
+                clearError(firstName);
+            }
+            
+            // Validar último nome
+            if (!lastName.value.trim()) {
+                showError(lastName, 'Por favor, insira o seu último nome.');
+                isValid = false;
+            } else if (lastName.value.trim().length < 2) {
+                showError(lastName, 'O último nome deve ter pelo menos 2 caracteres.');
+                isValid = false;
+            } else {
+                clearError(lastName);
+            }
+            
+            // Validar email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.value.trim()) {
+                showError(email, 'Por favor, insira o seu email.');
+                isValid = false;
+            } else if (!emailRegex.test(email.value.trim())) {
+                showError(email, 'Por favor, insira um email válido.');
+                isValid = false;
+            } else {
+                clearError(email);
+            }
+            
+            // Validar telefone (formato português)
+            const phoneRegex = /^(\+351\s?)?[0-9]{9}$/;
+            const cleanPhone = phone.value.replace(/\s+/g, '');
+            if (!phone.value.trim()) {
+                showError(phone, 'Por favor, insira o seu número de telefone.');
+                isValid = false;
+            } else if (!phoneRegex.test(cleanPhone)) {
+                showError(phone, 'Por favor, insira um número de telefone português válido (9 dígitos).');
+                isValid = false;
+            } else {
+                clearError(phone);
+            }
+            
+            // Validar mensagem
+            if (!message.value.trim()) {
+                showError(message, 'Por favor, escreva uma mensagem.');
+                isValid = false;
+            } else if (message.value.trim().length < 10) {
+                showError(message, 'A mensagem deve ter pelo menos 10 caracteres.');
+                isValid = false;
+            } else {
+                clearError(message);
+            }
+            
+            return isValid;
+        }
+        
+        function showError(input, message) {
+            const formGroup = input.closest('.form-group');
+            const errorMessage = formGroup.querySelector('.error-message');
+            
+            formGroup.classList.add('error');
+            errorMessage.textContent = message;
+        }
+        
+        function clearError(input) {
+            const formGroup = input.closest('.form-group');
+            formGroup.classList.remove('error');
+        }
+        
+        // Submissão do formulário
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                const submitBtn = document.querySelector('.submit-btn');
+                const successMessage = document.getElementById('successMessage');
+                
+                // Desativar botão durante submissão
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'A enviar...';
+                
+                // Simular envio (aqui você adicionaria a lógica real de envio)
+                setTimeout(() => {
+                    // Mostrar mensagem de sucesso
+                    successMessage.style.display = 'block';
+                    
+                    // Limpar formulário
+                    document.getElementById('contactForm').reset();
+                    
+                    // Reativar botão
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Enviar Mensagem';
+                    
+                    // Esconder mensagem após 5 segundos
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 5000);
+                }, 1000);
+            }
+        });
+        
+        // Validação em tempo real
+        document.getElementById('firstName').addEventListener('blur', function() {
+            if (this.value.trim()) validateForm();
+        });
+        
+        document.getElementById('lastName').addEventListener('blur', function() {
+            if (this.value.trim()) validateForm();
+        });
+        
+        document.getElementById('email').addEventListener('blur', function() {
+            if (this.value.trim()) validateForm();
+        });
+        
+        document.getElementById('phone').addEventListener('blur', function() {
+            if (this.value.trim()) validateForm();
+        });
+        
+        document.getElementById('message').addEventListener('blur', function() {
+            if (this.value.trim()) validateForm();
+        });
+
+        // Cursor personalizado - bola amarelada com efeitos
+        const customCursor = document.getElementById('customCursor');
+        
+        // Atualizar posição do cursor
+        document.addEventListener('mousemove', (e) => {
+            customCursor.style.left = e.clientX - 10 + 'px';
+            customCursor.style.top = e.clientY - 10 + 'px';
+        });
+        
+        // Efeito hover em elementos clicáveis
+        const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .work-item, .work-cta, .lightbox-close');
+        
+        hoverElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                customCursor.classList.add('hover');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                customCursor.classList.remove('hover');
+            });
+        });
+        
+        // Esconder cursor quando sair da página
+        document.addEventListener('mouseleave', () => {
+            customCursor.style.opacity = '0';
+        });
+        
+        document.addEventListener('mouseenter', () => {
+            customCursor.style.opacity = '1';
+        });
+
+        // Função para inicializar eventos do cursor personalizado
+        function initCustomCursor() {
+            const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .work-item, .work-cta, .lightbox-close');
+            
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    customCursor.classList.add('hover');
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    customCursor.classList.remove('hover');
+                });
+            });
+        }
+
+        // Garantir que o header está sempre visível
+        function ensureHeaderVisibility() {
+            const header = document.querySelector('header');
+            if (header) {
+                header.style.position = 'fixed';
+                header.style.top = '0';
+                header.style.left = '0';
+                header.style.width = '100%';
+                header.style.zIndex = '9999';
+                header.style.display = 'block';
+                header.style.visibility = 'visible';
+                header.style.opacity = '1';
+            }
+        }
+
+        // Efeito de transparência no header ao fazer scroll (sem animações)
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const scrolled = window.pageYOffset;
+            
+            // Garantir que o header está sempre visível
+            ensureHeaderVisibility();
+            
+            if (scrolled > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Executar ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            ensureHeaderVisibility();
+            
+            // Inicializar cursor personalizado amarelado
+            initCustomCursor();
+            
+            // Inicializar animações de entrada das imagens
+            initImageAnimations();
+            
+            // Funcionalidade para destacar seção ativa
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav a[href^="#"], .logo-dropdown a[href^="#"]');
+            
+            function updateActiveLink() {
+                const scrollPosition = window.scrollY + 100; // Offset para header
+                
+                sections.forEach(section => {
+                    const top = section.offsetTop;
+                    const bottom = top + section.offsetHeight;
+                    const id = section.getAttribute('id');
+                    
+                    if (scrollPosition >= top && scrollPosition < bottom) {
+                        // Remove active de todos os links
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        
+                        // Adiciona active ao link correspondente
+                        const activeLink = document.querySelector(`nav a[href="#${id}"], .logo-dropdown a[href="#${id}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
+                    }
+                });
+            }
+            
+            // Atualizar ao fazer scroll
+            window.addEventListener('scroll', updateActiveLink);
+            
+            // Atualizar inicialmente
+            updateActiveLink();
+
+            // Inicializar lightbox para galeria BDN Arquitetura
+            initLightbox();
+        });
+
+        // Função para inicializar animações de entrada das imagens
+        function initImageAnimations() {
+            // ANIMAÇÕES REMOVIDAS - IMAGENS SEMPRE VISÍVEIS
+            // Todas as imagens ficam visíveis desde o carregamento da página
+            console.log('Animações de entrada removidas - todas as imagens são visíveis imediatamente');
+        }
+
+        // Portfolio Skylab Filter System
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projects = document.querySelectorAll('.skylab-project');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter projects with smooth animation
+                    projects.forEach(project => {
+                        const category = project.getAttribute('data-category');
+                        
+                        if (filterValue === 'all' || category === filterValue) {
+                            project.style.display = 'block';
+                            project.classList.remove('fade-out');
+                            project.classList.add('fade-in');
+                        } else {
+                            project.classList.remove('fade-in');
+                            project.classList.add('fade-out');
+                            setTimeout(() => {
+                                if (project.classList.contains('fade-out')) {
+                                    project.style.display = 'none';
+                                }
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // Initialize all projects as visible
+            projects.forEach(project => {
+                project.classList.add('fade-in');
+            });
+        });
+
+        // Lightbox functionality
+        function initLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxCaption = document.querySelector('.lightbox-caption');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const lightboxNavLeft = document.getElementById('lightbox-nav-left');
+            const lightboxNavRight = document.getElementById('lightbox-nav-right');
+            const lightboxCurrent = document.getElementById('lightbox-current');
+            const lightboxTotal = document.getElementById('lightbox-total');
+            const customCursor = document.getElementById('customCursor');
+            
+            // Galeria de trabalhos BDN Arquitetura (seção empresa1)
+            const galleryItems = document.querySelectorAll('#empresa1 .work-item');
+            const galleryImages = Array.from(galleryItems).map(item => ({
+                src: item.querySelector('img').src,
+                alt: item.querySelector('img').alt,
+                caption: item.querySelector('img').alt
+            }));
+            
+            let currentIndex = 0;
+            
+            // Atualizar total de imagens
+            lightboxTotal.textContent = galleryImages.length;
+            
+            // Garantir visibilidade do cursor ao abrir lightbox
+            function showImage(index) {
+                currentIndex = index;
+                lightboxImage.src = galleryImages[index].src;
+                lightboxImage.alt = galleryImages[index].alt;
+                lightboxCaption.textContent = galleryImages[index].caption;
+                lightboxCurrent.textContent = index + 1;
+                
+                // Mostrar lightbox
+                lightbox.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            // Função para fechar lightbox
+            function closeLightbox() {
+                lightbox.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+            
+            // Função para próxima imagem
+            function nextImage() {
+                currentIndex = (currentIndex + 1) % galleryImages.length;
+                showImage(currentIndex);
+            }
+            
+            // Função para imagem anterior
+            function prevImage() {
+                currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+                showImage(currentIndex);
+            }
+            
+            // Event listeners para itens da galeria
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => {
+                    showImage(index);
+                });
+            });
+            
+            // Event listeners para controles do lightbox
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxNavLeft.addEventListener('click', prevImage);
+            lightboxNavRight.addEventListener('click', nextImage);
+            
+            // Atualizar cursor baseado na posição do mouse na imagem
+            lightboxImage.addEventListener('mousemove', (e) => {
+                const rect = lightboxImage.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const imageWidth = rect.width;
+                
+                // Se o mouse estiver na metade esquerda, mostrar cursor de seta esquerda
+                if (x < imageWidth / 2) {
+                    lightboxImage.style.cursor = 'w-resize';
+                } else {
+                    // Se estiver na metade direita, mostrar cursor de seta direita
+                    lightboxImage.style.cursor = 'e-resize';
+                }
+            });
+            
+            // Adicionar clique na imagem para navegar
+            lightboxImage.addEventListener('click', (e) => {
+                const rect = lightboxImage.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const imageWidth = rect.width;
+                
+                // Se clicou na metade esquerda, vai para imagem anterior
+                if (x < imageWidth / 2) {
+                    prevImage();
+                } else {
+                    // Se clicou na metade direita, vai para próxima imagem
+                    nextImage();
+                }
+            });
+            
+            // Reset do cursor quando sair da imagem
+            lightboxImage.addEventListener('mouseleave', () => {
+                lightboxImage.style.cursor = 'default';
+            });
+            
+            // Fechar lightbox ao clicar fora da imagem
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+            
+            // Controles por teclado
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.classList.contains('show')) {
+                    switch(e.key) {
+                        case 'Escape':
+                            closeLightbox();
+                            break;
+                        case 'ArrowRight':
+                            nextImage();
+                            break;
+                        case 'ArrowLeft':
+                            prevImage();
+                            break;
+                    }
+                }
+            });
+
+            // Tracking adicional para a imagem - removido para evitar conflitos
+
+        }
+
+        // Scroll suave para elementos internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // Ajustar para a altura da navbar
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    
+                    // Scroll suave
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu functionality (simplificada)
+        function toggleMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            const navOverlay = document.getElementById('nav-overlay');
+            
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            navOverlay.classList.toggle('active');
+        }
+
+        // Event listeners para o menu mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger');
+            const navOverlay = document.getElementById('nav-overlay');
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            
+            if (hamburger) {
+                hamburger.addEventListener('click', toggleMobileMenu);
+            }
+            
+            if (navOverlay) {
+                navOverlay.addEventListener('click', toggleMobileMenu);
+            }
+            
+            // Fechar menu quando clicar em um link
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    // Fechar menu mobile sempre que clicar em um link
+                    toggleMobileMenu();
+                });
+            });
+
+            // Funcionalidade do dropdown do logo
+            const logo = document.getElementById('logo');
+            const logoDropdown = document.getElementById('logo-dropdown');
+            const desktopNav = document.querySelector('.desktop-nav');
+            let isScrolled = false;
+
+            // Detectar scroll para mostrar/esconder navbar links
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > 50 && !isScrolled) {
+                    isScrolled = true;
+                    desktopNav.classList.add('hidden');
+                } else if (scrollTop <= 50 && isScrolled) {
+                    isScrolled = false;
+                    desktopNav.classList.remove('hidden');
+                    // Esconder dropdown quando volta ao topo
+                    logoDropdown.classList.remove('show');
+                }
+            });
+
+            // Toggle dropdown do logo
+            if (logo) {
+                logo.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Só mostrar dropdown se estiver com scroll
+                    if (isScrolled) {
+                        logoDropdown.classList.toggle('show');
+                    }
+                });
+            }
+
+            // Fechar dropdown quando clicar fora
+            document.addEventListener('click', function(e) {
+                if (!logo.contains(e.target)) {
+                    logoDropdown.classList.remove('show');
+                }
+            });
+
+            // Fechar dropdown quando clicar em um link do dropdown
+            const logoDropdownLinks = logoDropdown.querySelectorAll('a');
+            logoDropdownLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    logoDropdown.classList.remove('show');
+                });
+            });
+        });
+    </script>
+
+    <!-- Lightbox para galeria BDN Arquitetura -->
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close">&times;</span>
+            <img id="lightbox-image" class="lightbox-image" src="" alt="">
+            <div class="lightbox-caption"></div>
+            <div class="lightbox-nav">
+                <div class="lightbox-nav-left" id="lightbox-nav-left"></div>
+                <div class="lightbox-nav-right" id="lightbox-nav-right"></div>
+            </div>
+            <div class="lightbox-counter">
+                <span id="lightbox-current">1</span> / <span id="lightbox-total">12</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
