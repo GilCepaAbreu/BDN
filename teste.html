@@ -687,6 +687,11 @@ main {
     padding: clamp(5rem, 8vw, 7rem) 0;
 }
 
+/* Reduzir espaçamento superior da seção de contactos */
+#contato.section {
+    padding-top: clamp(0.5rem, 1.5vw, 1rem);
+}
+
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
@@ -791,7 +796,7 @@ footer {
 
 .footer-content {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr ;
     gap: 3rem;
     margin-bottom: 2rem;
 }
@@ -866,6 +871,28 @@ footer {
     position: absolute;
     left: 0;
     font-size: 0.8rem;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+}
+
+.info-list li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #ccc;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.info-list li:before {
+    content: "◉";
+    color: #ffd700;
+    position: absolute;
+    left: 0;
+    font-size: 0.6rem;
+    top: 0.3rem;
 }
 
 .social-links {
@@ -968,9 +995,12 @@ footer {
 
 .contact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
-    gap: clamp(2rem, 4vw, 3rem);
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
     margin-top: clamp(2rem, 4vw, 3rem);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .contact-item {
@@ -1023,6 +1053,72 @@ footer {
 .contact-details a:hover {
     color: #ffed4e;
     text-decoration: underline;
+}
+
+/* Centralização do texto para cards específicos */
+.contact-details.centered-text {
+    text-align: center;
+}
+
+.contact-details.centered-text h3 {
+    text-align: center;
+}
+
+.contact-details.centered-text p {
+    text-align: center;
+}
+
+/* Responsividade para os cards de contacto */
+@media (max-width: 1024px) {
+    .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 800px;
+        gap: clamp(1.5rem, 3vw, 2rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+}
+
+/* Mapa de Localização */
+.contact-map {
+    margin-top: clamp(3rem, 6vw, 4rem);
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.map-container {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.map-container h3 {
+    color: #ffd700;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    font-family: 'Playfair Display', serif;
+}
+
+.map-embed {
+    width: 100%;
+    height: 400px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .map-embed {
+        height: 300px;
+    }
 }
 
 /* Formulário de Contacto */
@@ -1199,7 +1295,7 @@ footer {
     width: 100vw;
     margin: 0;
     padding: 0;
-    min-height: 3200px; /* Aumentar para acomodar imagens maiores da quarta linha */
+    min-height: 3600px; /* Aumentar para acomodar a nova imagem (Projeto 13) */
     left: 50%;
     transform: translateX(-50%);
     overflow: hidden; /* Garantir que elementos não ultrapassem */
@@ -1214,8 +1310,66 @@ footer {
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     cursor: url('bdn_fabicon.png') 16 16, pointer;
-    /* IMAGENS SEMPRE VISÍVEIS - SEM ANIMAÇÕES */
+    /* Inicialmente invisível para animação de entrada */
+    opacity: 0;
+    transform: translateY(60px) scale(0.8);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Estado visível após scroll */
+.work-item.animate-in {
     opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Variações de animação por tipo */
+.work-item.slide-left {
+    transform: translateX(-100px) translateY(30px) scale(0.9);
+}
+
+.work-item.slide-left.animate-in {
+    transform: translateX(0) translateY(0) scale(1);
+}
+
+.work-item.slide-right {
+    transform: translateX(100px) translateY(30px) scale(0.9);
+}
+
+.work-item.slide-right.animate-in {
+    transform: translateX(0) translateY(0) scale(1);
+}
+
+.work-item.zoom-rotate {
+    transform: translateY(50px) scale(0.5) rotate(15deg);
+}
+
+.work-item.zoom-rotate.animate-in {
+    transform: translateY(0) scale(1) rotate(0deg);
+}
+
+.work-item.flip-in {
+    transform: translateY(40px) rotateY(90deg) scale(0.8);
+}
+
+.work-item.flip-in.animate-in {
+    transform: translateY(0) rotateY(0deg) scale(1);
+}
+
+.work-item.elastic-in {
+    transform: translateY(80px) scale(0.3);
+    transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.work-item.elastic-in.animate-in {
+    transform: translateY(0) scale(1);
+}
+
+.work-item.bounce-in {
+    transform: translateY(100px) scale(0.6);
+    transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.work-item.bounce-in.animate-in {
     transform: translateY(0) scale(1);
 }
 
@@ -1254,19 +1408,19 @@ footer {
 .work-item:nth-child(1) {
     left: 5%;
     top: 0;
-    width: 550px; /* Forçar tamanho maior para a primeira imagem */
+    width: 825px; /* Aumentado em 1.5x: 550px × 1.5 = 825px */
     max-width: calc(90vw - 40px); /* Garantir que não ultrapasse viewport */
 }
 
 .work-item:nth-child(2) {
-    left: calc(5% + 550px + 40px); /* Alinhar com espaçamento de 40px */
+    left: calc(5% + 825px + 40px); /* Alinhar com espaçamento de 40px considerando nova largura */
     top: 180px; /* Mais abaixo */
     transform: none;
     max-width: calc(30vw - 40px); /* Limitar largura */
 }
 
 .work-item:nth-child(3) {
-    left: calc(5% + 550px + 40px + 400px + 40px); /* Alinhar com espaçamento de 40px */
+    left: calc(5% + 825px + 40px + 400px + 40px); /* Alinhar com espaçamento de 40px considerando nova largura */
     top: 280px; /* Ainda mais abaixo */
     width: 550px; /* Forçar tamanho maior para a terceira imagem */
     transform: none;
@@ -1277,8 +1431,8 @@ footer {
 .work-item:nth-child(4) {
     right: 5%; /* Começar pela direita */
     top: 680px;
-    width: 550px; /* Imagem grande */
-    max-width: calc(35vw); /* Limitar largura */
+    width: 660px; /* Aumentado em 1.2x: 550px × 1.2 = 660px */
+    max-width: calc(42vw); /* Ajustar largura máxima proporcionalmente */
 }
 
 .work-item:nth-child(5) {
@@ -1290,15 +1444,15 @@ footer {
 
 .work-item:nth-child(6) {
     right: calc(5% + 35vw + 40px + 25vw + 40px); /* Continuar alinhamento com vw */
-    top: 960px; /* Ainda mais abaixo */
+    top: 1000px; /* Puxado mais para baixo: de 960px para 1000px */
     width: 550px; /* Imagem grande */
     max-width: calc(25vw); /* Limitar largura */
 }
 
 /* Terceira linha - apenas duas imagens grandes lado a lado */
 .work-item:nth-child(7) {
-    left: 10%; /* Mais margem para centrar melhor */
-    top: 1360px;
+    left: 20%; /* Movida significativamente mais para a direita */
+    top: 1460px; /* Movida levemente mais para baixo: de 1420px para 1460px */
     width: 550px; /* Reduzir para metade do tamanho (de xxlarge para xlarge) */
     max-width: calc(30vw); /* Reduzir largura máxima */
 }
@@ -1349,6 +1503,15 @@ footer {
     max-width: calc(45vw); /* Aumentar proporcionalmente */
 }
 
+/* Nova imagem (Projeto 13) - lado direito, alinhada com eixo esquerdo da penúltima */
+.work-item:nth-child(13) {
+    right: 25%; /* Movida mais para o lado esquerdo */
+    top: 3150px; /* Mais abaixo da última imagem */
+    transform: none;
+    width: 450px; /* Tamanho médio */
+    max-width: calc(35vw);
+}
+
 .work-image-container {
     position: relative;
     width: 100%;
@@ -1359,6 +1522,27 @@ footer {
 /* Altura especial para imagens XXLarge da terceira linha e quarta linha (projeto 9) */
 .work-item.size-xxlarge .work-image-container {
     height: 350px; /* Significativamente mais alta que as outras */
+}
+
+/* Alturas específicas para a primeira linha de imagens */
+.work-item:nth-child(1) .work-image-container {
+    height: 313px; /* Primeira imagem: 250px × 1.25 = 313px */
+}
+
+.work-item:nth-child(2) .work-image-container {
+    height: 325px; /* Segunda imagem: 250px × 1.3 = 325px */
+}
+
+/* A terceira imagem mantém a altura padrão de 250px */
+
+/* Altura específica para a quarta imagem */
+.work-item:nth-child(4) .work-image-container {
+    height: 300px; /* Quarta imagem: 250px × 1.2 = 300px */
+}
+
+/* Altura específica para a última imagem da segunda linha */
+.work-item:nth-child(6) .work-image-container {
+    height: 325px; /* Última imagem da segunda linha: 250px × 1.3 = 325px */
 }
 
 .work-image {
@@ -1441,7 +1625,7 @@ footer {
 /* Masonry-like layout for larger screens */
 @media (min-width: 1200px) {
     .work-grid {
-        min-height: 3450px; /* Aumentar para acomodar a imagem maior da quinta linha */
+        min-height: 3800px; /* Aumentar para acomodar a nova imagem (Projeto 13) */
     }
     
     .work-item.size-small {
@@ -1482,7 +1666,7 @@ footer {
     
     /* Ajustar segunda linha (inverso) para telas grandes */
     .work-item:nth-child(4) {
-        width: 600px !important;
+        width: 720px !important; /* Aumentado em 1.2x: 600px × 1.2 = 720px */
         top: 720px;
     }
     
@@ -1493,14 +1677,15 @@ footer {
     
     .work-item:nth-child(6) {
         right: calc(5% + 600px + 50px + 450px + 50px);
-        top: 1000px;
+        top: 1040px; /* Ajustado para telas grandes */
         width: 600px !important;
     }
     
     /* Ajustar terceira linha (duas imagens grandes) */
     .work-item:nth-child(7) {
         width: 600px !important; /* Reduzir para metade em desktop */
-        left: 8%;
+        left: 20%; /* Movida significativamente mais para a direita para telas grandes */
+        top: 1520px; /* Movida levemente mais para baixo para telas grandes */
         max-width: calc(30vw);
     }
     
@@ -1528,6 +1713,25 @@ footer {
         height: 400px;
     }
     
+    /* Alturas específicas para a primeira linha em telas grandes */
+    .work-item:nth-child(1) .work-image-container {
+        height: 375px; /* Primeira imagem proporcional para telas grandes */
+    }
+    
+    .work-item:nth-child(2) .work-image-container {
+        height: 390px; /* Segunda imagem proporcional para telas grandes */
+    }
+    
+    /* Altura específica para a quarta imagem em telas grandes */
+    .work-item:nth-child(4) .work-image-container {
+        height: 360px; /* Quarta imagem: 300px × 1.2 = 360px para telas grandes */
+    }
+    
+    /* Altura específica para a última imagem da segunda linha em telas grandes */
+    .work-item:nth-child(6) .work-image-container {
+        height: 390px; /* Última imagem da segunda linha proporcional para telas grandes */
+    }
+    
     /* Ajustar quinta linha para telas grandes */
     .work-item:nth-child(11) {
         right: 5%; /* Lado direito */
@@ -1542,11 +1746,19 @@ footer {
         width: 700px !important; /* Aumentar para xxlarge em desktop */
         max-width: calc(45vw);
     }
+    
+    /* Nova imagem (Projeto 13) para telas grandes */
+    .work-item:nth-child(13) {
+        right: 25%; /* Movida mais para o lado esquerdo */
+        top: 3300px; /* Mais abaixo */
+        width: 500px !important;
+        max-width: calc(35vw);
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
     .work-grid {
-        min-height: 3350px; /* Aumentar para tablets com imagem maior da quinta linha */
+        min-height: 3700px; /* Aumentar para tablets com nova imagem (Projeto 13) */
         width: 100vw;
     }
     
@@ -1588,7 +1800,7 @@ footer {
     
     /* Ajustar segunda linha (inverso) para telas médias */
     .work-item:nth-child(4) {
-        width: 450px !important;
+        width: 540px !important; /* Aumentado em 1.2x: 450px × 1.2 = 540px */
         top: 700px;
     }
     
@@ -1599,14 +1811,15 @@ footer {
     
     .work-item:nth-child(6) {
         right: calc(5% + 450px + 30px + 350px + 30px);
-        top: 980px;
+        top: 1020px; /* Ajustado para tablets */
         width: 450px !important;
     }
     
     /* Ajustar terceira linha para tablets */
     .work-item:nth-child(7) {
         width: 450px !important; /* Proporcional para tablets */
-        left: 6%;
+        left: 25%; /* Movida significativamente mais para a direita para tablets */
+        top: 1500px; /* Movida levemente mais para baixo para tablets */
         max-width: calc(30vw);
     }
     
@@ -1634,6 +1847,25 @@ footer {
         height: 320px;
     }
     
+    /* Alturas específicas para a primeira linha em tablets */
+    .work-item:nth-child(1) .work-image-container {
+        height: 313px; /* Primeira imagem: mantém proporção */
+    }
+    
+    .work-item:nth-child(2) .work-image-container {
+        height: 325px; /* Segunda imagem: mantém proporção */
+    }
+    
+    /* Altura específica para a quarta imagem em tablets */
+    .work-item:nth-child(4) .work-image-container {
+        height: 300px; /* Quarta imagem: mantém altura aumentada para tablets */
+    }
+    
+    /* Altura específica para a última imagem da segunda linha em tablets */
+    .work-item:nth-child(6) .work-image-container {
+        height: 325px; /* Última imagem da segunda linha: mantém proporção */
+    }
+    
     /* Ajustar quinta linha para tablets */
     .work-item:nth-child(11) {
         right: 5%; /* Lado direito */
@@ -1647,6 +1879,14 @@ footer {
         transform: none;
         width: 500px !important; /* Proporcional para tablets */
         max-width: calc(42vw);
+    }
+    
+    /* Nova imagem (Projeto 13) para tablets */
+    .work-item:nth-child(13) {
+        right: 25%; /* Movida mais para o lado esquerdo */
+        top: 3250px; /* Mais abaixo */
+        width: 400px !important;
+        max-width: calc(35vw);
     }
 }
 
@@ -1772,11 +2012,14 @@ footer {
     height: 100%;
     position: relative;
     pointer-events: all;
-    cursor: w-resize; /* Cursor seta esquerda por padrão */
+}
+
+.lightbox-nav-left {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='leftArrow' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%23ffed4e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffd700;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='arrowShadow' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='3'/%3E%3CfeOffset dx='2' dy='2' result='offset'/%3E%3CfeFlood flood-color='%23000' flood-opacity='0.7'/%3E%3CfeComposite in2='offset' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M25 8L15 20L25 32L22 35L8 20L22 5Z' fill='url(%23leftArrow)' stroke='%23b8860b' stroke-width='2' filter='url(%23arrowShadow)'/%3E%3Cpath d='M24 10L16 20L24 30L21 32L10 20L21 8Z' fill='%23fff' opacity='0.3'/%3E%3C/svg%3E") 20 20, w-resize;
 }
 
 .lightbox-nav-right {
-    cursor: e-resize; /* Cursor seta direita */
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='rightArrow' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%23ffed4e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffd700;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='arrowShadowRight' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='3'/%3E%3CfeOffset dx='2' dy='2' result='offset'/%3E%3CfeFlood flood-color='%23000' flood-opacity='0.7'/%3E%3CfeComposite in2='offset' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M15 8L25 20L15 32L18 35L32 20L18 5Z' fill='url(%23rightArrow)' stroke='%23b8860b' stroke-width='2' filter='url(%23arrowShadowRight)'/%3E%3Cpath d='M16 10L24 20L16 30L19 32L30 20L19 8Z' fill='%23fff' opacity='0.3'/%3E%3C/svg%3E") 20 20, e-resize;
 }
 
 /* Áreas invisíveis para navegação por cursor */
@@ -2010,7 +2253,7 @@ footer {
                         <img src="img/habitacao11.png" alt="Hotel Quinta do Vale" class="work-image" >
                     </div>
                 </div>
-
+                
                 <!-- Projeto 6 -->
                 <div class="work-item size-xlarge slide-right" data-category="retail">
                     <div class="work-image-container">
@@ -2059,6 +2302,13 @@ footer {
                         <img src="img/habitacao3.png" alt="Edifício Moderno" class="work-image" >
                     </div>
                 </div>
+
+                <!-- Projeto 13 - Nova imagem no lado direito, alinhada com eixo esquerdo da penúltima -->
+                <div class="work-item size-large bounce-in" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="img/habitacao2.png" alt="Casa Moderna" class="work-image" >
+                    </div>
+                </div>
             </div>
 
         </section>
@@ -2086,9 +2336,9 @@ footer {
                     
                     <div class="contact-item">
                         <div class="contact-icon">📞</div>
-                        <div class="contact-details">
+                        <div class="contact-details centered-text" >
                             <h3>Contactos Telefónicos</h3>
-                            <p><a href="tel:+351911504793">911 504 793</a></p>
+                            <p ><a href="tel:+351911504793">911 504 793</a></p>
                             <p><a href="tel:+351253131797">253 131 797</a></p>
                         </div>
                     </div>
@@ -2104,7 +2354,7 @@ footer {
                     
                     <div class="contact-item">
                         <div class="contact-icon">🌐</div>
-                        <div class="contact-details">
+                        <div class="contact-details centered-text">
                             <h3>Redes Sociais</h3>
                             <p><a href="https://www.facebook.com/projectoBDN/?fref=ts" target="_blank">Facebook</a></p>
                             <p><a href="https://www.google.pt/maps/place/BDN/@41.5320682,-8.7647711,17z/data=!3m1!4b1!4m2!3m1!1s0xd244b916d62e69f:0x6aa246b2fb81a52c" target="_blank">Ver no Google Maps</a></p>
@@ -2113,6 +2363,19 @@ footer {
                 </div>
             </div>
 
+            <!-- Mapa de Localização -->
+            <div class="contact-map">
+                <div class="map-container">
+                    <h3>A Nossa Localização</h3>
+                    <iframe class="map-embed" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2975.9286897662397!2d-8.767251!3d41.532068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd244b916d62e69f%3A0x6aa246b2fb81a52c!2sBDN!5e0!3m2!1spt!2spt!4v1642098765432!5m2!1spt!2spt"
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Localização BDN Arquitectura - Av. Comendador Francisco Alves Quintas, Zona Industrial de Gandra, 4740-010 Esposende">
+                    </iframe>
+                </div>
+            </div>
 
             <!-- Formulário de Contacto -->
             <div class="contact-form">
@@ -2166,9 +2429,9 @@ footer {
                     <div class="footer-logo">
                         <img src="BDN_logo.png" alt="BDN Arquitectura" class="footer-logo-img">
                         <div>
-                            <h3>BDN Arquitectura</h3>
+                            <h3>BDN</h3>
                             <p style="font-size: 0.9rem; color: #ffd700; margin-bottom: 0.5rem;">PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</p>
-                            <p style="font-size: 0.8rem; color: #aaa;">Transformamos sonhos em realidade através de projetos arquitetónicos inovadores e sustentáveis.</p>
+                            <p style="font-size: 0.8rem; color: #aaa;">Transformamos sonhos em realidade através de projetos inovadores.</p>
                         </div>
                     </div>
                 </div>
@@ -2176,43 +2439,22 @@ footer {
                 <div class="footer-section footer-contact">
                     <h4>Contactos</h4>
                     <div class="contact-info">
-                        <p><i class="contact-icon">✉</i> <a href="mailto:geral@bdn.pt">geral@bdn.pt</a></p>
-                        <p><i class="contact-icon">☎</i> <a href="tel:+351912345678">+351 912 345 678</a></p>
-                        <p><i class="contact-icon">☏</i> <a href="tel:+351123456789">+351 123 456 789</a></p>
-                        <p><i class="contact-icon">⌖</i> Rua dos Arquitectos, 123<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4000-123 Porto, Portugal</p>
+                        <p><i class="contact-icon">✉</i> <a href="mailto:geral@bdn.pt">jaimebermudes@projectobdn.com</a></p>
+                        <p><i class="contact-icon">☎</i> <a href="tel:+351912345678">+351 911 504 793</a></p>
+                        <p><i class="contact-icon">☏</i> <a href="tel:+351123456789">+351 253 131 797</a></p>
+                        <p><i class="contact-icon">⌖</i> Av. Comendador Francisco Alves Quintas<br>
+                            Zona Industrial de Gandra
+4740-010 Esposende</p>
                     </div>
                 </div>
                 
-                <div class="footer-section footer-services">
-                    <h4>Serviços</h4>
-                    <ul class="service-list">
-                        <li>Projetos de Arquitetura</li>
-                        <li>Licenciamento</li>
-                        <li>Construção</li>
-                        <li>Remodelações</li>
-                        <li>Consultoria</li>
-                    </ul>
-                </div>
                 
-                <div class="footer-section footer-social">
-                    <h4>Siga-nos</h4>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook">◉</a>
-                        <a href="#" aria-label="Instagram">◈</a>
-                        <a href="#" aria-label="LinkedIn">◎</a>
-                        <a href="#" aria-label="YouTube">▶</a>
-                    </div>
-                    <div class="footer-links">
-                        <a href="#">Política de Privacidade</a>
-                        <a href="#">Termos de Utilização</a>
-                        <a href="#">Livro de Reclamações</a>
-                    </div>
-                </div>
+
             </div>
             
             <div class="footer-bottom">
                 <p>&copy; 2025 Grupo BDN. Todos os direitos reservados.</p>
-                <p style="font-size: 0.8rem; color: #888;">Desenvolvido com excelência em arquitetura</p>
+                <p style="font-size: 0.8rem; color: #888;">Desenvolvido por <a href="https://codecraftstudio.pt">CodeCraftStudio</a></p>
             </div>
         </div>
     </footer>
@@ -2479,9 +2721,50 @@ footer {
 
         // Função para inicializar animações de entrada das imagens
         function initImageAnimations() {
-            // ANIMAÇÕES REMOVIDAS - IMAGENS SEMPRE VISÍVEIS
-            // Todas as imagens ficam visíveis desde o carregamento da página
-            console.log('Animações de entrada removidas - todas as imagens são visíveis imediatamente');
+            // Configurar Intersection Observer para animar imagens durante scroll
+            const observerOptions = {
+                threshold: 0.1, // Animar quando 10% da imagem estiver visível
+                rootMargin: '0px 0px -50px 0px' // Começar animação um pouco antes
+            };
+
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Adicionar delay baseado no índice para efeito em cascata
+                        setTimeout(() => {
+                            entry.target.classList.add('animate-in');
+                        }, index * 150); // 150ms de delay entre cada imagem
+                    }
+                });
+            }, observerOptions);
+
+            // Observar todas as imagens do portfólio
+            const workItems = document.querySelectorAll('.work-item');
+            workItems.forEach((item, index) => {
+                // Adicionar delay inicial baseado na posição
+                item.style.transitionDelay = `${index * 0.1}s`;
+                imageObserver.observe(item);
+            });
+
+            // Observer separado para quando o usuário volta para cima
+            const resetObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
+                        // Quando a imagem sai da vista (scrolling para cima)
+                        entry.target.classList.remove('animate-in');
+                    }
+                });
+            }, {
+                threshold: 0,
+                rootMargin: '100px 0px 100px 0px'
+            });
+
+            // Aplicar o reset observer também
+            workItems.forEach(item => {
+                resetObserver.observe(item);
+            });
+
+            console.log(`Inicializadas animações de scroll para ${workItems.length} imagens do portfólio`);
         }
 
         // Portfolio Skylab Filter System
@@ -2600,10 +2883,10 @@ footer {
                 
                 // Se o mouse estiver na metade esquerda, mostrar cursor de seta esquerda
                 if (x < imageWidth / 2) {
-                    lightboxImage.style.cursor = 'w-resize';
+                    lightboxImage.style.cursor = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='leftArrow' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%23ffed4e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffd700;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='arrowShadow' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='3'/%3E%3CfeOffset dx='2' dy='2' result='offset'/%3E%3CfeFlood flood-color='%23000' flood-opacity='0.7'/%3E%3CfeComposite in2='offset' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M25 8L15 20L25 32L22 35L8 20L22 5Z' fill='url(%23leftArrow)' stroke='%23b8860b' stroke-width='2' filter='url(%23arrowShadow)'/%3E%3Cpath d='M24 10L16 20L24 30L21 32L10 20L21 8Z' fill='%23fff' opacity='0.3'/%3E%3C/svg%3E\") 20 20, w-resize";
                 } else {
                     // Se estiver na metade direita, mostrar cursor de seta direita
-                    lightboxImage.style.cursor = 'e-resize';
+                    lightboxImage.style.cursor = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='rightArrow' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%23ffed4e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffd700;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='arrowShadowRight' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='3'/%3E%3CfeOffset dx='2' dy='2' result='offset'/%3E%3CfeFlood flood-color='%23000' flood-opacity='0.7'/%3E%3CfeComposite in2='offset' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M15 8L25 20L15 32L18 35L32 20L18 5Z' fill='url(%23rightArrow)' stroke='%23b8860b' stroke-width='2' filter='url(%23arrowShadowRight)'/%3E%3Cpath d='M16 10L24 20L16 30L19 32L30 20L19 8Z' fill='%23fff' opacity='0.3'/%3E%3C/svg%3E\") 20 20, e-resize";
                 }
             });
             
