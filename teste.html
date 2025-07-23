@@ -1531,6 +1531,7 @@ footer {
     max-width: calc(40vw);
 }
 
+
 /* Imagem paralela (Projeto 15) - lado direito, paralela à 14ª */
 .work-item:nth-child(15) {
     right: 5%; /* Lado direito */
@@ -1545,11 +1546,20 @@ footer {
     width: 100%;
     height: 250px;
     overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Altura especial para imagens XXLarge da terceira linha e quarta linha (projeto 9) */
 .work-item.size-xxlarge .work-image-container {
     height: 350px; /* Significativamente mais alta que as outras */
+}
+
+/* Efeitos de hover para o container da imagem */
+.work-item:hover .work-image-container {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 }
 
 /* Alturas específicas para a primeira linha de imagens */
@@ -1582,11 +1592,198 @@ footer {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Transição removida */
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: brightness(1) contrast(1.05) saturate(1.1);
+}
+
+/* Efeitos de hover na imagem */
+.work-item:hover .work-image {
+    transform: scale(1.08);
+    filter: brightness(1.1) contrast(1.1) saturate(1.2);
+}
+
+/* Overlay com gradiente sutil no hover */
+.work-image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.work-item:hover .work-image-container::before {
+    opacity: 1;
 }
 
 /* Hover effect na imagem - REMOVIDO */
 /* .work-item:hover .work-image foi removido */
+
+/* Efeitos especiais para imagens específicas */
+.work-item:nth-child(1):hover .work-image {
+    transform: scale(1.05) rotate(1deg);
+    filter: brightness(1.15) sepia(0.2);
+}
+
+.work-item:nth-child(3):hover .work-image {
+    transform: scale(1.1) perspective(1000px) rotateY(5deg);
+}
+
+.work-item:nth-child(5):hover .work-image {
+    transform: scale(1.08);
+    filter: brightness(1.1) hue-rotate(10deg);
+}
+
+.work-item:nth-child(7):hover .work-image {
+    transform: scale(1.06) skewY(1deg);
+    filter: brightness(1.12) contrast(1.15);
+}
+
+.work-item:nth-child(9):hover .work-image {
+    transform: scale(1.1) perspective(800px) rotateX(5deg);
+}
+
+/* Efeito de brilho nas imagens pares (exceto 14 que tem efeito especial) */
+.work-item:nth-child(even):not(:nth-child(14)) .work-image-container::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    transform: rotate(45deg) translateX(-100%);
+    transition: transform 0.8s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.work-item:nth-child(even):not(:nth-child(14)):hover .work-image-container::after {
+    transform: rotate(45deg) translateX(100%);
+}
+
+/* Efeito de partículas para as duas últimas imagens */
+.work-item:nth-child(14) .work-image-container,
+.work-item:nth-child(15) .work-image-container {
+    position: relative;
+}
+
+.work-item:nth-child(14) .work-image-container::after,
+.work-item:nth-child(15) .work-image-container::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.9) url('bdn_fabicon.png') center/25px no-repeat;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease;
+    pointer-events: none;
+    z-index: 3;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.work-item:nth-child(14):hover .work-image-container::after,
+.work-item:nth-child(15):hover .work-image-container::after {
+    opacity: 1;
+    transform: translateY(0);
+    animation: float 2s ease-in-out infinite;
+}
+
+/* Animação de flutuação */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Efeito de pulso suave em todas as imagens */
+.work-image-container {
+    animation: subtle-pulse 4s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+    0%, 100% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); }
+    50% { box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2); }
+}
+
+/* Efeito de reflexo nas bordas */
+.work-image-container {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(45deg, #f0f0f0, #ffffff) padding-box, 
+                linear-gradient(45deg, rgba(255,255,255,0.8), rgba(0,0,0,0.1)) border-box;
+}
+
+/* Efeito especial para imagens ímpares - borda colorida sutil */
+.work-item:nth-child(odd) .work-image-container {
+    background: linear-gradient(45deg, #f8f9fa, #ffffff) padding-box, 
+                linear-gradient(45deg, rgba(74, 144, 226, 0.3), rgba(80, 227, 194, 0.3)) border-box;
+}
+
+/* Overlay de foco no hover - usando pseudo-elemento */
+.work-image-container .focus-overlay {
+    display: none; /* Remover esta regra pois vamos usar pseudo-elemento */
+}
+
+/* Efeito de foco central usando ::after nas imagens ímpares */
+.work-item:nth-child(odd) .work-image-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.95) url('bdn_fabicon.png') center/30px no-repeat;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+    pointer-events: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.work-item:nth-child(odd):hover .work-image-container::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Efeito de ondas no hover para as últimas 3 imagens */
+.work-item:nth-child(13):hover .work-image,
+.work-item:nth-child(14):hover .work-image,
+.work-item:nth-child(15):hover .work-image {
+    animation: wave-effect 0.6s ease-out;
+}
+
+@keyframes wave-effect {
+    0% { transform: scale(1); }
+    20% { transform: scale(1.02) rotate(-0.5deg); }
+    40% { transform: scale(1.05) rotate(0.5deg); }
+    60% { transform: scale(1.08) rotate(-0.3deg); }
+    80% { transform: scale(1.06) rotate(0.2deg); }
+    100% { transform: scale(1.08) rotate(0deg); }
+}
+
+/* Efeito de cristal para imagens específicas */
+.work-item:nth-child(2) .work-image-container,
+.work-item:nth-child(8) .work-image-container {
+    backdrop-filter: blur(0px);
+    transition: backdrop-filter 0.3s ease;
+}
+
+.work-item:nth-child(2):hover .work-image-container,
+.work-item:nth-child(8):hover .work-image-container {
+    backdrop-filter: blur(1px);
+}
 
 .work-info {
     padding: 1.5rem;
