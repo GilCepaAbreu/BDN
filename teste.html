@@ -1318,8 +1318,8 @@ footer {
     cursor: url('bdn_fabicon.png') 16 16, pointer;
     /* Inicialmente invisível para animação de entrada */
     opacity: 0;
-    transform: translateY(60px) scale(0.8);
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(40px) scale(0.9);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Estado visível após scroll */
@@ -1328,9 +1328,10 @@ footer {
     transform: translateY(0) scale(1);
 }
 
-/* Variações de animação por tipo */
+/* Variações de animação por tipo - otimizadas para serem mais rápidas */
 .work-item.slide-left {
-    transform: translateX(-100px) translateY(30px) scale(0.9);
+    transform: translateX(-60px) translateY(20px) scale(0.95);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .work-item.slide-left.animate-in {
@@ -1338,7 +1339,8 @@ footer {
 }
 
 .work-item.slide-right {
-    transform: translateX(100px) translateY(30px) scale(0.9);
+    transform: translateX(60px) translateY(20px) scale(0.95);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .work-item.slide-right.animate-in {
@@ -1346,7 +1348,8 @@ footer {
 }
 
 .work-item.zoom-rotate {
-    transform: translateY(50px) scale(0.5) rotate(15deg);
+    transform: translateY(30px) scale(0.7) rotate(10deg);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .work-item.zoom-rotate.animate-in {
@@ -1354,7 +1357,8 @@ footer {
 }
 
 .work-item.flip-in {
-    transform: translateY(40px) rotateY(90deg) scale(0.8);
+    transform: translateY(25px) rotateY(45deg) scale(0.9);
+    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .work-item.flip-in.animate-in {
@@ -1362,8 +1366,8 @@ footer {
 }
 
 .work-item.elastic-in {
-    transform: translateY(80px) scale(0.3);
-    transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform: translateY(50px) scale(0.6);
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .work-item.elastic-in.animate-in {
@@ -1371,8 +1375,8 @@ footer {
 }
 
 .work-item.bounce-in {
-    transform: translateY(100px) scale(0.6);
-    transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateY(60px) scale(0.8);
+    transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .work-item.bounce-in.animate-in {
@@ -1495,7 +1499,7 @@ footer {
 
 /* Quinta linha - duas imagens: primeira no lado direito, segunda na extremidade esquerda mais abaixo */
 .work-item:nth-child(11) {
-    right: 5%; /* Lado direito */
+    right: 20%; /* Movida mais para a esquerda: de 5% para 20% */
     top: 2550px; /* Ajustar para ficar abaixo da nova altura das imagens da quarta linha */
     transform: none;
     max-width: calc(25vw);
@@ -1768,7 +1772,7 @@ footer {
     
     /* Ajustar quinta linha para telas grandes */
     .work-item:nth-child(11) {
-        right: 5%; /* Lado direito */
+        right: 20%; /* Movida mais para a esquerda: de 5% para 20% */
         top: 2650px; /* Ajustar para nova posição em telas grandes */
         max-width: calc(28vw);
     }
@@ -1923,7 +1927,7 @@ footer {
     
     /* Ajustar quinta linha para tablets */
     .work-item:nth-child(11) {
-        right: 5%; /* Lado direito */
+        right: 20%; /* Movida mais para a esquerda: de 5% para 20% */
         top: 2630px; /* Ajustar para nova posição em tablets */
         max-width: calc(30vw);
     }
@@ -2099,56 +2103,12 @@ footer {
     background: transparent;
 }
 
-/* Overlay sutil para indicar área de navegação */
-.lightbox-content::before,
-.lightbox-content::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: rgba(255, 215, 0, 0.1);
-    border: 1px solid rgba(255, 215, 0, 0.2);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: 1;
-}
+/* Overlay sutil para indicar área de navegação - REMOVIDO */
+/* As setas estáticas dos lados foram removidas */
 
-.lightbox-content::before {
-    left: 20px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffd700' viewBox='0 0 24 24'%3E%3Cpath d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 24px;
-}
-
-.lightbox-content::after {
-    right: 20px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffd700' viewBox='0 0 24 24'%3E%3Cpath d='M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 24px;
-}
-
-.lightbox-content:hover::before,
-.lightbox-content:hover::after {
-    opacity: 1;
-}
-
+/* Caption removida - sem descrição das imagens */
 .lightbox-caption {
-    background: rgba(0, 0, 0, 0.8);
-    color: #ffd700;
-    padding: 1rem 2rem;
-    border-radius: 25px;
-    margin-top: 1rem;
-    font-size: 1.1rem;
-    font-weight: 500;
-    text-align: center;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    backdrop-filter: blur(10px);
+    display: none;
 }
 
 .lightbox-counter {
@@ -2804,19 +2764,19 @@ footer {
 
         // Função para inicializar animações de entrada das imagens
         function initImageAnimations() {
-            // Configurar Intersection Observer para animar imagens durante scroll
+            // Configurar Intersection Observer para animar imagens assim que entrarem na viewport
             const observerOptions = {
-                threshold: 0.1, // Animar quando 10% da imagem estiver visível
-                rootMargin: '0px 0px -50px 0px' // Começar animação um pouco antes
+                threshold: 0.05, // Animar quando apenas 5% da imagem estiver visível
+                rootMargin: '100px 0px 0px 0px' // Começar animação 100px antes da imagem entrar na viewport
             };
 
             const imageObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
+                entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        // Adicionar delay baseado no índice para efeito em cascata
-                        setTimeout(() => {
-                            entry.target.classList.add('animate-in');
-                        }, index * 150); // 150ms de delay entre cada imagem
+                        // Animar imediatamente quando entrar na viewport
+                        entry.target.classList.add('animate-in');
+                        // Parar de observar esta imagem após animar (one-time animation)
+                        imageObserver.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
@@ -2824,30 +2784,34 @@ footer {
             // Observar todas as imagens do portfólio
             const workItems = document.querySelectorAll('.work-item');
             workItems.forEach((item, index) => {
-                // Adicionar delay inicial baseado na posição
-                item.style.transitionDelay = `${index * 0.1}s`;
+                // Remover delay inicial para animação mais imediata
+                item.style.transitionDelay = '0s';
                 imageObserver.observe(item);
             });
 
-            // Observer separado para quando o usuário volta para cima
-            const resetObserver = new IntersectionObserver((entries) => {
+            // Observer adicional para detectar quando o usuário entra na seção das imagens
+            const sectionObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
-                        // Quando a imagem sai da vista (scrolling para cima)
-                        entry.target.classList.remove('animate-in');
+                    if (entry.isIntersecting) {
+                        // Quando a seção de imagens entra na viewport, aplicar delays em cascata
+                        const visibleItems = document.querySelectorAll('.work-item.animate-in');
+                        visibleItems.forEach((item, index) => {
+                            item.style.transitionDelay = `${index * 0.05}s`; // Delay muito pequeno para efeito cascata rápido
+                        });
                     }
                 });
             }, {
-                threshold: 0,
-                rootMargin: '100px 0px 100px 0px'
+                threshold: 0.1,
+                rootMargin: '50px 0px 0px 0px'
             });
 
-            // Aplicar o reset observer também
-            workItems.forEach(item => {
-                resetObserver.observe(item);
-            });
+            // Observar a seção do portfólio
+            const portfolioSection = document.querySelector('#empresa1');
+            if (portfolioSection) {
+                sectionObserver.observe(portfolioSection);
+            }
 
-            console.log(`Inicializadas animações de scroll para ${workItems.length} imagens do portfólio`);
+            console.log(`Inicializadas animações de scroll otimizadas para ${workItems.length} imagens do portfólio`);
         }
 
         // Portfolio Skylab Filter System
