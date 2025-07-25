@@ -2,8 +2,11 @@
 <html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BDN - Projetamos | Arquitetamos | Construímos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>BDN - Projectamos | Arquitectamos | Construímos</title>
     <link rel="icon" type="image/png" href="bdn_fabicon.png">
     <link rel="shortcut icon" type="image/png" href="bdn_fabicon.png">
     <link rel="apple-touch-icon" href="bdn_fabicon.png">
@@ -129,6 +132,13 @@ body {
     overflow-x: hidden; /* Prevenir scroll horizontal */
     max-width: 100vw; /* Limitar largura máxima */
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Melhorias para touch devices */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* Regra adicional para garantir que nenhum elemento ultrapasse */
@@ -586,6 +596,61 @@ nav a.active {
     transform: translateY(-2px);
 }
 
+/* Language Selector - Posição Fixa Inferior Esquerda */
+.language-selector {
+    position: fixed !important;
+    bottom: 30px !important;
+    left: 30px !important;
+    background: var(--bg-secondary);
+    border: 2px solid var(--accent-primary);
+    border-radius: 30px;
+    padding: 8px 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    z-index: 1001;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.language-selector:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.language-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.language-btn.active {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    font-weight: 600;
+}
+
+.language-btn:hover:not(.active) {
+    color: var(--accent-primary);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.language-separator {
+    width: 1px;
+    height: 16px;
+    background: var(--accent-primary);
+    opacity: 0.5;
+}
+
 /* Theme Toggle Button - Posição Fixa Inferior Direita */
 .theme-toggle-fixed {
     position: fixed !important;
@@ -730,6 +795,112 @@ nav a.active {
 
 /* Responsivo para mobile */
 @media (max-width: 768px) {
+    /* Ajustar cursor para touch devices */
+    .custom-cursor {
+        display: none !important;
+    }
+    
+    body {
+        cursor: auto !important;
+        padding-top: 70px; /* Reduzir padding top no mobile */
+    }
+    
+    *, *:before, *:after {
+        cursor: auto !important;
+    }
+    
+    /* Navigation improvements - Remove hamburger, always show menu */
+    .hamburger {
+        display: none !important; /* Esconder hamburger no mobile */
+    }
+    
+    .desktop-nav {
+        display: none;
+    }
+    
+    .nav-menu {
+        position: static !important;
+        right: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        background: transparent !important;
+        display: none; /* Inicialmente escondido */
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 20px 0;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        backdrop-filter: none;
+        border-left: none;
+        box-shadow: none;
+        z-index: 1001;
+        overflow-y: visible;
+        margin-top: 10px;
+        border-top: 1px solid rgba(255, 215, 0, 0.2);
+        background: rgba(0, 0, 0, 0.9) !important;
+        border-radius: 8px;
+        margin: 10px 15px 0 15px;
+    }
+    
+    .nav-menu.active {
+        display: flex !important;
+    }
+    
+    .nav-menu li {
+        margin: 0;
+        width: 100%;
+    }
+    
+    .nav-menu a {
+        display: block;
+        padding: 15px 25px;
+        border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        font-size: 1rem;
+        text-align: left;
+        background: transparent;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-menu a:hover {
+        background: rgba(255, 215, 0, 0.1);
+        color: #ffd700;
+        padding-left: 35px;
+        transform: none;
+    }
+    
+    /* Header adjustments */
+    .header-content {
+        padding: 1rem 0;
+        justify-content: space-between;
+    }
+    
+    .logo {
+        font-size: 1.4rem;
+        margin-left: 20px;
+    }
+    
+    .logo-img {
+        width: 32px;
+        height: 32px;
+    }
+    
+    /* Language selector mobile */
+    .language-selector {
+        bottom: 20px;
+        left: 20px;
+        padding: 8px 12px;
+        border-radius: 25px;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+    }
+    
+    .language-btn {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+        min-width: 35px;
+    }
+    
+    /* Theme toggle mobile */
     .theme-toggle-fixed {
         width: 50px;
         height: 50px;
@@ -755,12 +926,89 @@ nav a.active {
     
     .theme-toggle-fixed::before {
         left: 8px;
-        font-size: 12px;
+        font-size: 10px;
     }
     
     .theme-toggle-fixed::after {
         right: 8px;
-        font-size: 12px;
+        font-size: 10px;
+    }
+    
+    /* Hero section mobile */
+    .hero {
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+        padding: 0 20px;
+        line-height: 1.5;
+    }
+    
+    /* Container adjustments */
+    .container {
+        padding: 0 15px;
+        max-width: 100%;
+    }
+    
+    /* Section spacing */
+    section {
+        margin-bottom: 3rem;
+    }
+}
+
+/* Additional mobile optimizations for small screens */
+@media (max-width: 480px) {
+    body {
+        padding-top: 65px;
+    }
+    
+    .header-content {
+        padding: 0.8rem 0;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+        margin-left: 15px;
+    }
+    
+    .logo-img {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .nav-menu {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .language-selector {
+        bottom: 15px;
+        left: 15px;
+        padding: 6px 10px;
+    }
+    
+    .theme-toggle-fixed {
+        bottom: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .container {
+        padding: 0 10px;
     }
 }
 
@@ -1518,14 +1766,27 @@ footer {
 /* Centralização do texto para cards específicos */
 .contact-details.centered-text {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .contact-details.centered-text h3 {
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .contact-details.centered-text p {
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-details.centered-text a {
+    text-align: center;
+    display: inline-block;
 }
 
 /* Responsividade para os cards de contacto */
@@ -3216,62 +3477,485 @@ footer {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2rem;
+        gap: 1.5rem;
         width: 100%;
         transform: none;
         left: auto;
+        margin: 0 auto;
     }
     
     .work-item {
         position: static;
-        width: 100%;
-        max-width: 350px;
+        width: 100% !important;
+        max-width: min(320px, 90vw) !important;
+        height: 280px !important; /* Altura fixa para todas as imagens */
         transform: none !important;
         left: auto !important;
         right: auto !important;
         top: auto !important;
-    }
-
-    .work-item.size-vertical {
-        max-width: 280px;
-        height: 420px; /* Proporção vertical para mobile */
+        margin: 0 auto;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--bg-secondary);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     
-    .work-header {
-        padding: 3rem 1rem 4rem;
+    /* Todos os work-items têm o mesmo tamanho no mobile */
+    .work-item.size-small,
+    .work-item.size-medium,
+    .work-item.size-large,
+    .work-item.size-xlarge,
+    .work-item.size-xxlarge,
+    .work-item.size-vertical,
+    .work-item.size-double-large {
+        width: 100% !important;
+        max-width: min(320px, 90vw) !important;
+        height: 280px !important;
+        aspect-ratio: unset !important;
+    }
+    
+    .work-item:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 15px 50px rgba(255, 215, 0, 0.2);
+        border-color: rgba(255, 215, 0, 0.4);
     }
     
     .work-image-container {
-        height: 200px;
+        height: 220px !important; /* Altura fixa para todos os containers de imagem */
+        border-radius: 8px 8px 0 0;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .work-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    
+    .work-item:hover .work-image {
+        transform: scale(1.05);
+    }
+    
+    .work-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        padding: 1rem;
+        color: white;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .work-item:hover .work-overlay {
+        transform: translateY(0);
+    }
+    
+    /* Improve header and footer spacing */
+    .work-header {
+        padding: 2rem 1rem 3rem;
+        text-align: center;
+    }
+    
+    .work-header h2 {
+        font-size: clamp(2rem, 6vw, 3rem);
+        margin-bottom: 1rem;
     }
     
     .work-footer {
-        padding: 3rem 1rem;
+        padding: 2rem 1rem;
+        text-align: center;
     }
     
-    /* Footer compacto para mobile */
+    /* Enhanced footer for mobile */
     footer {
-        padding: 1.5rem 0 0.8rem;
-        margin-top: 1.5rem;
+        padding: 2rem 0 1rem;
+        margin-top: 2rem;
+        background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+        border-top: 1px solid rgba(255, 215, 0, 0.2);
     }
     
     .footer-content {
         flex-direction: column;
-        gap: 1.5rem;
-        margin-bottom: 0.8rem;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        text-align: center;
     }
     
     .footer-section {
         text-align: center;
+        padding: 0 1rem;
+    }
+    
+    .footer-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: var(--accent-primary);
     }
     
     .footer-about .footer-logo {
         justify-content: center;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        gap: 1rem;
+    }
+    
+    .footer-logo img {
+        width: 40px;
+        height: 40px;
     }
     
     .footer-bottom {
-        padding-top: 0.8rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 215, 0, 0.1);
+        text-align: center;
+        font-size: 0.9rem;
+    }
+    
+    /* Contact section improvements */
+    .contact-section {
+        padding: 2rem 1rem;
+    }
+    
+    .contact-form {
+        max-width: 100%;
+        padding: 1.5rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.5);
+        color: var(--text-primary);
+        font-size: 16px; /* Prevent zoom on iOS */
+        transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+        outline: none;
+    }
+}
+
+/* Ultra mobile optimizations for very small screens */
+@media (max-width: 375px) {
+    body {
+        padding-top: 60px;
+    }
+    
+    .header-content {
+        padding: 0.6rem 0;
+    }
+    
+    .logo {
+        font-size: 1.1rem;
+        margin-left: 10px;
+    }
+    
+    .logo-img {
+        width: 26px;
+        height: 26px;
+    }
+    
+    .nav-menu {
+        width: 100%;
+        padding: 70px 0 30px;
+    }
+    
+    .nav-menu a {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+    
+    .hero {
+        padding: 1.5rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 1.6rem;
+        line-height: 1.1;
+    }
+    
+    .hero p {
+        font-size: 0.9rem;
+        padding: 0 15px;
+    }
+    
+    .work-item {
+        max-width: min(300px, 95vw) !important;
+        height: 260px !important; /* Altura ligeiramente menor para telas pequenas */
+        margin: 0 auto;
+    }
+    
+    /* Todos os work-items têm o mesmo tamanho em telas pequenas */
+    .work-item.size-small,
+    .work-item.size-medium,
+    .work-item.size-large,
+    .work-item.size-xlarge,
+    .work-item.size-xxlarge,
+    .work-item.size-vertical,
+    .work-item.size-double-large {
+        width: 100% !important;
+        max-width: min(300px, 95vw) !important;
+        height: 260px !important;
+    }
+    
+    .work-image-container {
+        height: 180px !important; /* Altura ajustada para telas pequenas */
+    }
+    
+    .work-header {
+        padding: 1.5rem 0.8rem 2rem;
+    }
+    
+    .work-header h2 {
+        font-size: 1.6rem;
+    }
+    
+    .container {
+        padding: 0 8px;
+    }
+    
+    .language-selector {
+        bottom: 10px;
+        left: 10px;
+        padding: 4px 8px;
+    }
+    
+    .language-btn {
+        font-size: 0.7rem;
+        padding: 4px 6px;
+        min-width: 30px;
+    }
+    
+    .theme-toggle-fixed {
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .theme-toggle-fixed .theme-toggle-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .theme-toggle-fixed .theme-circle {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .unique-client-title {
+        font-size: clamp(2.5rem, 8vw, 3rem);
+        gap: 0.5rem;
+    }
+    
+    .contact-form {
+        padding: 1rem;
+        margin: 0 0.5rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 15px;
+    }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+    body {
+        padding-top: 65px;
+    }
+    
+    .hero {
+        padding: 1.5rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .work-grid {
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+    
+    .work-item {
+        max-width: min(300px, 45vw);
+    }
+    
+    .work-image-container {
+        height: 160px;
+    }
+    
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 1rem;
+    }
+    
+    .footer-section {
+        flex: 1;
+        min-width: 200px;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* Remove hover effects on touch devices */
+    .work-item:hover {
+        transform: none;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 215, 0, 0.2);
+    }
+    
+    .work-item:hover .work-image {
+        transform: none;
+    }
+    
+    .work-item:hover .work-overlay {
+        transform: translateY(0);
+    }
+    
+    /* Enhance touch targets */
+    .nav-menu a {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .language-btn {
+        min-height: 40px;
+        min-width: 40px;
+    }
+    
+    .theme-toggle-fixed {
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    /* Better form controls for touch */
+    .form-group input,
+    .form-group textarea {
+        min-height: 48px;
+        border-radius: 12px;
+    }
+    
+    .contact-btn {
+        min-height: 48px;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 16px;
+    }
+}
+
+/* Safe area support for devices with notch */
+@supports (padding: max(0px)) {
+    header {
+        padding-top: max(20px, env(safe-area-inset-top));
+    }
+    
+    body {
+        padding-top: max(80px, calc(80px + env(safe-area-inset-top)));
+    }
+    
+    .language-selector {
+        bottom: max(20px, env(safe-area-inset-bottom));
+        left: max(20px, env(safe-area-inset-left));
+    }
+    
+    .theme-toggle-fixed {
+        bottom: max(20px, env(safe-area-inset-bottom));
+        right: max(20px, env(safe-area-inset-right));
+    }
+    
+    .nav-menu {
+        padding-top: max(80px, calc(80px + env(safe-area-inset-top)));
+        padding-bottom: max(40px, env(safe-area-inset-bottom));
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --bg-primary: #000000;
+        --bg-secondary: #111111;
+        --text-primary: #ffffff;
+        --accent-primary: #ffff00;
+        --border-color: #ffffff;
+    }
+    
+    .work-item {
+        border: 2px solid var(--accent-primary);
+    }
+    
+    .nav-menu a:hover {
+        background: var(--accent-primary);
+        color: var(--bg-primary);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .custom-cursor {
+        display: none !important;
+    }
+}
+
+/* Dark mode media query support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #1a1a1a;
+        --text-primary: #ffffff;
+    }
+}
+
+/* Print styles for better mobile printing */
+@media print {
+    .custom-cursor,
+    .theme-toggle-fixed,
+    .language-selector,
+    .hamburger,
+    .nav-menu,
+    .lightbox {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+        padding-top: 0 !important;
+    }
+    
+    .work-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
     }
 }
 
@@ -3405,38 +4089,115 @@ footer {
 /* Responsive Lightbox */
 @media (max-width: 768px) {
     .lightbox-content {
-        max-width: 95%;
-        max-height: 95%;
-        min-width: 320px;  /* Aumentado para tablets */
-        min-height: 240px; /* Aumentado para tablets */
+        max-width: 98%;
+        max-height: 98%;
+        min-width: 280px;
+        min-height: 200px;
+        margin: 10px;
     }
     
     .lightbox-image {
-        max-height: 75vh;  /* Aumentado de 70vh para 75vh */
-        min-width: 300px;  /* Aumentado para tablets */
-        min-height: 200px; /* Aumentado para tablets */
+        max-height: 80vh;
+        min-width: 250px;
+        min-height: 180px;
+        border-radius: 4px;
     }
     
     .lightbox-close {
-        top: -40px;
-        font-size: 30px;
-        width: 40px;
-        height: 40px;
-    }
-    
-    .lightbox-caption {
-        font-size: 1rem;
-        padding: 0.8rem 1.5rem;
+        top: -45px;
+        right: 0;
+        width: 45px;
+        height: 45px;
+        font-size: 32px;
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid #ffd700;
     }
     
     .lightbox-counter {
         bottom: -50px;
         font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    /* Disable cursor navigation on mobile */
+    .lightbox-nav-left,
+    .lightbox-nav-right {
+        display: none;
+    }
+    
+    /* Add touch-friendly navigation buttons */
+    .lightbox-mobile-nav {
+        position: absolute;
+        bottom: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .lightbox-mobile-prev,
+    .lightbox-mobile-next {
+        background: rgba(0, 0, 0, 0.8);
+        color: #ffd700;
+        border: 2px solid #ffd700;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: bold;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        transition: all 0.3s ease;
+    }
+    
+    .lightbox-mobile-prev:active,
+    .lightbox-mobile-next:active {
+        transform: scale(0.95);
+        background: rgba(255, 215, 0, 0.2);
     }
 }
 
 @media (max-width: 480px) {
-    /* Manter navegação por cursor em dispositivos móveis */
+    .lightbox-content {
+        max-width: 95%;
+        max-height: 95%;
+        min-width: 260px;
+        margin: 5px;
+    }
+    
+    .lightbox-image {
+        max-height: 75vh;
+        min-width: 220px;
+        min-height: 160px;
+    }
+    
+    .lightbox-close {
+        top: -40px;
+        width: 40px;
+        height: 40px;
+        font-size: 28px;
+    }
+    
+    .lightbox-mobile-prev,
+    .lightbox-mobile-next {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .lightbox-counter {
+        bottom: -45px;
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+}
+
+/* Enhanced Work Gallery Mobile Styles */
+@media (max-width: 767px) {
     .lightbox-nav-left,
     .lightbox-nav-right {
         cursor: pointer;
@@ -3790,11 +4551,8 @@ footer {
 
 /* ===== SECÇÃO SOBRE BDN ===== */
 .sobre-bdn-section {
-    padding: clamp(4rem, 8vw, 6rem) 0;
-    background: linear-gradient(135deg, 
-        var(--bg-primary) 0%, 
-        var(--bg-secondary) 50%, 
-        var(--bg-primary) 100%);
+    padding: clamp(6rem, 10vw, 8rem) 0;
+    background: var(--bg-primary);
     position: relative;
     overflow: hidden;
 }
@@ -3806,107 +4564,137 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 30% 70%, 
-        rgba(255, 215, 0, 0.05) 0%, 
-        transparent 50%);
+    background: 
+        linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.02) 50%, transparent 100%),
+        linear-gradient(0deg, transparent 0%, rgba(255, 215, 0, 0.01) 100%);
     pointer-events: none;
 }
 
 .sobre-bdn-content {
     position: relative;
     z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
 .sobre-bdn-header {
     text-align: center;
-    margin-bottom: clamp(3rem, 6vw, 4rem);
+    margin-bottom: clamp(4rem, 8vw, 6rem);
+    position: relative;
 }
 
 .sobre-bdn-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 700;
-    color: var(--accent-primary);
-    margin-bottom: 1rem;
-    line-height: 1.2;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 300;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
 }
 
 .sobre-bdn-subtitle {
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    color: var(--text-secondary);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: var(--accent-primary);
     font-weight: 300;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 2px;
 }
 
 .sobre-bdn-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: clamp(3rem, 6vw, 5rem);
+    gap: clamp(4rem, 8vw, 6rem);
     align-items: start;
 }
 
 .sobre-bdn-intro {
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
 }
 
 .sobre-bdn-intro p {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    line-height: 1.7;
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    line-height: 1.8;
     color: var(--text-primary);
+    font-weight: 300;
+    margin: 0;
 }
 
 .sobre-bdn-intro strong {
     color: var(--accent-primary);
-    font-weight: 600;
+    font-weight: 400;
 }
 
-.sobre-bdn-values h3,
-.sobre-bdn-stats h3 {
+.sobre-bdn-values h3 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 4vw, 2.2rem);
-    color: var(--accent-primary);
-    margin-bottom: 2rem;
-    font-weight: 600;
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+    color: var(--text-primary);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    letter-spacing: -0.01em;
 }
 
 .values-grid {
     display: grid;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .value-item {
     display: flex;
     align-items: flex-start;
-    gap: 1rem;
-    padding: 1.5rem;
-    background: rgba(255, 215, 0, 0.05);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 215, 0, 0.1);
+    gap: 1.5rem;
+    padding: 0;
+    background: transparent;
+    border: none;
     transition: all 0.3s ease;
+    position: relative;
+}
+
+.value-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 0;
+    background: var(--accent-primary);
+    transition: height 0.3s ease;
+}
+
+.value-item:hover::before {
+    height: 100%;
 }
 
 .value-item:hover {
-    background: rgba(255, 215, 0, 0.1);
-    border-color: rgba(255, 215, 0, 0.2);
-    transform: translateY(-2px);
+    transform: translateX(1rem);
 }
 
 .value-icon {
-    font-size: 1.5rem;
-    min-width: 40px;
+    font-size: 1.2rem;
+    min-width: 30px;
+    opacity: 0.8;
 }
 
 .value-item h4 {
-    font-size: 1.1rem;
-    color: var(--accent-primary);
+    font-size: 1rem;
+    color: var(--text-primary);
     margin-bottom: 0.5rem;
-    font-weight: 600;
+    font-weight: 400;
+    letter-spacing: 0.01em;
 }
 
 .value-item p {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--text-secondary);
-    line-height: 1.5;
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 300;
 }
 
 .stats-grid {
@@ -3993,13 +4781,16 @@ footer {
 
 /* Estilos para a nova seção de informações da parceria */
 .partnership-info {
-    background: linear-gradient(135deg, #CC5500 0%, #B04500 100%);
-    border-radius: 20px;
-    padding: 3rem;
-    color: white;
+    margin-top: 4rem;
+    padding: 3rem 2rem;
+    border-top: 1px solid rgba(205, 133, 106, 0.3);
+    text-align: center;
+    background: linear-gradient(135deg, rgba(205, 133, 106, 0.08) 0%, rgba(218, 165, 132, 0.05) 100%);
+    box-shadow: none;
+    border-radius: 16px;
+    color: var(--text-primary);
+    overflow: visible;
     position: relative;
-    overflow: hidden;
-    box-shadow: 0 15px 40px rgba(204, 85, 0, 0.3);
 }
 
 .partnership-info::before {
@@ -4008,9 +4799,9 @@ footer {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
-    pointer-events: none;
+    height: 3px;
+    background: linear-gradient(90deg, #CD856A 0%, #DAA584 50%, #CD856A 100%);
+    border-radius: 16px 16px 0 0;
 }
 
 .partnership-main {
@@ -4022,27 +4813,34 @@ footer {
 
 .partnership-logo-large {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(4rem, 8vw, 6rem);
-    font-weight: 700;
-    color: white;
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 300;
+    color: #CD856A;
     margin-bottom: 1rem;
-    line-height: 1;
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+    line-height: 1.2;
+    text-shadow: none;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #CD856A 0%, #B8704F 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .partnership-main h4 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    font-weight: 600;
+    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+    font-weight: 300;
     margin-bottom: 1.5rem;
-    color: rgba(255,255,255,0.95);
+    color: #B8704F;
+    letter-spacing: -0.01em;
 }
 
 .partnership-description {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: rgba(255,255,255,0.9);
-    max-width: 600px;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    font-weight: 300;
+    max-width: 60ch;
     margin: 0 auto;
 }
 
@@ -4055,9 +4853,9 @@ footer {
 .partnership-services h5, .partnership-palette h5 {
     font-family: 'Playfair Display', serif;
     font-size: 1.3rem;
-    font-weight: 600;
+    font-weight: 400;
     margin-bottom: 1rem;
-    color: rgba(255,255,255,0.95);
+    color: #B8704F;
     text-align: center;
 }
 
@@ -4070,17 +4868,19 @@ footer {
 }
 
 .services-list li {
-    background: rgba(255,255,255,0.15);
+    background: rgba(205, 133, 106, 0.1);
     padding: 1rem 1.5rem;
     border-radius: 12px;
-    font-weight: 500;
+    font-weight: 400;
     text-align: center;
     transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    border: 1px solid rgba(205, 133, 106, 0.2);
+    color: #B8704F;
 }
 
 .services-list li:hover {
-    background: rgba(255,255,255,0.25);
+    background: rgba(205, 133, 106, 0.15);
+    border-color: rgba(205, 133, 106, 0.3);
     transform: translateY(-2px);
 }
 
@@ -4135,12 +4935,12 @@ footer {
     }
     
     .partnership-info {
-        padding: 2rem;
+        padding: 2rem 0;
     }
     
-    .services-list {
+    .sobre-bdn-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 3rem;
     }
     
     .color-palette {
@@ -4204,20 +5004,51 @@ footer {
 
 /* Estilos da nova seção de informações da parceria no tema invertido */
 [data-theme="inverted"] .partnership-info {
-    background: linear-gradient(135deg, #B04500 0%, #993D00 100%);
-    box-shadow: 0 15px 40px rgba(176, 69, 0, 0.4);
+    border-top-color: rgba(101, 46, 17, 0.5);
+    background: linear-gradient(135deg, rgba(101, 46, 17, 0.2) 0%, rgba(120, 65, 30, 0.15) 100%);
+    box-shadow: 0 4px 20px rgba(101, 46, 17, 0.1);
 }
 
 [data-theme="inverted"] .partnership-info::before {
-    background: linear-gradient(45deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+    background: linear-gradient(90deg, #652E11 0%, #8B4513 50%, #652E11 100%);
+}
+
+[data-theme="inverted"] .partnership-logo-large {
+    color: #652E11;
+    background: linear-gradient(135deg, #652E11 0%, #8B4513 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 1px 1px 2px rgba(101, 46, 17, 0.3);
+}
+
+[data-theme="inverted"] .partnership-main h4 {
+    color: #78411E;
+    font-weight: 500;
+}
+
+[data-theme="inverted"] .partnership-services h5,
+[data-theme="inverted"] .partnership-palette h5 {
+    color: #78411E;
+    font-weight: 500;
 }
 
 [data-theme="inverted"] .services-list li {
-    background: rgba(255,255,255,0.1);
+    background: rgba(101, 46, 17, 0.25);
+    border-color: rgba(101, 46, 17, 0.4);
+    color: #652E11;
+    font-weight: 500;
 }
 
 [data-theme="inverted"] .services-list li:hover {
-    background: rgba(255,255,255,0.2);
+    background: rgba(101, 46, 17, 0.35);
+    border-color: rgba(101, 46, 17, 0.6);
+    box-shadow: 0 4px 12px rgba(101, 46, 17, 0.2);
+}
+
+[data-theme="inverted"] .partnership-description {
+    color: #5D3317;
+    font-weight: 400;
 }
 
 
@@ -4226,6 +5057,13 @@ footer {
 <body>
     <!-- Cursor personalizado amarelado -->
     <div class="custom-cursor" id="customCursor"></div>
+    
+    <!-- Seletor de Idioma - Canto Inferior Esquerdo -->
+    <div class="language-selector" id="language-selector">
+        <button class="language-btn active" data-lang="pt" title="Português">PT</button>
+        <div class="language-separator"></div>
+        <button class="language-btn" data-lang="en" title="English">EN</button>
+    </div>
     
     <!-- Botão de Alternância de Tema - Canto Inferior Direito -->
     <div class="theme-toggle-fixed" id="theme-toggle" title="Alternar Tema">
@@ -4242,7 +5080,7 @@ footer {
                     <div class="logo-dropdown" id="logo-dropdown">
                         <ul>
                             <li><a href="#home">Início</a></li>
-                            <li><a href="#empresa1">BDN - Projects</a></li>
+                            <li><a href="#empresa1">BDN - Projetos</a></li>
                             <li><a href="#sobre-bdn">Sobre BDN</a></li>
                             <li><a href="#contato">Contacto</a></li>
                         </ul>
@@ -4255,17 +5093,17 @@ footer {
                         <span></span>
                     </div>
                     <ul class="desktop-nav">
-                        <li><a href="#home">Início</a></li>
-                        <li><a href="#empresa1">BDN -  Projects</a></li>
-                        <li><a href="#sobre-bdn">Sobre BDN</a></li>
-                        <li><a href="#contato">Contacto</a></li>
+                        <li><a href="#home" data-translate="nav_home">Início</a></li>
+                        <li><a href="#empresa1" data-translate="nav_projects">BDN - Projetos</a></li>
+                        <li><a href="#sobre-bdn" data-translate="nav_about">Sobre BDN</a></li>
+                        <li><a href="#contato" data-translate="nav_contact">Contacto</a></li>
                     </ul>
                     <div class="nav-menu" id="nav-menu">
                         <ul>
-                            <li><a href="#home">Início</a></li>
-                            <li><a href="#empresa1">BDN - Projects</a></li>
-                            <li><a href="#sobre-bdn">Sobre BDN</a></li>
-                            <li><a href="#contato">Contacto</a></li>
+                            <li><a href="#home" data-translate="nav_home">Início</a></li>
+                            <li><a href="#empresa1" data-translate="nav_projects">BDN - Projectos</a></li>
+                            <li><a href="#sobre-bdn" data-translate="nav_about">Sobre BDN</a></li>
+                            <li><a href="#contato" data-translate="nav_contact">Contacto</a></li>
                         </ul>
                     </div>
                     <div class="nav-overlay" id="nav-overlay"></div>
@@ -4281,13 +5119,13 @@ footer {
                 <div class="hero-logo">
                     <img src="BDN_logo.png" alt="BDN" class="hero-logo-img">
                 </div>
-                <div class="hero-motto">PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</div>
-                <p>Grupo empresarial dedicado à criação de espaços únicos que inspiram e transformam</p>
-                <p>Descubra as nossas empresas especializadas e como podemos dar vida aos seus projetos</p>
+                <div class="hero-motto" data-translate="hero_motto">PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS</div>
+                <p data-translate="hero_description1">Grupo empresarial dedicado à criação de espaços únicos que inspiram e transformam</p>
+                <p data-translate="hero_description2">Descubra como podemos dar vida aos seus projectos</p>
             </div>
         </section>
 
-        <!-- Secção BDN Arquitetura -->
+        <!-- Secção BDN Arquitectura -->
         <section id="empresa1">
             <!-- Header da Seção -->
             <div class="work-header">
@@ -4296,7 +5134,7 @@ footer {
                         <div class="brand-section">
                             <span class="brand-name">BDN</span>
                             <div class="brand-divider"></div>
-                            <span class="brand-tagline">PROJECTS</span>
+                            <span class="brand-tagline" data-translate="projects_title">PROJETOS</span>
                         </div>
                     </div>
                 </div>
@@ -4304,14 +5142,14 @@ footer {
             <br><br>
             <!-- Portfolio Grid Profissional -->
             <div class="work-grid">
-                <!-- Projeto 1 -->
+                <!-- Projecto 1 -->
                 <div class="work-item size-xlarge bounce-in" data-category="residential">
                     <div class="work-image-container">
                         <img src="imagens/habitacao1.png" alt="Vila Contemporânea" class="work-image">
                     </div>
                 </div>
 
-                <!-- Projeto 2 -->
+                <!-- Projecto 2 -->
                 <div class="work-item size-medium slide-left" data-category="commercial">
                     <div class="work-image-container">
                         <img src="imagens/habitacao15.png" alt="Centro Empresarial" class="work-image" >
@@ -4388,21 +5226,21 @@ footer {
                     </div>
                 </div>
 
-                <!-- Projeto 13 - Nova imagem no lado direito, alinhada com eixo esquerdo da penúltima -->
+                <!-- Projecto 13 - Nova imagem no lado direito, alinhada com eixo esquerdo da penúltima -->
                 <div class="work-item size-large bounce-in" data-category="residential">
                     <div class="work-image-container">
                         <img src="imagens/habitacao2.png" alt="Casa Moderna" class="work-image" >
                     </div>
                 </div>
 
-                <!-- Projeto 14 - Última imagem antes dos contactos, posicionada no lado esquerdo -->
+                <!-- Projecto 14 - Última imagem antes dos contactos, posicionada no lado esquerdo -->
                 <div class="work-item size-vertical slide-left" data-category="residential">
                     <div class="work-image-container">
                         <img src="imagens/habitacao6.png" alt="Projeto Final" class="work-image" >
                     </div>
                 </div>
 
-                <!-- Projeto 15 - Imagem paralela à última, posicionada no lado direito -->
+                <!-- Projecto 15 - Imagem paralela à última, posicionada no lado direito -->
                 <div class="work-item size-large slide-right" data-category="commercial">
                     <div class="work-image-container">
                         <img src="imagens/habitacao7.png" alt="Projeto Paralelo" class="work-image" >
@@ -4521,33 +5359,33 @@ footer {
             <div class="container">
                 <div class="sobre-bdn-content">
                     <div class="sobre-bdn-header">
-                        <h2 class="sobre-bdn-title">Sobre BDN</h2>
-                        <p class="sobre-bdn-subtitle">PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</p>
+                        <h2 class="sobre-bdn-title" data-translate="about_title">Sobre BDN</h2>
+                        <p class="sobre-bdn-subtitle" data-translate="about_subtitle">PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS</p>
                     </div>
                     
                     <div class="sobre-bdn-grid">
                         <div class="sobre-bdn-text">
                             <div class="sobre-bdn-intro">
-                                <p>A <strong>BDN</strong> é uma empresa de referência no setor da arquitetura e construção, com 15 anos de experiência na criação de projetos únicos e inovadores. Combinamos tradição e modernidade para dar vida às suas ideias.</p>
+                                <p data-translate="about_description">A <strong>BDN</strong> é uma empresa de referência no setor da arquitetura e construção, com 15 anos de experiência na criação de projetos únicos e inovadores. Combinamos tradição e modernidade para dar vida às suas ideias.</p>
                             </div>
                             
                             <div class="sobre-bdn-values">
-                                <h3>Os Nossos Valores</h3>
+                                <h3 data-translate="values_title">Os Nossos Valores</h3>
                                 <div class="values-grid">
                                     <div class="value-item">
                                         <div class="value-icon">🎯</div>
-                                        <h4>Excelência</h4>
-                                        <p>Comprometemo-nos com a mais alta qualidade em cada projeto</p>
+                                        <h4 data-translate="value_excellence">Excelência</h4>
+                                        <p data-translate="value_excellence_desc">Comprometemo-nos com a mais alta qualidade em cada projeto</p>
                                     </div>
                                     <div class="value-item">
                                         <div class="value-icon">💡</div>
-                                        <h4>Inovação</h4>
-                                        <p>Utilizamos as mais recentes tecnologias e tendências arquitetónicas</p>
+                                        <h4 data-translate="value_innovation">Inovação</h4>
+                                        <p data-translate="value_innovation_desc">Utilizamos as mais recentes tecnologias e tendências arquitetónicas</p>
                                     </div>
                                     <div class="value-item">
                                         <div class="value-icon">🤝</div>
-                                        <h4>Confiança</h4>
-                                        <p>Construímos relações duradouras baseadas na transparência</p>
+                                        <h4 data-translate="value_trust">Confiança</h4>
+                                        <p data-translate="value_trust_desc">Construímos relações duradoras baseadas na transparência</p>
                                     </div>
                                 </div>
                             </div>
@@ -4556,15 +5394,15 @@ footer {
                         <div class="sobre-bdn-stats">
                             <div class="partnership-info">
                                 <div class="partnership-main">
-                                    <h4>Ana Duarte Arquitetura de Interiores</h4>
-                                    <p class="partnership-description">
+                                    <h4 data-translate="partnership_title">Ana Duarte Arquitetura de Interiores</h4>
+                                    <p class="partnership-description" data-translate="partnership_description">
                                         Especializada em design de interiores sofisticado e funcional, a Ana Duarte Arquitetura de Interiores 
                                         complementa perfeitamente os projetos da BDN, criando espaços que harmonizam arquitetura e decoração.
                                     </p>
                                 </div>
                                 
                                 <div class="partnership-services">
-                                    <h5>Especialidades</h5>
+                                    <h5 data-translate="partnership_specialties">Especialidades</h5>
                                     <ul class="services-list">
                                         <li>Design de Interiores Residencial</li>
                                         <li>Arquitetura Comercial de Interiores</li>
@@ -4583,19 +5421,18 @@ footer {
         <!-- Secção Contacto -->
         <section id="contato" class="section">
             <div class="hero">
-                <h1>Contacto</h1>
-                <p><strong>PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</strong></p>
-                <p>Entre em contacto connosco para dar vida ao seu projeto</p>
+                <h1 data-translate="contact_title">Contacto</h1>
+                <p><strong data-translate="contact_motto">PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS</strong></p>
+                <p data-translate="contact_description">Entre em contacto connosco para dar vida ao seu projeto</p>
             </div>
 
-            <!-- Informações de Contacto -->
             <div class="contact-info">
                 <div class="contact-grid">
                     <div class="contact-item">
                         <div class="contact-icon">📍</div>
                         <div class="contact-details">
-                            <h3>Morada</h3>
-                            <p>Av. Comendador Francisco Alves Quintas<br>
+                            <h3 data-translate="contact_address_title">Morada</h3>
+                            <p data-translate="contact_address">Av. Comendador Francisco Alves Quintas<br>
                             Zona Industrial de Gandra<br>
                             4740-010 Esposende</p>
                         </div>
@@ -4603,9 +5440,9 @@ footer {
                     
                     <div class="contact-item">
                         <div class="contact-icon">📞</div>
-                        <div class="contact-details centered-text" >
-                            <h3>Contactos Telefónicos</h3>
-                            <p ><a href="tel:+351911504793">911 504 793</a></p>
+                        <div class="contact-details centered-text">
+                            <h3 data-translate="contact_phone_title">Contactos Telefónicos</h3>
+                            <p><a href="tel:+351911504793">911 504 793</a></p>
                             <p><a href="tel:+351253131797">253 131 797</a></p>
                         </div>
                     </div>
@@ -4613,7 +5450,7 @@ footer {
                     <div class="contact-item">
                         <div class="contact-icon">✉️</div>
                         <div class="contact-details">
-                            <h3>Email</h3>
+                            <h3 data-translate="contact_email_title">Email</h3>
                             <p><a href="mailto:jaimebermudes@projectobdn.com">jaimebermudes@projectobdn.com</a></p>
                             <p><a href="mailto:joaobermudes@projectobdn.com">joaobermudes@projectobdn.com</a></p>
                         </div>
@@ -4622,9 +5459,9 @@ footer {
                     <div class="contact-item">
                         <div class="contact-icon">🌐</div>
                         <div class="contact-details centered-text">
-                            <h3>Redes Sociais</h3>
+                            <h3 data-translate="contact_social_title">Redes Sociais</h3>
                             <p><a href="https://www.facebook.com/projectoBDN/?fref=ts" target="_blank">Facebook</a></p>
-                            <p><a href="https://www.google.pt/maps/place/BDN/@41.5320682,-8.7647711,17z/data=!3m1!4b1!4m2!3m1!1s0xd244b916d62e69f:0x6aa246b2fb81a52c" target="_blank">Ver no Google Maps</a></p>
+                            <p><a href="https://www.google.pt/maps/place/BDN/@41.5320682,-8.7647711,17z/data=!3m1!4b1!4m2!3m1!1s0xd244b916d62e69f:0x6aa246b2fb81a52c" target="_blank" data-translate="contact_maps_link">Ver no Google Maps</a></p>
                         </div>
                     </div>
                 </div>
@@ -4633,7 +5470,7 @@ footer {
             <!-- Mapa de Localização -->
             <div class="contact-map">
                 <div class="map-container">
-                    <h3>A Nossa Localização</h3>
+                    <h3 data-translate="contact_location_title">A Nossa Localização</h3>
                     <iframe class="map-embed" 
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2975.9286897662397!2d-8.767251!3d41.532068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd244b916d62e69f%3A0x6aa246b2fb81a52c!2sBDN!5e0!3m2!1spt!2spt!4v1642098765432!5m2!1spt!2spt"
                             allowfullscreen="" 
@@ -4646,42 +5483,42 @@ footer {
 
             <!-- Formulário de Contacto -->
             <div class="contact-form">
-                <h3>Envie-nos uma Mensagem</h3>
+                <h3 data-translate="contact_form_title">Envie-nos uma Mensagem</h3>
                 <form id="contactForm" novalidate>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="firstName">Primeiro Nome *</label>
+                            <label for="firstName" data-translate="form_first_name">Primeiro Nome *</label>
                             <input type="text" id="firstName" name="firstName" required>
-                            <div class="error-message">Por favor, insira o seu primeiro nome.</div>
+                            <div class="error-message" data-translate="form_first_name_error">Por favor, insira o seu primeiro nome.</div>
                         </div>
                         <div class="form-group">
-                            <label for="lastName">Último Nome *</label>
+                            <label for="lastName" data-translate="form_last_name">Último Nome *</label>
                             <input type="text" id="lastName" name="lastName" required>
-                            <div class="error-message">Por favor, insira o seu último nome.</div>
+                            <div class="error-message" data-translate="form_last_name_error">Por favor, insira o seu último nome.</div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Email *</label>
+                        <label for="email" data-translate="form_email">Email *</label>
                         <input type="email" id="email" name="email" required>
-                        <div class="error-message">Por favor, insira um email válido.</div>
+                        <div class="error-message" data-translate="form_email_error">Por favor, insira um email válido.</div>
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">Contacto Telefónico *</label>
+                        <label for="phone" data-translate="form_phone">Contacto Telefónico *</label>
                         <input type="tel" id="phone" name="phone" placeholder="+351 XXX XXX XXX" required>
-                        <div class="error-message">Por favor, insira um número de telefone válido.</div>
+                        <div class="error-message" data-translate="form_phone_error">Por favor, insira um número de telefone válido.</div>
                     </div>
 
                     <div class="form-group">
-                        <label for="message">Mensagem *</label>
-                        <textarea id="message" name="message" placeholder="Descreva o seu projeto ou questão..." required></textarea>
-                        <div class="error-message">Por favor, escreva uma mensagem.</div>
+                        <label for="message" data-translate="form_message">Mensagem *</label>
+                        <textarea id="message" name="message" placeholder="" data-translate-placeholder="form_message_placeholder" required></textarea>
+                        <div class="error-message" data-translate="form_message_error">Por favor, escreva uma mensagem.</div>
                     </div>
 
-                    <button type="submit" class="submit-btn">Enviar Mensagem</button>
+                    <button type="submit" class="submit-btn" data-translate="form_submit">Enviar Mensagem</button>
                     
-                    <div class="success-message" id="successMessage">
+                    <div class="success-message" id="successMessage" data-translate="form_success">
                         Mensagem enviada com sucesso! Entraremos em contacto consigo brevemente.
                     </div>
                 </form>
@@ -4697,14 +5534,14 @@ footer {
                         <img src="BDN_logo.png" alt="BDN Arquitectura" class="footer-logo-img">
                         <div>
                             <h3>BDN</h3>
-                            <p style="font-size: 0.9rem; color: #ffd700; margin-bottom: 0.5rem;">PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</p>
-                            <p style="font-size: 0.8rem; color: #aaa;">Transformamos sonhos em realidade através de projetos inovadores.</p>
+                            <p style="font-size: 0.9rem; color: #ffd700; margin-bottom: 0.5rem;" data-translate="footer_motto">PROJECTAMOS | ARQUITECTAMOS | CONSTRUÍMOS</p>
+                            <p style="font-size: 0.8rem; color: #aaa;" data-translate="footer_description">Transformamos sonhos em realidade através de projectos inovadores.</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="footer-section footer-contact">
-                    <h4>Contactos</h4>
+                    <h4 data-translate="footer_contact_title">Contactos</h4>
                     <div class="contact-info">
                         <p><i class="contact-icon">✉</i> <a href="mailto:geral@bdn.pt">jaimebermudes@projectobdn.com</a></p>
                         <p><i class="contact-icon">☎</i> <a href="tel:+351912345678">+351 911 504 793</a></p>
@@ -4913,36 +5750,45 @@ footer {
             if (this.value.trim()) validateForm();
         });
 
-        // Cursor personalizado - bola amarelada com efeitos
+        // Cursor personalizado - apenas para dispositivos desktop
         const customCursor = document.getElementById('customCursor');
+        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                        ('ontouchstart' in window) || 
+                        (navigator.maxTouchPoints > 0);
         
-        // Atualizar posição do cursor
-        document.addEventListener('mousemove', (e) => {
-            customCursor.style.left = e.clientX - 10 + 'px';
-            customCursor.style.top = e.clientY - 10 + 'px';
-        });
-        
-        // Efeito hover em elementos clicáveis
-        const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .work-item, .work-cta, .lightbox-close');
-        
-        hoverElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                customCursor.classList.add('hover');
+        // Só ativar cursor personalizado em desktop
+        if (!isMobile && customCursor) {
+            // Atualizar posição do cursor
+            document.addEventListener('mousemove', (e) => {
+                customCursor.style.left = e.clientX - 10 + 'px';
+                customCursor.style.top = e.clientY - 10 + 'px';
             });
             
-            element.addEventListener('mouseleave', () => {
-                customCursor.classList.remove('hover');
+            // Efeito hover em elementos clicáveis
+            const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .work-item, .work-cta, .lightbox-close');
+            
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    customCursor.classList.add('hover');
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    customCursor.classList.remove('hover');
+                });
             });
-        });
-        
-        // Esconder cursor quando sair da página
-        document.addEventListener('mouseleave', () => {
-            customCursor.style.opacity = '0';
-        });
-        
-        document.addEventListener('mouseenter', () => {
-            customCursor.style.opacity = '1';
-        });
+            
+            // Esconder cursor quando sair da página
+            document.addEventListener('mouseleave', () => {
+                customCursor.style.opacity = '0';
+            });
+            
+            document.addEventListener('mouseenter', () => {
+                customCursor.style.opacity = '1';
+            });
+        } else if (customCursor) {
+            // Esconder cursor personalizado em dispositivos móveis
+            customCursor.style.display = 'none';
+        }
 
         // Função para inicializar eventos do cursor personalizado
         function initCustomCursor() {
@@ -5283,15 +6129,74 @@ footer {
             });
         });
 
-        // Mobile menu functionality (simplificada)
+        // Mobile menu functionality (enhanced for mobile)
         function toggleMobileMenu() {
-            const hamburger = document.getElementById('hamburger');
             const navMenu = document.getElementById('nav-menu');
             const navOverlay = document.getElementById('nav-overlay');
+            const body = document.body;
             
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            navOverlay.classList.toggle('active');
+            // No mobile, apenas controlar o menu sem hamburger
+            if (navMenu) {
+                navMenu.classList.toggle('active');
+            }
+            
+            if (navOverlay) {
+                navOverlay.classList.toggle('active');
+            }
+            
+            // Prevent body scroll when menu is open
+            if (navMenu && navMenu.classList.contains('active')) {
+                body.style.overflow = 'hidden';
+                body.style.position = 'fixed';
+                body.style.width = '100%';
+            } else {
+                body.style.overflow = '';
+                body.style.position = '';
+                body.style.width = '';
+            }
+        }
+
+        // Enhanced mobile detection and responsive features
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   ('ontouchstart' in window) || 
+                   (navigator.maxTouchPoints > 0) ||
+                   window.innerWidth <= 768;
+        }
+
+        // Touch-friendly enhancements
+        function enhanceTouchExperience() {
+            if (isMobileDevice()) {
+                // Add touch feedback to interactive elements
+                const touchElements = document.querySelectorAll('a, button, .work-item, .nav-menu a');
+                touchElements.forEach(element => {
+                    element.style.webkitTapHighlightColor = 'rgba(255, 215, 0, 0.3)';
+                    element.style.tapHighlightColor = 'rgba(255, 215, 0, 0.3)';
+                    
+                    // Add touch start and end events for better feedback
+                    element.addEventListener('touchstart', function() {
+                        this.style.transform = 'scale(0.98)';
+                        this.style.transition = 'transform 0.1s ease';
+                    });
+                    
+                    element.addEventListener('touchend', function() {
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 100);
+                    });
+                });
+                
+                // Enhance form inputs for mobile
+                const inputs = document.querySelectorAll('input, textarea');
+                inputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        // Scroll to input on focus (helps with virtual keyboard)
+                        setTimeout(() => {
+                            this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 300);
+                    });
+                });
+            }
         }
 
         // Event listeners para o menu mobile
@@ -5299,24 +6204,70 @@ footer {
             // Inicializar sistema de tema
             initThemeToggle();
             
-            const hamburger = document.getElementById('hamburger');
+            // Enhance touch experience for mobile devices
+            enhanceTouchExperience();
+            
+            const logoElement = document.querySelector('.logo');
+            const navMenu = document.getElementById('nav-menu');
             const navOverlay = document.getElementById('nav-overlay');
             const navLinks = document.querySelectorAll('.nav-menu a');
             
-            if (hamburger) {
-                hamburger.addEventListener('click', toggleMobileMenu);
+            // No mobile, o logo controla o menu em vez do hamburger
+            if (logoElement && isMobileDevice()) {
+                logoElement.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    toggleMobileMenu();
+                });
             }
             
             if (navOverlay) {
                 navOverlay.addEventListener('click', toggleMobileMenu);
+                navOverlay.addEventListener('touchstart', toggleMobileMenu);
             }
             
             // Fechar menu quando clicar em um link
             navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    // Fechar menu mobile sempre que clicar em um link
-                    toggleMobileMenu();
+                link.addEventListener('click', (e) => {
+                    if (isMobileDevice()) {
+                        // Small delay to see the click feedback before closing
+                        setTimeout(() => {
+                            toggleMobileMenu();
+                        }, 150);
+                    }
                 });
+            });
+            
+            // Close menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const navMenu = document.getElementById('nav-menu');
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        toggleMobileMenu();
+                    }
+                }
+            });
+            
+            // Handle window resize for responsive behavior
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    // Close mobile menu if window becomes desktop size
+                    if (window.innerWidth > 768) {
+                        const navMenu = document.getElementById('nav-menu');
+                        const navOverlay = document.getElementById('nav-overlay');
+                        
+                        if (navMenu && navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            if (navOverlay) {
+                                navOverlay.classList.remove('active');
+                            }
+                            document.body.style.overflow = '';
+                            document.body.style.position = '';
+                            document.body.style.width = '';
+                        }
+                    }
+                }, 250);
             });
 
             // Funcionalidade do dropdown do logo
@@ -5698,6 +6649,273 @@ footer {
             </div>
         </div>
     </div>
+
+    <!-- Sistema de Tradução -->
+    <script>
+        // Traduções
+        const translations = {
+            pt: {
+                nav_home: "Início",
+                nav_projects: "BDN - Projectos",
+                nav_about: "Sobre BDN",
+                nav_contact: "Contacto",
+                hero_motto: "PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS",
+                hero_description1: "Grupo empresarial dedicado à criação de espaços únicos que inspiram e transformam",
+                hero_description2: "Descubra como podemos dar vida aos seus projectos",
+                projects_title: "PROJETOS",
+                about_title: "Sobre BDN",
+                about_subtitle: "PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS",
+                about_description: "A <strong>BDN</strong> é uma empresa de referência no setor da arquitetura e construção, com 15 anos de experiência na criação de projetos únicos e inovadores. Combinamos tradição e modernidade para dar vida às suas ideias.",
+                values_title: "Os Nossos Valores",
+                value_excellence: "Excelência",
+                value_excellence_desc: "Comprometemo-nos com a mais alta qualidade em cada projeto",
+                value_innovation: "Inovação",
+                value_innovation_desc: "Utilizamos as mais recentes tecnologias e tendências arquitetónicas",
+                value_trust: "Confiança",
+                value_trust_desc: "Construímos relações duradoras baseadas na transparência",
+                partnership_title: "Ana Duarte Arquitetura de Interiores",
+                partnership_description: "Especializada em design de interiores sofisticado e funcional, a Ana Duarte Arquitetura de Interiores complementa perfeitamente os projetos da BDN, criando espaços que harmonizam arquitetura e decoração.",
+                partnership_specialties: "Especialidades",
+                contact_title: "Contacto",
+                contact_motto: "PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS",
+                contact_description: "Entre em contacto connosco para dar vida ao seu projeto",
+                contact_address_title: "Morada",
+                contact_address: "Av. Comendador Francisco Alves Quintas<br>Zona Industrial de Gandra<br>4740-010 Esposende",
+                contact_phone_title: "Contactos Telefónicos",
+                contact_email_title: "Email",
+                contact_social_title: "Redes Sociais",
+                contact_maps_link: "Ver no Google Maps",
+                contact_location_title: "A Nossa Localização",
+                contact_form_title: "Envie-nos uma Mensagem",
+                form_first_name: "Primeiro Nome *",
+                form_first_name_error: "Por favor, insira o seu primeiro nome.",
+                form_last_name: "Último Nome *",
+                form_last_name_error: "Por favor, insira o seu último nome.",
+                form_email: "Email *",
+                form_email_error: "Por favor, insira um email válido.",
+                form_phone: "Contacto Telefónico *",
+                form_phone_error: "Por favor, insira um número de telefone válido.",
+                form_message: "Mensagem *",
+                form_message_placeholder: "Descreva o seu projecto ou questão...",
+                form_message_error: "Por favor, escreva uma mensagem.",
+                form_submit: "Enviar Mensagem",
+                form_success: "Mensagem enviada com sucesso! Entraremos em contacto consigo brevemente.",
+                footer_motto: "PROJECTAMOS | ARQUITECTAMOS | CONSTRUÍMOS",
+                footer_description: "Transformamos sonhos em realidade através de projectos inovadores.",
+                footer_contact_title: "Contactos"
+            },
+            en: {
+                nav_home: "Home",
+                nav_projects: "BDN - Projects",
+                nav_about: "About BDN",
+                nav_contact: "Contact",
+                hero_motto: "WE DESIGN | WE ARCHITECT | WE BUILD",
+                hero_description1: "Business group dedicated to creating unique spaces that inspire and transform",
+                hero_description2: "Discover how we can bring your projects to life",
+                projects_title: "PROJECTS",
+                about_title: "About BDN",
+                about_subtitle: "WE DESIGN | WE ARCHITECT | WE BUILD",
+                about_description: "<strong>BDN</strong> is a reference company in the architecture and construction sector, with 15 years of experience in creating unique and innovative projects. We combine tradition and modernity to bring your ideas to life.",
+                values_title: "Our Values",
+                value_excellence: "Excellence",
+                value_excellence_desc: "We are committed to the highest quality in every project",
+                value_innovation: "Innovation",
+                value_innovation_desc: "We use the latest technologies and architectural trends",
+                value_trust: "Trust",
+                value_trust_desc: "We build lasting relationships based on transparency",
+                partnership_title: "Ana Duarte Interior Architecture",
+                partnership_description: "Specialized in sophisticated and functional interior design, Ana Duarte Interior Architecture perfectly complements BDN's projects, creating spaces that harmonize architecture and decoration.",
+                partnership_specialties: "Specialties",
+                contact_title: "Contact",
+                contact_motto: "WE DESIGN | WE ARCHITECT | WE BUILD",
+                contact_description: "Get in touch with us to bring your project to life",
+                contact_address_title: "Address",
+                contact_address: "Av. Comendador Francisco Alves Quintas<br>Zona Industrial de Gandra<br>4740-010 Esposende",
+                contact_phone_title: "Phone Contacts",
+                contact_email_title: "Email",
+                contact_social_title: "Social Media",
+                contact_maps_link: "View on Google Maps",
+                contact_location_title: "Our Location",
+                contact_form_title: "Send us a Message",
+                form_first_name: "First Name *",
+                form_first_name_error: "Please enter your first name.",
+                form_last_name: "Last Name *",
+                form_last_name_error: "Please enter your last name.",
+                form_email: "Email *",
+                form_email_error: "Please enter a valid email.",
+                form_phone: "Phone Contact *",
+                form_phone_error: "Please enter a valid phone number.",
+                form_message: "Message *",
+                form_message_placeholder: "Describe your project or question...",
+                form_message_error: "Please write a message.",
+                form_submit: "Send Message",
+                form_success: "Message sent successfully! We will contact you shortly.",
+                footer_motto: "WE DESIGN | WE ARCHITECT | WE BUILD",
+                footer_description: "We transform dreams into reality through innovative projects.",
+                footer_contact_title: "Contacts"
+            }
+        };
+
+        // Sistema de tradução
+        class LanguageSystem {
+            constructor() {
+                this.currentLanguage = localStorage.getItem('language') || 'pt';
+                this.init();
+            }
+
+            init() {
+                this.updateLanguageButtons();
+                this.translatePage();
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                const languageButtons = document.querySelectorAll('.language-btn');
+                languageButtons.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const newLang = e.target.getAttribute('data-lang');
+                        this.setLanguage(newLang);
+                    });
+                });
+            }
+
+            setLanguage(lang) {
+                this.currentLanguage = lang;
+                localStorage.setItem('language', lang);
+                this.updateLanguageButtons();
+                this.translatePage();
+            }
+
+            updateLanguageButtons() {
+                const buttons = document.querySelectorAll('.language-btn');
+                buttons.forEach(btn => {
+                    const btnLang = btn.getAttribute('data-lang');
+                    btn.classList.toggle('active', btnLang === this.currentLanguage);
+                });
+            }
+
+            translatePage() {
+                const elements = document.querySelectorAll('[data-translate]');
+                const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+                const currentTranslations = translations[this.currentLanguage];
+
+                // Traduzir elementos de texto
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    if (currentTranslations[key]) {
+                        element.innerHTML = currentTranslations[key];
+                    }
+                });
+
+                // Traduzir placeholders
+                placeholderElements.forEach(element => {
+                    const key = element.getAttribute('data-translate-placeholder');
+                    if (currentTranslations[key]) {
+                        element.placeholder = currentTranslations[key];
+                    }
+                });
+
+                // Atualizar título da página
+                document.title = this.currentLanguage === 'pt' ? 'BDN - Arquitetura e Construção' : 'BDN - Architecture and Construction';
+                
+                // Atualizar tooltip do tema
+                const themeToggle = document.getElementById('theme-toggle');
+                if (themeToggle) {
+                    themeToggle.title = this.currentLanguage === 'pt' ? 'Alternar Tema' : 'Toggle Theme';
+                }
+                
+                // Atualizar tooltips dos botões de idioma
+                const languageButtons = document.querySelectorAll('.language-btn');
+                languageButtons.forEach(btn => {
+                    const lang = btn.getAttribute('data-lang');
+                    if (lang === 'pt') {
+                        btn.title = this.currentLanguage === 'pt' ? 'Português' : 'Portuguese';
+                    } else if (lang === 'en') {
+                        btn.title = this.currentLanguage === 'pt' ? 'Inglês' : 'English';
+                    }
+                });
+            }
+        }
+
+        // Inicializar sistema de tradução quando o DOM estiver carregado
+        document.addEventListener('DOMContentLoaded', function() {
+            new LanguageSystem();
+            
+            // Enhanced mobile optimizations
+            initMobileOptimizations();
+        });
+        
+        // Mobile-specific optimizations
+        function initMobileOptimizations() {
+            if (isMobileDevice()) {
+                // Prevent zoom on input focus (iOS Safari)
+                const inputs = document.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        if (input.type !== 'email' && input.type !== 'tel') {
+                            document.querySelector('meta[name=viewport]').setAttribute('content', 
+                                'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                        }
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        document.querySelector('meta[name=viewport]').setAttribute('content', 
+                            'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
+                    });
+                });
+                
+                // Optimize scroll performance
+                document.body.style.webkitOverflowScrolling = 'touch';
+                document.body.style.overflowScrolling = 'touch';
+                
+                // Add safe area support for newer phones
+                document.documentElement.style.setProperty('--safe-area-top', 'env(safe-area-inset-top)');
+                document.documentElement.style.setProperty('--safe-area-bottom', 'env(safe-area-inset-bottom)');
+                document.documentElement.style.setProperty('--safe-area-left', 'env(safe-area-inset-left)');
+                document.documentElement.style.setProperty('--safe-area-right', 'env(safe-area-inset-right)');
+                
+                // Optimize image loading for mobile
+                const images = document.querySelectorAll('img');
+                images.forEach(img => {
+                    img.loading = 'lazy';
+                    img.addEventListener('error', function() {
+                        this.style.display = 'none';
+                    });
+                });
+                
+                // Add smooth scroll behavior
+                document.documentElement.style.scrollBehavior = 'smooth';
+                
+                // Improve font rendering on mobile
+                document.body.style.webkitFontSmoothing = 'antialiased';
+                document.body.style.mozOsxFontSmoothing = 'grayscale';
+                
+                // Add haptic feedback support if available
+                if ('vibrate' in navigator) {
+                    const buttons = document.querySelectorAll('button, .contact-btn, .nav-menu a');
+                    buttons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            navigator.vibrate(50); // Light haptic feedback
+                        });
+                    });
+                }
+            }
+        }
+        
+        // Enhanced performance monitoring for mobile
+        window.addEventListener('load', function() {
+            // Basic performance monitoring
+            if ('performance' in window) {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+                
+                // Log slow loads for mobile debugging
+                if (loadTime > 3000 && isMobileDevice()) {
+                    console.log('Slow mobile load detected:', loadTime + 'ms');
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>
