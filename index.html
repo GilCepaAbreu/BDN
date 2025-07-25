@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BDN - Projetamos | Arquitetamos | Construímos</title>
+    <title>BDN - Projectamos | Arquitectamos | Construímos</title>
     <link rel="icon" type="image/png" href="bdn_fabicon.png">
     <link rel="shortcut icon" type="image/png" href="bdn_fabicon.png">
     <link rel="apple-touch-icon" href="bdn_fabicon.png">
@@ -16,6 +16,43 @@
     cursor: none;
 }
 
+/* Sistema de Cores - Tema Padrão e Inverso */
+:root {
+    /* Tema Padrão (Preto e Amarelo) - Backgrounds mais escuros */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #050505;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --accent-primary: #ffd700;
+    --accent-secondary: #ffed4e;
+    --accent-tertiary: #b8860b;
+    --border-color: #ffd700;
+    --shadow-color: rgba(255, 215, 0, 0.3);
+    --gradient-start: #0a0a0a;
+    --gradient-end: #1a1a1a;
+    --overlay-bg: rgba(255, 215, 0, 0.1);
+    --hover-glow: rgba(255, 215, 0, 0.5);
+}
+
+[data-theme="inverted"] {
+    /* Tema Inverso (Amarelo e Preto) */
+    --bg-primary: #ffd700;
+    --bg-secondary: #ffed4e;
+    --bg-tertiary: #fff8dc;
+    --text-primary: #1a1a1a;
+    --text-secondary: #2d2d2d;
+    --accent-primary: #1a1a1a;
+    --accent-secondary: #0a0a0a;
+    --accent-tertiary: #333333;
+    --border-color: #1a1a1a;
+    --shadow-color: rgba(26, 26, 26, 0.3);
+    --gradient-start: #ffd700;
+    --gradient-end: #ffed4e;
+    --overlay-bg: rgba(26, 26, 26, 0.1);
+    --hover-glow: rgba(26, 26, 26, 0.5);
+}
+
 /* Cursor personalizado - bola amarelada com efeitos */
 body, html {
     cursor: none;
@@ -25,13 +62,13 @@ body, html {
     position: fixed;
     width: 20px;
     height: 20px;
-    background: radial-gradient(circle, rgba(255,215,0,0.9) 0%, rgba(255,193,7,0.7) 70%, rgba(255,165,0,0.3) 100%);
+    background: radial-gradient(circle, var(--accent-primary) 0%, var(--accent-secondary) 70%, var(--accent-tertiary) 100%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 10000;
-    transition: transform 0.1s ease;
-    box-shadow: 0 0 15px rgba(255,215,0,0.6), 0 0 30px rgba(255,193,7,0.4);
-    animation: pulseYellow 2s infinite;
+    transition: transform 0.1s ease, background 0.5s ease;
+    box-shadow: 0 0 15px var(--shadow-color), 0 0 30px var(--shadow-color);
+    animation: pulseTheme 2s infinite;
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -39,37 +76,37 @@ body, html {
 
 .custom-cursor.hover {
     transform: scale(1.5);
-    background: radial-gradient(circle, rgba(255,215,0,1) 0%, rgba(255,193,7,0.8) 70%, rgba(255,165,0,0.5) 100%);
-    box-shadow: 0 0 25px rgba(255,215,0,0.8), 0 0 50px rgba(255,193,7,0.6);
-    animation: pulseHoverYellow 1s infinite;
+    background: radial-gradient(circle, var(--accent-primary) 0%, var(--accent-secondary) 70%, var(--accent-tertiary) 100%);
+    box-shadow: 0 0 25px var(--hover-glow), 0 0 50px var(--hover-glow);
+    animation: pulseHoverTheme 1s infinite;
 }
 
-@keyframes pulseYellow {
+@keyframes pulseTheme {
     0% {
-        box-shadow: 0 0 15px rgba(255,215,0,0.6), 0 0 30px rgba(255,193,7,0.4);
+        box-shadow: 0 0 15px var(--shadow-color), 0 0 30px var(--shadow-color);
         opacity: 1;
     }
     50% {
-        box-shadow: 0 0 25px rgba(255,215,0,0.8), 0 0 40px rgba(255,193,7,0.6);
+        box-shadow: 0 0 25px var(--hover-glow), 0 0 40px var(--hover-glow);
         opacity: 0.8;
     }
     100% {
-        box-shadow: 0 0 15px rgba(255,215,0,0.6), 0 0 30px rgba(255,193,7,0.4);
+        box-shadow: 0 0 15px var(--shadow-color), 0 0 30px var(--shadow-color);
         opacity: 1;
     }
 }
 
-@keyframes pulseHoverYellow {
+@keyframes pulseHoverTheme {
     0% {
-        box-shadow: 0 0 25px rgba(255,215,0,0.8), 0 0 50px rgba(255,193,7,0.6);
+        box-shadow: 0 0 25px var(--hover-glow), 0 0 50px var(--hover-glow);
         transform: scale(1.5);
     }
     50% {
-        box-shadow: 0 0 35px rgba(255,215,0,1), 0 0 70px rgba(255,193,7,0.8);
+        box-shadow: 0 0 35px var(--hover-glow), 0 0 70px var(--hover-glow);
         transform: scale(1.7);
     }
     100% {
-        box-shadow: 0 0 25px rgba(255,215,0,0.8), 0 0 50px rgba(255,193,7,0.6);
+        box-shadow: 0 0 25px var(--hover-glow), 0 0 50px var(--hover-glow);
         transform: scale(1.5);
     }
 }
@@ -85,15 +122,37 @@ input, textarea, select {
 body {
     font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
-    color: #fff;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
     min-height: 100vh;
     padding-top: 80px; /* Espaço para a navbar fixa */
+    overflow-x: hidden; /* Prevenir scroll horizontal */
+    max-width: 100vw; /* Limitar largura máxima */
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Regra adicional para garantir que nenhum elemento ultrapasse */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.work-grid, .work-item {
+    max-width: 100vw;
 }
 
 /* Espaçamento entre seções principais */
 section {
     margin-bottom: clamp(4rem, 8vw, 6rem);
+}
+
+/* Anular margin-bottom da galeria inversa */
+#galeria-inversa {
+    margin-bottom: 0 !important;
 }
 
 section:last-child {
@@ -173,7 +232,7 @@ header:after {
     font-family: 'Playfair Display', serif;
     font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 600;
-    color: #ffd700;
+    color: var(--accent-primary);
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -183,10 +242,7 @@ header:after {
     z-index: inherit;
     margin-left: clamp(15px, 4vw, 30px);
     padding-left: 0;
-}
-
-.logo:hover {
-    opacity: 0.8;
+    transition: all 0.3s ease;
 }
 
 .logo-img {
@@ -194,6 +250,20 @@ header:after {
     height: clamp(30px, 6vw, 40px);
     object-fit: contain;
     cursor: url('bdn_fabicon.png') 16 16, pointer;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+}
+
+/* Fundo opaco para logos no tema inverso */
+[data-theme="inverted"] .logo-img {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 215, 0, 0.1);
 }
 
 .logo:hover .logo-img {
@@ -208,7 +278,7 @@ header:after {
     position: absolute;
     top: 100%;
     left: 0;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.98) 0%, rgba(5, 5, 5, 0.99) 100%);
     border: 1px solid rgba(255, 215, 0, 0.4);
     border-radius: 12px;
     padding: 0.8rem 0;
@@ -339,7 +409,7 @@ header:after {
     position: absolute;
     top: 100%;
     left: 0;
-    background: rgba(0, 0, 0, 0.98);
+    background: rgba(0, 0, 0, 0.99);
     backdrop-filter: blur(25px);
     border: 1px solid rgba(255, 215, 0, 0.3);
     border-radius: 8px;
@@ -497,7 +567,7 @@ nav ul {
 
 nav a {
     text-decoration: none;
-    color: #fff;
+    color: var(--text-primary);
     font-weight: 400;
     font-size: clamp(0.8rem, 1.5vw, 0.95rem);
     padding: 0.5rem 1rem;
@@ -511,9 +581,253 @@ nav a {
 
 nav a:hover,
 nav a.active {
-    color: #ffd700;
-    background: rgba(255, 215, 0, 0.1);
+    color: var(--accent-primary);
+    background: var(--overlay-bg);
     transform: translateY(-2px);
+}
+
+/* Language Selector - Posição Fixa Inferior Esquerda */
+.language-selector {
+    position: fixed !important;
+    bottom: 30px !important;
+    left: 30px !important;
+    background: var(--bg-secondary);
+    border: 2px solid var(--accent-primary);
+    border-radius: 30px;
+    padding: 8px 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    z-index: 1001;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.language-selector:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+}
+
+.language-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.language-btn.active {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    font-weight: 600;
+}
+
+.language-btn:hover:not(.active) {
+    color: var(--accent-primary);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.language-separator {
+    width: 1px;
+    height: 16px;
+    background: var(--accent-primary);
+    opacity: 0.5;
+}
+
+/* Theme Toggle Button - Posição Fixa Inferior Direita */
+.theme-toggle-fixed {
+    position: fixed !important;
+    bottom: 30px !important;
+    right: 30px !important;
+    width: 60px;
+    height: 60px;
+    background: var(--bg-secondary);
+    border: 3px solid var(--accent-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px var(--shadow-color), 0 0 40px var(--shadow-color);
+    z-index: 99999 !important;
+    backdrop-filter: blur(10px);
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+.theme-toggle-fixed:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 6px 30px var(--hover-glow), 0 0 60px var(--hover-glow);
+    opacity: 1;
+    animation: themeTogglePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes themeTogglePulse {
+    0%, 100% { 
+        box-shadow: 0 6px 30px var(--hover-glow), 0 0 60px var(--hover-glow);
+        transform: scale(1.1) rotate(15deg);
+    }
+    50% { 
+        box-shadow: 0 8px 40px var(--hover-glow), 0 0 80px var(--hover-glow);
+        transform: scale(1.15) rotate(15deg);
+    }
+}
+
+.theme-toggle-fixed .theme-toggle-icon {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle-fixed .theme-circle {
+    width: 24px;
+    height: 24px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    transform: translateX(-8px);
+}
+
+[data-theme="inverted"] .theme-toggle-fixed .theme-circle {
+    transform: translateX(8px);
+    background: var(--accent-primary);
+}
+
+/* Ícones no botão fixo */
+.theme-toggle-fixed::before {
+    content: '☀️';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    opacity: 1;
+    transition: all 0.4s ease;
+    z-index: 1;
+}
+
+.theme-toggle-fixed::after {
+    content: '🌙';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    opacity: 0.3;
+    transition: all 0.4s ease;
+    z-index: 1;
+}
+
+[data-theme="inverted"] .theme-toggle-fixed::before {
+    opacity: 0.3;
+}
+
+[data-theme="inverted"] .theme-toggle-fixed::after {
+    opacity: 1;
+}
+
+/* Efeito de entrada do botão - Sempre visível */
+.theme-toggle-fixed {
+    /* Remove animação de entrada que pode causar desaparecimento */
+    /* animation: slideInFromRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1s both; */
+    animation: none !important;
+    transform: translateX(0) scale(1) !important;
+    opacity: 1 !important;
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100px) scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(-10px) scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateX(0) scale(1);
+        opacity: 0.9;
+    }
+}
+
+/* Forçar visibilidade do botão de tema */
+#theme-toggle {
+    position: fixed !important;
+    z-index: 999999 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: flex !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+/* Garantir que o botão não seja ocultado por outros elementos */
+.theme-toggle-fixed,
+#theme-toggle {
+    will-change: transform;
+    isolation: isolate;
+}
+
+/* Responsivo para mobile */
+@media (max-width: 768px) {
+    .language-selector {
+        bottom: 20px;
+        left: 20px;
+        padding: 6px 10px;
+    }
+    
+    .language-btn {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+    
+    .theme-toggle-fixed {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+        border-width: 2px;
+    }
+    
+    .theme-toggle-fixed .theme-toggle-icon {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .theme-toggle-fixed .theme-circle {
+        width: 18px;
+        height: 18px;
+        transform: translateX(-6px);
+    }
+    
+    [data-theme="inverted"] .theme-toggle-fixed .theme-circle {
+        transform: translateX(6px);
+    }
+    
+    .theme-toggle-fixed::before {
+        left: 8px;
+        font-size: 12px;
+    }
+    
+    .theme-toggle-fixed::after {
+        right: 8px;
+        font-size: 12px;
+    }
 }
 
 main {
@@ -526,7 +840,7 @@ main {
     padding: clamp(3rem, 10vw, 6rem) 0;
     background: transparent;
     margin-bottom: clamp(3rem, 8vw, 5rem);
-    color: white;
+    color: var(--text-primary);
 }
 
 .hero h1 {
@@ -534,7 +848,7 @@ main {
     font-size: clamp(2rem, 6vw, 3.5rem);
     margin-bottom: clamp(1rem, 3vw, 1.5rem);
     font-weight: 400;
-    color: #ffd700;
+    color: var(--accent-primary);
     line-height: 1.2;
 }
 
@@ -542,7 +856,7 @@ main {
     font-size: clamp(0.9rem, 2vw, 1.1rem);
     margin-bottom: 1rem;
     font-weight: 300;
-    color: #ccc;
+    color: var(--text-secondary);
     max-width: min(600px, 90vw);
     margin-left: auto;
     margin-right: auto;
@@ -560,10 +874,35 @@ main {
     object-fit: contain;
     filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
     transition: all 0.3s ease;
+    border-radius: 12px;
 }
 
 .hero-logo-img:hover {
     transform: scale(1.05);
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+}
+
+/* Fundo opaco para logo hero no tema inverso */
+[data-theme="inverted"] .hero-logo-img {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(15px);
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 215, 0, 0.1),
+        0 0 20px rgba(255, 215, 0, 0.2);
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
+}
+
+[data-theme="inverted"] .hero-logo-img:hover {
+    background: rgba(0, 0, 0, 0.98);
+    transform: scale(1.05);
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 215, 0, 0.2),
+        0 0 30px rgba(255, 215, 0, 0.4);
     filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
 }
 
@@ -671,6 +1010,202 @@ main {
     padding: clamp(5rem, 8vw, 7rem) 0;
 }
 
+/* Remover completamente o espaçamento superior da seção de contactos */
+#contato.section {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Reduzir drasticamente o padding superior do hero na seção de contactos */
+#contato .hero {
+    padding-top: clamp(0.5rem, vw, 1rem) !important;
+}
+
+/* Forçar conexão direta entre título único e contactos */
+.unique-client-section + #contato {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Remover espaçamento inferior da galeria inversa */
+#galeria-inversa.section {
+    padding-bottom: 0 !important;
+    margin-bottom: -100rem !important;
+    padding: clamp(6rem, 12vw, 10rem) 0 0 0 !important; /* Aumentar ainda mais o padding superior */
+}
+
+/* Aumentar espaçamento específico entre título único e galeria inversa */
+.unique-client-section + #galeria-inversa {
+    margin-top: clamp(6rem, 12vw, 10rem) !important; /* Dobrar o espaçamento */
+}
+
+/* Forçar remoção completa de espaçamento entre galeria inversa e contactos */
+#galeria-inversa + #contato {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+#galeria-inversa .container {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Remover espaçamento do work-grid na galeria inversa */
+#galeria-inversa .work-grid {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Garantir que não há espaçamento adicional nos work-items da galeria inversa */
+#galeria-inversa .work-item:last-child {
+    margin-bottom: 0 !important;
+}
+
+/* Remover espaçamento inferior da seção empresa1 */
+#empresa1 {
+    margin-top: 10rem;
+    padding-bottom: 0;
+    margin-bottom: 15rem;
+}
+
+
+
+
+
+
+/* Divisor section CSS removed */
+
+.divisor-text {
+    font-size: clamp(0.7rem, 2vw, 1.5rem);
+    font-weight: 800;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    position: relative;
+    color: #ffd700;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes gradient-flow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.divisor-text .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(50px) rotateX(-45deg);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform-origin: center bottom;
+    margin: 0 clamp(0.3rem, 1vw, 1rem);
+    color: #ffd700;
+}
+
+.divisor-text .separator {
+    display: inline-block;
+    opacity: 0.6;
+    color: rgba(255, 215, 0, 0.6);
+    transform: scale(1.2);
+    margin: 0 clamp(0.3rem, 1vw, 1rem);
+}
+
+.divisor-subtitle {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(0.6rem, 0.9vw, 0.8rem);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+}
+
+.divisor-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgba(255, 215, 0, 0.6);
+    border-radius: 50%;
+    opacity: 0;
+    animation: float-particle 6s ease-in-out infinite;
+}
+
+@keyframes float-particle {
+    0%, 100% { 
+        opacity: 0; 
+        transform: translateY(0) scale(0);
+    }
+    20% { 
+        opacity: 1; 
+        transform: translateY(-30px) scale(1);
+    }
+    80% { 
+        opacity: 1; 
+        transform: translateY(-60px) scale(1.2);
+    }
+    100% { 
+        opacity: 0; 
+        transform: translateY(-100px) scale(0);
+    }
+}
+
+/* Estados de animação */
+.divisor-section.phase-1 .divisor-intro {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.divisor-section.phase-2 .divisor-text .word {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+}
+
+.divisor-section.phase-3 .divisor-subtitle {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.divisor-section.phase-3 .particle {
+    animation-play-state: running;
+}
+
+/* Efeito de scan line */
+.divisor-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 215, 0, 0.8) 50%, 
+        transparent 100%);
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 5;
+}
+
+.divisor-section.scanning::after {
+    opacity: 1;
+    transform: translateY(100vh);
+}
+
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
@@ -766,37 +1301,148 @@ main {
 }
 
 footer {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.95);
     color: white;
-    text-align: center;
-    padding: 3rem 0;
-    margin-top: 4rem;
+    padding: 2rem 0 1rem;
+    margin-top: 2rem;
     border-top: 1px solid rgba(255, 215, 0, 0.2);
 }
 
 .footer-content {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    align-items: flex-start;
     gap: 2rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
 }
 
-.footer-logo {
+.footer-section h4 {
+    color: #ffd700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.footer-about .footer-logo {
     display: flex;
     align-items: center;
     gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.footer-about .footer-logo h3 {
+    color: #ffd700;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+    font-family: 'Playfair Display', serif;
 }
 
 .footer-logo-img {
     width: 30px;
     height: 30px;
     object-fit: contain;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+/* Fundo opaco para logo footer no tema inverso */
+[data-theme="inverted"] .footer-logo-img {
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(4px);
+    padding: 3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.contact-info p {
+    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+}
+
+.contact-info a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+    color: #ffd700;
+}
+
+.contact-icon {
+    font-size: 1rem;
+    min-width: 20px;
+}
+
+.service-list {
+    list-style: none;
+    padding: 0;
+}
+
+.service-list li {
+    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
+    color: #ccc;
+    position: relative;
+    padding-left: 0.8rem;
+}
+
+.service-list li:before {
+    content: "▶";
+    color: #ffd700;
+    position: absolute;
+    left: 0;
+    font-size: 0.8rem;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+}
+
+.info-list li {
+    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
+    color: #ccc;
+    position: relative;
+    padding-left: 0.8rem;
+}
+
+.info-list li:before {
+    content: "◉";
+    color: #ffd700;
+    position: absolute;
+    left: 0;
+    font-size: 0.6rem;
+    top: 0.3rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.social-links a {
+    font-size: 1.3rem;
+    text-decoration: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+}
+
+.social-links a:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
 }
 
 .footer-links {
     display: flex;
-    gap: 2rem;
+    flex-direction: column;
+    gap: 0.3rem;
     list-style: none;
 }
 
@@ -804,12 +1450,24 @@ footer {
     color: #aaa;
     text-decoration: none;
     transition: color 0.3s ease;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     cursor: url('bdn_fabicon.png') 16 16, pointer;
 }
 
 .footer-links a:hover {
     color: #ffd700;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 215, 0, 0.1);
+    color: #888;
+    font-size: 0.8rem;
+}
+
+.footer-bottom p {
+    margin-bottom: 0.3rem;
 }
 
 .nav-tabs {
@@ -863,9 +1521,12 @@ footer {
 
 .contact-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
-    gap: clamp(2rem, 4vw, 3rem);
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
     margin-top: clamp(2rem, 4vw, 3rem);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .contact-item {
@@ -918,6 +1579,85 @@ footer {
 .contact-details a:hover {
     color: #ffed4e;
     text-decoration: underline;
+}
+
+/* Centralização do texto para cards específicos */
+.contact-details.centered-text {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-details.centered-text h3 {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-details.centered-text p {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-details.centered-text a {
+    text-align: center;
+    display: inline-block;
+}
+
+/* Responsividade para os cards de contacto */
+@media (max-width: 1024px) {
+    .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 800px;
+        gap: clamp(1.5rem, 3vw, 2rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+}
+
+/* Mapa de Localização */
+.contact-map {
+    margin-top: clamp(3rem, 6vw, 4rem);
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.map-container {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 8px;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.map-container h3 {
+    color: #ffd700;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    font-family: 'Playfair Display', serif;
+}
+
+.map-embed {
+    width: 100%;
+    height: 400px;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .map-embed {
+        height: 300px;
+    }
 }
 
 /* Formulário de Contacto */
@@ -1043,754 +1783,1578 @@ footer {
     display: none;
 }
 
-/* Responsive Design - Mobile First */
-@media (max-width: 768px) {
-    .header-content {
-        justify-content: space-between;
-        gap: 1rem;
-        padding: clamp(1rem, 2vw, 1.5rem) 0;
-        padding-left: 0;
-    }
-
-    .logo {
-        margin-left: 15px;
-        padding-left: 0;
-    }
-
-    nav {
-        margin-right: 15px;
-    }
-
-    .hamburger {
-        display: flex;
-    }
-
-    .desktop-nav {
-        display: none;
-    }
-
-    .nav-menu {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 280px;
-        height: 100vh;
-        background: rgba(0, 0, 0, 0.95);
-        padding-top: 100px;
-        z-index: 1001;
-        border-left: 1px solid rgba(255, 215, 0, 0.3);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        backdrop-filter: blur(10px);
-    }
-
-    .nav-menu.active {
-        right: 0;
-        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .nav-menu ul {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        width: 100%;
-        padding: 0;
-        list-style: none;
-    }
-
-    .nav-menu li {
-        width: 100%;
-        border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-    }
-
-    .nav-menu a {
-        display: block;
-        width: 100%;
-        text-align: center;
-        padding: 1.2rem 2rem;
-        font-size: 1.1rem;
-        color: #ffd700;
-        text-decoration: none;
-        position: relative;
-        cursor: url('bdn_fabicon.png') 16 16, pointer;
-    }
-
-    .nav-menu a:hover {
-        background: rgba(255, 215, 0, 0.1);
-        color: #fff;
-    }
-
-    .nav-menu li:last-child {
-        border-bottom: none;
-    }
-
-    /* Logo dropdown styles for mobile */
-    .logo-dropdown {
-        min-width: 200px;
-        left: -30px;
-        border-radius: 10px;
-        padding: 0.6rem 0;
-        box-shadow: 
-            0 8px 20px rgba(0, 0, 0, 0.4),
-            0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .logo-dropdown a {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-    }
-
-    .logo-dropdown a:hover {
-        transform: translateX(6px);
-        padding-left: 1.8rem;
-    }
+/* Professional Work Portfolio Styles - Skylab Inspired */
+.work-header {
+    text-align: center;
+    padding: 5rem 2rem 4rem;
+    background: var(--bg-primary);
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
 }
 
-@media (max-width: 480px) {
-    .container {
-        padding: 0 15px;
-    }
+.work-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(90deg, transparent 0%, var(--accent-primary) 50%, transparent 100%) top/100% 1px no-repeat,
+        linear-gradient(0deg, transparent 0%, rgba(255, 215, 0, 0.02) 50%, transparent 100%);
+    pointer-events: none;
+    opacity: 0.6;
+}
 
-    .header-content {
+.work-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent-primary) 50%, transparent 100%);
+    opacity: 0.8;
+}
+
+.work-hero {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.work-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    color: #fff;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    font-family: 'Playfair Display', serif;
+}
+
+/* Novo design profissional do título */
+.professional-title-container {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    background: rgba(255, 215, 0, 0.02);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 215, 0, 0.08);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.professional-title-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 215, 0, 0.03) 0%, 
+        transparent 30%, 
+        rgba(255, 215, 0, 0.01) 70%, 
+        transparent 100%);
+    pointer-events: none;
+}
+
+.brand-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--accent-primary);
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.brand-name::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent-primary) 50%, transparent 100%);
+}
+
+.brand-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent-primary) 50%, transparent 100%);
+    position: relative;
+}
+
+.brand-divider::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-primary);
+}
+
+.brand-tagline {
+    font-family: 'Roboto', sans-serif;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.work-title-new {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    color: #fff;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    line-height: 1.2;
+}
+
+.work-subtitle-new {
+    font-family: 'Roboto', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 300;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin: 0;
+}
+
+/* Estilos para tema invertido do work-header */
+[data-theme="inverted"] .work-header {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="inverted"] .work-header::before {
+    background: 
+        linear-gradient(90deg, transparent 0%, var(--accent-primary) 50%, transparent 100%) top/100% 1px no-repeat,
+        linear-gradient(0deg, transparent 0%, rgba(26, 26, 26, 0.02) 50%, transparent 100%);
+    opacity: 0.4;
+}
+
+[data-theme="inverted"] .work-header::after {
+    background: linear-gradient(90deg, transparent 0%, var(--accent-primary) 50%, transparent 100%);
+    opacity: 0.6;
+}
+
+/* Estilos para tema invertido do professional-title-container */
+[data-theme="inverted"] .professional-title-container {
+    background: rgba(0,0,0,0.95);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    box-shadow: 
+        0 4px 20px rgba(255, 215, 0, 0.2),
+        inset 0 1px 0 rgba(255, 215, 0, 0.1);
+}
+
+[data-theme="inverted"] .professional-title-container::before {
+    background: linear-gradient(135deg, 
+        rgba(255, 215, 0, 0.05) 0%, 
+        transparent 30%, 
+        rgba(255, 215, 0, 0.02) 70%, 
+        transparent 100%);
+}
+
+/* Estilos para tema invertido do novo título */
+[data-theme="inverted"] .brand-name {
+    color: #FFD700;
+    text-shadow: 
+        1px 1px 2px rgba(0,0,0,0.8),
+        2px 2px 4px rgba(0,0,0,0.6),
+        0 0 8px rgba(255, 215, 0, 0.4);
+    font-weight: 800;
+}
+
+[data-theme="inverted"] .brand-name::after {
+    background: linear-gradient(90deg, transparent 0%, #FFD700 50%, transparent 100%);
+}
+
+[data-theme="inverted"] .brand-divider {
+    background: linear-gradient(90deg, transparent 0%, #FFD700 50%, transparent 100%);
+}
+
+[data-theme="inverted"] .brand-divider::before {
+    background: #FFD700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+[data-theme="inverted"] .brand-tagline {
+    color: #FFC107;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+}
+
+[data-theme="inverted"] .work-title-new {
+    color: #FFD700;
+    font-weight: 500;
+    text-shadow: 
+        1px 1px 2px rgba(0,0,0,0.8),
+        2px 2px 4px rgba(0,0,0,0.5);
+}
+
+[data-theme="inverted"] .work-subtitle-new {
+    color: #FFC107;
+    font-weight: 500;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+}
+
+/* Responsividade para o novo título */
+@media (max-width: 768px) {
+    .work-header {
+        padding: 3rem 1rem 2rem;
+    }
+    
+    .professional-title-container {
+        padding: 2rem 1.5rem;
+        margin: 0 1rem;
+        border-radius: 15px;
+    }
+    
+    .brand-section {
+        flex-direction: column;
         gap: 1rem;
-        padding: 0.8rem 0;
-        padding-left: 0;
-    }
-
-    .logo {
-        font-size: 1.5rem;
-        margin-left: 15px;
-        padding-left: 0;
-    }
-
-    nav {
-        margin-right: 15px;
-    }
-
-    .logo-img {
-        width: 30px;
-        height: 30px;
-    }
-
-    nav ul {
-        width: 200px;
-    }
-
-    nav a {
-        font-size: 0.85rem;
-        padding: 0.8rem;
-    }
-
-    main {
-        margin-top: 70px;
-        padding: 1rem 0;
-    }
-
-    .hero {
-        padding: 2rem 0;
-        margin-bottom: 2rem;
-    }
-
-    .hero h1 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .hero p {
-        font-size: 0.9rem;
-        margin-bottom: 0.8rem;
-    }
-
-    .hero-logo-img {
-        width: 120px;
-    }
-
-    .companies-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        margin-top: 2rem;
-    }
-
-    .company-card {
-        padding: 1.5rem;
-    }
-
-    .company-card h2 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
-    }
-
-    .company-card h3 {
-        font-size: 1.2rem;
-        margin-top: 1.5rem;
-    }
-
-    .company-icon {
-        width: 35px;
-        height: 35px;
-        font-size: 1rem;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .project-card {
-        padding: 1.5rem;
-    }
-
-    .project-card h4 {
-        font-size: 1.1rem;
-    }
-
-    .gallery {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .gallery-item {
-        height: 150px;
-    }
-
-    .nav-tabs {
-        flex-direction: column;
-        gap: 0;
-    }
-
-    .nav-tab {
-        padding: 0.8rem 1rem;
-        font-size: 0.8rem;
-        border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-        border-right: none;
-    }
-
-    .nav-tab.active {
-        border-bottom-color: #ffd700;
-    }
-
-    .contact-btn {
-        padding: 0.7rem 1.5rem;
-        font-size: 0.8rem;
-        margin-top: 1rem;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-    }
-
-    .footer-links {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .footer-logo-img {
-        width: 25px;
-        height: 25px;
-    }
-
-    .contact-form {
-        padding: 1.5rem;
-        margin-top: 2rem;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
-
-    .contact-form h3 {
-        font-size: 1.3rem;
         margin-bottom: 1.5rem;
     }
-
-    .submit-btn {
-        padding: 1rem 2rem;
+    
+    .brand-divider {
+        width: 40px;
+        transform: rotate(90deg);
     }
-
-    .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+    
+    .brand-name {
+        font-size: clamp(2rem, 8vw, 2.5rem);
+        letter-spacing: 2px;
     }
-
-    .contact-item {
-        padding: 1.5rem;
+    
+    .brand-tagline {
+        font-size: clamp(0.7rem, 2vw, 0.9rem);
+        letter-spacing: 3px;
     }
-
-    .contact-icon {
-        font-size: 2rem;
+    
+    .work-title-new {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+        margin-bottom: 0.8rem;
     }
-
-    .contact-details h3 {
-        font-size: 1.1rem;
-    }
-
-    .contact-details p {
-        font-size: 0.85rem;
-        word-break: break-word;
-        overflow-wrap: break-word;
-        line-height: 1.3;
-    }
-
-    /* Reset layout alternado em mobile */
-    #empresa1 .company-card {
-        max-width: 100%;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        border-left: none !important;
-        border-right: none !important;
-        border-radius: 8px !important;
-        transform: none !important;
+    
+    .work-subtitle-new {
+        font-size: clamp(0.9rem, 3vw, 1rem);
+        letter-spacing: 1.5px;
     }
 }
 
-/* Tablet Portrait */
-@media (min-width: 481px) and (max-width: 768px) {
-    .container {
-        padding: 0 20px;
-    }
-
-    .header-content {
-        flex-direction: column;
-        gap: 1.2rem;
-        padding: 1rem 0;
-    }
-
-    .logo {
-        font-size: 1.8rem;
-    }
-
-    nav ul {
-        flex-direction: row;
-        gap: 2rem;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    nav a {
-        font-size: 0.9rem;
-    }
-
-    main {
-        margin-top: 90px;
-    }
-
-    .hero {
-        padding: 3rem 0;
-        margin-bottom: 3rem;
-    }
-
-    .hero h1 {
-        font-size: 2.8rem;
-    }
-
-    .hero p {
-        font-size: 1rem;
-    }
-
-    .hero-logo-img {
-        width: 200px;
-    }
-
-    .companies-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .company-card {
-        padding: 2rem;
-    }
-
-    .company-card h2 {
-        font-size: 1.6rem;
-    }
-
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-    }
-
-    .gallery {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.2rem;
-    }
-
-    .gallery-item {
-        height: 180px;
-    }
-
-    .nav-tabs {
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        justify-content: center;
-    }
-
-    .nav-tab {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.85rem;
-    }
-
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 1.5rem;
-    }
-
-    .footer-links {
-        flex-direction: row;
-        gap: 1.5rem;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .contact-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-    }
-
-    .contact-item {
-        padding: 2rem;
-    }
-
-    /* Reset layout alternado em tablet portrait */
-    #empresa1 .company-card {
-        max-width: 100%;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        border-left: none !important;
-        border-right: none !important;
-        border-radius: 8px !important;
-        transform: none !important;
-    }
+.work-subtitle {
+    margin-bottom: 2rem;
 }
 
-/* Tablet Landscape */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .container {
-        max-width: 900px;
-        padding: 0 30px;
-    }
-
-    .header-content {
-        padding: 1.2rem 0;
-    }
-
-    .logo {
-        font-size: 1.9rem;
-    }
-
-    nav ul {
-        gap: 2.5rem;
-    }
-
-    nav a {
-        font-size: 0.9rem;
-    }
-
-    .hero {
-        padding: 4rem 0;
-    }
-
-    .hero h1 {
-        font-size: 3rem;
-    }
-
-    .companies-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2.5rem;
-    }
-
-    .company-card {
-        padding: 2.5rem;
-    }
-
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
-    }
-
-    .gallery {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1.5rem;
-    }
-
-    .gallery-item {
-        height: 180px;
-    }
-
-    .nav-tabs {
-        justify-content: center;
-    }
-
-    .nav-tab {
-        padding: 1rem 1.8rem;
-        font-size: 0.9rem;
-    }
-
-    .footer-content {
-        gap: 2rem;
-    }
-}
-
-/* Desktop */
-@media (min-width: 1025px) and (max-width: 1200px) {
-    .container {
-        max-width: 1000px;
-    }
-
-    .companies-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 3rem;
-    }
-
-    .projects-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .gallery {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-/* Large Desktop */
-@media (min-width: 1201px) {
-    .container {
-        max-width: 1200px;
-    }
-
-    .companies-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .projects-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    .gallery {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-/* Ultra-wide screens */
-@media (min-width: 1400px) {
-    .container {
-        max-width: 1400px;
-    }
-
-    .hero h1 {
-        font-size: 4rem;
-    }
-
-    .hero p {
-        font-size: 1.2rem;
-    }
-
-    .companies-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 4rem;
-    }
-
-    .company-card {
-        padding: 3.5rem;
-    }
-
-    .projects-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2.5rem;
-    }
-
-    .gallery {
-        grid-template-columns: repeat(5, 1fr);
-    }
-}
-
-/* Touch-friendly enhancements */
-@media (pointer: coarse) {
-    .contact-btn {
-        padding: 1rem 2.5rem;
-        font-size: 1rem;
-    }
-
-    .nav-tab {
-        padding: 1rem 2rem;
-        font-size: 1rem;
-    }
-
-    nav a {
-        padding: 0.8rem 0;
-    }
-
-    .gallery-item {
-        min-height: 200px;
-    }
-}
-
-/* Print styles */
-@media print {
-    header {
-        position: static !important;
-        background: white !important;
-        color: black !important;
-    }
-
-    .hero {
-        page-break-inside: avoid;
-    }
-
-    .company-card {
-        page-break-inside: avoid;
-        background: white;
-        border: 1px solid #000;
-    }
-
-    .gallery-item {
-        page-break-inside: avoid;
-    }
-
-    .contact-btn {
-        display: none;
-    }
-}
-
-/* Accessibility improvements */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
-/* High contrast mode */
-@media (prefers-contrast: high) {
-    .company-card {
-        border: 2px solid #ffd700;
-    }
-
-    .contact-btn {
-        border: 3px solid #ffd700;
-    }
-}
-
-/* Lema com destaque simples */
-.hero-motto {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 2rem;
-    color: #FFD700;
-    text-align: center;
-    letter-spacing: 0.1em;
+.work-tagline {
+    color: var(--accent-primary);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 500;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    margin: 2rem 0;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1.5rem;
+    display: inline-block;
+    background: var(--overlay-bg);
 }
 
+/* Tagline Section - Redesign Moderno */
+.tagline-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-primary) 50%, var(--bg-tertiary) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.tagline-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 30%, var(--shadow-color) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+        linear-gradient(45deg, transparent 30%, var(--shadow-color) 50%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    animation: subtleGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes subtleGlow {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.tagline-container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 90vw;
+    margin: 0 auto;
+}
+
+.tagline-section .work-subtitle {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.tagline-section .work-tagline {
+    background: none;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    color: transparent;
+    font-size: clamp(2rem, 8vw, 6rem);
+    font-weight: 300;
+    letter-spacing: clamp(0.2rem, 1vw, 0.8rem);
+    font-family: 'Playfair Display', serif;
+    line-height: 1.2;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    overflow: visible;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tagline-section .work-tagline::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: var(--progress, 0%);
+    height: 2px;
+    background: linear-gradient(90deg, 
+        rgba(255, 215, 0, 0.8) 0%, 
+        rgba(255, 255, 255, 1) 50%, 
+        rgba(255, 215, 0, 0.8) 100%);
+    transform: translateY(-50%);
+    transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    z-index: 3;
+}
+
+.tagline-section .work-tagline::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: var(--progress, 0%);
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.6) 50%, 
+        transparent 100%);
+    transform: translateX(-50%);
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 3;
+}
+
+.tagline-section .work-tagline .tagline-text {
+    background: linear-gradient(90deg, 
+        #ffd700 0%, 
+        #ffd700 var(--text-progress, 0%), 
+        #ffffff var(--text-progress, 0%), 
+        #ffffff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 100% 100%;
+    position: relative;
+    display: inline-block;
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    text-shadow: none;
+    filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.3));
+}
+
+.tagline-section .work-tagline .tagline-text::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--glow-progress, 0%);
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        transparent 100%);
+    pointer-events: none;
+    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 4;
+}
+
+.tagline-section .work-tagline:hover {
+    transform: scale(1.02);
+    box-shadow: none;
+}
+
+.tagline-section .work-tagline:hover .tagline-text {
+    filter: drop-shadow(0 0 50px rgba(255, 255, 255, 0.4));
+}
+
+/* Animações de entrada */
+.tagline-section.animate-in .work-tagline {
+    animation: taglineReveal 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes taglineReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(60px) scale(0.8);
+        filter: blur(10px);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateY(20px) scale(0.95);
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0px);
+    }
+}
+
+/* Particles decorativos */
+.tagline-section .tagline-container::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    right: -50px;
+    bottom: -50px;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 215, 0, 0.4), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.3), transparent);
+    background-repeat: repeat;
+    background-size: 150px 100px;
+    animation: floatingParticles 20s linear infinite;
+    opacity: 0.6;
+    z-index: 1;
+    pointer-events: none;
+}
+
+@keyframes floatingParticles {
+    0% { transform: translateY(0px) rotate(0deg); }
+    100% { transform: translateY(-100px) rotate(360deg); }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .hero-motto {
-        font-size: 1.5rem;
-        margin: 1.5rem 0;
+    .tagline-section {
+        min-height: 70vh;
+        padding: 2rem 1rem;
+    }
+    
+    .tagline-container {
+        max-width: 95vw;
+    }
+    
+    .tagline-section .work-tagline {
+        font-size: clamp(1.5rem, 12vw, 3rem);
+        letter-spacing: clamp(0.1rem, 2vw, 0.4rem);
+    }
+    
+    .tagline-section .tagline-container::before {
+        animation-duration: 15s;
+        opacity: 0.3;
     }
 }
 
-@media (max-width: 480px) {
-    .hero-motto {
-        font-size: 1.2rem;
-        margin: 1rem 0;
-        letter-spacing: 0.05em;
+.work-description {
+    color: #ccc;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.6;
+    margin: 0;
+    font-style: italic;
+}
+
+.work-grid {
+    position: relative;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    min-height: 4000px; /* Aumentar para acomodar a nova imagem (Projeto 15) */
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden; /* Garantir que elementos não ultrapassem */
+    max-width: 100vw; /* Limitar largura máxima */
+}
+
+.work-item {
+    position: absolute;
+    width: 400px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
+    /* Inicialmente invisível para animação de entrada */
+    opacity: 0;
+    transform: translateY(40px) scale(0.9);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Estado visível após scroll */
+.work-item.animate-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Variações de animação por tipo - otimizadas para serem mais rápidas */
+.work-item.slide-left {
+    transform: translateX(-60px) translateY(20px) scale(0.95);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.work-item.slide-left.animate-in {
+    transform: translateX(0) translateY(0) scale(1);
+}
+
+.work-item.slide-right {
+    transform: translateX(60px) translateY(20px) scale(0.95);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.work-item.slide-right.animate-in {
+    transform: translateX(0) translateY(0) scale(1);
+}
+
+.work-item.zoom-rotate {
+    transform: translateY(30px) scale(0.7) rotate(10deg);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.work-item.zoom-rotate.animate-in {
+    transform: translateY(0) scale(1) rotate(0deg);
+}
+
+.work-item.flip-in {
+    transform: translateY(25px) rotateY(45deg) scale(0.9);
+    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.work-item.flip-in.animate-in {
+    transform: translateY(0) rotateY(0deg) scale(1);
+}
+
+.work-item.elastic-in {
+    transform: translateY(50px) scale(0.6);
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.work-item.elastic-in.animate-in {
+    transform: translateY(0) scale(1);
+}
+
+.work-item.bounce-in {
+    transform: translateY(60px) scale(0.8);
+    transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.work-item.bounce-in.animate-in {
+    transform: translateY(0) scale(1);
+}
+
+/* Novas animações para a segunda seção */
+.work-item.slide-up {
+    transform: translateY(80px) scale(0.9);
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.work-item.slide-up.animate-in {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.work-item.fade-in {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.6s ease-out;
+}
+
+.work-item.fade-in.animate-in {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.work-item.slide-in-right {
+    opacity: 0;
+    transform: translateX(60px) scale(0.95);
+    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.work-item.slide-in-right.animate-in {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+.work-item.slide-in-bottom {
+    opacity: 0;
+    transform: translateY(80px) scale(0.9);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.work-item.slide-in-bottom.animate-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.work-item.rotate-in {
+    opacity: 0;
+    transform: rotate(-15deg) scale(0.8);
+    transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.work-item.rotate-in.animate-in {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+/* Tamanhos diferentes para as imagens */
+.work-item.size-small {
+    width: 320px;
+}
+
+.work-item.size-medium {
+    width: 400px;
+}
+
+.work-item.size-large {
+    width: 480px;
+}
+
+.work-item.size-xlarge {
+    width: 550px;
+}
+
+.work-item.size-xxlarge {
+    width: 650px; /* Novo tamanho explicitamente maior */
+}
+
+/* Novos tamanhos para a segunda seção */
+.work-item.size-double-large {
+    width: 700px; /* 2x maior que size-small */
+    height: auto;
+}
+
+.work-item.size-small {
+    width: 350px; /* Tamanho pequeno */
+    height: auto;
+}
+
+/* Tamanho vertical específico para imagens portrait */
+.work-item.size-vertical {
+    width: 320px;
+    height: 480px; /* Formato vertical - mais alto que largo */
+}
+
+.work-item.size-vertical .work-image-container {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 2/3; /* Proporção vertical */
+}
+
+.work-item.size-vertical .work-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cobrir todo o container mantendo proporção */
+}
+
+/* Efeitos de entrada - REMOVIDOS */
+/* Todas as animações de entrada foram removidas */
+
+/* Animações keyframes - REMOVIDAS */
+/* Todas as animações @keyframes foram removidas */
+
+/* Hover effects - REMOVIDOS */
+/* Todos os efeitos de hover foram removidos */
+
+/* Posicionamento específico para ocupar toda a largura da tela */
+/* Primeira linha - alinhamento específico conforme solicitado */
+.work-item:nth-child(1) {
+    left: 5%;
+    top: 0;
+    width: 825px; /* Aumentado em 1.5x: 550px × 1.5 = 825px */
+    max-width: calc(90vw - 40px); /* Garantir que não ultrapasse viewport */
+}
+
+.work-item:nth-child(2) {
+    left: calc(5% + 825px + 40px); /* Alinhar com espaçamento de 40px considerando nova largura */
+    top: 180px; /* Mais abaixo */
+    transform: none;
+    max-width: calc(30vw - 40px); /* Limitar largura */
+}
+
+.work-item:nth-child(3) {
+    left: calc(5% + 825px + 40px + 400px + 40px); /* Alinhar com espaçamento de 40px considerando nova largura */
+    top: 280px; /* Ainda mais abaixo */
+    width: 550px; /* Forçar tamanho maior para a terceira imagem */
+    transform: none;
+    max-width: calc(25vw); /* Garantir que caiba na viewport */
+}
+
+/* Segunda linha - inverso da primeira (direita para esquerda) */
+.work-item:nth-child(4) {
+    right: 5%; /* Começar pela direita */
+    top: 680px;
+    width: 660px; /* Aumentado em 1.2x: 550px × 1.2 = 660px */
+    max-width: calc(42vw); /* Ajustar largura máxima proporcionalmente */
+}
+
+.work-item:nth-child(5) {
+    right: calc(5% + 35vw + 40px); /* Usar vw para o cálculo */
+    top: 860px; /* Mais abaixo */
+    transform: none;
+    max-width: calc(25vw); /* Limitar largura */
+}
+
+.work-item:nth-child(6) {
+    right: calc(5% + 35vw + 40px + 25vw + 40px); /* Continuar alinhamento com vw */
+    top: 1000px; /* Puxado mais para baixo: de 960px para 1000px */
+    width: 550px; /* Imagem grande */
+    max-width: calc(25vw); /* Limitar largura */
+}
+
+/* Terceira linha - apenas duas imagens grandes lado a lado */
+.work-item:nth-child(7) {
+    left: 20%; /* Movida significativamente mais para a direita */
+    top: 1460px; /* Movida levemente mais para baixo: de 1420px para 1460px */
+    width: 550px; /* Reduzir para metade do tamanho (de xxlarge para xlarge) */
+    max-width: calc(30vw); /* Reduzir largura máxima */
+}
+
+.work-item:nth-child(8) {
+    right: 3%; /* Mais à direita */
+    top: 1360px; /* Mesma altura - lado a lado */
+    transform: none;
+    width: 650px; /* Manter tamanho grande */
+    max-width: calc(35vw); /* Ajustar largura máxima */
+}
+
+.work-item:nth-child(9) {
+    /* Esta imagem será movida para a quarta linha */
+    left: 5%;
+    top: 1840px;
+}
+
+/* Quarta linha - duas imagens: primeira na extremidade esquerda, segunda no lado direito mais abaixo */
+.work-item:nth-child(9) {
+    left: 5%; /* Extremidade esquerda */
+    top: 1940px;
+    width: 650px; /* Aumentar em 2x: de ~325px para 650px */
+    max-width: calc(45vw); /* Aumentar proporcionalmente */
+}
+
+.work-item:nth-child(10) {
+    right: 5%; /* Lado direito */
+    top: 2200px; /* Mais abaixo que a primeira */
+    transform: none;
+    width: 550px; /* Aumentar em 2x: de ~275px para 550px */
+    max-width: calc(40vw); /* Aumentar proporcionalmente */
+}
+
+/* Quinta linha - duas imagens: primeira no lado direito, segunda na extremidade esquerda mais abaixo */
+.work-item:nth-child(11) {
+    right: 20%; /* Movida mais para a esquerda: de 5% para 20% */
+    top: 2550px; /* Ajustar para ficar abaixo da nova altura das imagens da quarta linha */
+    transform: none;
+    max-width: calc(25vw);
+}
+
+.work-item:nth-child(12) {
+    left: 5%; /* Extremidade esquerda */
+    top: 2820px; /* Ajustar posição para acomodar o tamanho maior */
+    transform: none;
+    width: 650px; /* Aumentar para size-xxlarge */
+    max-width: calc(45vw); /* Aumentar proporcionalmente */
+}
+
+/* Nova imagem (Projeto 13) - lado direito, alinhada com eixo esquerdo da penúltima */
+.work-item:nth-child(13) {
+    right: 25%; /* Movida mais para o lado esquerdo */
+    top: 3150px; /* Mais abaixo da última imagem */
+    transform: none;
+    width: 450px; /* Tamanho médio */
+    max-width: calc(35vw);
+}
+
+/* Última imagem (Projeto 14) - lado esquerdo, antes dos contactos */
+.work-item:nth-child(14) {
+    left: 5%; /* Lado esquerdo */
+    top: 3500px; /* Mais abaixo da 13ª imagem */
+    transform: none;
+    width: 480px; /* Tamanho large */
+    max-width: calc(40vw);
+}
+
+
+/* Imagem paralela (Projeto 15) - lado direito, paralela à 14ª */
+.work-item:nth-child(15) {
+    right: 5%; /* Lado direito */
+    top: 3500px; /* Mesma altura da 14ª imagem para ficarem paralelas */
+    transform: none;
+    width: 480px; /* Tamanho large igual à 14ª */
+    max-width: calc(40vw);
+}
+
+.work-image-container {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Altura especial para imagens XXLarge da terceira linha e quarta linha (projeto 9) */
+.work-item.size-xxlarge .work-image-container {
+    height: 350px; /* Significativamente mais alta que as outras */
+}
+
+/* Efeitos de hover para o container da imagem */
+.work-item:hover .work-image-container {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Alturas específicas para a primeira linha de imagens */
+.work-item:nth-child(1) .work-image-container {
+    height: 313px; /* Primeira imagem: 250px × 1.25 = 313px */
+}
+
+.work-item:nth-child(2) .work-image-container {
+    height: 325px; /* Segunda imagem: 250px × 1.3 = 325px */
+}
+
+/* A terceira imagem mantém a altura padrão de 250px */
+
+/* Altura específica para a quarta imagem */
+.work-item:nth-child(4) .work-image-container {
+    height: 300px; /* Quarta imagem: 250px × 1.2 = 300px */
+}
+
+/* Altura específica para a última imagem da segunda linha */
+.work-item:nth-child(6) .work-image-container {
+    height: 325px; /* Última imagem da segunda linha: 250px × 1.3 = 325px */
+}
+
+/* Altura específica para a décima imagem */
+.work-item:nth-child(10) .work-image-container {
+    height: 325px; /* Décima imagem: aumentada para 325px (30% maior que padrão) */
+}
+
+.work-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: brightness(1) contrast(1.05) saturate(1.1);
+}
+
+/* Efeitos de hover na imagem */
+.work-item:hover .work-image {
+    transform: scale(1.08);
+    filter: brightness(1.1) contrast(1.1) saturate(1.2);
+}
+
+/* Overlay com gradiente sutil no hover */
+.work-image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.work-item:hover .work-image-container::before {
+    opacity: 1;
+}
+
+/* Hover effect na imagem - REMOVIDO */
+/* .work-item:hover .work-image foi removido */
+
+/* Efeitos especiais para imagens específicas */
+.work-item:nth-child(1):hover .work-image {
+    transform: scale(1.05) rotate(1deg);
+    filter: brightness(1.15) sepia(0.2);
+}
+
+.work-item:nth-child(3):hover .work-image {
+    transform: scale(1.1) perspective(1000px) rotateY(5deg);
+}
+
+.work-item:nth-child(5):hover .work-image {
+    transform: scale(1.08);
+    filter: brightness(1.1) hue-rotate(10deg);
+}
+
+.work-item:nth-child(7):hover .work-image {
+    transform: scale(1.06) skewY(1deg);
+    filter: brightness(1.12) contrast(1.15);
+}
+
+.work-item:nth-child(9):hover .work-image {
+    transform: scale(1.1) perspective(800px) rotateX(5deg);
+}
+
+/* Efeito de brilho nas imagens pares (exceto 14 que tem efeito especial) */
+.work-item:nth-child(even):not(:nth-child(14)) .work-image-container::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    transform: rotate(45deg) translateX(-100%);
+    transition: transform 0.8s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.work-item:nth-child(even):not(:nth-child(14)):hover .work-image-container::after {
+    transform: rotate(45deg) translateX(100%);
+}
+
+/* Efeito de partículas para as duas últimas imagens */
+.work-item:nth-child(14) .work-image-container,
+.work-item:nth-child(15) .work-image-container {
+    position: relative;
+}
+
+.work-item:nth-child(14) .work-image-container::after,
+.work-item:nth-child(15) .work-image-container::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.9) url('bdn_fabicon.png') center/25px no-repeat;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s ease;
+    pointer-events: none;
+    z-index: 3;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.work-item:nth-child(14):hover .work-image-container::after,
+.work-item:nth-child(15):hover .work-image-container::after {
+    opacity: 1;
+    transform: translateY(0);
+    animation: float 2s ease-in-out infinite;
+}
+
+/* Animação de flutuação */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Efeito de pulso suave em todas as imagens */
+.work-image-container {
+    animation: subtle-pulse 4s ease-in-out infinite;
+}
+
+@keyframes subtle-pulse {
+    0%, 100% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); }
+    50% { box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2); }
+}
+
+/* Efeito de reflexo nas bordas */
+.work-image-container {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(45deg, #f0f0f0, #ffffff) padding-box, 
+                linear-gradient(45deg, rgba(255,255,255,0.8), rgba(0,0,0,0.1)) border-box;
+}
+
+/* Efeito especial para imagens ímpares - borda colorida sutil */
+.work-item:nth-child(odd) .work-image-container {
+    background: linear-gradient(45deg, #f8f9fa, #ffffff) padding-box, 
+                linear-gradient(45deg, rgba(74, 144, 226, 0.3), rgba(80, 227, 194, 0.3)) border-box;
+}
+
+/* Overlay de foco no hover - usando pseudo-elemento */
+.work-image-container .focus-overlay {
+    display: none; /* Remover esta regra pois vamos usar pseudo-elemento */
+}
+
+/* Efeito de foco central usando ::after nas imagens ímpares */
+.work-item:nth-child(odd) .work-image-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.95) url('bdn_fabicon.png') center/30px no-repeat;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+    pointer-events: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.work-item:nth-child(odd):hover .work-image-container::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Efeito de ondas no hover para as últimas 3 imagens */
+.work-item:nth-child(13):hover .work-image,
+.work-item:nth-child(14):hover .work-image,
+.work-item:nth-child(15):hover .work-image {
+    animation: wave-effect 0.6s ease-out;
+}
+
+@keyframes wave-effect {
+    0% { transform: scale(1); }
+    20% { transform: scale(1.02) rotate(-0.5deg); }
+    40% { transform: scale(1.05) rotate(0.5deg); }
+    60% { transform: scale(1.08) rotate(-0.3deg); }
+    80% { transform: scale(1.06) rotate(0.2deg); }
+    100% { transform: scale(1.08) rotate(0deg); }
+}
+
+/* Efeito de cristal para imagens específicas */
+.work-item:nth-child(2) .work-image-container,
+.work-item:nth-child(8) .work-image-container {
+    backdrop-filter: blur(0px);
+    transition: backdrop-filter 0.3s ease;
+}
+
+.work-item:nth-child(2):hover .work-image-container,
+.work-item:nth-child(8):hover .work-image-container {
+    backdrop-filter: blur(1px);
+}
+
+.work-info {
+    padding: 1.5rem;
+    background: #fff;
+}
+
+.work-project-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.work-location {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.work-tag {
+    background: #f5f5f5;
+    color: #555;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+    transition: all 0.2s ease;
+}
+
+.work-tag:hover {
+    background: #ffd700;
+    color: #000;
+}
+
+.work-footer {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #f8f8f8;
+}
+
+.work-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, #ffd700, #ffed4a);
+    color: #000;
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.work-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    background: linear-gradient(135deg, #ffed4a, #ffd700);
+}
+
+/* Masonry-like layout for larger screens */
+@media (min-width: 1200px) {
+    .work-grid {
+        min-height: 4300px; /* Aumentar para acomodar a nova imagem (Projeto 15) */
+    }
+    
+    .work-item.size-small {
+        width: 370px;
+    }
+    
+    .work-item.size-medium {
+        width: 450px;
+    }
+    
+    .work-item.size-large {
+        width: 530px;
+    }
+    
+    .work-item.size-xlarge {
+        width: 600px;
+    }
+
+    .work-item.size-vertical {
+        width: 370px;
+        height: 550px; /* Mais alto em telas grandes */
+    }
+    
+    .work-item.size-xxlarge {
+        width: 700px; /* Ainda maior em telas grandes */
+    }
+    
+    /* Novos tamanhos responsivos para telas grandes */
+    .work-item.size-double-large {
+        width: 800px; /* 2x maior que size-small */
+    }
+    
+    .work-item.size-small {
+        width: 400px; /* Tamanho pequeno responsivo */
+    }
+    
+    /* Ajustar primeira linha para telas grandes */
+    .work-item:nth-child(1) {
+        width: 600px !important;
+    }
+    
+    .work-item:nth-child(2) {
+        left: calc(5% + 600px + 50px); /* Mais espaçamento em telas grandes */
+        top: 200px;
+    }
+    
+    .work-item:nth-child(3) {
+        left: calc(5% + 600px + 50px + 450px + 50px);
+        top: 320px;
+        width: 600px !important;
+    }
+    
+    /* Ajustar segunda linha (inverso) para telas grandes */
+    .work-item:nth-child(4) {
+        width: 720px !important; /* Aumentado em 1.2x: 600px × 1.2 = 720px */
+        top: 720px;
+    }
+    
+    .work-item:nth-child(5) {
+        right: calc(5% + 600px + 50px);
+        top: 900px;
+    }
+    
+    .work-item:nth-child(6) {
+        right: calc(5% + 600px + 50px + 450px + 50px);
+        top: 1040px; /* Ajustado para telas grandes */
+        width: 600px !important;
+    }
+    
+    /* Ajustar terceira linha (duas imagens grandes) */
+    .work-item:nth-child(7) {
+        width: 600px !important; /* Reduzir para metade em desktop */
+        left: 20%; /* Movida significativamente mais para a direita para telas grandes */
+        top: 1520px; /* Movida levemente mais para baixo para telas grandes */
+        max-width: calc(30vw);
+    }
+    
+    .work-item:nth-child(8) {
+        right: 3%; /* Mais à direita */
+        width: 700px !important;
+        max-width: calc(35vw);
+    }
+    
+    /* Ajustar quarta linha para telas grandes - tamanhos aumentados em 2x */
+    .work-item:nth-child(9) {
+        width: 700px !important; /* Aumentar para tamanho xxlarge */
+        left: 5%;
+        max-width: calc(45vw);
+    }
+    
+    .work-item:nth-child(10) {
+        width: 600px !important; /* Aumentar para tamanho xlarge */
+        right: 5%;
+        max-width: calc(40vw);
+    }
+    
+    /* Altura maior para imagens XXLarge em telas grandes */
+    .work-item.size-xxlarge .work-image-container {
+        height: 400px;
+    }
+    
+    /* Alturas específicas para a primeira linha em telas grandes */
+    .work-item:nth-child(1) .work-image-container {
+        height: 375px; /* Primeira imagem proporcional para telas grandes */
+    }
+    
+    .work-item:nth-child(2) .work-image-container {
+        height: 390px; /* Segunda imagem proporcional para telas grandes */
+    }
+    
+    /* Altura específica para a quarta imagem em telas grandes */
+    .work-item:nth-child(4) .work-image-container {
+        height: 360px; /* Quarta imagem: 300px × 1.2 = 360px para telas grandes */
+    }
+    
+    /* Altura específica para a última imagem da segunda linha em telas grandes */
+    .work-item:nth-child(6) .work-image-container {
+        height: 390px; /* Última imagem da segunda linha proporcional para telas grandes */
+    }
+    
+    /* Altura específica para a décima imagem em telas grandes */
+    .work-item:nth-child(10) .work-image-container {
+        height: 390px; /* Décima imagem: aumentada proporcionalmente para telas grandes */
+    }
+    
+    /* Ajustar quinta linha para telas grandes */
+    .work-item:nth-child(11) {
+        right: 20%; /* Movida mais para a esquerda: de 5% para 20% */
+        top: 2650px; /* Ajustar para nova posição em telas grandes */
+        max-width: calc(28vw);
+    }
+    
+    .work-item:nth-child(12) {
+        left: 5%; /* Extremidade esquerda */
+        top: 2920px; /* Ajustar para o tamanho maior */
+        transform: none;
+        width: 700px !important; /* Aumentar para xxlarge em desktop */
+        max-width: calc(45vw);
+    }
+    
+    /* Nova imagem (Projeto 13) para telas grandes */
+    .work-item:nth-child(13) {
+        right: 25%; /* Movida mais para o lado esquerdo */
+        top: 3300px; /* Mais abaixo */
+        width: 500px !important;
+        max-width: calc(35vw);
+    }
+    
+    /* Última imagem (Projeto 14) para telas grandes */
+    .work-item:nth-child(14) {
+        left: 5%; /* Lado esquerdo */
+        top: 3700px; /* Mais abaixo da 13ª imagem */
+        width: 550px !important;
+        max-width: calc(40vw);
+    }
+    
+    /* Imagem paralela (Projeto 15) para telas grandes */
+    .work-item:nth-child(15) {
+        right: 5%; /* Lado direito */
+        top: 3700px; /* Mesma altura da 14ª para ficarem paralelas */
+        width: 550px !important;
+        max-width: calc(40vw);
     }
 }
 
-/* Estilos para Ana Duarte Interiores */
-.ana-duarte-section {
-    background: linear-gradient(135deg, #2c1810 0%, #3d241a 50%, #2c1810 100%);
-    margin-bottom: 0 !important;
-    padding: clamp(2rem, 4vw, 3rem) 0 !important;
+@media (min-width: 768px) and (max-width: 1199px) {
+    .work-grid {
+        min-height: 4100px; /* Aumentar para tablets com nova imagem (Projeto 15) */
+        width: 100vw;
+    }
+    
+    .work-item.size-small {
+        width: 300px;
+    }
+    
+    .work-item.size-medium {
+        width: 350px;
+    }
+    
+    .work-item.size-large {
+        width: 400px;
+    }
+    
+    .work-item.size-xlarge {
+        width: 450px;
+    }
+
+    .work-item.size-vertical {
+        width: 300px;
+        height: 450px; /* Proporção vertical para tablets */
+    }
+    
+    .work-item.size-xxlarge {
+        width: 500px; /* Proporcional para tablets */
+    }
+    
+    /* Novos tamanhos responsivos para tablets */
+    .work-item.size-double-large {
+        width: 520px; /* Proporção mantida */
+    }
+    
+    .work-item.size-small {
+        width: 260px; /* Metade do double-large */
+    }
+    
+    /* Ajustar primeira linha para telas médias */
+    .work-item:nth-child(1) {
+        width: 450px !important;
+    }
+    
+    .work-item:nth-child(2) {
+        left: calc(5% + 450px + 30px); /* Espaçamento proporcional */
+        top: 160px;
+    }
+    
+    .work-item:nth-child(3) {
+        left: calc(5% + 450px + 30px + 350px + 30px);
+        top: 240px;
+        width: 450px !important;
+    }
+    
+    /* Ajustar segunda linha (inverso) para telas médias */
+    .work-item:nth-child(4) {
+        width: 540px !important; /* Aumentado em 1.2x: 450px × 1.2 = 540px */
+        top: 700px;
+    }
+    
+    .work-item:nth-child(5) {
+        right: calc(5% + 450px + 30px);
+        top: 880px;
+    }
+    
+    .work-item:nth-child(6) {
+        right: calc(5% + 450px + 30px + 350px + 30px);
+        top: 1020px; /* Ajustado para tablets */
+        width: 450px !important;
+    }
+    
+    /* Ajustar terceira linha para tablets */
+    .work-item:nth-child(7) {
+        width: 450px !important; /* Proporcional para tablets */
+        left: 25%; /* Movida significativamente mais para a direita para tablets */
+        top: 1500px; /* Movida levemente mais para baixo para tablets */
+        max-width: calc(30vw);
+    }
+    
+    .work-item:nth-child(8) {
+        right: 3%; /* Mais à direita */
+        width: 500px !important;
+        max-width: calc(35vw);
+    }
+    
+    /* Ajustar quarta linha para tablets - tamanhos aumentados em 2x */
+    .work-item:nth-child(9) {
+        width: 500px !important; /* Proporcional para tablets */
+        left: 5%;
+        max-width: calc(42vw);
+    }
+    
+    .work-item:nth-child(10) {
+        width: 450px !important; /* Proporcional para tablets */
+        right: 5%;
+        max-width: calc(38vw);
+    }
+    
+    /* Altura proporcional para tablets */
+    .work-item.size-xxlarge .work-image-container {
+        height: 320px;
+    }
+    
+    /* Alturas específicas para a primeira linha em tablets */
+    .work-item:nth-child(1) .work-image-container {
+        height: 313px; /* Primeira imagem: mantém proporção */
+    }
+    
+    .work-item:nth-child(2) .work-image-container {
+        height: 325px; /* Segunda imagem: mantém proporção */
+    }
+    
+    /* Altura específica para a quarta imagem em tablets */
+    .work-item:nth-child(4) .work-image-container {
+        height: 300px; /* Quarta imagem: mantém altura aumentada para tablets */
+    }
+    
+    /* Altura específica para a última imagem da segunda linha em tablets */
+    .work-item:nth-child(6) .work-image-container {
+        height: 325px; /* Última imagem da segunda linha: mantém proporção */
+    }
+    
+    /* Altura específica para a décima imagem em tablets */
+    .work-item:nth-child(10) .work-image-container {
+        height: 325px; /* Décima imagem: aumentada para tablets */
+    }
+    
+    /* Ajustar quinta linha para tablets */
+    .work-item:nth-child(11) {
+        right: 20%; /* Movida mais para a esquerda: de 5% para 20% */
+        top: 2630px; /* Ajustar para nova posição em tablets */
+        max-width: calc(30vw);
+    }
+    
+    .work-item:nth-child(12) {
+        left: 5%; /* Extremidade esquerda */
+        top: 2900px; /* Ajustar para o tamanho maior */
+        transform: none;
+        width: 500px !important; /* Proporcional para tablets */
+        max-width: calc(42vw);
+    }
+    
+    /* Nova imagem (Projeto 13) para tablets */
+    .work-item:nth-child(13) {
+        right: 25%; /* Movida mais para o lado esquerdo */
+        top: 3250px; /* Mais abaixo */
+        width: 400px !important;
+        max-width: calc(35vw);
+    }
+    
+    /* Última imagem (Projeto 14) para tablets */
+    .work-item:nth-child(14) {
+        left: 5%; /* Lado esquerdo */
+        top: 3600px; /* Mais abaixo da 13ª imagem */
+        width: 450px !important;
+        max-width: calc(38vw);
+    }
+    
+    /* Imagem paralela (Projeto 15) para tablets */
+    .work-item:nth-child(15) {
+        right: 5%; /* Lado direito */
+        top: 3600px; /* Mesma altura da 14ª para ficarem paralelas */
+        width: 450px !important;
+        max-width: calc(38vw);
+    }
+    
+    /* Footer para tablets */
+    footer {
+        padding: 1.8rem 0 1rem;
+    }
+    
+    .footer-content {
+        gap: 1.5rem;
+    }
 }
 
-/* Layout alternado para BDN Arquitetura */
-#empresa1 .company-card {
-    margin-left: 0;
-    margin-right: 0;
-    max-width: 98%;
+@media (max-width: 767px) {
+    .work-grid {
+        position: static;
+        min-height: auto;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        width: 100%;
+        transform: none;
+        left: auto;
+    }
+    
+    .work-item {
+        position: static;
+        width: 100%;
+        max-width: 350px;
+        transform: none !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+    }
+
+    .work-item.size-vertical {
+        max-width: 280px;
+        height: 420px; /* Proporção vertical para mobile */
+    }
+    
+    .work-header {
+        padding: 3rem 1rem 4rem;
+    }
+    
+    .work-image-container {
+        height: 200px;
+    }
+    
+    .work-footer {
+        padding: 3rem 1rem;
+    }
+    
+    /* Footer compacto para mobile */
+    footer {
+        padding: 1.5rem 0 0.8rem;
+        margin-top: 1.5rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+    
+    .footer-about .footer-logo {
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    .footer-bottom {
+        padding-top: 0.8rem;
+    }
 }
 
-#empresa1 .company-card:nth-child(odd) {
-    margin-left: 0;
-    margin-right: auto;
-    border-left: 4px solid #ffd700;
-    border-radius: 0 8px 8px 0;
-    transform: translateX(-15%);
-}
-
-#empresa1 .company-card:nth-child(even) {
-    margin-left: auto;
-    margin-right: 0;
-    border-right: 4px solid #ffd700;
-    border-radius: 8px 0 0 8px;
-    transform: translateX(15%);
-}
-
-.ana-duarte-section .company-card {
-    background: rgba(139, 69, 19, 0.15);
-    border: 1px solid rgba(139, 69, 19, 0.4);
-    margin-bottom: clamp(1.5rem, 3vw, 2rem) !important;
-}
-
-.ana-duarte-section .hero {
-    padding: clamp(1.5rem, 4vw, 2.5rem) 0 !important;
-    margin-bottom: clamp(1rem, 3vw, 1.5rem) !important;
-}
-
-.ana-duarte-section .company-card h2 {
-    color: #D2691E;
-}
-
-.ana-duarte-section .company-card h3 {
-    color: #D2691E;
-}
-
-.ana-duarte-section .company-icon {
-    background: #D2691E;
-    color: #000;
-}
-
-.ana-duarte-section .hero h1 {
-    color: #D2691E;
-}
-
-.ana-duarte-section .contact-btn {
-    color: #D2691E;
-    border: 2px solid #D2691E;
-}
-
-.ana-duarte-section .contact-btn:hover {
-    background: #D2691E;
-    color: #000;
-}
-
-.ana-duarte-section .tag {
-    color: #D2691E;
-    border: 1px solid rgba(210, 105, 30, 0.3);
-}
-
-.ana-duarte-section .project-card h4 {
-    color: #D2691E;
-}
-
-.ana-duarte-section .gallery-overlay {
-    background: rgba(0, 0, 0, 0.8);
-    color: #D2691E;
-}
-
-.ana-duarte-section .services li {
-    border-bottom: 1px solid rgba(210, 105, 30, 0.2);
-}
-
-/* Lightbox styles */
+/* Lightbox Styles */
 .lightbox {
     display: none;
     position: fixed;
@@ -1799,49 +3363,68 @@ footer {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(5px);
-    cursor: none;
+    background-color: rgba(0, 0, 0, 0.98);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    cursor: url('bdn_fabicon.png') 16 16, pointer;
 }
 
-.lightbox-content {
-    position: relative;
-    margin: auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 1200px;
-    height: 100%;
+.lightbox.show {
     display: flex;
-    flex-direction: column;
+    opacity: 1;
     align-items: center;
     justify-content: center;
 }
 
+.lightbox-content {
+    position: relative;
+    max-width: 95%;     /* Aumentado de 90% para 95% */
+    max-height: 95%;    /* Aumentado de 90% para 95% */
+    min-width: 400px;   /* Aumentado de 350px para 400px */
+    min-height: 300px;  /* Aumentado de 250px para 300px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .lightbox-image {
     max-width: 100%;
-    max-height: 80vh;
-    width: auto;
-    height: auto;
+    max-height: 85vh;   /* Aumentado de 80vh para 85vh */
+    min-width: 400px;   /* Aumentado de 300px para 400px */
+    min-height: 300px;  /* Aumentado de 200px para 300px */
     object-fit: contain;
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-    pointer-events: none;
+    transition: transform 0.3s ease;
+    position: relative;
+    cursor: default;
 }
 
 .lightbox-close {
     position: absolute;
-    top: 15px;
-    right: 25px;
+    top: -50px;
+    right: 0;
     color: #ffd700;
-    font-size: 35px;
+    font-size: 40px;
     font-weight: bold;
-    cursor: none;
-    z-index: 10001;
-    transition: color 0.3s ease;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
 }
 
 .lightbox-close:hover {
     color: #ffed4e;
+    background: rgba(255, 215, 0, 0.2);
+    border-color: #ffd700;
+    transform: scale(1.1);
 }
 
 .lightbox-nav {
@@ -1858,96 +3441,100 @@ footer {
 .lightbox-nav-right {
     width: 50%;
     height: 100%;
-    pointer-events: auto;
-    z-index: 10001;
+    position: relative;
+    pointer-events: all;
 }
 
 .lightbox-nav-left {
-    left: 0;
-    cursor: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M20 24L12 16L20 8" stroke="%23FFD700" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') 16 16, w-resize;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='leftArrow' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%23ffed4e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffd700;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='arrowShadow' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='3'/%3E%3CfeOffset dx='2' dy='2' result='offset'/%3E%3CfeFlood flood-color='%23000' flood-opacity='0.7'/%3E%3CfeComposite in2='offset' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M25 8L15 20L25 32L22 35L8 20L22 5Z' fill='url(%23leftArrow)' stroke='%23b8860b' stroke-width='2' filter='url(%23arrowShadow)'/%3E%3Cpath d='M24 10L16 20L24 30L21 32L10 20L21 8Z' fill='%23fff' opacity='0.3'/%3E%3C/svg%3E") 20 20, w-resize;
 }
 
 .lightbox-nav-right {
-    right: 0;
-    cursor: url('data:image/svg+xml;charset=utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M12 24L20 16L12 8" stroke="%23FFD700" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') 16 16, e-resize;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='rightArrow' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%23ffed4e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffd700;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='arrowShadowRight' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='3'/%3E%3CfeOffset dx='2' dy='2' result='offset'/%3E%3CfeFlood flood-color='%23000' flood-opacity='0.7'/%3E%3CfeComposite in2='offset' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M15 8L25 20L15 32L18 35L32 20L18 5Z' fill='url(%23rightArrow)' stroke='%23b8860b' stroke-width='2' filter='url(%23arrowShadowRight)'/%3E%3Cpath d='M16 10L24 20L16 30L19 32L30 20L19 8Z' fill='%23fff' opacity='0.3'/%3E%3C/svg%3E") 20 20, e-resize;
 }
 
-.lightbox-prev,
-.lightbox-next {
-    display: none;
+/* Áreas invisíveis para navegação por cursor */
+.lightbox-nav-left:hover,
+.lightbox-nav-right:hover {
+    background: transparent;
 }
 
+/* Overlay sutil para indicar área de navegação - REMOVIDO */
+/* As setas estáticas dos lados foram removidas */
+
+/* Caption removida - sem descrição das imagens */
 .lightbox-caption {
-    color: #ffd700;
-    font-size: 1.2rem;
-    text-align: center;
-    margin-top: 20px;
-    font-weight: 500;
+    display: none;
 }
 
 .lightbox-counter {
     position: absolute;
-    bottom: 20px;
+    bottom: -60px;
     left: 50%;
     transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
     color: #ffd700;
-    font-size: 1rem;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 10px 20px;
+    padding: 0.5rem 1rem;
     border-radius: 20px;
+    font-size: 0.9rem;
     border: 1px solid rgba(255, 215, 0, 0.3);
+    backdrop-filter: blur(10px);
 }
 
-/* Responsive lightbox */
+/* Responsive Lightbox */
 @media (max-width: 768px) {
     .lightbox-content {
-        padding: 10px;
+        max-width: 95%;
+        max-height: 95%;
+        min-width: 320px;  /* Aumentado para tablets */
+        min-height: 240px; /* Aumentado para tablets */
     }
     
     .lightbox-image {
-        max-height: 70vh;
+        max-height: 75vh;  /* Aumentado de 70vh para 75vh */
+        min-width: 300px;  /* Aumentado para tablets */
+        min-height: 200px; /* Aumentado para tablets */
     }
     
     .lightbox-close {
-        top: 10px;
-        right: 15px;
+        top: -40px;
         font-size: 30px;
-    }
-    
-    .lightbox-nav {
-        pointer-events: auto;
-    }
-    
-    .lightbox-nav-left,
-    .lightbox-nav-right {
-        width: 50%;
-        height: 100%;
+        width: 40px;
+        height: 40px;
     }
     
     .lightbox-caption {
         font-size: 1rem;
-        margin-top: 15px;
+        padding: 0.8rem 1.5rem;
     }
     
     .lightbox-counter {
-        bottom: 10px;
-        font-size: 0.9rem;
-        padding: 8px 15px;
-    }
-    
-    .custom-cursor.arrow-left,
-    .custom-cursor.arrow-right {
-        width: 25px;
-        height: 25px;
-    }
-    
-    .custom-cursor.arrow-left::after,
-    .custom-cursor.arrow-right::after {
-        font-size: 14px;
+        bottom: -50px;
+        font-size: 0.8rem;
     }
 }
 
-/* Animações do lightbox */
+@media (max-width: 480px) {
+    /* Manter navegação por cursor em dispositivos móveis */
+    .lightbox-nav-left,
+    .lightbox-nav-right {
+        cursor: pointer;
+    }
+    
+    /* Garantir tamanho maior consistente em mobile */
+    .lightbox-content {
+        min-width: 300px;  /* Aumentado de 280px para 300px */
+        min-height: 225px; /* Aumentado de 200px para 225px */
+    }
+    
+    .lightbox-image {
+        min-width: 280px;  /* Aumentado de 250px para 280px */
+        min-height: 180px; /* Aumentado de 150px para 180px */
+        max-height: 70vh;  /* Mantido mesmo tamanho */
+    }
+}
+
+/* Animações suaves para o lightbox */
 @keyframes lightboxFadeIn {
     from {
         opacity: 0;
@@ -1959,75 +3546,849 @@ footer {
     }
 }
 
-.lightbox.show {
-    display: flex !important;
+.lightbox.show .lightbox-content {
     animation: lightboxFadeIn 0.3s ease-out;
 }
 
-.lightbox.show .lightbox-image {
-    animation: lightboxFadeIn 0.3s ease-out;
-}
-
-/* Cursores de seta personalizados */
-.custom-cursor.arrow-left {
-    background: radial-gradient(circle, rgba(255,215,0,1) 0%, rgba(255,193,7,0.9) 70%, rgba(255,165,0,0.5) 100%);
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
+/* ===== SECÇÃO TÍTULO ÚNICO ===== */
+.unique-client-section {
+    padding: 15px 0 10px 0;
+    background: linear-gradient(135deg, 
+        var(--bg-primary) 0%, 
+        var(--bg-secondary) 50%, 
+        var(--bg-tertiary) 100%);
     position: relative;
-    z-index: 10002 !important;
-    pointer-events: none !important;
-    border: 2px solid rgba(255,215,0,0.8);
-    box-shadow: 0 0 15px rgba(255,215,0,0.6);
+    overflow: hidden;
 }
 
-.custom-cursor.arrow-left::after {
-    content: '←';
+.unique-client-section::before {
+    content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #000;
-    font-size: 18px;
-    font-weight: bold;
-    text-shadow: 0 0 3px rgba(255,215,0,0.8);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, 
+        rgba(212, 175, 55, 0.1) 0%, 
+        transparent 70%);
+    pointer-events: none;
 }
 
-.custom-cursor.arrow-right {
-    background: radial-gradient(circle, rgba(255,215,0,1) 0%, rgba(255,193,7,0.9) 70%, rgba(255,165,0,0.5) 100%);
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
+.unique-title-wrapper {
+    text-align: center;
     position: relative;
-    z-index: 10002 !important;
-    pointer-events: none !important;
-    border: 2px solid rgba(255,215,0,0.8);
-    box-shadow: 0 0 15px rgba(255,215,0,0.6);
+    z-index: 2;
 }
 
-.custom-cursor.arrow-right::after {
-    content: '→';
+.unique-client-title {
+    font-size: clamp(3rem, 8vw, 8rem);
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    margin: 0;
+    line-height: 1.1;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(1rem, 3vw, 2rem);
+}
+
+.word-animation {
+    display: inline-block;
+    position: relative;
+    opacity: 0;
+    transform: translateY(50px) rotateX(-30deg);
+    animation: wordReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    perspective: 1000px;
+}
+
+.word-animation:nth-child(1) { animation-delay: 0.2s; }
+.word-animation:nth-child(2) { animation-delay: 0.4s; }
+.word-animation:nth-child(3) { animation-delay: 0.6s; }
+.word-animation:nth-child(4) { animation-delay: 0.8s; }
+
+.highlight-word {
+    background: linear-gradient(45deg, 
+        var(--accent-primary), 
+        #f4d03f, 
+        var(--accent-primary));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: wordReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0.8s,
+               shimmerEffect 3s ease-in-out infinite 2s;
+    position: relative;
+}
+
+.highlight-word::before {
+    content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #000;
-    font-size: 18px;
-    font-weight: bold;
-    text-shadow: 0 0 3px rgba(255,215,0,0.8);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+    opacity: 0;
+    animation: highlightSweep 2s ease-in-out infinite 2s;
+    border-radius: 8px;
+    z-index: -1;
 }
 
-/* Cursor personalizado escondido no lightbox */
-.lightbox.show .custom-cursor {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
+.title-underline {
+    width: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        var(--accent-primary), 
+        transparent);
+    margin: 2rem auto;
+    border-radius: 2px;
+    animation: underlineExpand 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 1.5s;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
+
+.floating-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent-primary);
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFloat 6s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+}
+
+.particle:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 5s;
+}
+
+.particle:nth-child(2) {
+    left: 25%;
+    animation-delay: 1s;
+    animation-duration: 7s;
+}
+
+.particle:nth-child(3) {
+    left: 50%;
+    animation-delay: 2s;
+    animation-duration: 6s;
+}
+
+.particle:nth-child(4) {
+    left: 75%;
+    animation-delay: 3s;
+    animation-duration: 8s;
+}
+
+.particle:nth-child(5) {
+    left: 90%;
+    animation-delay: 4s;
+    animation-duration: 5.5s;
+}
+
+/* Animações */
+@keyframes wordReveal {
+    0% {
+        opacity: 0;
+        transform: translateY(50px) rotateX(-30deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+@keyframes shimmerEffect {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes highlightSweep {
+    0%, 100% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(100%);
+    }
+}
+
+@keyframes underlineExpand {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 300px;
+    }
+}
+
+@keyframes particleFloat {
+    0%, 100% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(90vh) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translateY(-10vh) scale(1);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .unique-client-section {
+        padding: 10px 0 5px 0;
+    }
+    
+    .unique-client-title {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .title-underline {
+        width: 200px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .unique-client-section {
+        padding: 8px 0 5px 0;
+    }
+    
+    .title-underline {
+        width: 150px !important;
+    }
+}
+
+/* Tema Inverso */
+[data-theme="inverted"] .unique-client-section {
+    background: linear-gradient(135deg, 
+        var(--bg-primary) 0%, 
+        var(--bg-secondary) 50%, 
+        var(--bg-tertiary) 100%);
+}
+
+[data-theme="inverted"] .unique-client-section::before {
+    background: radial-gradient(circle at 50% 50%, 
+        rgba(26, 26, 26, 0.2) 0%, 
+        transparent 70%);
+}
+
+[data-theme="inverted"] .word-animation {
+    text-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+/* ===== GALERIA INVERSA ===== */
+/* Galeria inversa usa o mesmo posicionamento da galeria original */
+
+/* Ajustes específicos para animações na galeria inversa */
+.inverse-layout .slide-left {
+    animation-name: slideInLeft;
+}
+
+.inverse-layout .slide-right {
+    animation-name: slideInRight;
+}
+
+/* Efeitos de entrada alternativos para galeria inversa */
+.inverse-layout .work-item:nth-child(odd) {
+    animation-delay: 0.1s;
+}
+
+.inverse-layout .work-item:nth-child(even) {
+    animation-delay: 0.3s;
+}
+
+/* Hover effects especiais para galeria inversa */
+.inverse-layout .work-item:hover {
+    transform: scale(1.02) rotate(0.5deg);
+}
+
+.inverse-layout .work-item:hover .work-image {
+    filter: brightness(1.1) contrast(1.05) saturate(1.1);
+}
+
+/* Efeitos de parallax sutil para galeria inversa */
+.inverse-layout .work-item {
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.inverse-layout .work-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(212, 175, 55, 0.05) 50%, 
+        transparent 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.inverse-layout .work-item:hover::before {
+    opacity: 1;
+}
+
+/* Tema inverso para galeria inversa */
+[data-theme="inverted"] .inverse-layout .work-item::before {
+    background: linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(26, 26, 26, 0.1) 50%, 
+        transparent 100%);
+}
+
+/* ===== SECÇÃO SOBRE BDN ===== */
+.sobre-bdn-section {
+    padding: clamp(6rem, 10vw, 8rem) 0;
+    background: var(--bg-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.sobre-bdn-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.02) 50%, transparent 100%),
+        linear-gradient(0deg, transparent 0%, rgba(255, 215, 0, 0.01) 100%);
+    pointer-events: none;
+}
+
+.sobre-bdn-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.sobre-bdn-header {
+    text-align: center;
+    margin-bottom: clamp(4rem, 8vw, 6rem);
+    position: relative;
+}
+
+.sobre-bdn-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 300;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.sobre-bdn-subtitle {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: var(--accent-primary);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 2px;
+}
+
+.sobre-bdn-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(4rem, 8vw, 6rem);
+    align-items: start;
+}
+
+.sobre-bdn-intro {
+    margin-bottom: 3rem;
+}
+
+.sobre-bdn-intro p {
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    line-height: 1.8;
+    color: var(--text-primary);
+    font-weight: 300;
+    margin: 0;
+}
+
+.sobre-bdn-intro strong {
+    color: var(--accent-primary);
+    font-weight: 400;
+}
+
+.sobre-bdn-values h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+    color: var(--text-primary);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+}
+
+.values-grid {
+    display: grid;
+    gap: 2rem;
+}
+
+.value-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 0;
+    background: transparent;
+    border: none;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.value-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 0;
+    background: var(--accent-primary);
+    transition: height 0.3s ease;
+}
+
+.value-item:hover::before {
+    height: 100%;
+}
+
+.value-item:hover {
+    transform: translateX(1rem);
+}
+
+.value-icon {
+    font-size: 1.2rem;
+    min-width: 30px;
+    opacity: 0.8;
+}
+
+.value-item h4 {
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+}
+
+.value-item p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 300;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: rgba(255, 215, 0, 0.08);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 215, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: rgba(255, 215, 0, 0.12);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+}
+
+.stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Estilos para a parceria Ana Duarte */
+.partnership-highlight {
+    background: linear-gradient(135deg, #CC5500 0%, #B04500 100%) !important;
+    border: 1px solid #CC5500 !important;
+    color: white !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.partnership-highlight::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.partnership-highlight:hover {
+    background: linear-gradient(135deg, #B04500 0%, #993D00 100%) !important;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(204, 85, 0, 0.4) !important;
+}
+
+.partnership-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.partnership-highlight .stat-label {
+    color: rgba(255,255,255,0.9) !important;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+}
+
+/* Estilos para a nova seção de informações da parceria */
+.partnership-info {
+    margin-top: 4rem;
+    padding: 3rem 2rem;
+    border-top: 1px solid rgba(205, 133, 106, 0.3);
+    text-align: center;
+    background: linear-gradient(135deg, rgba(205, 133, 106, 0.08) 0%, rgba(218, 165, 132, 0.05) 100%);
+    box-shadow: none;
+    border-radius: 16px;
+    color: var(--text-primary);
+    overflow: visible;
+    position: relative;
+}
+
+.partnership-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #CD856A 0%, #DAA584 50%, #CD856A 100%);
+    border-radius: 16px 16px 0 0;
+}
+
+.partnership-main {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.partnership-logo-large {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 300;
+    color: #CD856A;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    text-shadow: none;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #CD856A 0%, #B8704F 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.partnership-main h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    color: #B8704F;
+    letter-spacing: -0.01em;
+}
+
+.partnership-description {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    font-weight: 300;
+    max-width: 60ch;
+    margin: 0 auto;
+}
+
+.partnership-services, .partnership-palette {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 2rem;
+}
+
+.partnership-services h5, .partnership-palette h5 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: #B8704F;
+    text-align: center;
+}
+
+.services-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.8rem;
+}
+
+.services-list li {
+    background: rgba(205, 133, 106, 0.1);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 400;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(205, 133, 106, 0.2);
+    color: #B8704F;
+}
+
+.services-list li:hover {
+    background: rgba(205, 133, 106, 0.15);
+    border-color: rgba(205, 133, 106, 0.3);
+    transform: translateY(-2px);
+}
+
+.color-palette {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.color-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.color-swatch {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+.color-swatch:hover {
+    transform: scale(1.1);
+}
+
+.color-item span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .sobre-bdn-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .value-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .partnership-info {
+        padding: 2rem 0;
+    }
+    
+    .sobre-bdn-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .color-palette {
+        gap: 1rem;
+    }
+    
+    .color-swatch {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Tema Inverso */
+[data-theme="inverted"] .sobre-bdn-section {
+    background: linear-gradient(135deg, 
+        var(--bg-primary) 0%, 
+        var(--bg-secondary) 50%, 
+        var(--bg-primary) 100%);
+}
+
+[data-theme="inverted"] .sobre-bdn-section::before {
+    background: radial-gradient(circle at 30% 70%, 
+        rgba(26, 26, 26, 0.1) 0%, 
+        transparent 50%);
+}
+
+[data-theme="inverted"] .value-item {
+    background: rgba(26, 26, 26, 0.1);
+    border-color: rgba(26, 26, 26, 0.2);
+}
+
+[data-theme="inverted"] .value-item:hover {
+    background: rgba(26, 26, 26, 0.15);
+    border-color: rgba(26, 26, 26, 0.3);
+}
+
+[data-theme="inverted"] .stat-item {
+    background: rgba(26, 26, 26, 0.12);
+    border-color: rgba(26, 26, 26, 0.25);
+}
+
+[data-theme="inverted"] .stat-item:hover {
+    background: rgba(26, 26, 26, 0.18);
+    box-shadow: 0 10px 30px rgba(26, 26, 26, 0.3);
+}
+
+/* Estilos da parceria no tema invertido */
+[data-theme="inverted"] .partnership-highlight {
+    background: linear-gradient(135deg, #B04500 0%, #993D00 100%) !important;
+    border: 1px solid #B04500 !important;
+}
+
+[data-theme="inverted"] .partnership-highlight::before {
+    background: linear-gradient(45deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+}
+
+[data-theme="inverted"] .partnership-highlight:hover {
+    background: linear-gradient(135deg, #993D00 0%, #802F00 100%) !important;
+    box-shadow: 0 15px 40px rgba(176, 69, 0, 0.5) !important;
+}
+
+/* Estilos da nova seção de informações da parceria no tema invertido */
+[data-theme="inverted"] .partnership-info {
+    border-top-color: rgba(101, 46, 17, 0.5);
+    background: linear-gradient(135deg, rgba(101, 46, 17, 0.2) 0%, rgba(120, 65, 30, 0.15) 100%);
+    box-shadow: 0 4px 20px rgba(101, 46, 17, 0.1);
+}
+
+[data-theme="inverted"] .partnership-info::before {
+    background: linear-gradient(90deg, #652E11 0%, #8B4513 50%, #652E11 100%);
+}
+
+[data-theme="inverted"] .partnership-logo-large {
+    color: #652E11;
+    background: linear-gradient(135deg, #652E11 0%, #8B4513 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 1px 1px 2px rgba(101, 46, 17, 0.3);
+}
+
+[data-theme="inverted"] .partnership-main h4 {
+    color: #78411E;
+    font-weight: 500;
+}
+
+[data-theme="inverted"] .partnership-services h5,
+[data-theme="inverted"] .partnership-palette h5 {
+    color: #78411E;
+    font-weight: 500;
+}
+
+[data-theme="inverted"] .services-list li {
+    background: rgba(101, 46, 17, 0.25);
+    border-color: rgba(101, 46, 17, 0.4);
+    color: #652E11;
+    font-weight: 500;
+}
+
+[data-theme="inverted"] .services-list li:hover {
+    background: rgba(101, 46, 17, 0.35);
+    border-color: rgba(101, 46, 17, 0.6);
+    box-shadow: 0 4px 12px rgba(101, 46, 17, 0.2);
+}
+
+[data-theme="inverted"] .partnership-description {
+    color: #5D3317;
+    font-weight: 400;
+}
+
+
     </style>
 </head>
 <body>
     <!-- Cursor personalizado amarelado -->
     <div class="custom-cursor" id="customCursor"></div>
+    
+    <!-- Seletor de Idioma - Canto Inferior Esquerdo -->
+    <div class="language-selector" id="language-selector">
+        <button class="language-btn active" data-lang="pt" title="Português">PT</button>
+        <div class="language-separator"></div>
+        <button class="language-btn" data-lang="en" title="English">EN</button>
+    </div>
+    
+    <!-- Botão de Alternância de Tema - Canto Inferior Direito -->
+    <div class="theme-toggle-fixed" id="theme-toggle" title="Alternar Tema">
+        <div class="theme-toggle-icon">
+            <div class="theme-circle"></div>
+        </div>
+    </div>
     
     <header>
         <div class="header-container">
@@ -2037,8 +4398,8 @@ footer {
                     <div class="logo-dropdown" id="logo-dropdown">
                         <ul>
                             <li><a href="#home">Início</a></li>
-                            <li><a href="#sobre-empresa">Sobre BDN</a></li>
-                            <li><a href="#empresa1">BDN Arquitetura</a></li>
+                            <li><a href="#empresa1">BDN - Projetos</a></li>
+                            <li><a href="#sobre-bdn">Sobre BDN</a></li>
                             <li><a href="#contato">Contacto</a></li>
                         </ul>
                     </div>
@@ -2050,17 +4411,17 @@ footer {
                         <span></span>
                     </div>
                     <ul class="desktop-nav">
-                        <li><a href="#home">Início</a></li>
-                        <li><a href="#sobre-empresa">Sobre BDN</a></li>
-                        <li><a href="#empresa1">BDN Arquitetura</a></li>
-                        <li><a href="#contato">Contacto</a></li>
+                        <li><a href="#home" data-translate="nav_home">Início</a></li>
+                        <li><a href="#empresa1" data-translate="nav_projects">BDN - Projetos</a></li>
+                        <li><a href="#sobre-bdn" data-translate="nav_about">Sobre BDN</a></li>
+                        <li><a href="#contato" data-translate="nav_contact">Contacto</a></li>
                     </ul>
                     <div class="nav-menu" id="nav-menu">
                         <ul>
-                            <li><a href="#home">Início</a></li>
-                            <li><a href="#sobre-empresa">Sobre BDN</a></li>
-                            <li><a href="#empresa1">BDN Arquitetura</a></li>
-                            <li><a href="#contato">Contacto</a></li>
+                            <li><a href="#home" data-translate="nav_home">Início</a></li>
+                            <li><a href="#empresa1" data-translate="nav_projects">BDN - Projectos</a></li>
+                            <li><a href="#sobre-bdn" data-translate="nav_about">Sobre BDN</a></li>
+                            <li><a href="#contato" data-translate="nav_contact">Contacto</a></li>
                         </ul>
                     </div>
                     <div class="nav-overlay" id="nav-overlay"></div>
@@ -2076,179 +4437,320 @@ footer {
                 <div class="hero-logo">
                     <img src="BDN_logo.png" alt="BDN" class="hero-logo-img">
                 </div>
-                <div class="hero-motto">PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</div>
-                <p>Grupo empresarial dedicado à criação de espaços únicos que inspiram e transformam</p>
-                <p>Descubra as nossas empresas especializadas e como podemos dar vida aos seus projetos</p>
+                <div class="hero-motto" data-translate="hero_motto">PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS</div>
+                <p data-translate="hero_description1">Grupo empresarial dedicado à criação de espaços únicos que inspiram e transformam</p>
+                <p data-translate="hero_description2">Descubra como podemos dar vida aos seus projectos</p>
             </div>
         </section>
 
-        <!-- Secção Sobre o Grupo BDN -->
-        <section id="sobre-empresa">
-            <div class="company-card" style="margin-bottom: 4rem;">
-                <h2>Sobre o Grupo BDN</h2>
-                <p><strong>"PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS"</strong> - Este é o lema que guia o Grupo BDN, uma empresa dedicada à criação de espaços únicos que transformam vidas e comunidades. Fundado por uma equipa de profissionais visionários, o nosso grupo combina criatividade, tecnologia e sustentabilidade para desenvolver projetos que transcendem o tempo e inspiram gerações.</p>
-                
-                <p>Com mais de uma década de experiência no mercado, especializamo-nos através das nossas duas empresas distintas, cada uma com a sua área de expertise, oferecendo soluções completas desde a arquitetura até aos interiores.</p>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                    <div>
-                        <h3>A Nossa Missão</h3>
-                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Projetar, arquitetar e construir espaços únicos e funcionais que reflectem a personalidade dos nossos clientes, contribuindo para a melhoria da qualidade de vida através da excelência técnica e criativa.</p>
-                    </div>
-                    <div>
-                        <h3>A Nossa Visão</h3>
-                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Ser reconhecido como o grupo empresarial de referência no setor, conhecido pela inovação, sustentabilidade e capacidade de transformar sonhos em realidade através de projetos excepcionais.</p>
-                    </div>
-                    <div>
-                        <h3>Os Nossos Valores</h3>
-                        <p style="color: #aaa; font-size: 0.95rem; line-height: 1.6;">Criatividade, sustentabilidade, excelência técnica, personalização, funcionalidade e integridade em todos os nossos projetos, desde a conceção até à execução.</p>
-                    </div>
-                </div>
-
-                <div style="margin-top: 3rem;">
-                    <h3>As Nossas Empresas</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 1.5rem;">
-                        <div style="padding: 1.5rem; border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 8px;">
-                            <h4 style="color: #ffd700; margin-bottom: 1rem;">🏗️ BDN Arquitetura</h4>
-                            <p style="color: #aaa; font-size: 0.9rem; line-height: 1.6;">Especializada em projetos arquitetónicos residenciais e comerciais, desenvolvendo soluções completas desde a conceção até à execução da obra.</p>
-                        </div>
-                        <div style="padding: 1.5rem; border: 1px solid rgba(139, 69, 19, 0.5); border-radius: 8px; background: rgba(139, 69, 19, 0.1);">
-                            <h4 style="color: #8B4513; margin-bottom: 1rem;">🎨 Ana Duarte Arquitetura de Interiores</h4>
-                            <p style="color: #aaa; font-size: 0.9rem; line-height: 1.6;">Focada exclusivamente em design de interiores, criando ambientes sofisticados com uma paleta de cores de preto e terra cotta.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Secção BDN Arquitetura -->
+        <!-- Secção BDN Arquitectura -->
         <section id="empresa1">
-            <div class="hero">
-                <h1>BDN Arquitetura</h1>
-                <p><strong>PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</strong></p>
-                <p>Soluções arquitetónicas completas desde a conceção até à execução</p>
+            <!-- Header da Seção -->
+            <div class="work-header">
+                <div class="work-hero">
+                    <div class="professional-title-container">
+                        <div class="brand-section">
+                            <span class="brand-name">BDN</span>
+                            <div class="brand-divider"></div>
+                            <span class="brand-tagline" data-translate="projects_title">PROJETOS</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <br><br>
+            <!-- Portfolio Grid Profissional -->
+            <div class="work-grid">
+                <!-- Projecto 1 -->
+                <div class="work-item size-xlarge bounce-in" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao1.png" alt="Vila Contemporânea" class="work-image">
+                    </div>
+                </div>
 
-            <div class="company-card">
-                <h2>
-                    <div class="company-icon">�️</div>
-                    BDN Arquitetura
-                </h2>
-                <p>A BDN Arquitetura materializa o lema do grupo <strong>"PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS"</strong>, oferecendo soluções arquitetónicas completas para projetos residenciais e comerciais. A nossa equipa especializada acompanha cada projeto desde a conceção inicial até à entrega final da obra, garantindo qualidade e excelência em todas as fases.</p>
+                <!-- Projecto 2 -->
+                <div class="work-item size-medium slide-left" data-category="commercial">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao15.png" alt="Centro Empresarial" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 3 -->
+                <div class="work-item size-xlarge flip-in" data-category="workspace">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao14.png" alt="Sede Corporativa" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 4 -->
+                <div class="work-item size-medium zoom-rotate" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao13.png" alt="Casa da Ria" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 5 -->
+                <div class="work-item size-medium elastic-in" data-category="hospitality">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao11.png" alt="Hotel Quinta do Vale" class="work-image" >
+                    </div>
+                </div>
                 
-                <h3>A Nossa Abordagem Integrada</h3>
-                <ul class="services">
-                    <li><strong>Projetamos:</strong> Desenvolvimento de conceitos únicos e personalizados</li>
-                    <li><strong>Arquitetamos:</strong> Criação de soluções técnicas e estéticas inovadoras</li>
-                    <li><strong>Construímos:</strong> Execução com controlo de qualidade e prazos</li>
-                    <li><strong>Sustentabilidade:</strong> Soluções ecológicas e eficiência energética</li>
-                </ul>
-            </div>
+                <!-- Projeto 6 -->
+                <div class="work-item size-xlarge slide-right" data-category="retail">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao10.png" alt="Espaço Comercial" class="work-image" >
+                    </div>
+                </div>
 
-            <div class="company-card">
-                <h2>Projetos Arquitetónicos em Destaque</h2>
-                <div class="projects-grid">
-                    <div class="project-card">
-                        <h4>Residência Contemporânea</h4>
-                        <p>Casa moderna de 350m² com design inovador, integração interior-exterior e soluções sustentáveis aplicando o conceito completo do grupo.</p>
-                        <div class="project-tags">
-                            <span class="tag">Residencial</span>
-                            <span class="tag">Sustentável</span>
-                            <span class="tag">350m²</span>
-                        </div>
+                <!-- Projeto 7 -->
+                <div class="work-item size-xlarge bounce-in" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao9.png" alt="Moradia Atlântico" class="work-image" >
                     </div>
-                    <div class="project-card">
-                        <h4>Complexo Comercial</h4>
-                        <p>Edifício comercial multifuncional projetado, arquitetado e construído pela equipa BDN, integrando escritórios e espaços comerciais.</p>
-                        <div class="project-tags">
-                            <span class="tag">Comercial</span>
-                            <span class="tag">Multifuncional</span>
-                            <span class="tag">Obra Completa</span>
-                        </div>
+                </div>
+
+                <!-- Projeto 8 -->
+                <div class="work-item size-xxlarge flip-in" data-category="commercial">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao8.png" alt="Torre Moderna" class="work-image" >
                     </div>
-                    <div class="project-card">
-                        <h4>Moradia Unifamiliar</h4>
-                        <p>Projeto residencial completo com acompanhamento desde o desenho inicial até à entrega das chaves, incluindo paisagismo.</p>
-                        <div class="project-tags">
-                            <span class="tag">Unifamiliar</span>
-                            <span class="tag">Paisagismo</span>
-                            <span class="tag">Turnkey</span>
-                        </div>
+                </div>
+
+                <!-- Projeto 9 -->
+                <div class="work-item size-xxlarge zoom-rotate" data-category="cultural">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao7.png" alt="Centro Cultural" class="work-image" >
                     </div>
-                    <div class="project-card">
-                        <h4>Edifício Corporativo</h4>
-                        <p>Sede empresarial com soluções arquitetónicas inovadoras, espaços colaborativos e tecnologia integrada.</p>
-                        <div class="project-tags">
-                            <span class="tag">Corporativo</span>
-                            <span class="tag">Tecnologia</span>
-                            <span class="tag">Inovação</span>
-                        </div>
+                </div>
+
+                <!-- Projeto 10 -->
+                <div class="work-item size-xlarge elastic-in" data-category="hospitality">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao5.png" alt="Resort Costeiro" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 11 - Quinta linha, primeira imagem (alinhada com meio da imagem 10) -->
+                <div class="work-item size-large elastic-in" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao4.png" alt="Moradia do Minho" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projeto 12 - Quinta linha, segunda imagem (centralizada na página) -->
+                <div class="work-item size-xxlarge bounce-in" data-category="commercial">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao3.png" alt="Edifício Moderno" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projecto 13 - Nova imagem no lado direito, alinhada com eixo esquerdo da penúltima -->
+                <div class="work-item size-large bounce-in" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao2.png" alt="Casa Moderna" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projecto 14 - Última imagem antes dos contactos, posicionada no lado esquerdo -->
+                <div class="work-item size-vertical slide-left" data-category="residential">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao6.png" alt="Projeto Final" class="work-image" >
+                    </div>
+                </div>
+
+                <!-- Projecto 15 - Imagem paralela à última, posicionada no lado direito -->
+                <div class="work-item size-large slide-right" data-category="commercial">
+                    <div class="work-image-container">
+                        <img src="imagens/habitacao7.png" alt="Projeto Paralelo" class="work-image" >
                     </div>
                 </div>
             </div>
 
-            <div class="company-card">
-                <h2>Portfólio BDN Arquitetura</h2>
-                <div class="gallery">
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Projeto Arquitetónico">
-                        <div class="gallery-overlay">Projetos Residenciais</div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Edifício Comercial">
-                        <div class="gallery-overlay">Projetos Comerciais</div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Paisagismo">
-                        <div class="gallery-overlay">Paisagismo Integrado</div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Construção">
-                        <div class="gallery-overlay">Execução de Obras</div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Sustentabilidade">
-                        <div class="gallery-overlay">Soluções Sustentáveis</div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Inovação">
-                        <div class="gallery-overlay">Inovação Técnica</div>
+        </section>
+
+        <!-- Secção Título Único -->
+        <section class="unique-client-section">
+            <div class="container">
+                <div class="unique-title-wrapper">
+                    <h2 class="unique-client-title">
+                        <span class="word-animation" data-word="EACH">EACH</span>
+                        <span class="word-animation" data-word="CLIENT">CLIENT</span>
+                        <span class="word-animation" data-word="IS">IS</span>
+                        <span class="word-animation highlight-word" data-word="UNIQUE">UNIQUE</span>
+                    </h2>
+                    <div class="title-underline"></div>
+                    <div class="floating-particles">
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
                     </div>
                 </div>
             </div>
+        </section>
+        
 
-            <div class="company-card">
-                <h2>Serviços BDN Arquitetura</h2>
-                <ul class="services">
-                    <li><strong>Projeto Arquitetónico:</strong> Desenvolvimento completo do projeto desde o conceito</li>
-                    <li><strong>Arquitetura de Execução:</strong> Plantas técnicas e detalhamento construtivo</li>
-                    <li><strong>Gestão de Obra:</strong> Acompanhamento e supervisão durante toda a construção</li>
-                    <li><strong>Projeto Paisagístico:</strong> Jardins e áreas externas integradas</li>
-                    <li><strong>Consultoria Sustentável:</strong> Soluções eco-friendly e eficiência energética</li>
-                    <li><strong>Projetos Complementares:</strong> Coordenação de especialidades (estrutural, MEP)</li>
-                    <li><strong>Licenciamento:</strong> Apoio nos processos de aprovação municipal</li>
-                    <li><strong>Entrega Chave na Mão:</strong> Solução completa até à entrega final</li>
-                </ul>
-                <a href="#contato" class="contact-btn">Solicitar Projeto Completo</a>
+
+
+
+        <!-- Secção Galeria Inversa -->
+        <section id="galeria-inversa" class="section">
+            <div class="container">
+                <div class="work-grid inverse-layout">
+                    
+                    <!-- Projeto 1 - Primeira linha da galeria original -->
+                    <div class="work-item size-xlarge bounce-in" data-category="residential">
+                        <div class="work-image-container">
+                            <img src="imagens/img1.png" alt="Vila Contemporânea" class="work-image">
+                        </div>
+                    </div>
+
+                    <!-- Projeto 2 - Primeira linha da galeria original -->
+                    <div class="work-item size-medium slide-left" data-category="commercial">
+                        <div class="work-image-container">
+                            <img src="imagens/img2.png" alt="Centro Empresarial" class="work-image">
+                        </div>
+                    </div>
+
+                    <!-- Projeto 3 - Primeira linha da galeria original -->
+                    <div class="work-item size-xlarge flip-in" data-category="workspace">
+                        <div class="work-image-container">
+                            <img src="imagens/img3.png" alt="Sede Corporativa" class="work-image">
+                        </div>
+                    </div>
+
+                    <!-- Projeto 4 - Primeira linha da galeria original -->
+                    <div class="work-item size-medium zoom-rotate" data-category="residential">
+                        <div class="work-image-container">
+                            <img src="imagens/img4.png" alt="Casa da Ria" class="work-image">
+                        </div>
+                    </div>
+
+                    <!-- Projeto 5 - Primeira linha da galeria original -->
+                    <div class="work-item size-medium elastic-in" data-category="hospitality">
+                        <div class="work-image-container">
+                            <img src="imagens/img5.png" alt="Hotel Quinta do Vale" class="work-image">
+                        </div>
+                    </div>
+
+                    <!-- Projeto Adicional 1 - Imagem Grande (2x maior) -->
+                    <div class="work-item size-double-large slide-up" data-category="featured">
+                        <div class="work-image-container">
+                            <img src="imagens/img6.png" alt="Projeto Arquitetónico Principal" class="work-image">
+                        </div>
+                    </div>
+
+                    <!-- Projeto Adicional 2 - Imagem Pequena -->
+                    <div class="work-item size-small fade-in" data-category="featured">
+                        <div class="work-image-container">
+                            <img src="imagens/img7.png" alt="Projeto Complementar" class="work-image">
+                        </div>
+                    </div>
+
+                    <!-- Projeto Adicional 3 - Imagem do Lado Direito -->
+                    <div class="work-item size-medium slide-in-right" data-category="featured">
+                        <div class="work-image-container">
+                            <img src="imagens/img8.png" alt="Projeto Lateral" class="work-image">
+                        </div>
+                    </div>
+
+                    <!-- Projeto Adicional 4 - Primeira imagem em baixo -->
+                    <div class="work-item size-vertical slide-in-bottom" data-category="featured">
+                        <div class="work-image-container">
+                            <img src="imagens/img9.png" alt="Projeto Arquitetónico Inferior" class="work-image">
+                        </div>
+                    </div>
+
+                    <!-- Projeto Adicional 5 - Segunda imagem em baixo -->
+                    <div class="work-item size-medium rotate-in" data-category="featured">
+                        <div class="work-image-container">
+                            <img src="imagens/img10.png" alt="Projeto Final Complementar" class="work-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Secção Sobre BDN -->
+        <section id="sobre-bdn" class="section sobre-bdn-section">
+            <div class="container">
+                <div class="sobre-bdn-content">
+                    <div class="sobre-bdn-header">
+                        <h2 class="sobre-bdn-title" data-translate="about_title">Sobre BDN</h2>
+                        <p class="sobre-bdn-subtitle" data-translate="about_subtitle">PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS</p>
+                    </div>
+                    
+                    <div class="sobre-bdn-grid">
+                        <div class="sobre-bdn-text">
+                            <div class="sobre-bdn-intro">
+                                <p data-translate="about_description">A <strong>BDN</strong> é uma empresa de referência no setor da arquitetura e construção, com 15 anos de experiência na criação de projetos únicos e inovadores. Combinamos tradição e modernidade para dar vida às suas ideias.</p>
+                            </div>
+                            
+                            <div class="sobre-bdn-values">
+                                <h3 data-translate="values_title">Os Nossos Valores</h3>
+                                <div class="values-grid">
+                                    <div class="value-item">
+                                        <div class="value-icon">🎯</div>
+                                        <h4 data-translate="value_excellence">Excelência</h4>
+                                        <p data-translate="value_excellence_desc">Comprometemo-nos com a mais alta qualidade em cada projeto</p>
+                                    </div>
+                                    <div class="value-item">
+                                        <div class="value-icon">💡</div>
+                                        <h4 data-translate="value_innovation">Inovação</h4>
+                                        <p data-translate="value_innovation_desc">Utilizamos as mais recentes tecnologias e tendências arquitetónicas</p>
+                                    </div>
+                                    <div class="value-item">
+                                        <div class="value-icon">🤝</div>
+                                        <h4 data-translate="value_trust">Confiança</h4>
+                                        <p data-translate="value_trust_desc">Construímos relações duradoras baseadas na transparência</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="sobre-bdn-stats">
+                            <div class="partnership-info">
+                                <div class="partnership-main">
+                                    <h4 data-translate="partnership_title">Ana Duarte Arquitetura de Interiores</h4>
+                                    <p class="partnership-description" data-translate="partnership_description">
+                                        Especializada em design de interiores sofisticado e funcional, a Ana Duarte Arquitetura de Interiores 
+                                        complementa perfeitamente os projetos da BDN, criando espaços que harmonizam arquitetura e decoração.
+                                    </p>
+                                </div>
+                                
+                                <div class="partnership-services">
+                                    <h5 data-translate="partnership_specialties">Especialidades</h5>
+                                    <ul class="services-list">
+                                        <li>Design de Interiores Residencial</li>
+                                        <li>Arquitetura Comercial de Interiores</li>
+                                        <li>Consultoria em Decoração</li>
+                                        <li>Projeto de Mobiliário Personalizado</li>
+                                        <li>Seleção de Materiais e Acabamentos</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Secção Contacto -->
         <section id="contato" class="section">
             <div class="hero">
-                <h1>Contacto</h1>
-                <p><strong>PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</strong></p>
-                <p>Entre em contacto connosco para dar vida ao seu projeto</p>
+                <h1 data-translate="contact_title">Contacto</h1>
+                <p><strong data-translate="contact_motto">PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS</strong></p>
+                <p data-translate="contact_description">Entre em contacto connosco para dar vida ao seu projeto</p>
             </div>
 
-            <!-- Informações de Contacto -->
             <div class="contact-info">
                 <div class="contact-grid">
                     <div class="contact-item">
                         <div class="contact-icon">📍</div>
                         <div class="contact-details">
-                            <h3>Morada</h3>
-                            <p>Av. Comendador Francisco Alves Quintas<br>
+                            <h3 data-translate="contact_address_title">Morada</h3>
+                            <p data-translate="contact_address">Av. Comendador Francisco Alves Quintas<br>
                             Zona Industrial de Gandra<br>
                             4740-010 Esposende</p>
                         </div>
@@ -2256,8 +4758,8 @@ footer {
                     
                     <div class="contact-item">
                         <div class="contact-icon">📞</div>
-                        <div class="contact-details">
-                            <h3>Contactos Telefónicos</h3>
+                        <div class="contact-details centered-text">
+                            <h3 data-translate="contact_phone_title">Contactos Telefónicos</h3>
                             <p><a href="tel:+351911504793">911 504 793</a></p>
                             <p><a href="tel:+351253131797">253 131 797</a></p>
                         </div>
@@ -2266,7 +4768,7 @@ footer {
                     <div class="contact-item">
                         <div class="contact-icon">✉️</div>
                         <div class="contact-details">
-                            <h3>Email</h3>
+                            <h3 data-translate="contact_email_title">Email</h3>
                             <p><a href="mailto:jaimebermudes@projectobdn.com">jaimebermudes@projectobdn.com</a></p>
                             <p><a href="mailto:joaobermudes@projectobdn.com">joaobermudes@projectobdn.com</a></p>
                         </div>
@@ -2274,54 +4776,67 @@ footer {
                     
                     <div class="contact-item">
                         <div class="contact-icon">🌐</div>
-                        <div class="contact-details">
-                            <h3>Redes Sociais</h3>
+                        <div class="contact-details centered-text">
+                            <h3 data-translate="contact_social_title">Redes Sociais</h3>
                             <p><a href="https://www.facebook.com/projectoBDN/?fref=ts" target="_blank">Facebook</a></p>
-                            <p><a href="https://www.google.pt/maps/place/BDN/@41.5320682,-8.7647711,17z/data=!3m1!4b1!4m2!3m1!1s0xd244b916d62e69f:0x6aa246b2fb81a52c" target="_blank">Ver no Google Maps</a></p>
+                            <p><a href="https://www.google.pt/maps/place/BDN/@41.5320682,-8.7647711,17z/data=!3m1!4b1!4m2!3m1!1s0xd244b916d62e69f:0x6aa246b2fb81a52c" target="_blank" data-translate="contact_maps_link">Ver no Google Maps</a></p>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Mapa de Localização -->
+            <div class="contact-map">
+                <div class="map-container">
+                    <h3 data-translate="contact_location_title">A Nossa Localização</h3>
+                    <iframe class="map-embed" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2975.9286897662397!2d-8.767251!3d41.532068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd244b916d62e69f%3A0x6aa246b2fb81a52c!2sBDN!5e0!3m2!1spt!2spt!4v1642098765432!5m2!1spt!2spt"
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Localização BDN Arquitectura - Av. Comendador Francisco Alves Quintas, Zona Industrial de Gandra, 4740-010 Esposende">
+                    </iframe>
+                </div>
+            </div>
 
             <!-- Formulário de Contacto -->
             <div class="contact-form">
-                <h3>Envie-nos uma Mensagem</h3>
+                <h3 data-translate="contact_form_title">Envie-nos uma Mensagem</h3>
                 <form id="contactForm" novalidate>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="firstName">Primeiro Nome *</label>
+                            <label for="firstName" data-translate="form_first_name">Primeiro Nome *</label>
                             <input type="text" id="firstName" name="firstName" required>
-                            <div class="error-message">Por favor, insira o seu primeiro nome.</div>
+                            <div class="error-message" data-translate="form_first_name_error">Por favor, insira o seu primeiro nome.</div>
                         </div>
                         <div class="form-group">
-                            <label for="lastName">Último Nome *</label>
+                            <label for="lastName" data-translate="form_last_name">Último Nome *</label>
                             <input type="text" id="lastName" name="lastName" required>
-                            <div class="error-message">Por favor, insira o seu último nome.</div>
+                            <div class="error-message" data-translate="form_last_name_error">Por favor, insira o seu último nome.</div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Email *</label>
+                        <label for="email" data-translate="form_email">Email *</label>
                         <input type="email" id="email" name="email" required>
-                        <div class="error-message">Por favor, insira um email válido.</div>
+                        <div class="error-message" data-translate="form_email_error">Por favor, insira um email válido.</div>
                     </div>
 
                     <div class="form-group">
-                        <label for="phone">Contacto Telefónico *</label>
+                        <label for="phone" data-translate="form_phone">Contacto Telefónico *</label>
                         <input type="tel" id="phone" name="phone" placeholder="+351 XXX XXX XXX" required>
-                        <div class="error-message">Por favor, insira um número de telefone válido.</div>
+                        <div class="error-message" data-translate="form_phone_error">Por favor, insira um número de telefone válido.</div>
                     </div>
 
                     <div class="form-group">
-                        <label for="message">Mensagem *</label>
-                        <textarea id="message" name="message" placeholder="Descreva o seu projeto ou questão..." required></textarea>
-                        <div class="error-message">Por favor, escreva uma mensagem.</div>
+                        <label for="message" data-translate="form_message">Mensagem *</label>
+                        <textarea id="message" name="message" placeholder="" data-translate-placeholder="form_message_placeholder" required></textarea>
+                        <div class="error-message" data-translate="form_message_error">Por favor, escreva uma mensagem.</div>
                     </div>
 
-                    <button type="submit" class="submit-btn">Enviar Mensagem</button>
+                    <button type="submit" class="submit-btn" data-translate="form_submit">Enviar Mensagem</button>
                     
-                    <div class="success-message" id="successMessage">
+                    <div class="success-message" id="successMessage" data-translate="form_success">
                         Mensagem enviada com sucesso! Entraremos em contacto consigo brevemente.
                     </div>
                 </form>
@@ -2332,24 +4847,89 @@ footer {
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="BDN_logo.png" alt="BDN Arquitectura" class="footer-logo-img">
-                    <div>
-                        <p>&copy; 2025 Grupo BDN. Todos os direitos reservados.</p>
-                        <p style="font-size: 0.8rem; color: #888;">PROJETAMOS | ARQUITETAMOS | CONSTRUIMOS</p>
+                <div class="footer-section footer-about">
+                    <div class="footer-logo">
+                        <img src="BDN_logo.png" alt="BDN Arquitectura" class="footer-logo-img">
+                        <div>
+                            <h3>BDN</h3>
+                            <p style="font-size: 0.9rem; color: #ffd700; margin-bottom: 0.5rem;" data-translate="footer_motto">PROJECTAMOS | ARQUITECTAMOS | CONSTRUÍMOS</p>
+                            <p style="font-size: 0.8rem; color: #aaa;" data-translate="footer_description">Transformamos sonhos em realidade através de projectos inovadores.</p>
+                        </div>
                     </div>
                 </div>
-                <ul class="footer-links">
-                    <li><a href="#">Política de Privacidade</a></li>
-                    <li><a href="#">Termos de Utilização</a></li>
-                    <li><a href="#">Política de Cookies</a></li>
-                    <li><a href="#">Livro de Reclamações</a></li>
-                </ul>
+                
+                <div class="footer-section footer-contact">
+                    <h4 data-translate="footer_contact_title">Contactos</h4>
+                    <div class="contact-info">
+                        <p><i class="contact-icon">✉</i> <a href="mailto:geral@bdn.pt">jaimebermudes@projectobdn.com</a></p>
+                        <p><i class="contact-icon">☎</i> <a href="tel:+351912345678">+351 911 504 793</a></p>
+                        <p><i class="contact-icon">☏</i> <a href="tel:+351123456789">+351 253 131 797</a></p>
+                        <p><i class="contact-icon">⌖</i> Av. Comendador Francisco Alves Quintas<br>
+                            Zona Industrial de Gandra
+4740-010 Esposende</p>
+                    </div>
+                </div>
+                
+                
+
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Grupo BDN. Todos os direitos reservados.</p>
+                <p style="font-size: 0.8rem; color: #888;">Desenvolvido por <a href="https://codecraftstudio.pt">CodeCraftStudio</a></p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Sistema de Alternância de Tema
+        function initThemeToggle() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            
+            // Verificar se há tema salvo no localStorage
+            const savedTheme = localStorage.getItem('website-theme') || 'default';
+            
+            // Aplicar tema salvo
+            if (savedTheme === 'inverted') {
+                body.setAttribute('data-theme', 'inverted');
+            }
+            
+            // Event listener para o botão de toggle
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = body.getAttribute('data-theme');
+                
+                if (currentTheme === 'inverted') {
+                    // Mudar para tema padrão
+                    body.removeAttribute('data-theme');
+                    localStorage.setItem('website-theme', 'default');
+                    console.log('Tema alterado para: Padrão (Preto e Amarelo)');
+                } else {
+                    // Mudar para tema inverso
+                    body.setAttribute('data-theme', 'inverted');
+                    localStorage.setItem('website-theme', 'inverted');
+                    console.log('Tema alterado para: Inverso (Amarelo e Preto)');
+                }
+                
+                // Atualizar cursor personalizado
+                updateCustomCursor();
+            });
+            
+            console.log(`Tema inicializado: ${savedTheme === 'inverted' ? 'Inverso' : 'Padrão'}`);
+        }
+        
+        // Atualizar cursor personalizado quando o tema muda
+        function updateCustomCursor() {
+            const customCursor = document.getElementById('customCursor');
+            if (customCursor) {
+                // Forçar recálculo das variáveis CSS
+                customCursor.style.display = 'none';
+                setTimeout(() => {
+                    customCursor.style.display = 'block';
+                }, 10);
+            }
+        }
+
         // Validação do Formulário de Contacto
         function validateForm() {
             const form = document.getElementById('contactForm');
@@ -2498,7 +5078,7 @@ footer {
         });
         
         // Efeito hover em elementos clicáveis
-        const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .gallery-item, .project-card');
+        const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .work-item, .work-cta, .lightbox-close');
         
         hoverElements.forEach(element => {
             element.addEventListener('mouseenter', () => {
@@ -2521,7 +5101,7 @@ footer {
 
         // Função para inicializar eventos do cursor personalizado
         function initCustomCursor() {
-            const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .gallery-item, .project-card, .lightbox-close, .lightbox-prev, .lightbox-next');
+            const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .work-item, .work-cta, .lightbox-close');
             
             hoverElements.forEach(element => {
                 element.addEventListener('mouseenter', () => {
@@ -2568,8 +5148,14 @@ footer {
         document.addEventListener('DOMContentLoaded', function() {
             ensureHeaderVisibility();
             
+            // Inicializar sistema de tema
+            initThemeToggle();
+            
             // Inicializar cursor personalizado amarelado
             initCustomCursor();
+            
+            // Inicializar animações de entrada das imagens
+            initImageAnimations();
             
             // Funcionalidade para destacar seção ativa
             const sections = document.querySelectorAll('section[id]');
@@ -2606,6 +5192,98 @@ footer {
             initLightbox();
         });
 
+        // Função para inicializar animações de entrada das imagens
+        function initImageAnimations() {
+            // Configurar Intersection Observer para animar imagens assim que entrarem na viewport
+            const observerOptions = {
+                threshold: 0.05, // Animar quando apenas 5% da imagem estiver visível
+                rootMargin: '100px 0px 0px 0px' // Começar animação 100px antes da imagem entrar na viewport
+            };
+
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        // Animar imediatamente quando entrar na viewport
+                        entry.target.classList.add('animate-in');
+                        // Parar de observar esta imagem após animar (one-time animation)
+                        imageObserver.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observar todas as imagens do portfólio
+            const workItems = document.querySelectorAll('.work-item');
+            workItems.forEach((item, index) => {
+                // Remover delay inicial para animação mais imediata
+                item.style.transitionDelay = '0s';
+                imageObserver.observe(item);
+            });
+
+            // Observer adicional para detectar quando o usuário entra na seção das imagens
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Quando a seção de imagens entra na viewport, aplicar delays em cascata
+                        const visibleItems = document.querySelectorAll('.work-item.animate-in');
+                        visibleItems.forEach((item, index) => {
+                            item.style.transitionDelay = `${index * 0.05}s`; // Delay muito pequeno para efeito cascata rápido
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '50px 0px 0px 0px'
+            });
+
+            // Observar a seção do portfólio
+            const portfolioSection = document.querySelector('#empresa1');
+            if (portfolioSection) {
+                sectionObserver.observe(portfolioSection);
+            }
+
+            console.log(`Inicializadas animações de scroll otimizadas para ${workItems.length} imagens do portfólio`);
+        }
+
+        // Portfolio Skylab Filter System
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projects = document.querySelectorAll('.skylab-project');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter projects with smooth animation
+                    projects.forEach(project => {
+                        const category = project.getAttribute('data-category');
+                        
+                        if (filterValue === 'all' || category === filterValue) {
+                            project.style.display = 'block';
+                            project.classList.remove('fade-out');
+                            project.classList.add('fade-in');
+                        } else {
+                            project.classList.remove('fade-in');
+                            project.classList.add('fade-out');
+                            setTimeout(() => {
+                                if (project.classList.contains('fade-out')) {
+                                    project.style.display = 'none';
+                                }
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // Initialize all projects as visible
+            projects.forEach(project => {
+                project.classList.add('fade-in');
+            });
+        });
+
         // Lightbox functionality
         function initLightbox() {
             const lightbox = document.getElementById('lightbox');
@@ -2618,12 +5296,16 @@ footer {
             const lightboxTotal = document.getElementById('lightbox-total');
             const customCursor = document.getElementById('customCursor');
             
-            // Apenas galeria BDN Arquitetura (seção empresa1)
-            const galleryItems = document.querySelectorAll('#empresa1 .gallery-item');
-            const galleryImages = Array.from(galleryItems).map(item => ({
+            // Galeria de trabalhos BDN Arquitetura (seção empresa1 + galeria-inversa)
+            const galleryItems1 = document.querySelectorAll('#empresa1 .work-item');
+            const galleryItems2 = document.querySelectorAll('#galeria-inversa .work-item');
+            
+            // Combinar ambas as galerias em um array único
+            const allGalleryItems = [...galleryItems1, ...galleryItems2];
+            const galleryImages = Array.from(allGalleryItems).map(item => ({
                 src: item.querySelector('img').src,
                 alt: item.querySelector('img').alt,
-                caption: item.querySelector('.gallery-overlay').textContent
+                caption: item.querySelector('img').alt
             }));
             
             let currentIndex = 0;
@@ -2662,17 +5344,52 @@ footer {
                 showImage(currentIndex);
             }
             
-            // Event listeners para itens da galeria
-            galleryItems.forEach((item, index) => {
+            // Event listeners para itens de ambas as galerias
+            allGalleryItems.forEach((item, index) => {
                 item.addEventListener('click', () => {
                     showImage(index);
                 });
             });
             
-            // Event listeners para controles do lightbox (com cursores nativos)
+            // Event listeners para controles do lightbox
             lightboxClose.addEventListener('click', closeLightbox);
             lightboxNavLeft.addEventListener('click', prevImage);
             lightboxNavRight.addEventListener('click', nextImage);
+            
+            // Atualizar cursor baseado na posição do mouse na imagem
+            lightboxImage.addEventListener('mousemove', (e) => {
+                const rect = lightboxImage.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const imageWidth = rect.width;
+                
+                // Se o mouse estiver na metade esquerda, mostrar cursor de seta esquerda
+                if (x < imageWidth / 2) {
+                    lightboxImage.style.cursor = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='leftArrow' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%23ffed4e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffd700;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='arrowShadow' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='3'/%3E%3CfeOffset dx='2' dy='2' result='offset'/%3E%3CfeFlood flood-color='%23000' flood-opacity='0.7'/%3E%3CfeComposite in2='offset' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M25 8L15 20L25 32L22 35L8 20L22 5Z' fill='url(%23leftArrow)' stroke='%23b8860b' stroke-width='2' filter='url(%23arrowShadow)'/%3E%3Cpath d='M24 10L16 20L24 30L21 32L10 20L21 8Z' fill='%23fff' opacity='0.3'/%3E%3C/svg%3E\") 20 20, w-resize";
+                } else {
+                    // Se estiver na metade direita, mostrar cursor de seta direita
+                    lightboxImage.style.cursor = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cdefs%3E%3ClinearGradient id='rightArrow' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23fff;stop-opacity:0.9' /%3E%3Cstop offset='50%25' style='stop-color:%23ffed4e;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ffd700;stop-opacity:1' /%3E%3C/linearGradient%3E%3Cfilter id='arrowShadowRight' x='-50%25' y='-50%25' width='200%25' height='200%25'%3E%3CfeGaussianBlur in='SourceAlpha' stdDeviation='3'/%3E%3CfeOffset dx='2' dy='2' result='offset'/%3E%3CfeFlood flood-color='%23000' flood-opacity='0.7'/%3E%3CfeComposite in2='offset' operator='in'/%3E%3CfeMerge%3E%3CfeMergeNode/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M15 8L25 20L15 32L18 35L32 20L18 5Z' fill='url(%23rightArrow)' stroke='%23b8860b' stroke-width='2' filter='url(%23arrowShadowRight)'/%3E%3Cpath d='M16 10L24 20L16 30L19 32L30 20L19 8Z' fill='%23fff' opacity='0.3'/%3E%3C/svg%3E\") 20 20, e-resize";
+                }
+            });
+            
+            // Adicionar clique na imagem para navegar
+            lightboxImage.addEventListener('click', (e) => {
+                const rect = lightboxImage.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const imageWidth = rect.width;
+                
+                // Se clicou na metade esquerda, vai para imagem anterior
+                if (x < imageWidth / 2) {
+                    prevImage();
+                } else {
+                    // Se clicou na metade direita, vai para próxima imagem
+                    nextImage();
+                }
+            });
+            
+            // Reset do cursor quando sair da imagem
+            lightboxImage.addEventListener('mouseleave', () => {
+                lightboxImage.style.cursor = 'default';
+            });
             
             // Fechar lightbox ao clicar fora da imagem
             lightbox.addEventListener('click', (e) => {
@@ -2734,6 +5451,9 @@ footer {
 
         // Event listeners para o menu mobile
         document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar sistema de tema
+            initThemeToggle();
+            
             const hamburger = document.getElementById('hamburger');
             const navOverlay = document.getElementById('nav-overlay');
             const navLinks = document.querySelectorAll('.nav-menu a');
@@ -2803,6 +5523,319 @@ footer {
                 });
             });
         });
+
+        // Sistema avançado de animação da seção divisória - Inspirado em Archipelago
+        function initAdvancedDivisorEffect() {
+            const divisorSection = document.getElementById('divisor-section');
+            const words = divisorSection.querySelectorAll('.word');
+            const particlesContainer = document.getElementById('particles-container');
+            
+            if (!divisorSection) return;
+
+            let currentPhase = 0;
+            let isAnimating = false;
+            let scrollBlocked = false;
+            let animationTimeline = null;
+
+            // Gerar partículas dinâmicas
+            function createParticles() {
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 6 + 's';
+                    particle.style.animationDuration = (3 + Math.random() * 3) + 's';
+                    particlesContainer.appendChild(particle);
+                }
+            }
+
+            // Sistema de fases de animação
+            function triggerPhase(phase) {
+                if (currentPhase >= phase) return;
+                
+                currentPhase = phase;
+                divisorSection.classList.add(`phase-${phase}`);
+
+                switch(phase) {
+                    case 1:
+                        // Fase 1: Introdução aparece
+                        setTimeout(() => triggerPhase(2), 800);
+                        break;
+                        
+                    case 2:
+                        // Fase 2: Palavras aparecem sequencialmente
+                        words.forEach((word, index) => {
+                            const delay = parseInt(word.dataset.delay) || 0;
+                            setTimeout(() => {
+                                word.style.transitionDelay = '0s';
+                                word.classList.add('revealed');
+                                // Iniciar mudança de cor após aparecer
+                                setTimeout(() => startColorTransition(word), 300);
+                            }, delay);
+                        });
+                        setTimeout(() => triggerPhase(3), 1200);
+                        break;
+                        
+                    case 3:
+                        // Fase 3: Subtítulo e partículas
+                        divisorSection.classList.add('scanning');
+                        setTimeout(() => {
+                            scrollBlocked = false;
+                            document.body.style.overflow = 'auto';
+                        }, 2000);
+                        break;
+                }
+            }
+
+            // Função para mudança de cor de amarelo para branco
+            function startColorTransition(word) {
+                let progress = 0;
+                const duration = 1500; // 1.5 segundos
+                const startTime = Date.now();
+                
+                function updateColor() {
+                    const elapsed = Date.now() - startTime;
+                    progress = Math.min(elapsed / duration, 1);
+                    
+                    // Interpolação de cor de amarelo para branco
+                    const yellow = { r: 255, g: 215, b: 0 };
+                    const white = { r: 255, g: 255, b: 255 };
+                    
+                    const r = Math.round(yellow.r + (white.r - yellow.r) * progress);
+                    const g = Math.round(yellow.g + (white.g - yellow.g) * progress);
+                    const b = Math.round(yellow.b + (white.b - yellow.b) * progress);
+                    
+                    word.style.color = `rgb(${r}, ${g}, ${b})`;
+                    
+                    // Adicionar brilho conforme muda para branco
+                    const glowIntensity = progress * 0.5;
+                    word.style.textShadow = `0 0 ${15 + glowIntensity * 20}px rgba(255, 255, 255, ${0.3 + glowIntensity})`;
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(updateColor);
+                    }
+                }
+                
+                updateColor();
+            }
+
+            // Detector de scroll avançado com IntersectionObserver
+            const observerOptions = {
+                threshold: [0.3, 0.4, 0.5, 0.6, 0.7],
+                rootMargin: '-20% 0px -20% 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const ratio = entry.intersectionRatio;
+                    const rect = entry.boundingClientRect;
+                    const viewportHeight = window.innerHeight;
+                    const viewportCenter = viewportHeight / 2;
+                    
+                    // Calcular se o elemento está no centro da viewport
+                    const elementCenter = rect.top + (rect.height / 2);
+                    const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
+                    const isInCenter = distanceFromCenter < rect.height / 4; // Margem de tolerância
+                    
+                    // Só animar quando estiver no centro e com boa visibilidade
+                    if (ratio >= 0.5 && isInCenter && !isAnimating) {
+                        startAdvancedAnimation();
+                    }
+                    
+                    // Efeitos paralelos baseados na posição
+                    const centerPosition = (viewportCenter - rect.top) / rect.height;
+                    updateParallaxEffects(centerPosition);
+                });
+            }, observerOptions);
+
+            function startAdvancedAnimation() {
+                if (isAnimating) return;
+                
+                isAnimating = true;
+                scrollBlocked = true;
+                document.body.style.overflow = 'hidden';
+                
+                // Iniciar sequência de fases
+                triggerPhase(1);
+            }
+
+            function updateParallaxEffects(position) {
+                // Efeito de paralaxe no background
+                const intensity = Math.max(0, Math.min(1, position));
+                divisorSection.style.setProperty('--scroll-intensity', intensity);
+                
+                // Atualizar gradiente baseado na posição
+                const hue = 45 + (intensity * 30); // De dourado para mais claro
+                divisorSection.style.background = `
+                    linear-gradient(135deg, 
+                        hsl(0, 0%, ${5 + intensity * 5}%) 0%, 
+                        hsl(${hue}, 100%, ${10 + intensity * 5}%) 50%, 
+                        hsl(0, 0%, ${15 + intensity * 10}%) 100%)
+                `;
+            }
+
+            // Efeitos de hover interativos
+            words.forEach(word => {
+                word.addEventListener('mouseenter', () => {
+                    if (currentPhase >= 2) {
+                        word.style.transform = 'translateY(0) rotateX(0deg) scale(1.1)';
+                        word.style.textShadow = '0 0 40px rgba(255, 215, 0, 0.8)';
+                    }
+                });
+                
+                word.addEventListener('mouseleave', () => {
+                    if (currentPhase >= 2) {
+                        word.style.transform = 'translateY(0) rotateX(0deg) scale(1)';
+                        word.style.textShadow = '0 0 30px rgba(255, 215, 0, 0.3)';
+                    }
+                });
+            });
+
+            // Sistema de scroll personalizado durante animação
+            function handleAnimationScroll(e) {
+                if (scrollBlocked) {
+                    e.preventDefault();
+                    return false;
+                }
+            }
+
+            // Event listeners
+            observer.observe(divisorSection);
+            window.addEventListener('wheel', handleAnimationScroll, { passive: false });
+            window.addEventListener('touchmove', handleAnimationScroll, { passive: false });
+            
+            // Inicializar
+            createParticles();
+            
+            console.log('Sistema avançado de animação divisória inicializado');
+        }
+
+        // Inicializar o efeito quando o DOM estiver carregado
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar sistema de tema
+            initThemeToggle();
+            
+            // Divisor effect removed
+            initTaglineScrollEffect();
+        });
+
+        // Efeito de scroll moderno para a tagline - Inspirado em sites premium
+        function initTaglineScrollEffect() {
+            const taglineSection = document.querySelector('.tagline-section');
+            const taglineElement = taglineSection?.querySelector('.work-tagline');
+            const taglineText = taglineSection?.querySelector('.tagline-text');
+            
+            if (!taglineSection || !taglineElement || !taglineText) {
+                console.log('Elementos da tagline não encontrados');
+                return;
+            }
+
+            // Variables for animation control
+            let isInView = false;
+            let hasAnimated = false;
+            let animationFrame = null;
+
+            // Enhanced Intersection Observer for precise detection
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isInView = entry.isIntersecting && entry.intersectionRatio > 0.3;
+                    
+                    if (isInView && !hasAnimated) {
+                        console.log('Tagline section ativa - iniciando animação');
+                        taglineSection.classList.add('animate-in');
+                        startScrollAnimation();
+                        hasAnimated = true;
+                    }
+                });
+            }, {
+                threshold: [0.2, 0.3, 0.5, 0.7],
+                rootMargin: '-10% 0px -10% 0px'
+            });
+
+            function startScrollAnimation() {
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                handleScroll(); // Initial calculation
+            }
+
+            function handleScroll() {
+                if (!isInView) return;
+
+                // Cancel previous animation frame
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                }
+
+                animationFrame = requestAnimationFrame(() => {
+                    const rect = taglineSection.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const sectionCenter = rect.top + rect.height / 2;
+                    const viewportCenter = windowHeight / 2;
+                    
+                    // Calculate progress based on proximity to center
+                    const maxDistance = windowHeight * 0.6;
+                    const distance = Math.abs(sectionCenter - viewportCenter);
+                    const progress = Math.max(0, Math.min(1, 1 - (distance / maxDistance)));
+                    
+                    // Apply smooth easing
+                    const easedProgress = easeOutCubic(progress);
+                    
+                    updateTaglineAnimation(easedProgress);
+                });
+            }
+
+            function updateTaglineAnimation(progress) {
+                // Update CSS custom properties for smooth animation
+                taglineElement.style.setProperty('--progress', `${progress * 100}%`);
+                taglineText.style.setProperty('--text-progress', `${progress * 100}%`);
+                taglineText.style.setProperty('--glow-progress', `${Math.min(100, progress * 120)}%`);
+                
+                // Add subtle transform based on progress
+                const scale = 1 + (progress * 0.05);
+                const opacity = 0.7 + (progress * 0.3);
+                
+                taglineElement.style.transform = `scale(${scale})`;
+                taglineElement.style.opacity = opacity;
+                
+                // Dynamic filter effects
+                const blurAmount = Math.max(0, 3 - (progress * 3));
+                const brightness = 0.8 + (progress * 0.4);
+                
+                taglineText.style.filter = `
+                    drop-shadow(0 0 ${20 + progress * 30}px rgba(255, 215, 0, ${0.2 + progress * 0.3}))
+                    blur(${blurAmount}px)
+                    brightness(${brightness})
+                `;
+                
+                console.log(`Animação: ${(progress * 100).toFixed(1)}% - Escala: ${scale.toFixed(2)}`);
+            }
+
+            // Smooth easing function
+            function easeOutCubic(t) {
+                return 1 - Math.pow(1 - t, 3);
+            }
+
+            // Enhanced hover effects
+            taglineElement.addEventListener('mouseenter', () => {
+                taglineElement.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                taglineText.style.filter = `
+                    drop-shadow(0 0 60px rgba(255, 255, 255, 0.6))
+                    blur(0px)
+                    brightness(1.2)
+                `;
+            });
+
+            taglineElement.addEventListener('mouseleave', () => {
+                taglineElement.style.transition = 'all 0.3s ease-out';
+                // Reset to current scroll-based values
+                handleScroll();
+            });
+
+            // Initialize observer
+            observer.observe(taglineSection);
+            
+            console.log('Sistema de animação da tagline moderno inicializado');
+        }
     </script>
 
     <!-- Lightbox para galeria BDN Arquitetura -->
@@ -2816,10 +5849,203 @@ footer {
                 <div class="lightbox-nav-right" id="lightbox-nav-right"></div>
             </div>
             <div class="lightbox-counter">
-                <span id="lightbox-current">1</span> / <span id="lightbox-total">6</span>
+                <span id="lightbox-current">1</span> / <span id="lightbox-total">15</span>
             </div>
         </div>
     </div>
+
+    <!-- Sistema de Tradução -->
+    <script>
+        // Traduções
+        const translations = {
+            pt: {
+                nav_home: "Início",
+                nav_projects: "BDN - Projectos",
+                nav_about: "Sobre BDN",
+                nav_contact: "Contacto",
+                hero_motto: "PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS",
+                hero_description1: "Grupo empresarial dedicado à criação de espaços únicos que inspiram e transformam",
+                hero_description2: "Descubra como podemos dar vida aos seus projectos",
+                projects_title: "PROJETOS",
+                about_title: "Sobre BDN",
+                about_subtitle: "PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS",
+                about_description: "A <strong>BDN</strong> é uma empresa de referência no setor da arquitetura e construção, com 15 anos de experiência na criação de projetos únicos e inovadores. Combinamos tradição e modernidade para dar vida às suas ideias.",
+                values_title: "Os Nossos Valores",
+                value_excellence: "Excelência",
+                value_excellence_desc: "Comprometemo-nos com a mais alta qualidade em cada projeto",
+                value_innovation: "Inovação",
+                value_innovation_desc: "Utilizamos as mais recentes tecnologias e tendências arquitetónicas",
+                value_trust: "Confiança",
+                value_trust_desc: "Construímos relações duradoras baseadas na transparência",
+                partnership_title: "Ana Duarte Arquitetura de Interiores",
+                partnership_description: "Especializada em design de interiores sofisticado e funcional, a Ana Duarte Arquitetura de Interiores complementa perfeitamente os projetos da BDN, criando espaços que harmonizam arquitetura e decoração.",
+                partnership_specialties: "Especialidades",
+                contact_title: "Contacto",
+                contact_motto: "PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS",
+                contact_description: "Entre em contacto connosco para dar vida ao seu projeto",
+                contact_address_title: "Morada",
+                contact_address: "Av. Comendador Francisco Alves Quintas<br>Zona Industrial de Gandra<br>4740-010 Esposende",
+                contact_phone_title: "Contactos Telefónicos",
+                contact_email_title: "Email",
+                contact_social_title: "Redes Sociais",
+                contact_maps_link: "Ver no Google Maps",
+                contact_location_title: "A Nossa Localização",
+                contact_form_title: "Envie-nos uma Mensagem",
+                form_first_name: "Primeiro Nome *",
+                form_first_name_error: "Por favor, insira o seu primeiro nome.",
+                form_last_name: "Último Nome *",
+                form_last_name_error: "Por favor, insira o seu último nome.",
+                form_email: "Email *",
+                form_email_error: "Por favor, insira um email válido.",
+                form_phone: "Contacto Telefónico *",
+                form_phone_error: "Por favor, insira um número de telefone válido.",
+                form_message: "Mensagem *",
+                form_message_placeholder: "Descreva o seu projecto ou questão...",
+                form_message_error: "Por favor, escreva uma mensagem.",
+                form_submit: "Enviar Mensagem",
+                form_success: "Mensagem enviada com sucesso! Entraremos em contacto consigo brevemente.",
+                footer_motto: "PROJECTAMOS | ARQUITECTAMOS | CONSTRUÍMOS",
+                footer_description: "Transformamos sonhos em realidade através de projectos inovadores.",
+                footer_contact_title: "Contactos"
+            },
+            en: {
+                nav_home: "Home",
+                nav_projects: "BDN - Projects",
+                nav_about: "About BDN",
+                nav_contact: "Contact",
+                hero_motto: "WE DESIGN | WE ARCHITECT | WE BUILD",
+                hero_description1: "Business group dedicated to creating unique spaces that inspire and transform",
+                hero_description2: "Discover how we can bring your projects to life",
+                projects_title: "PROJECTS",
+                about_title: "About BDN",
+                about_subtitle: "WE DESIGN | WE ARCHITECT | WE BUILD",
+                about_description: "<strong>BDN</strong> is a reference company in the architecture and construction sector, with 15 years of experience in creating unique and innovative projects. We combine tradition and modernity to bring your ideas to life.",
+                values_title: "Our Values",
+                value_excellence: "Excellence",
+                value_excellence_desc: "We are committed to the highest quality in every project",
+                value_innovation: "Innovation",
+                value_innovation_desc: "We use the latest technologies and architectural trends",
+                value_trust: "Trust",
+                value_trust_desc: "We build lasting relationships based on transparency",
+                partnership_title: "Ana Duarte Interior Architecture",
+                partnership_description: "Specialized in sophisticated and functional interior design, Ana Duarte Interior Architecture perfectly complements BDN's projects, creating spaces that harmonize architecture and decoration.",
+                partnership_specialties: "Specialties",
+                contact_title: "Contact",
+                contact_motto: "WE DESIGN | WE ARCHITECT | WE BUILD",
+                contact_description: "Get in touch with us to bring your project to life",
+                contact_address_title: "Address",
+                contact_address: "Av. Comendador Francisco Alves Quintas<br>Zona Industrial de Gandra<br>4740-010 Esposende",
+                contact_phone_title: "Phone Contacts",
+                contact_email_title: "Email",
+                contact_social_title: "Social Media",
+                contact_maps_link: "View on Google Maps",
+                contact_location_title: "Our Location",
+                contact_form_title: "Send us a Message",
+                form_first_name: "First Name *",
+                form_first_name_error: "Please enter your first name.",
+                form_last_name: "Last Name *",
+                form_last_name_error: "Please enter your last name.",
+                form_email: "Email *",
+                form_email_error: "Please enter a valid email.",
+                form_phone: "Phone Contact *",
+                form_phone_error: "Please enter a valid phone number.",
+                form_message: "Message *",
+                form_message_placeholder: "Describe your project or question...",
+                form_message_error: "Please write a message.",
+                form_submit: "Send Message",
+                form_success: "Message sent successfully! We will contact you shortly.",
+                footer_motto: "WE DESIGN | WE ARCHITECT | WE BUILD",
+                footer_description: "We transform dreams into reality through innovative projects.",
+                footer_contact_title: "Contacts"
+            }
+        };
+
+        // Sistema de tradução
+        class LanguageSystem {
+            constructor() {
+                this.currentLanguage = localStorage.getItem('language') || 'pt';
+                this.init();
+            }
+
+            init() {
+                this.updateLanguageButtons();
+                this.translatePage();
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                const languageButtons = document.querySelectorAll('.language-btn');
+                languageButtons.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const newLang = e.target.getAttribute('data-lang');
+                        this.setLanguage(newLang);
+                    });
+                });
+            }
+
+            setLanguage(lang) {
+                this.currentLanguage = lang;
+                localStorage.setItem('language', lang);
+                this.updateLanguageButtons();
+                this.translatePage();
+            }
+
+            updateLanguageButtons() {
+                const buttons = document.querySelectorAll('.language-btn');
+                buttons.forEach(btn => {
+                    const btnLang = btn.getAttribute('data-lang');
+                    btn.classList.toggle('active', btnLang === this.currentLanguage);
+                });
+            }
+
+            translatePage() {
+                const elements = document.querySelectorAll('[data-translate]');
+                const placeholderElements = document.querySelectorAll('[data-translate-placeholder]');
+                const currentTranslations = translations[this.currentLanguage];
+
+                // Traduzir elementos de texto
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    if (currentTranslations[key]) {
+                        element.innerHTML = currentTranslations[key];
+                    }
+                });
+
+                // Traduzir placeholders
+                placeholderElements.forEach(element => {
+                    const key = element.getAttribute('data-translate-placeholder');
+                    if (currentTranslations[key]) {
+                        element.placeholder = currentTranslations[key];
+                    }
+                });
+
+                // Atualizar título da página
+                document.title = this.currentLanguage === 'pt' ? 'BDN - Arquitetura e Construção' : 'BDN - Architecture and Construction';
+                
+                // Atualizar tooltip do tema
+                const themeToggle = document.getElementById('theme-toggle');
+                if (themeToggle) {
+                    themeToggle.title = this.currentLanguage === 'pt' ? 'Alternar Tema' : 'Toggle Theme';
+                }
+                
+                // Atualizar tooltips dos botões de idioma
+                const languageButtons = document.querySelectorAll('.language-btn');
+                languageButtons.forEach(btn => {
+                    const lang = btn.getAttribute('data-lang');
+                    if (lang === 'pt') {
+                        btn.title = this.currentLanguage === 'pt' ? 'Português' : 'Portuguese';
+                    } else if (lang === 'en') {
+                        btn.title = this.currentLanguage === 'pt' ? 'Inglês' : 'English';
+                    }
+                });
+            }
+        }
+
+        // Inicializar sistema de tradução quando o DOM estiver carregado
+        document.addEventListener('DOMContentLoaded', function() {
+            new LanguageSystem();
+        });
+    </script>
 
 </body>
 </html>
