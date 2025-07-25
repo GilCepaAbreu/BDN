@@ -5051,10 +5051,283 @@ footer {
     font-weight: 400;
 }
 
+/* ===== LOADING SCREEN STYLES ===== */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, 
+        var(--bg-primary) 0%, 
+        var(--bg-secondary) 50%, 
+        var(--bg-tertiary) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loading-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 400px;
+    padding: 2rem;
+}
+
+.loading-logo {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.loading-logo-img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 50%;
+    padding: 20px;
+    background: rgba(255, 215, 0, 0.1);
+    border: 3px solid var(--accent-primary);
+    box-shadow: 
+        0 0 30px rgba(255, 215, 0, 0.3),
+        inset 0 0 20px rgba(255, 215, 0, 0.1);
+    animation: logoFloat 3s ease-in-out infinite, logoGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0px) scale(1);
+    }
+    50% {
+        transform: translateY(-10px) scale(1.05);
+    }
+}
+
+@keyframes logoGlow {
+    0% {
+        box-shadow: 
+            0 0 30px rgba(255, 215, 0, 0.3),
+            inset 0 0 20px rgba(255, 215, 0, 0.1);
+    }
+    100% {
+        box-shadow: 
+            0 0 50px rgba(255, 215, 0, 0.6),
+            inset 0 0 30px rgba(255, 215, 0, 0.2);
+    }
+}
+
+.loading-text {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.loading-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin: 0 0 0.5rem 0;
+    letter-spacing: 0.1em;
+    text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+    animation: titlePulse 2s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
+}
+
+.loading-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+    opacity: 0.9;
+    animation: subtitleFade 3s ease-in-out infinite;
+}
+
+@keyframes subtitleFade {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.loading-progress {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.loading-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 215, 0, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.loading-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, 
+        var(--accent-primary) 0%, 
+        var(--accent-secondary) 50%, 
+        var(--accent-primary) 100%);
+    background-size: 200% 100%;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    animation: progressShimmer 2s linear infinite;
+}
+
+@keyframes progressShimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.loading-percentage {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent-primary);
+    font-weight: 600;
+    text-align: center;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 215, 0, 0.2);
+    border-top: 3px solid var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Loading screen responsivo */
+@media (max-width: 768px) {
+    .loading-container {
+        max-width: 300px;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+    
+    .loading-logo-img {
+        width: 100px;
+        height: 100px;
+        padding: 15px;
+    }
+    
+    .loading-title {
+        font-size: 2.5rem;
+    }
+    
+    .loading-subtitle {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .loading-container {
+        max-width: 280px;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .loading-logo-img {
+        width: 80px;
+        height: 80px;
+        padding: 12px;
+    }
+    
+    .loading-title {
+        font-size: 2rem;
+    }
+    
+    .loading-subtitle {
+        font-size: 0.8rem;
+    }
+    
+    .spinner {
+        width: 30px;
+        height: 30px;
+        border-width: 2px;
+    }
+}
+
+/* Tema inverso para loading screen */
+[data-theme="inverted"] .loading-screen {
+    background: linear-gradient(135deg, 
+        var(--bg-primary) 0%, 
+        var(--bg-secondary) 50%, 
+        var(--bg-tertiary) 100%);
+}
+
+[data-theme="inverted"] .loading-logo-img {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: var(--accent-primary);
+    backdrop-filter: blur(10px);
+}
+
 
     </style>
 </head>
 <body>
+    <!-- Tela de Carregamento -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-container">
+            <div class="loading-logo">
+                <img src="BDN_logo.png" alt="BDN Logo" class="loading-logo-img">
+            </div>
+            <div class="loading-progress">
+                <div class="loading-bar">
+                    <div class="loading-fill" id="loading-fill"></div>
+                </div>
+                <div class="loading-percentage" id="loading-percentage">0%</div>
+            </div>
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Cursor personalizado amarelado -->
     <div class="custom-cursor" id="customCursor"></div>
     
@@ -5564,6 +5837,180 @@ footer {
     </footer>
 
     <script>
+        // ===== LOADING SCREEN FUNCTIONALITY =====
+        class LoadingScreen {
+            constructor() {
+                this.loadingScreen = document.getElementById('loading-screen');
+                this.loadingFill = document.getElementById('loading-fill');
+                this.loadingPercentage = document.getElementById('loading-percentage');
+                this.progress = 0;
+                this.isComplete = false;
+                this.minLoadingTime = 2000; // Tempo mínimo de carregamento (2 segundos)
+                this.startTime = Date.now();
+                
+                this.init();
+            }
+            
+            init() {
+                // Simular progresso de carregamento
+                this.simulateProgress();
+                
+                // Verificar quando o conteúdo está realmente carregado
+                this.checkContentLoaded();
+                
+                // Preload critical images
+                this.preloadImages();
+            }
+            
+            simulateProgress() {
+                const interval = setInterval(() => {
+                    if (this.progress < 90) {
+                        // Progresso mais rápido no início
+                        const increment = this.progress < 30 ? 8 : 
+                                        this.progress < 60 ? 4 : 2;
+                        this.progress += increment;
+                        this.updateProgress();
+                    } else {
+                        clearInterval(interval);
+                        // Aguardar o carregamento real antes de completar
+                        this.waitForRealCompletion();
+                    }
+                }, 150);
+            }
+            
+            waitForRealCompletion() {
+                const checkCompletion = () => {
+                    const elapsedTime = Date.now() - this.startTime;
+                    const minTimeReached = elapsedTime >= this.minLoadingTime;
+                    const contentLoaded = document.readyState === 'complete';
+                    
+                    if (minTimeReached && contentLoaded && !this.isComplete) {
+                        this.completeLoading();
+                    } else {
+                        setTimeout(checkCompletion, 100);
+                    }
+                };
+                checkCompletion();
+            }
+            
+            preloadImages() {
+                const imagesToPreload = [
+                    'BDN_logo.png',
+                    'bdn_fabicon.png'
+                ];
+                
+                imagesToPreload.forEach(src => {
+                    const img = new Image();
+                    img.src = src;
+                });
+                
+                // Preload work gallery images
+                const workImages = document.querySelectorAll('.work-image');
+                let loadedImages = 0;
+                const totalImages = workImages.length;
+                
+                if (totalImages > 0) {
+                    workImages.forEach(img => {
+                        if (img.complete) {
+                            loadedImages++;
+                        } else {
+                            img.addEventListener('load', () => {
+                                loadedImages++;
+                                const imageProgress = Math.floor((loadedImages / totalImages) * 10);
+                                this.progress = Math.min(85, this.progress + imageProgress);
+                                this.updateProgress();
+                            });
+                        }
+                    });
+                }
+            }
+            
+            checkContentLoaded() {
+                if (document.readyState === 'complete') {
+                    this.progress = Math.max(this.progress, 95);
+                    this.updateProgress();
+                } else {
+                    window.addEventListener('load', () => {
+                        this.progress = Math.max(this.progress, 95);
+                        this.updateProgress();
+                    });
+                }
+            }
+            
+            updateProgress() {
+                this.progress = Math.min(100, this.progress);
+                this.loadingFill.style.width = this.progress + '%';
+                this.loadingPercentage.textContent = this.progress + '%';
+                
+                if (this.progress >= 100 && !this.isComplete) {
+                    setTimeout(() => this.completeLoading(), 500);
+                }
+            }
+            
+            completeLoading() {
+                if (this.isComplete) return;
+                
+                this.isComplete = true;
+                this.progress = 100;
+                this.updateProgress();
+                
+                // Fade out animation
+                setTimeout(() => {
+                    this.loadingScreen.classList.add('fade-out');
+                    
+                    // Remove from DOM after animation
+                    setTimeout(() => {
+                        this.loadingScreen.remove();
+                        
+                        // Enable scroll and interactions
+                        document.body.style.overflow = '';
+                        document.body.style.pointerEvents = '';
+                        
+                        // Trigger any post-load animations
+                        this.triggerPostLoadAnimations();
+                    }, 800);
+                }, 300);
+            }
+            
+            triggerPostLoadAnimations() {
+                // Animate hero section
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    hero.style.opacity = '0';
+                    hero.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        hero.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        hero.style.opacity = '1';
+                        hero.style.transform = 'translateY(0)';
+                    }, 200);
+                }
+                
+                // Animate work items with stagger
+                const workItems = document.querySelectorAll('.work-item');
+                workItems.forEach((item, index) => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(50px) scale(0.9)';
+                    
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0) scale(1)';
+                    }, 500 + (index * 100));
+                });
+            }
+        }
+        
+        // Initialize loading screen when DOM starts loading
+        document.addEventListener('DOMContentLoaded', () => {
+            // Prevent scroll during loading
+            document.body.style.overflow = 'hidden';
+            document.body.style.pointerEvents = 'none';
+            
+            // Start loading screen
+            new LoadingScreen();
+        });
+
         // Sistema de Alternância de Tema
         function initThemeToggle() {
             const themeToggle = document.getElementById('theme-toggle');
