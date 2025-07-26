@@ -1212,13 +1212,13 @@ main {
 /* Remover espaçamento inferior da galeria inversa */
 #galeria-inversa.section {
     padding-bottom: 0 !important;
-    margin-bottom: -100rem !important;
-    padding: clamp(6rem, 12vw, 10rem) 0 0 0 !important; /* Aumentar ainda mais o padding superior */
+    margin-bottom: 0 !important; /* Remover margem negativa extrema */
+    padding: clamp(3rem, 6vw, 5rem) 0 0 0 !important; /* Reduzir padding superior */
 }
 
-/* Aumentar espaçamento específico entre título único e galeria inversa */
+/* Reduzir espaçamento específico entre título único e galeria inversa */
 .unique-client-section + #galeria-inversa {
-    margin-top: clamp(6rem, 12vw, 10rem) !important; /* Dobrar o espaçamento */
+    margin-top: clamp(2rem, 4vw, 3rem) !important; /* Reduzir espaçamento */
 }
 
 /* Forçar remoção completa de espaçamento entre galeria inversa e contactos */
@@ -1247,7 +1247,7 @@ main {
 #empresa1 {
     margin-top: 10rem;
     padding-bottom: 0;
-    margin-bottom: 15rem;
+    margin-bottom: 2rem; /* Reduzido de 15rem para 2rem */
 }
 
 
@@ -2486,7 +2486,7 @@ footer {
     width: 100vw;
     margin: 0;
     padding: 0;
-    min-height: 4000px; /* Aumentar para acomodar a nova imagem (Projeto 15) */
+    min-height: 3600px; /* Reduzir altura para otimizar espaço */
     left: 50%;
     transform: translateX(-50%);
     overflow: hidden; /* Garantir que elementos não ultrapassem */
@@ -2499,7 +2499,7 @@ footer {
 .work-item {
     position: absolute;
     width: 400px;
-    background: #fff;
+    background: transparent;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -3049,7 +3049,7 @@ footer {
 
 .work-info {
     padding: 1.5rem;
-    background: #fff;
+    background: transparent;
 }
 
 .work-project-title {
@@ -3462,77 +3462,282 @@ footer {
 }
 
 @media (max-width: 767px) {
+    /* Layout mobile otimizado - todas as imagens visíveis */
     .work-grid {
-        position: static;
-        min-height: auto;
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-        width: 100%;
-        transform: none;
-        left: auto;
-        margin: 0 auto;
-    }
-    
-    .work-item {
-        position: static;
-        width: 100% !important;
-        max-width: min(320px, 90vw) !important;
-        height: 280px !important; /* Altura fixa para todas as imagens */
-        transform: none !important;
-        left: auto !important;
-        right: auto !important;
-        top: auto !important;
-        margin: 0 auto;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        border-radius: 12px;
-        overflow: hidden;
-        background: var(--bg-secondary);
-        border: 1px solid rgba(255, 215, 0, 0.2);
-        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    
-    /* Todos os work-items têm o mesmo tamanho no mobile */
-    .work-item.size-small,
-    .work-item.size-medium,
-    .work-item.size-large,
-    .work-item.size-xlarge,
-    .work-item.size-xxlarge,
-    .work-item.size-vertical,
-    .work-item.size-double-large {
-        width: 100% !important;
-        max-width: min(320px, 90vw) !important;
-        height: 280px !important;
-        aspect-ratio: unset !important;
-    }
-    
-    .work-item:hover {
-        transform: translateY(-5px) scale(1.02);
-        box-shadow: 0 15px 50px rgba(255, 215, 0, 0.2);
-        border-color: rgba(255, 215, 0, 0.4);
-    }
-    
-    .work-image-container {
-        height: 220px !important; /* Altura fixa para todos os containers de imagem */
-        border-radius: 8px 8px 0 0;
-        overflow: hidden;
         position: relative;
-    }
-    
-    .work-image {
+        min-height: 1420px; /* Reduzir altura para eliminar espaço vazio */
+        padding: 1rem 0.5rem;
         width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.4s ease;
+        overflow-x: hidden;
     }
     
+    /* Primeira linha - 3 imagens escalonadas */
+    .work-item:nth-child(1) {
+        left: 5% !important;
+        top: 0 !important;
+        width: 40vw !important; /* ~150px em 375px de largura */
+        max-width: 150px !important;
+    }
+
+    .work-item:nth-child(2) {
+        right: 5% !important; /* Lado direito */
+        top: 30px !important; 
+        width: 30vw !important; /* ~112px em 375px */
+        max-width: 112px !important;
+    }
+
+    .work-item:nth-child(3) {
+        left: 50% !important; /* Centro */
+        top: 80px !important;
+        width: 35vw !important; /* ~131px em 375px */
+        max-width: 131px !important;
+        transform: translateX(-50%) !important; /* Centralizar */
+    }
+
+    /* Segunda linha - 3 imagens em disposição triangular inversa */
+    .work-item:nth-child(4) {
+        right: 5% !important;
+        top: 220px !important; 
+        width: 42vw !important; /* ~157px em 375px */
+        max-width: 157px !important;
+    }
+
+    .work-item:nth-child(5) {
+        left: 5% !important;
+        top: 270px !important; 
+        width: 28vw !important; /* ~105px em 375px */
+        max-width: 105px !important;
+    }
+
+    .work-item:nth-child(6) {
+        left: 50% !important; /* Centro */
+        top: 320px !important;
+        width: 38vw !important; /* ~142px em 375px */
+        max-width: 142px !important;
+        transform: translateX(-50%) !important;
+    }
+
+    /* Terceira linha - 2 imagens lado a lado */
+    .work-item:nth-child(7) {
+        left: 8% !important;
+        top: 480px !important; 
+        width: 38vw !important; /* ~142px em 375px */
+        max-width: 142px !important;
+    }
+
+    .work-item:nth-child(8) {
+        right: 8% !important;
+        top: 460px !important; 
+        width: 40vw !important; /* ~150px em 375px */
+        max-width: 150px !important;
+    }
+
+    /* Quarta linha - 2 imagens escalonadas */
+    .work-item:nth-child(9) {
+        left: 5% !important;
+        top: 640px !important;
+        width: 44vw !important; /* ~165px em 375px */
+        max-width: 165px !important;
+    }
+
+    .work-item:nth-child(10) {
+        right: 5% !important;
+        top: 720px !important; 
+        width: 38vw !important; /* ~142px em 375px */
+        max-width: 142px !important;
+    }
+
+    /* Quinta linha - 2 imagens centralizadas */
+    .work-item:nth-child(11) {
+        left: 50% !important;
+        top: 880px !important;
+        width: 32vw !important; /* ~120px em 375px */
+        max-width: 120px !important;
+        transform: translateX(-80%) !important; /* Offset à esquerda */
+    }
+
+    .work-item:nth-child(12) {
+        left: 50% !important;
+        top: 960px !important;
+        width: 44vw !important; /* ~165px em 375px */
+        max-width: 165px !important;
+        transform: translateX(-20%) !important; /* Offset à direita */
+    }
+
+    /* Sexta linha - últimas imagens */
+    .work-item:nth-child(13) {
+        right: 8% !important;
+        top: 1140px !important;
+        width: 35vw !important; /* ~131px em 375px */
+        max-width: 131px !important;
+    }
+
+    .work-item:nth-child(14) {
+        left: 5% !important;
+        top: 1280px !important;
+        width: 38vw !important; /* ~142px em 375px */
+        max-width: 142px !important;
+    }
+
+    .work-item:nth-child(15) {
+        right: 5% !important;
+        top: 1280px !important; /* Mesma altura da 14ª */
+        width: 38vw !important; /* ~142px em 375px */
+        max-width: 142px !important;
+    }
+
+    /* Ajustar containers das imagens para mobile */
+    .work-image-container {
+        height: 100px !important; /* Altura uniforme menor */
+        border-radius: 6px;
+    }
+
+    /* Altura específica para algumas imagens principais */
+    .work-item:nth-child(1) .work-image-container,
+    .work-item:nth-child(4) .work-image-container,
+    .work-item:nth-child(8) .work-image-container,
+    .work-item:nth-child(9) .work-image-container,
+    .work-item:nth-child(12) .work-image-container {
+        height: 120px !important; /* Ligeiramente maior para imagens principais */
+    }
+
+    /* Reduzir efeitos de hover no mobile */
+    .work-item:hover .work-image-container {
+        transform: translateY(-1px); /* Movimento muito sutil */
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
     .work-item:hover .work-image {
-        transform: scale(1.05);
+        transform: scale(1.01); /* Zoom muito sutil */
     }
-    
-    .work-overlay {
+
+    /* Simplificar hover effects específicos */
+    .work-item:nth-child(1):hover .work-image,
+    .work-item:nth-child(3):hover .work-image {
+        transform: scale(1.01); /* Uniformizar */
+        filter: brightness(1.05);
+    }
+
+    /* Reduzir espaçamentos das seções no mobile */
+    #empresa1 {
+        margin-top: 2rem !important; /* Reduzir margem superior */
+        margin-bottom: 1rem !important; /* Reduzir margem inferior */
+        padding-bottom: 0 !important;
+    }
+
+    #galeria-inversa {
+        margin-top: 1rem !important; /* Reduzir margem superior */
+        margin-bottom: 0 !important;
+        padding-top: 1rem !important; /* Reduzir padding superior */
+        padding-bottom: 0 !important;
+    }
+
+    /* Reduzir altura do work-grid da segunda seção também */
+    #galeria-inversa .work-grid {
+        min-height: auto !important; /* Permitir altura automática */
+        padding-bottom: 0 !important;
+    }
+
+    /* Aplicar posicionamento absoluto também para galeria inversa no mobile */
+    #galeria-inversa .work-grid.inverse-layout {
+        position: relative !important;
+        min-height: 800px !important; /* Altura muito menor para segunda seção */
+        padding: 0.5rem !important;
+    }
+
+    /* Posições específicas para imagens da galeria inversa no mobile */
+    #galeria-inversa .work-item:nth-child(1) {
+        left: 5% !important;
+        top: 0 !important;
+        width: 35vw !important;
+        max-width: 130px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(2) {
+        right: 5% !important;
+        top: 40px !important;
+        width: 28vw !important;
+        max-width: 105px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(3) {
+        left: 50% !important;
+        top: 100px !important;
+        width: 32vw !important;
+        max-width: 120px !important;
+        transform: translateX(-50%) !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(4) {
+        right: 8% !important;
+        top: 200px !important;
+        width: 30vw !important;
+        max-width: 115px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(5) {
+        left: 8% !important;
+        top: 260px !important;
+        width: 26vw !important;
+        max-width: 100px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(6) {
+        left: 50% !important;
+        top: 340px !important;
+        width: 38vw !important;
+        max-width: 145px !important;
+        transform: translateX(-50%) !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(7) {
+        left: 10% !important;
+        top: 480px !important;
+        width: 30vw !important;
+        max-width: 115px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(8) {
+        right: 10% !important;
+        top: 460px !important;
+        width: 32vw !important;
+        max-width: 120px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(9) {
+        left: 50% !important;
+        top: 580px !important;
+        width: 28vw !important;
+        max-width: 105px !important;
+        transform: translateX(-80%) !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(10) {
+        right: 8% !important;
+        top: 640px !important;
+        width: 34vw !important;
+        max-width: 130px !important;
+        position: absolute !important;
+    }
+
+    /* Remover espaçamentos extras de seções */
+    section {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}
+
+/* Estilos gerais para trabalhos */
+.work-overlay {
         position: absolute;
         bottom: 0;
         left: 0;
@@ -3644,7 +3849,6 @@ footer {
         box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
         outline: none;
     }
-}
 
 /* Ultra mobile optimizations for very small screens */
 @media (max-width: 375px) {
@@ -5499,7 +5703,7 @@ footer {
                 </div>
 
                 <!-- Projecto 14 - Última imagem antes dos contactos, posicionada no lado esquerdo -->
-                <div class="work-item size-vertical slide-left" data-category="residential">
+                <div class="work-item size-medium slide-left" data-category="residential">
                     <div class="work-image-container">
                         <img src="imagens/habitacao6.png" alt="Projeto Final" class="work-image" >
                     </div>
@@ -5603,7 +5807,7 @@ footer {
                     </div>
 
                     <!-- Projeto Adicional 4 - Primeira imagem em baixo -->
-                    <div class="work-item size-vertical slide-in-bottom" data-category="featured">
+                    <div class="work-item size-mediumslide-in-bottom" data-category="featured">
                         <div class="work-image-container">
                             <img src="imagens/img9.png" alt="Projeto Arquitetónico Inferior" class="work-image">
                         </div>
@@ -5714,7 +5918,7 @@ footer {
                     
                     <div class="contact-item">
                         <div class="contact-icon">✉️</div>
-                        <div class="contact-details">
+                        <div class="contact-details centered-text">
                             <h3 data-translate="contact_email_title">Email</h3>
                             <p><a href="mailto:jaimebermudes@projectobdn.com">jaimebermudes@projectobdn.com</a></p>
                             <p><a href="mailto:joaobermudes@projectobdn.com">joaobermudes@projectobdn.com</a></p>
