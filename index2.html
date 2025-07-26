@@ -312,6 +312,36 @@ header:after {
     animation: dropdownBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
+/* Estilo especial para quando o dropdown é mostrado automaticamente pelo scroll */
+.logo-dropdown.auto-show {
+    animation: dropdownSlideIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-color: rgba(255, 215, 0, 0.6);
+    box-shadow: 
+        0 15px 35px rgba(255, 215, 0, 0.15),
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 215, 0, 0.2);
+}
+
+@keyframes dropdownSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-25px) scale(0.9);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(3px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        box-shadow: 
+            0 15px 35px rgba(255, 215, 0, 0.15),
+            0 8px 16px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 215, 0, 0.2);
+    }
+}
+
 .logo-dropdown ul {
     list-style: none;
     margin: 0;
@@ -407,11 +437,32 @@ header:after {
     }
 }
 
-.desktop-nav.hidden {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.4s ease;
+/* Garantir que em desktop a navbar funcione corretamente */
+@media (min-width: 769px) {
+    .desktop-nav {
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .desktop-nav.hidden {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(20px);
+        pointer-events: none;
+    }
+    
+    /* Garantir que o logo permaneça sempre visível e clicável */
+    .logo {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transition: all 0.3s ease;
+    }
+    
+    /* Melhorar a aparência do dropdown quando ativado automaticamente */
+    .logo-dropdown.auto-show {
+        border-color: rgba(255, 215, 0, 0.7);
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.99) 0%, rgba(10, 10, 10, 0.99) 100%);
+    }
 }
 
 /* Dropdown Menu */
@@ -815,68 +866,51 @@ nav a.active {
     }
     
     .desktop-nav {
-        display: none;
+        display: none !important; /* Esconder navegação desktop no mobile */
     }
     
     .nav-menu {
-        position: static !important;
-        right: auto !important;
-        width: 100% !important;
-        height: auto !important;
-        background: transparent !important;
-        display: none; /* Inicialmente escondido */
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        padding: 20px 0;
-        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        backdrop-filter: none;
-        border-left: none;
-        box-shadow: none;
-        z-index: 1001;
-        overflow-y: visible;
-        margin-top: 10px;
-        border-top: 1px solid rgba(255, 215, 0, 0.2);
-        background: rgba(0, 0, 0, 0.9) !important;
-        border-radius: 8px;
-        margin: 10px 15px 0 15px;
+        display: none !important; /* Esconder completamente o menu nav no mobile */
     }
     
-    .nav-menu.active {
+    .nav-overlay {
+        display: none !important; /* Esconder overlay no mobile */
+    }
+    
+    /* Manter apenas o logo com dropdown funcional em mobile */
+    .logo {
         display: flex !important;
+        position: relative;
+        cursor: pointer;
     }
     
-    .nav-menu li {
-        margin: 0;
-        width: 100%;
+    .logo-dropdown {
+        display: block; /* Garantir que o dropdown está disponível */
+        position: absolute !important;
+        top: 100% !important; /* Abaixo do logo */
+        left: 50% !important; /* Centralizado horizontalmente */
+        transform: translateX(-50%) !important; /* Centralizar pelo meio */
+        min-width: 220px;
+        z-index: 1000;
     }
     
-    .nav-menu a {
-        display: block;
-        padding: 15px 25px;
-        border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-        font-size: 1rem;
-        text-align: left;
-        background: transparent;
-        transition: all 0.3s ease;
+    .logo-dropdown.show {
+        transform: translateX(-50%) translateY(0) scale(1) !important;
     }
     
-    .nav-menu a:hover {
-        background: rgba(255, 215, 0, 0.1);
-        color: #ffd700;
-        padding-left: 35px;
-        transform: none;
-    }
-    
-    /* Header adjustments */
+    /* Ajustar header para mobile - apenas logo visível */
     .header-content {
         padding: 1rem 0;
-        justify-content: space-between;
+        justify-content: center; /* Centralizar o logo */
+    }
+    
+    nav {
+        display: none !important; /* Esconder toda a seção nav em mobile */
     }
     
     .logo {
         font-size: 1.4rem;
-        margin-left: 20px;
+        margin: 0; /* Remover margins para centralizar melhor */
     }
     
     .logo-img {
@@ -1192,15 +1226,19 @@ main {
     padding: clamp(5rem, 8vw, 7rem) 0;
 }
 
-/* Remover completamente o espaçamento superior da seção de contactos */
+/* REMOVER COMPLETAMENTE o espaçamento superior da seção de contactos */
 #contato.section {
     padding-top: 0 !important;
     margin-top: 0 !important;
+    /* Aceitar o movimento para cima da seção anterior */
+    position: relative;
+    z-index: 1;
 }
 
-/* Reduzir drasticamente o padding superior do hero na seção de contactos */
+/* ELIMINAR padding superior do hero na seção de contactos */
 #contato .hero {
-    padding-top: clamp(0.5rem, vw, 1rem) !important;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
 }
 
 /* Forçar conexão direta entre título único e contactos */
@@ -1209,22 +1247,16 @@ main {
     padding-top: 0 !important;
 }
 
-/* Remover espaçamento inferior da galeria inversa */
-#galeria-inversa.section {
-    padding-bottom: 0 !important;
-    margin-bottom: 0 !important; /* Remover margem negativa extrema */
-    padding: clamp(3rem, 6vw, 5rem) 0 0 0 !important; /* Reduzir padding superior */
-}
-
 /* Reduzir espaçamento específico entre título único e galeria inversa */
 .unique-client-section + #galeria-inversa {
-    margin-top: clamp(2rem, 4vw, 3rem) !important; /* Reduzir espaçamento */
+    margin-top: clamp(2rem, 4vw, 3rem) !important;
 }
 
-/* Forçar remoção completa de espaçamento entre galeria inversa e contactos */
+/* FORÇAR PROXIMIDADE EXTREMA entre galeria inversa e contactos */
 #galeria-inversa + #contato {
     margin-top: 0 !important;
     padding-top: 0 !important;
+    transform: translateY(-10px) !important; /* Puxar para cima */
 }
 
 #galeria-inversa .container {
@@ -1232,7 +1264,7 @@ main {
     margin-bottom: 0 !important;
 }
 
-/* Remover espaçamento do work-grid na galeria inversa */
+/* Remover TODO o espaçamento do work-grid na galeria inversa */
 #galeria-inversa .work-grid {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
@@ -1241,6 +1273,43 @@ main {
 /* Garantir que não há espaçamento adicional nos work-items da galeria inversa */
 #galeria-inversa .work-item:last-child {
     margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Remover qualquer espaçamento adicional do último elemento da galeria inversa */
+#galeria-inversa .work-item:last-child .work-content,
+#galeria-inversa .work-item:last-child .services-list,
+#galeria-inversa .work-item:last-child .services-list li:last-child {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* FORÇAR que todos os elementos filhos da galeria inversa não tenham espaçamento inferior */
+#galeria-inversa * {
+    margin-bottom: 0 !important;
+}
+
+#galeria-inversa.work-item:last-child * {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Garantir que a seção como um todo não tenha espaçamento */
+#galeria-inversa::after {
+    content: '';
+    display: block;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* SOBRESCREVER completamente o padding padrão da .section para proximidade extrema */
+#galeria-inversa.section {
+    padding: clamp(3rem, 6vw, 5rem) 0 0 0 !important; /* Apenas padding superior, ZERO inferior */
+}
+
+#contato.section {
+    padding: 0 0 clamp(5rem, 8vw, 7rem) 0 !important; /* ZERO superior, apenas inferior */
 }
 
 /* Remover espaçamento inferior da seção empresa1 */
@@ -1483,8 +1552,8 @@ main {
 }
 
 footer {
-    background: rgba(0, 0, 0, 0.95);
-    color: white;
+    background: rgba(0, 0, 0, 0.95) !important;
+    color: white !important;
     padding: 2rem 0 1rem;
     margin-top: 2rem;
     border-top: 1px solid rgba(255, 215, 0, 0.2);
@@ -1492,15 +1561,16 @@ footer {
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     gap: 2rem;
     margin-bottom: 1rem;
     flex-wrap: wrap;
+    text-align: center;
 }
 
 .footer-section h4 {
-    color: #ffd700;
+    color: #ffd700 !important;
     font-size: 1rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
@@ -1514,10 +1584,25 @@ footer {
 }
 
 .footer-about .footer-logo h3 {
-    color: #ffd700;
+    color: #ffd700 !important;
     font-size: 1.1rem;
     margin-bottom: 0;
     font-family: 'Playfair Display', serif;
+}
+
+/* Garantir que o texto do footer seja sempre branco */
+footer p {
+    color: white !important;
+}
+
+footer a {
+    color: #ffd700 !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffed4e !important;
 }
 
 .footer-logo-img {
@@ -1629,7 +1714,7 @@ footer {
 }
 
 .footer-links a {
-    color: #aaa;
+    color: #aaa !important;
     text-decoration: none;
     transition: color 0.3s ease;
     font-size: 0.85rem;
@@ -1637,19 +1722,20 @@ footer {
 }
 
 .footer-links a:hover {
-    color: #ffd700;
+    color: #ffd700 !important;
 }
 
 .footer-bottom {
     text-align: center;
     padding-top: 1rem;
-    border-top: 1px solid rgba(255, 215, 0, 0.1);
-    color: #888;
+    border-top: 1px solid rgba(255, 215, 0, 0.1) !important;
+    color: #888 !important;
     font-size: 0.8rem;
 }
 
 .footer-bottom p {
     margin-bottom: 0.3rem;
+    color: #888 !important;
 }
 
 .nav-tabs {
@@ -1963,6 +2049,35 @@ footer {
     text-align: center;
     margin-top: 1rem;
     display: none;
+}
+
+/* Estilos específicos para formulários no tema invertido (amarelo) */
+[data-theme="inverted"] .contact-form {
+    background: rgba(70, 70, 70, 0.95) !important;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+[data-theme="inverted"] .form-group input,
+[data-theme="inverted"] .form-group textarea {
+    background: rgba(50, 50, 50, 0.9) !important;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    color: #fff !important;
+}
+
+[data-theme="inverted"] .form-group input:focus,
+[data-theme="inverted"] .form-group textarea:focus {
+    background: rgba(60, 60, 60, 0.95) !important;
+    border-color: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+[data-theme="inverted"] .form-group input::placeholder,
+[data-theme="inverted"] .form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+[data-theme="inverted"] .form-group label {
+    color: #ffd700 !important;
 }
 
 /* Professional Work Portfolio Styles - Skylab Inspired */
@@ -3281,6 +3396,34 @@ footer {
         width: 550px !important;
         max-width: calc(40vw);
     }
+    
+    /* PROXIMIDADE EXTREMA entre galeria-inversa e contactos em desktop */
+    #galeria-inversa + #contato {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        transform: translateY(-20px) !important; /* Puxar ainda mais para cima em desktop */
+    }
+    
+    #contato.section {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    #contato .hero {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Garantir que a galeria inversa não tenha espaçamento inferior em desktop */
+    #galeria-inversa.section {
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    
+    #galeria-inversa .work-grid {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
@@ -3630,6 +3773,23 @@ footer {
         margin-bottom: 0 !important;
         padding-top: 1rem !important; /* Reduzir padding superior */
         padding-bottom: 0 !important;
+    }
+    
+    /* PROXIMIDADE EXTREMA entre galeria-inversa e contactos em mobile */
+    #galeria-inversa + #contato {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        transform: translateY(-15px) !important; /* Puxar para cima também em mobile */
+    }
+    
+    #contato.section {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    #contato .hero {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
     }
 
     /* Reduzir altura do work-grid da segunda seção também */
@@ -5807,7 +5967,7 @@ footer {
                     </div>
 
                     <!-- Projeto Adicional 4 - Primeira imagem em baixo -->
-                    <div class="work-item size-mediumslide-in-bottom" data-category="featured">
+                    <div class="work-item size-vertical slide-in-bottom" data-category="featured">
                         <div class="work-image-container">
                             <img src="imagens/img9.png" alt="Projeto Arquitetónico Inferior" class="work-image">
                         </div>
@@ -5886,7 +6046,6 @@ footer {
                 </div>
             </div>
         </section>
-
         <!-- Secção Contacto -->
         <section id="contato" class="section">
             <div class="hero">
@@ -5899,7 +6058,7 @@ footer {
                 <div class="contact-grid">
                     <div class="contact-item">
                         <div class="contact-icon">📍</div>
-                        <div class="contact-details">
+                        <div class="contact-details centered-text">
                             <h3 data-translate="contact_address_title">Morada</h3>
                             <p data-translate="contact_address">Av. Comendador Francisco Alves Quintas<br>
                             Zona Industrial de Gandra<br>
@@ -6008,21 +6167,6 @@ footer {
                         </div>
                     </div>
                 </div>
-                
-                <div class="footer-section footer-contact">
-                    <h4 data-translate="footer_contact_title">Contactos</h4>
-                    <div class="contact-info">
-                        <p><i class="contact-icon">✉</i> <a href="mailto:geral@bdn.pt">jaimebermudes@projectobdn.com</a></p>
-                        <p><i class="contact-icon">☎</i> <a href="tel:+351912345678">+351 911 504 793</a></p>
-                        <p><i class="contact-icon">☏</i> <a href="tel:+351123456789">+351 253 131 797</a></p>
-                        <p><i class="contact-icon">⌖</i> Av. Comendador Francisco Alves Quintas<br>
-                            Zona Industrial de Gandra
-4740-010 Esposende</p>
-                    </div>
-                </div>
-                
-                
-
             </div>
             
             <div class="footer-bottom">
@@ -7045,15 +7189,22 @@ footer {
             enhanceTouchExperience();
             
             const logoElement = document.querySelector('.logo');
-            const navMenu = document.getElementById('nav-menu');
-            const navOverlay = document.getElementById('nav-overlay');
-            const navLinks = document.querySelectorAll('.nav-menu a');
+            const mobileLogoDropdown = document.getElementById('logo-dropdown');
             
-            // No mobile, o logo controla o menu em vez do hamburger
+            // Em mobile, apenas o dropdown do logo funciona
             if (logoElement && isMobileDevice()) {
                 logoElement.addEventListener('click', function(e) {
                     e.preventDefault();
-                    toggleMobileMenu();
+                    if (mobileLogoDropdown) {
+                        mobileLogoDropdown.classList.toggle('show');
+                    }
+                });
+                
+                // Fechar dropdown quando clicar fora
+                document.addEventListener('click', function(e) {
+                    if (!logoElement.contains(e.target) && mobileLogoDropdown) {
+                        mobileLogoDropdown.classList.remove('show');
+                    }
                 });
             }
             
@@ -7112,19 +7263,43 @@ footer {
             const logoDropdown = document.getElementById('logo-dropdown');
             const desktopNav = document.querySelector('.desktop-nav');
             let isScrolled = false;
+            let autoDropdownShown = false;
 
-            // Detectar scroll para mostrar/esconder navbar links
+            // Detectar scroll para mostrar/esconder navbar links (apenas desktop)
             window.addEventListener('scroll', function() {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 
-                if (scrollTop > 50 && !isScrolled) {
-                    isScrolled = true;
-                    desktopNav.classList.add('hidden');
-                } else if (scrollTop <= 50 && isScrolled) {
-                    isScrolled = false;
-                    desktopNav.classList.remove('hidden');
-                    // Esconder dropdown quando volta ao topo
-                    logoDropdown.classList.remove('show');
+                // Apenas aplicar este comportamento em desktop (não mobile)
+                if (!isMobileDevice() && window.innerWidth > 768) {
+                    if (scrollTop > 80 && !isScrolled) {
+                        isScrolled = true;
+                        autoDropdownShown = true;
+                        
+                        // Esconder os links da navbar
+                        if (desktopNav) {
+                            desktopNav.classList.add('hidden');
+                        }
+                        
+                        // Ativar automaticamente o dropdown quando faz scroll para baixo
+                        if (logoDropdown && !logoDropdown.classList.contains('show')) {
+                            logoDropdown.classList.add('show');
+                            logoDropdown.classList.add('auto-show');
+                        }
+                    } else if (scrollTop <= 80 && isScrolled) {
+                        isScrolled = false;
+                        autoDropdownShown = false;
+                        
+                        // Mostrar os links da navbar
+                        if (desktopNav) {
+                            desktopNav.classList.remove('hidden');
+                        }
+                        
+                        // Esconder dropdown quando volta ao topo
+                        if (logoDropdown && logoDropdown.classList.contains('auto-show')) {
+                            logoDropdown.classList.remove('show');
+                            logoDropdown.classList.remove('auto-show');
+                        }
+                    }
                 }
             });
 
@@ -7134,17 +7309,36 @@ footer {
                     e.preventDefault();
                     e.stopPropagation();
                     
-                    // Só mostrar dropdown se estiver com scroll
-                    if (isScrolled) {
-                        logoDropdown.classList.toggle('show');
+                    if (logoDropdown) {
+                        // Se estamos em desktop e o dropdown foi mostrado automaticamente pelo scroll
+                        if (!isMobileDevice() && autoDropdownShown && logoDropdown.classList.contains('auto-show')) {
+                            // Toggle do dropdown automático
+                            if (logoDropdown.classList.contains('show')) {
+                                logoDropdown.classList.remove('show');
+                            } else {
+                                logoDropdown.classList.add('show');
+                            }
+                        } else {
+                            // Toggle normal do dropdown (quando no topo ou em mobile)
+                            logoDropdown.classList.toggle('show');
+                            logoDropdown.classList.remove('auto-show');
+                        }
                     }
                 });
             }
 
             // Fechar dropdown quando clicar fora
             document.addEventListener('click', function(e) {
-                if (!logo.contains(e.target)) {
-                    logoDropdown.classList.remove('show');
+                if (logo && !logo.contains(e.target) && logoDropdown) {
+                    // Se não está scrolled ou não é desktop, fecha completamente
+                    if (!isScrolled || isMobileDevice()) {
+                        logoDropdown.classList.remove('show');
+                        logoDropdown.classList.remove('auto-show');
+                        autoDropdownShown = false;
+                    } else {
+                        // Se está scrolled em desktop, apenas esconde mas mantém o estado auto
+                        logoDropdown.classList.remove('show');
+                    }
                 }
             });
 
