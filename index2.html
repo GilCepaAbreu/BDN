@@ -5716,26 +5716,7 @@ footer a:hover {
                     </div>
                 </div>
                 <nav>
-                    <div class="hamburger" id="hamburger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <ul class="desktop-nav">
-                        <li><a href="#home" data-translate="nav_home">Início</a></li>
-                        <li><a href="#empresa1" data-translate="nav_projects">BDN - Projetos</a></li>
-                        <li><a href="#sobre-bdn" data-translate="nav_about">Sobre BDN</a></li>
-                        <li><a href="#contato" data-translate="nav_contact">Contacto</a></li>
-                    </ul>
-                    <div class="nav-menu" id="nav-menu">
-                        <ul>
-                            <li><a href="#home" data-translate="nav_home">Início</a></li>
-                            <li><a href="#empresa1" data-translate="nav_projects">BDN - Projectos</a></li>
-                            <li><a href="#sobre-bdn" data-translate="nav_about">Sobre BDN</a></li>
-                            <li><a href="#contato" data-translate="nav_contact">Contacto</a></li>
-                        </ul>
-                    </div>
-                    <div class="nav-overlay" id="nav-overlay"></div>
+                    <!-- Removido os links da navbar, apenas o dropdown do logo está disponível -->
                 </nav>
             </div>
         </div>
@@ -5967,7 +5948,7 @@ footer a:hover {
                     </div>
 
                     <!-- Projeto Adicional 4 - Primeira imagem em baixo -->
-                    <div class="work-item size-medium slide-in-bottom" data-category="featured">
+                    <div class="work-item size-vertical slide-in-bottom" data-category="featured">
                         <div class="work-image-container">
                             <img src="imagens/img9.png" alt="Projeto Arquitetónico Inferior" class="work-image">
                         </div>
@@ -7184,27 +7165,30 @@ footer a:hover {
         document.addEventListener('DOMContentLoaded', function() {
             // Inicializar sistema de tema
             initThemeToggle();
-            
-            // Enhance touch experience for mobile devices
+
+            // Enhance touch experience para mobile
             enhanceTouchExperience();
-            
+
+            // Dropdown do logo funciona em todos os dispositivos (SEM DUPLICAÇÃO)
             const logoElement = document.querySelector('.logo');
-            const mobileLogoDropdown = document.getElementById('logo-dropdown');
-            
-            // Em mobile, apenas o dropdown do logo funciona
-            if (logoElement && isMobileDevice()) {
+            const logoDropdown = document.getElementById('logo-dropdown');
+            if (logoElement && logoDropdown) {
                 logoElement.addEventListener('click', function(e) {
                     e.preventDefault();
-                    if (mobileLogoDropdown) {
-                        mobileLogoDropdown.classList.toggle('show');
+                    e.stopPropagation();
+                    logoDropdown.classList.toggle('show');
+                });
+                // Fechar dropdown ao clicar fora
+                document.addEventListener('click', function(e) {
+                    if (!logoElement.contains(e.target)) {
+                        logoDropdown.classList.remove('show');
                     }
                 });
-                
-                // Fechar dropdown quando clicar fora
-                document.addEventListener('click', function(e) {
-                    if (!logoElement.contains(e.target) && mobileLogoDropdown) {
-                        mobileLogoDropdown.classList.remove('show');
-                    }
+                // Fechar dropdown ao clicar em um link
+                logoDropdown.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        logoDropdown.classList.remove('show');
+                    });
                 });
             }
             
@@ -7259,96 +7243,7 @@ footer a:hover {
             });
 
             // Funcionalidade do dropdown do logo
-            const logo = document.getElementById('logo');
-            const logoDropdown = document.getElementById('logo-dropdown');
-            const desktopNav = document.querySelector('.desktop-nav');
-            let isScrolled = false;
-            let autoDropdownShown = false;
-
-            // Detectar scroll para mostrar/esconder navbar links (apenas desktop)
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                // Apenas aplicar este comportamento em desktop (não mobile)
-                if (!isMobileDevice() && window.innerWidth > 768) {
-                    if (scrollTop > 80 && !isScrolled) {
-                        isScrolled = true;
-                        autoDropdownShown = true;
-                        
-                        // Esconder os links da navbar
-                        if (desktopNav) {
-                            desktopNav.classList.add('hidden');
-                        }
-                        
-                        // Ativar automaticamente o dropdown quando faz scroll para baixo
-                        if (logoDropdown && !logoDropdown.classList.contains('show')) {
-                            logoDropdown.classList.add('show');
-                            logoDropdown.classList.add('auto-show');
-                        }
-                    } else if (scrollTop <= 80 && isScrolled) {
-                        isScrolled = false;
-                        autoDropdownShown = false;
-                        
-                        // Mostrar os links da navbar
-                        if (desktopNav) {
-                            desktopNav.classList.remove('hidden');
-                        }
-                        
-                        // Esconder dropdown quando volta ao topo
-                        if (logoDropdown && logoDropdown.classList.contains('auto-show')) {
-                            logoDropdown.classList.remove('show');
-                            logoDropdown.classList.remove('auto-show');
-                        }
-                    }
-                }
-            });
-
-            // Toggle dropdown do logo
-            if (logo) {
-                logo.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    if (logoDropdown) {
-                        // Se estamos em desktop e o dropdown foi mostrado automaticamente pelo scroll
-                        if (!isMobileDevice() && autoDropdownShown && logoDropdown.classList.contains('auto-show')) {
-                            // Toggle do dropdown automático
-                            if (logoDropdown.classList.contains('show')) {
-                                logoDropdown.classList.remove('show');
-                            } else {
-                                logoDropdown.classList.add('show');
-                            }
-                        } else {
-                            // Toggle normal do dropdown (quando no topo ou em mobile)
-                            logoDropdown.classList.toggle('show');
-                            logoDropdown.classList.remove('auto-show');
-                        }
-                    }
-                });
-            }
-
-            // Fechar dropdown quando clicar fora
-            document.addEventListener('click', function(e) {
-                if (logo && !logo.contains(e.target) && logoDropdown) {
-                    // Se não está scrolled ou não é desktop, fecha completamente
-                    if (!isScrolled || isMobileDevice()) {
-                        logoDropdown.classList.remove('show');
-                        logoDropdown.classList.remove('auto-show');
-                        autoDropdownShown = false;
-                    } else {
-                        // Se está scrolled em desktop, apenas esconde mas mantém o estado auto
-                        logoDropdown.classList.remove('show');
-                    }
-                }
-            });
-
-            // Fechar dropdown quando clicar em um link do dropdown
-            const logoDropdownLinks = logoDropdown.querySelectorAll('a');
-            logoDropdownLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    logoDropdown.classList.remove('show');
-                });
-            });
+            // (Removido: toda a lógica duplicada e conflitos do dropdown do logo)
         });
 
         // Sistema avançado de animação da seção divisória - Inspirado em Archipelago
