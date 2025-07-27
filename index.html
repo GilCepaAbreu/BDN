@@ -2,7 +2,10 @@
 <html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>BDN - Projectamos | Arquitectamos | Construímos</title>
     <link rel="icon" type="image/png" href="bdn_fabicon.png">
     <link rel="shortcut icon" type="image/png" href="bdn_fabicon.png">
@@ -129,6 +132,13 @@ body {
     overflow-x: hidden; /* Prevenir scroll horizontal */
     max-width: 100vw; /* Limitar largura máxima */
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Melhorias para touch devices */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* Regra adicional para garantir que nenhum elemento ultrapasse */
@@ -302,6 +312,36 @@ header:after {
     animation: dropdownBounce 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
+/* Estilo especial para quando o dropdown é mostrado automaticamente pelo scroll */
+.logo-dropdown.auto-show {
+    animation: dropdownSlideIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border-color: rgba(255, 215, 0, 0.6);
+    box-shadow: 
+        0 15px 35px rgba(255, 215, 0, 0.15),
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 215, 0, 0.2);
+}
+
+@keyframes dropdownSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-25px) scale(0.9);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(3px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        box-shadow: 
+            0 15px 35px rgba(255, 215, 0, 0.15),
+            0 8px 16px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 215, 0, 0.2);
+    }
+}
+
 .logo-dropdown ul {
     list-style: none;
     margin: 0;
@@ -397,11 +437,32 @@ header:after {
     }
 }
 
-.desktop-nav.hidden {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.4s ease;
+/* Garantir que em desktop a navbar funcione corretamente */
+@media (min-width: 769px) {
+    .desktop-nav {
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .desktop-nav.hidden {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(20px);
+        pointer-events: none;
+    }
+    
+    /* Garantir que o logo permaneça sempre visível e clicável */
+    .logo {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transition: all 0.3s ease;
+    }
+    
+    /* Melhorar a aparência do dropdown quando ativado automaticamente */
+    .logo-dropdown.auto-show {
+        border-color: rgba(255, 215, 0, 0.7);
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.99) 0%, rgba(10, 10, 10, 0.99) 100%);
+    }
 }
 
 /* Dropdown Menu */
@@ -785,17 +846,95 @@ nav a.active {
 
 /* Responsivo para mobile */
 @media (max-width: 768px) {
+    /* Ajustar cursor para touch devices */
+    .custom-cursor {
+        display: none !important;
+    }
+    
+    body {
+        cursor: auto !important;
+        padding-top: 70px; /* Reduzir padding top no mobile */
+    }
+    
+    *, *:before, *:after {
+        cursor: auto !important;
+    }
+    
+    /* Navigation improvements - Remove hamburger, always show menu */
+    .hamburger {
+        display: none !important; /* Esconder hamburger no mobile */
+    }
+    
+    .desktop-nav {
+        display: none !important; /* Esconder navegação desktop no mobile */
+    }
+    
+    .nav-menu {
+        display: none !important; /* Esconder completamente o menu nav no mobile */
+    }
+    
+    .nav-overlay {
+        display: none !important; /* Esconder overlay no mobile */
+    }
+    
+    /* Manter apenas o logo com dropdown funcional em mobile */
+    .logo {
+        display: flex !important;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .logo-dropdown {
+        display: block; /* Garantir que o dropdown está disponível */
+        position: absolute !important;
+        top: 100% !important; /* Abaixo do logo */
+        left: 50% !important; /* Centralizado horizontalmente */
+        transform: translateX(-50%) !important; /* Centralizar pelo meio */
+        min-width: 220px;
+        z-index: 1000;
+    }
+    
+    .logo-dropdown.show {
+        transform: translateX(-50%) translateY(0) scale(1) !important;
+    }
+    
+    /* Ajustar header para mobile - apenas logo visível */
+    .header-content {
+        padding: 1rem 0;
+        justify-content: center; /* Centralizar o logo */
+    }
+    
+    nav {
+        display: none !important; /* Esconder toda a seção nav em mobile */
+    }
+    
+    .logo {
+        font-size: 1.4rem;
+        margin: 0; /* Remover margins para centralizar melhor */
+    }
+    
+    .logo-img {
+        width: 32px;
+        height: 32px;
+    }
+    
+    /* Language selector mobile */
     .language-selector {
         bottom: 20px;
         left: 20px;
-        padding: 6px 10px;
+        padding: 8px 12px;
+        border-radius: 25px;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
     }
     
     .language-btn {
         font-size: 0.8rem;
-        padding: 4px 8px;
+        padding: 6px 10px;
+        min-width: 35px;
     }
     
+    /* Theme toggle mobile */
     .theme-toggle-fixed {
         width: 50px;
         height: 50px;
@@ -821,12 +960,89 @@ nav a.active {
     
     .theme-toggle-fixed::before {
         left: 8px;
-        font-size: 12px;
+        font-size: 10px;
     }
     
     .theme-toggle-fixed::after {
         right: 8px;
-        font-size: 12px;
+        font-size: 10px;
+    }
+    
+    /* Hero section mobile */
+    .hero {
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+        padding: 0 20px;
+        line-height: 1.5;
+    }
+    
+    /* Container adjustments */
+    .container {
+        padding: 0 15px;
+        max-width: 100%;
+    }
+    
+    /* Section spacing */
+    section {
+        margin-bottom: 3rem;
+    }
+}
+
+/* Additional mobile optimizations for small screens */
+@media (max-width: 480px) {
+    body {
+        padding-top: 65px;
+    }
+    
+    .header-content {
+        padding: 0.8rem 0;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+        margin-left: 15px;
+    }
+    
+    .logo-img {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .nav-menu {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .language-selector {
+        bottom: 15px;
+        left: 15px;
+        padding: 6px 10px;
+    }
+    
+    .theme-toggle-fixed {
+        bottom: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .container {
+        padding: 0 10px;
     }
 }
 
@@ -1010,15 +1226,19 @@ main {
     padding: clamp(5rem, 8vw, 7rem) 0;
 }
 
-/* Remover completamente o espaçamento superior da seção de contactos */
+/* REMOVER COMPLETAMENTE o espaçamento superior da seção de contactos */
 #contato.section {
     padding-top: 0 !important;
     margin-top: 0 !important;
+    /* Aceitar o movimento para cima da seção anterior */
+    position: relative;
+    z-index: 1;
 }
 
-/* Reduzir drasticamente o padding superior do hero na seção de contactos */
+/* ELIMINAR padding superior do hero na seção de contactos */
 #contato .hero {
-    padding-top: clamp(0.5rem, vw, 1rem) !important;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
 }
 
 /* Forçar conexão direta entre título único e contactos */
@@ -1027,22 +1247,16 @@ main {
     padding-top: 0 !important;
 }
 
-/* Remover espaçamento inferior da galeria inversa */
-#galeria-inversa.section {
-    padding-bottom: 0 !important;
-    margin-bottom: -100rem !important;
-    padding: clamp(6rem, 12vw, 10rem) 0 0 0 !important; /* Aumentar ainda mais o padding superior */
-}
-
-/* Aumentar espaçamento específico entre título único e galeria inversa */
+/* Reduzir espaçamento específico entre título único e galeria inversa */
 .unique-client-section + #galeria-inversa {
-    margin-top: clamp(6rem, 12vw, 10rem) !important; /* Dobrar o espaçamento */
+    margin-top: clamp(2rem, 4vw, 3rem) !important;
 }
 
-/* Forçar remoção completa de espaçamento entre galeria inversa e contactos */
+/* FORÇAR PROXIMIDADE EXTREMA entre galeria inversa e contactos */
 #galeria-inversa + #contato {
     margin-top: 0 !important;
     padding-top: 0 !important;
+    transform: translateY(-10px) !important; /* Puxar para cima */
 }
 
 #galeria-inversa .container {
@@ -1050,7 +1264,7 @@ main {
     margin-bottom: 0 !important;
 }
 
-/* Remover espaçamento do work-grid na galeria inversa */
+/* Remover TODO o espaçamento do work-grid na galeria inversa */
 #galeria-inversa .work-grid {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
@@ -1059,13 +1273,50 @@ main {
 /* Garantir que não há espaçamento adicional nos work-items da galeria inversa */
 #galeria-inversa .work-item:last-child {
     margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Remover qualquer espaçamento adicional do último elemento da galeria inversa */
+#galeria-inversa .work-item:last-child .work-content,
+#galeria-inversa .work-item:last-child .services-list,
+#galeria-inversa .work-item:last-child .services-list li:last-child {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* FORÇAR que todos os elementos filhos da galeria inversa não tenham espaçamento inferior */
+#galeria-inversa * {
+    margin-bottom: 0 !important;
+}
+
+#galeria-inversa.work-item:last-child * {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Garantir que a seção como um todo não tenha espaçamento */
+#galeria-inversa::after {
+    content: '';
+    display: block;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* SOBRESCREVER completamente o padding padrão da .section para proximidade extrema */
+#galeria-inversa.section {
+    padding: clamp(3rem, 6vw, 5rem) 0 0 0 !important; /* Apenas padding superior, ZERO inferior */
+}
+
+#contato.section {
+    padding: 0 0 clamp(5rem, 8vw, 7rem) 0 !important; /* ZERO superior, apenas inferior */
 }
 
 /* Remover espaçamento inferior da seção empresa1 */
 #empresa1 {
     margin-top: 10rem;
     padding-bottom: 0;
-    margin-bottom: 15rem;
+    margin-bottom: 2rem; /* Reduzido de 15rem para 2rem */
 }
 
 
@@ -1301,8 +1552,8 @@ main {
 }
 
 footer {
-    background: rgba(0, 0, 0, 0.95);
-    color: white;
+    background: rgba(0, 0, 0, 0.95) !important;
+    color: white !important;
     padding: 2rem 0 1rem;
     margin-top: 2rem;
     border-top: 1px solid rgba(255, 215, 0, 0.2);
@@ -1310,15 +1561,16 @@ footer {
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
     gap: 2rem;
     margin-bottom: 1rem;
     flex-wrap: wrap;
+    text-align: center;
 }
 
 .footer-section h4 {
-    color: #ffd700;
+    color: #ffd700 !important;
     font-size: 1rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
@@ -1332,10 +1584,25 @@ footer {
 }
 
 .footer-about .footer-logo h3 {
-    color: #ffd700;
+    color: #ffd700 !important;
     font-size: 1.1rem;
     margin-bottom: 0;
     font-family: 'Playfair Display', serif;
+}
+
+/* Garantir que o texto do footer seja sempre branco */
+footer p {
+    color: white !important;
+}
+
+footer a {
+    color: #ffd700 !important;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #ffed4e !important;
 }
 
 .footer-logo-img {
@@ -1447,7 +1714,7 @@ footer {
 }
 
 .footer-links a {
-    color: #aaa;
+    color: #aaa !important;
     text-decoration: none;
     transition: color 0.3s ease;
     font-size: 0.85rem;
@@ -1455,19 +1722,20 @@ footer {
 }
 
 .footer-links a:hover {
-    color: #ffd700;
+    color: #ffd700 !important;
 }
 
 .footer-bottom {
     text-align: center;
     padding-top: 1rem;
-    border-top: 1px solid rgba(255, 215, 0, 0.1);
-    color: #888;
+    border-top: 1px solid rgba(255, 215, 0, 0.1) !important;
+    color: #888 !important;
     font-size: 0.8rem;
 }
 
 .footer-bottom p {
     margin-bottom: 0.3rem;
+    color: #888 !important;
 }
 
 .nav-tabs {
@@ -1781,6 +2049,35 @@ footer {
     text-align: center;
     margin-top: 1rem;
     display: none;
+}
+
+/* Estilos específicos para formulários no tema invertido (amarelo) */
+[data-theme="inverted"] .contact-form {
+    background: rgba(70, 70, 70, 0.95) !important;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+[data-theme="inverted"] .form-group input,
+[data-theme="inverted"] .form-group textarea {
+    background: rgba(50, 50, 50, 0.9) !important;
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    color: #fff !important;
+}
+
+[data-theme="inverted"] .form-group input:focus,
+[data-theme="inverted"] .form-group textarea:focus {
+    background: rgba(60, 60, 60, 0.95) !important;
+    border-color: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+[data-theme="inverted"] .form-group input::placeholder,
+[data-theme="inverted"] .form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+[data-theme="inverted"] .form-group label {
+    color: #ffd700 !important;
 }
 
 /* Professional Work Portfolio Styles - Skylab Inspired */
@@ -2304,143 +2601,135 @@ footer {
     width: 100vw;
     margin: 0;
     padding: 0;
-    min-height: 4000px; /* Aumentar para acomodar a nova imagem (Projeto 15) */
+    min-height: 3600px; /* Reduzir altura para otimizar espaço */
     left: 50%;
     transform: translateX(-50%);
     overflow: hidden; /* Garantir que elementos não ultrapassem */
     max-width: 100vw; /* Limitar largura máxima */
 }
 
+/* ===== ANIMAÇÕES PROFISSIONAIS PARA IMAGENS ===== */
+
+/* Estado inicial das imagens - invisíveis até serem ativadas */
 .work-item {
     position: absolute;
     width: 400px;
-    background: #fff;
+    background: transparent;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     cursor: url('bdn_fabicon.png') 16 16, pointer;
-    /* Inicialmente invisível para animação de entrada */
+    /* Estado inicial - aplicado via JavaScript */
     opacity: 0;
-    transform: translateY(40px) scale(0.9);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(60px) scale(0.9);
+    filter: blur(5px);
+    transition: none;
+    will-change: transform, opacity, filter;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
 }
 
-/* Estado visível após scroll */
+/* Estado animado - aplicado via JavaScript */
 .work-item.animate-in {
     opacity: 1;
     transform: translateY(0) scale(1);
+    filter: blur(0px);
 }
 
-/* Variações de animação por tipo - otimizadas para serem mais rápidas */
-.work-item.slide-left {
-    transform: translateX(-60px) translateY(20px) scale(0.95);
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+/* Animação de hover melhorada para itens animados */
+.work-item.animate-in:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.work-item.slide-left.animate-in {
-    transform: translateX(0) translateY(0) scale(1);
+/* Efeitos especiais para diferentes tipos de animação */
+.work-item.slide-entrance {
+    transform: translateY(60px) scale(0.9);
 }
 
-.work-item.slide-right {
-    transform: translateX(60px) translateY(20px) scale(0.95);
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.work-item.zoom-entrance {
+    transform: translateY(30px) scale(0.6);
 }
 
-.work-item.slide-right.animate-in {
-    transform: translateX(0) translateY(0) scale(1);
+.work-item.rotate-entrance {
+    transform: translateY(40px) scale(0.8) rotate(-15deg);
 }
 
-.work-item.zoom-rotate {
-    transform: translateY(30px) scale(0.7) rotate(10deg);
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.work-item.flip-entrance {
+    transform: translateY(30px) rotateY(45deg) scale(0.9);
 }
 
-.work-item.zoom-rotate.animate-in {
-    transform: translateY(0) scale(1) rotate(0deg);
+/* Performance optimizations */
+.work-item {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
 }
 
-.work-item.flip-in {
-    transform: translateY(25px) rotateY(45deg) scale(0.9);
-    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.work-item.flip-in.animate-in {
-    transform: translateY(0) rotateY(0deg) scale(1);
-}
-
-.work-item.elastic-in {
-    transform: translateY(50px) scale(0.6);
-    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.work-item.elastic-in.animate-in {
-    transform: translateY(0) scale(1);
-}
-
-.work-item.bounce-in {
-    transform: translateY(60px) scale(0.8);
-    transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.work-item.bounce-in.animate-in {
-    transform: translateY(0) scale(1);
-}
-
-/* Novas animações para a segunda seção */
-.work-item.slide-up {
-    transform: translateY(80px) scale(0.9);
-    opacity: 0;
+/* Smooth transitions for different animation states */
+.work-item.transitioning {
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.work-item.slide-up.animate-in {
-    transform: translateY(0) scale(1);
-    opacity: 1;
+.work-item.elastic-transition {
+    transition: all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.work-item.fade-in {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: all 0.6s ease-out;
+.work-item.zoom-transition {
+    transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.work-item.fade-in.animate-in {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.work-item.slide-in-right {
-    opacity: 0;
-    transform: translateX(60px) scale(0.95);
-    transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.work-item.slide-in-right.animate-in {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-}
-
-.work-item.slide-in-bottom {
-    opacity: 0;
-    transform: translateY(80px) scale(0.9);
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.work-item.slide-in-bottom.animate-in {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
-
-.work-item.rotate-in {
-    opacity: 0;
-    transform: rotate(-15deg) scale(0.8);
+.work-item.rotate-transition {
     transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.work-item.rotate-in.animate-in {
-    opacity: 1;
-    transform: rotate(0deg) scale(1);
+/* Estados de loading suaves */
+.work-item.loading {
+    opacity: 0.3;
+    transform: translateY(20px) scale(0.95);
+    filter: blur(2px);
 }
+
+/* Indicador visual de que a imagem está pronta para animar */
+.work-item.ready-to-animate {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+    filter: blur(3px);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Optimização para mobile - animações mais simples */
+@media (max-width: 768px) {
+    .work-item {
+        transition: all 0.6s ease-out;
+    }
+    
+    .work-item.animate-in:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 15px 40px rgba(255, 215, 0, 0.15);
+    }
+}
+
+/* Reduzir animações para utilizadores que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+    .work-item {
+        transition: opacity 0.3s ease !important;
+        transform: none !important;
+        filter: none !important;
+    }
+    
+    .work-item.animate-in {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+    }
+}
+
+/* ===== FIM DAS ANIMAÇÕES PROFISSIONAIS ===== */
 
 /* Tamanhos diferentes para as imagens */
 .work-item.size-small {
@@ -2875,7 +3164,7 @@ footer {
 
 .work-info {
     padding: 1.5rem;
-    background: #fff;
+    background: transparent;
 }
 
 .work-project-title {
@@ -3107,6 +3396,34 @@ footer {
         width: 550px !important;
         max-width: calc(40vw);
     }
+    
+    /* PROXIMIDADE EXTREMA entre galeria-inversa e contactos em desktop */
+    #galeria-inversa + #contato {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        transform: translateY(-20px) !important; /* Puxar ainda mais para cima em desktop */
+    }
+    
+    #contato.section {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    #contato .hero {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Garantir que a galeria inversa não tenha espaçamento inferior em desktop */
+    #galeria-inversa.section {
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    
+    #galeria-inversa .work-grid {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 1199px) {
@@ -3288,69 +3605,713 @@ footer {
 }
 
 @media (max-width: 767px) {
+    /* Layout mobile otimizado - todas as imagens visíveis */
     .work-grid {
-        position: static;
-        min-height: auto;
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
+        position: relative;
+        min-height: 1420px; /* Reduzir altura para eliminar espaço vazio */
+        padding: 1rem 0.5rem;
         width: 100%;
-        transform: none;
-        left: auto;
+        overflow-x: hidden;
     }
     
-    .work-item {
-        position: static;
-        width: 100%;
-        max-width: 350px;
-        transform: none !important;
-        left: auto !important;
-        right: auto !important;
-        top: auto !important;
+    /* Primeira linha - 3 imagens escalonadas */
+    .work-item:nth-child(1) {
+        left: 5% !important;
+        top: 0 !important;
+        width: 40vw !important; /* ~150px em 375px de largura */
+        max-width: 150px !important;
     }
 
-    .work-item.size-vertical {
-        max-width: 280px;
-        height: 420px; /* Proporção vertical para mobile */
+    .work-item:nth-child(2) {
+        right: 5% !important; /* Lado direito */
+        top: 30px !important; 
+        width: 30vw !important; /* ~112px em 375px */
+        max-width: 112px !important;
     }
-    
-    .work-header {
-        padding: 3rem 1rem 4rem;
+
+    .work-item:nth-child(3) {
+        left: 50% !important; /* Centro */
+        top: 80px !important;
+        width: 35vw !important; /* ~131px em 375px */
+        max-width: 131px !important;
+        transform: translateX(-50%) !important; /* Centralizar */
     }
-    
+
+    /* Segunda linha - 3 imagens em disposição triangular inversa */
+    .work-item:nth-child(4) {
+        right: 5% !important;
+        top: 220px !important; 
+        width: 42vw !important; /* ~157px em 375px */
+        max-width: 157px !important;
+    }
+
+    .work-item:nth-child(5) {
+        left: 5% !important;
+        top: 270px !important; 
+        width: 28vw !important; /* ~105px em 375px */
+        max-width: 105px !important;
+    }
+
+    .work-item:nth-child(6) {
+        left: 50% !important; /* Centro */
+        top: 320px !important;
+        width: 38vw !important; /* ~142px em 375px */
+        max-width: 142px !important;
+        transform: translateX(-50%) !important;
+    }
+
+    /* Terceira linha - 2 imagens lado a lado */
+    .work-item:nth-child(7) {
+        left: 8% !important;
+        top: 480px !important; 
+        width: 38vw !important; /* ~142px em 375px */
+        max-width: 142px !important;
+    }
+
+    .work-item:nth-child(8) {
+        right: 8% !important;
+        top: 460px !important; 
+        width: 40vw !important; /* ~150px em 375px */
+        max-width: 150px !important;
+    }
+
+    /* Quarta linha - 2 imagens escalonadas */
+    .work-item:nth-child(9) {
+        left: 5% !important;
+        top: 640px !important;
+        width: 44vw !important; /* ~165px em 375px */
+        max-width: 165px !important;
+    }
+
+    .work-item:nth-child(10) {
+        right: 5% !important;
+        top: 720px !important; 
+        width: 38vw !important; /* ~142px em 375px */
+        max-width: 142px !important;
+    }
+
+    /* Quinta linha - 2 imagens centralizadas */
+    .work-item:nth-child(11) {
+        left: 50% !important;
+        top: 880px !important;
+        width: 32vw !important; /* ~120px em 375px */
+        max-width: 120px !important;
+        transform: translateX(-80%) !important; /* Offset à esquerda */
+    }
+
+    .work-item:nth-child(12) {
+        left: 50% !important;
+        top: 960px !important;
+        width: 44vw !important; /* ~165px em 375px */
+        max-width: 165px !important;
+        transform: translateX(-20%) !important; /* Offset à direita */
+    }
+
+    /* Sexta linha - últimas imagens */
+    .work-item:nth-child(13) {
+        right: 8% !important;
+        top: 1140px !important;
+        width: 35vw !important; /* ~131px em 375px */
+        max-width: 131px !important;
+    }
+
+    .work-item:nth-child(14) {
+        left: 5% !important;
+        top: 1280px !important;
+        width: 38vw !important; /* ~142px em 375px */
+        max-width: 142px !important;
+    }
+
+    .work-item:nth-child(15) {
+        right: 5% !important;
+        top: 1280px !important; /* Mesma altura da 14ª */
+        width: 38vw !important; /* ~142px em 375px */
+        max-width: 142px !important;
+    }
+
+    /* Ajustar containers das imagens para mobile */
     .work-image-container {
-        height: 200px;
+        height: 100px !important; /* Altura uniforme menor */
+        border-radius: 6px;
+    }
+
+    /* Altura específica para algumas imagens principais */
+    .work-item:nth-child(1) .work-image-container,
+    .work-item:nth-child(4) .work-image-container,
+    .work-item:nth-child(8) .work-image-container,
+    .work-item:nth-child(9) .work-image-container,
+    .work-item:nth-child(12) .work-image-container {
+        height: 120px !important; /* Ligeiramente maior para imagens principais */
+    }
+
+    /* Reduzir efeitos de hover no mobile */
+    .work-item:hover .work-image-container {
+        transform: translateY(-1px); /* Movimento muito sutil */
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .work-item:hover .work-image {
+        transform: scale(1.01); /* Zoom muito sutil */
+    }
+
+    /* Simplificar hover effects específicos */
+    .work-item:nth-child(1):hover .work-image,
+    .work-item:nth-child(3):hover .work-image {
+        transform: scale(1.01); /* Uniformizar */
+        filter: brightness(1.05);
+    }
+
+    /* Reduzir espaçamentos das seções no mobile */
+    #empresa1 {
+        margin-top: 2rem !important; /* Reduzir margem superior */
+        margin-bottom: 1rem !important; /* Reduzir margem inferior */
+        padding-bottom: 0 !important;
+    }
+
+    #galeria-inversa {
+        margin-top: 1rem !important; /* Reduzir margem superior */
+        margin-bottom: 0 !important;
+        padding-top: 1rem !important; /* Reduzir padding superior */
+        padding-bottom: 0 !important;
+    }
+    
+    /* PROXIMIDADE EXTREMA entre galeria-inversa e contactos em mobile */
+    #galeria-inversa + #contato {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        transform: translateY(-15px) !important; /* Puxar para cima também em mobile */
+    }
+    
+    #contato.section {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+    
+    #contato .hero {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    /* Reduzir altura do work-grid da segunda seção também */
+    #galeria-inversa .work-grid {
+        min-height: auto !important; /* Permitir altura automática */
+        padding-bottom: 0 !important;
+    }
+
+    /* Aplicar posicionamento absoluto também para galeria inversa no mobile */
+    #galeria-inversa .work-grid.inverse-layout {
+        position: relative !important;
+        min-height: 800px !important; /* Altura muito menor para segunda seção */
+        padding: 0.5rem !important;
+    }
+
+    /* Posições específicas para imagens da galeria inversa no mobile */
+    #galeria-inversa .work-item:nth-child(1) {
+        left: 5% !important;
+        top: 0 !important;
+        width: 35vw !important;
+        max-width: 130px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(2) {
+        right: 5% !important;
+        top: 40px !important;
+        width: 28vw !important;
+        max-width: 105px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(3) {
+        left: 50% !important;
+        top: 100px !important;
+        width: 32vw !important;
+        max-width: 120px !important;
+        transform: translateX(-50%) !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(4) {
+        right: 8% !important;
+        top: 200px !important;
+        width: 30vw !important;
+        max-width: 115px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(5) {
+        left: 8% !important;
+        top: 260px !important;
+        width: 26vw !important;
+        max-width: 100px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(6) {
+        left: 50% !important;
+        top: 340px !important;
+        width: 38vw !important;
+        max-width: 145px !important;
+        transform: translateX(-50%) !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(7) {
+        left: 10% !important;
+        top: 480px !important;
+        width: 30vw !important;
+        max-width: 115px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(8) {
+        right: 10% !important;
+        top: 460px !important;
+        width: 32vw !important;
+        max-width: 120px !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(9) {
+        left: 50% !important;
+        top: 580px !important;
+        width: 28vw !important;
+        max-width: 105px !important;
+        transform: translateX(-80%) !important;
+        position: absolute !important;
+    }
+
+    #galeria-inversa .work-item:nth-child(10) {
+        right: 8% !important;
+        top: 640px !important;
+        width: 34vw !important;
+        max-width: 130px !important;
+        position: absolute !important;
+    }
+
+    /* Remover espaçamentos extras de seções */
+    section {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+}
+
+/* Estilos gerais para trabalhos */
+.work-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        padding: 1rem;
+        color: white;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .work-item:hover .work-overlay {
+        transform: translateY(0);
+    }
+    
+    /* Improve header and footer spacing */
+    .work-header {
+        padding: 2rem 1rem 3rem;
+        text-align: center;
+    }
+    
+    .work-header h2 {
+        font-size: clamp(2rem, 6vw, 3rem);
+        margin-bottom: 1rem;
     }
     
     .work-footer {
-        padding: 3rem 1rem;
+        padding: 2rem 1rem;
+        text-align: center;
     }
     
-    /* Footer compacto para mobile */
+    /* Enhanced footer for mobile */
     footer {
-        padding: 1.5rem 0 0.8rem;
-        margin-top: 1.5rem;
+        padding: 2rem 0 1rem;
+        margin-top: 2rem;
+        background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+        border-top: 1px solid rgba(255, 215, 0, 0.2);
     }
     
     .footer-content {
         flex-direction: column;
-        gap: 1.5rem;
-        margin-bottom: 0.8rem;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        text-align: center;
     }
     
     .footer-section {
         text-align: center;
+        padding: 0 1rem;
+    }
+    
+    .footer-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: var(--accent-primary);
     }
     
     .footer-about .footer-logo {
         justify-content: center;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        gap: 1rem;
+    }
+    
+    .footer-logo img {
+        width: 40px;
+        height: 40px;
     }
     
     .footer-bottom {
-        padding-top: 0.8rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 215, 0, 0.1);
+        text-align: center;
+        font-size: 0.9rem;
+    }
+    
+    /* Contact section improvements */
+    .contact-section {
+        padding: 2rem 1rem;
+    }
+    
+    .contact-form {
+        max-width: 100%;
+        padding: 1.5rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+    }
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.5);
+        color: var(--text-primary);
+        font-size: 16px; /* Prevent zoom on iOS */
+        transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: var(--accent-primary);
+        box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+        outline: none;
+    }
+
+/* Ultra mobile optimizations for very small screens */
+@media (max-width: 375px) {
+    body {
+        padding-top: 60px;
+    }
+    
+    .header-content {
+        padding: 0.6rem 0;
+    }
+    
+    .logo {
+        font-size: 1.1rem;
+        margin-left: 10px;
+    }
+    
+    .logo-img {
+        width: 26px;
+        height: 26px;
+    }
+    
+    .nav-menu {
+        width: 100%;
+        padding: 70px 0 30px;
+    }
+    
+    .nav-menu a {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+    
+    .hero {
+        padding: 1.5rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 1.6rem;
+        line-height: 1.1;
+    }
+    
+    .hero p {
+        font-size: 0.9rem;
+        padding: 0 15px;
+    }
+    
+    .work-item {
+        max-width: min(300px, 95vw) !important;
+        height: 260px !important; /* Altura ligeiramente menor para telas pequenas */
+        margin: 0 auto;
+    }
+    
+    /* Todos os work-items têm o mesmo tamanho em telas pequenas */
+    .work-item.size-small,
+    .work-item.size-medium,
+    .work-item.size-large,
+    .work-item.size-xlarge,
+    .work-item.size-xxlarge,
+    .work-item.size-vertical,
+    .work-item.size-double-large {
+        width: 100% !important;
+        max-width: min(300px, 95vw) !important;
+        height: 260px !important;
+    }
+    
+    .work-image-container {
+        height: 180px !important; /* Altura ajustada para telas pequenas */
+    }
+    
+    .work-header {
+        padding: 1.5rem 0.8rem 2rem;
+    }
+    
+    .work-header h2 {
+        font-size: 1.6rem;
+    }
+    
+    .container {
+        padding: 0 8px;
+    }
+    
+    .language-selector {
+        bottom: 10px;
+        left: 10px;
+        padding: 4px 8px;
+    }
+    
+    .language-btn {
+        font-size: 0.7rem;
+        padding: 4px 6px;
+        min-width: 30px;
+    }
+    
+    .theme-toggle-fixed {
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .theme-toggle-fixed .theme-toggle-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .theme-toggle-fixed .theme-circle {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .unique-client-title {
+        font-size: clamp(2.5rem, 8vw, 3rem);
+        gap: 0.5rem;
+    }
+    
+    .contact-form {
+        padding: 1rem;
+        margin: 0 0.5rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 15px;
+    }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+    body {
+        padding-top: 65px;
+    }
+    
+    .hero {
+        padding: 1.5rem 0;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .work-grid {
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+    
+    .work-item {
+        max-width: min(300px, 45vw);
+    }
+    
+    .work-image-container {
+        height: 160px;
+    }
+    
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 1rem;
+    }
+    
+    .footer-section {
+        flex: 1;
+        min-width: 200px;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* Remove hover effects on touch devices */
+    .work-item:hover {
+        transform: none;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 215, 0, 0.2);
+    }
+    
+    .work-item:hover .work-image {
+        transform: none;
+    }
+    
+    .work-item:hover .work-overlay {
+        transform: translateY(0);
+    }
+    
+    /* Enhance touch targets */
+    .nav-menu a {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .language-btn {
+        min-height: 40px;
+        min-width: 40px;
+    }
+    
+    .theme-toggle-fixed {
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    /* Better form controls for touch */
+    .form-group input,
+    .form-group textarea {
+        min-height: 48px;
+        border-radius: 12px;
+    }
+    
+    .contact-btn {
+        min-height: 48px;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 16px;
+    }
+}
+
+/* Safe area support for devices with notch */
+@supports (padding: max(0px)) {
+    header {
+        padding-top: max(20px, env(safe-area-inset-top));
+    }
+    
+    body {
+        padding-top: max(80px, calc(80px + env(safe-area-inset-top)));
+    }
+    
+    .language-selector {
+        bottom: max(20px, env(safe-area-inset-bottom));
+        left: max(20px, env(safe-area-inset-left));
+    }
+    
+    .theme-toggle-fixed {
+        bottom: max(20px, env(safe-area-inset-bottom));
+        right: max(20px, env(safe-area-inset-right));
+    }
+    
+    .nav-menu {
+        padding-top: max(80px, calc(80px + env(safe-area-inset-top)));
+        padding-bottom: max(40px, env(safe-area-inset-bottom));
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --bg-primary: #000000;
+        --bg-secondary: #111111;
+        --text-primary: #ffffff;
+        --accent-primary: #ffff00;
+        --border-color: #ffffff;
+    }
+    
+    .work-item {
+        border: 2px solid var(--accent-primary);
+    }
+    
+    .nav-menu a:hover {
+        background: var(--accent-primary);
+        color: var(--bg-primary);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .custom-cursor {
+        display: none !important;
+    }
+}
+
+/* Dark mode media query support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #1a1a1a;
+        --text-primary: #ffffff;
+    }
+}
+
+/* Print styles for better mobile printing */
+@media print {
+    .custom-cursor,
+    .theme-toggle-fixed,
+    .language-selector,
+    .hamburger,
+    .nav-menu,
+    .lightbox {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+        color: black !important;
+        padding-top: 0 !important;
+    }
+    
+    .work-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
     }
 }
 
@@ -3484,38 +4445,115 @@ footer {
 /* Responsive Lightbox */
 @media (max-width: 768px) {
     .lightbox-content {
-        max-width: 95%;
-        max-height: 95%;
-        min-width: 320px;  /* Aumentado para tablets */
-        min-height: 240px; /* Aumentado para tablets */
+        max-width: 98%;
+        max-height: 98%;
+        min-width: 280px;
+        min-height: 200px;
+        margin: 10px;
     }
     
     .lightbox-image {
-        max-height: 75vh;  /* Aumentado de 70vh para 75vh */
-        min-width: 300px;  /* Aumentado para tablets */
-        min-height: 200px; /* Aumentado para tablets */
+        max-height: 80vh;
+        min-width: 250px;
+        min-height: 180px;
+        border-radius: 4px;
     }
     
     .lightbox-close {
-        top: -40px;
-        font-size: 30px;
-        width: 40px;
-        height: 40px;
-    }
-    
-    .lightbox-caption {
-        font-size: 1rem;
-        padding: 0.8rem 1.5rem;
+        top: -45px;
+        right: 0;
+        width: 45px;
+        height: 45px;
+        font-size: 32px;
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid #ffd700;
     }
     
     .lightbox-counter {
         bottom: -50px;
         font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    /* Disable cursor navigation on mobile */
+    .lightbox-nav-left,
+    .lightbox-nav-right {
+        display: none;
+    }
+    
+    /* Add touch-friendly navigation buttons */
+    .lightbox-mobile-nav {
+        position: absolute;
+        bottom: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .lightbox-mobile-prev,
+    .lightbox-mobile-next {
+        background: rgba(0, 0, 0, 0.8);
+        color: #ffd700;
+        border: 2px solid #ffd700;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: bold;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+        transition: all 0.3s ease;
+    }
+    
+    .lightbox-mobile-prev:active,
+    .lightbox-mobile-next:active {
+        transform: scale(0.95);
+        background: rgba(255, 215, 0, 0.2);
     }
 }
 
 @media (max-width: 480px) {
-    /* Manter navegação por cursor em dispositivos móveis */
+    .lightbox-content {
+        max-width: 95%;
+        max-height: 95%;
+        min-width: 260px;
+        margin: 5px;
+    }
+    
+    .lightbox-image {
+        max-height: 75vh;
+        min-width: 220px;
+        min-height: 160px;
+    }
+    
+    .lightbox-close {
+        top: -40px;
+        width: 40px;
+        height: 40px;
+        font-size: 28px;
+    }
+    
+    .lightbox-mobile-prev,
+    .lightbox-mobile-next {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .lightbox-counter {
+        bottom: -45px;
+        font-size: 0.75rem;
+        padding: 0.3rem 0.6rem;
+    }
+}
+
+/* Enhanced Work Gallery Mobile Styles */
+@media (max-width: 767px) {
     .lightbox-nav-left,
     .lightbox-nav-right {
         cursor: pointer;
@@ -4369,10 +5407,283 @@ footer {
     font-weight: 400;
 }
 
+/* ===== LOADING SCREEN STYLES ===== */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, 
+        var(--bg-primary) 0%, 
+        var(--bg-secondary) 50%, 
+        var(--bg-tertiary) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loading-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 400px;
+    padding: 2rem;
+}
+
+.loading-logo {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.loading-logo-img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 50%;
+    padding: 20px;
+    background: rgba(255, 215, 0, 0.1);
+    border: 3px solid var(--accent-primary);
+    box-shadow: 
+        0 0 30px rgba(255, 215, 0, 0.3),
+        inset 0 0 20px rgba(255, 215, 0, 0.1);
+    animation: logoFloat 3s ease-in-out infinite, logoGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoFloat {
+    0%, 100% {
+        transform: translateY(0px) scale(1);
+    }
+    50% {
+        transform: translateY(-10px) scale(1.05);
+    }
+}
+
+@keyframes logoGlow {
+    0% {
+        box-shadow: 
+            0 0 30px rgba(255, 215, 0, 0.3),
+            inset 0 0 20px rgba(255, 215, 0, 0.1);
+    }
+    100% {
+        box-shadow: 
+            0 0 50px rgba(255, 215, 0, 0.6),
+            inset 0 0 30px rgba(255, 215, 0, 0.2);
+    }
+}
+
+.loading-text {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.loading-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin: 0 0 0.5rem 0;
+    letter-spacing: 0.1em;
+    text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+    animation: titlePulse 2s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
+}
+
+.loading-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin: 0;
+    opacity: 0.9;
+    animation: subtitleFade 3s ease-in-out infinite;
+}
+
+@keyframes subtitleFade {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.loading-progress {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.loading-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 215, 0, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.loading-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, 
+        var(--accent-primary) 0%, 
+        var(--accent-secondary) 50%, 
+        var(--accent-primary) 100%);
+    background-size: 200% 100%;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    animation: progressShimmer 2s linear infinite;
+}
+
+@keyframes progressShimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.loading-percentage {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent-primary);
+    font-weight: 600;
+    text-align: center;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 215, 0, 0.2);
+    border-top: 3px solid var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Loading screen responsivo */
+@media (max-width: 768px) {
+    .loading-container {
+        max-width: 300px;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+    
+    .loading-logo-img {
+        width: 100px;
+        height: 100px;
+        padding: 15px;
+    }
+    
+    .loading-title {
+        font-size: 2.5rem;
+    }
+    
+    .loading-subtitle {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .loading-container {
+        max-width: 280px;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    
+    .loading-logo-img {
+        width: 80px;
+        height: 80px;
+        padding: 12px;
+    }
+    
+    .loading-title {
+        font-size: 2rem;
+    }
+    
+    .loading-subtitle {
+        font-size: 0.8rem;
+    }
+    
+    .spinner {
+        width: 30px;
+        height: 30px;
+        border-width: 2px;
+    }
+}
+
+/* Tema inverso para loading screen */
+[data-theme="inverted"] .loading-screen {
+    background: linear-gradient(135deg, 
+        var(--bg-primary) 0%, 
+        var(--bg-secondary) 50%, 
+        var(--bg-tertiary) 100%);
+}
+
+[data-theme="inverted"] .loading-logo-img {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: var(--accent-primary);
+    backdrop-filter: blur(10px);
+}
+
 
     </style>
 </head>
 <body>
+    <!-- Tela de Carregamento -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-container">
+            <div class="loading-logo">
+                <img src="BDN_logo.png" alt="BDN Logo" class="loading-logo-img">
+            </div>
+            <div class="loading-progress">
+                <div class="loading-bar">
+                    <div class="loading-fill" id="loading-fill"></div>
+                </div>
+                <div class="loading-percentage" id="loading-percentage">0%</div>
+            </div>
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Cursor personalizado amarelado -->
     <div class="custom-cursor" id="customCursor"></div>
     
@@ -4405,26 +5716,7 @@ footer {
                     </div>
                 </div>
                 <nav>
-                    <div class="hamburger" id="hamburger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <ul class="desktop-nav">
-                        <li><a href="#home" data-translate="nav_home">Início</a></li>
-                        <li><a href="#empresa1" data-translate="nav_projects">BDN - Projetos</a></li>
-                        <li><a href="#sobre-bdn" data-translate="nav_about">Sobre BDN</a></li>
-                        <li><a href="#contato" data-translate="nav_contact">Contacto</a></li>
-                    </ul>
-                    <div class="nav-menu" id="nav-menu">
-                        <ul>
-                            <li><a href="#home" data-translate="nav_home">Início</a></li>
-                            <li><a href="#empresa1" data-translate="nav_projects">BDN - Projectos</a></li>
-                            <li><a href="#sobre-bdn" data-translate="nav_about">Sobre BDN</a></li>
-                            <li><a href="#contato" data-translate="nav_contact">Contacto</a></li>
-                        </ul>
-                    </div>
-                    <div class="nav-overlay" id="nav-overlay"></div>
+                    <!-- Removido os links da navbar, apenas o dropdown do logo está disponível -->
                 </nav>
             </div>
         </div>
@@ -4552,7 +5844,7 @@ footer {
                 </div>
 
                 <!-- Projecto 14 - Última imagem antes dos contactos, posicionada no lado esquerdo -->
-                <div class="work-item size-vertical slide-left" data-category="residential">
+                <div class="work-item size-medium slide-left" data-category="residential">
                     <div class="work-image-container">
                         <img src="imagens/habitacao6.png" alt="Projeto Final" class="work-image" >
                     </div>
@@ -4735,7 +6027,6 @@ footer {
                 </div>
             </div>
         </section>
-
         <!-- Secção Contacto -->
         <section id="contato" class="section">
             <div class="hero">
@@ -4748,7 +6039,7 @@ footer {
                 <div class="contact-grid">
                     <div class="contact-item">
                         <div class="contact-icon">📍</div>
-                        <div class="contact-details">
+                        <div class="contact-details centered-text">
                             <h3 data-translate="contact_address_title">Morada</h3>
                             <p data-translate="contact_address">Av. Comendador Francisco Alves Quintas<br>
                             Zona Industrial de Gandra<br>
@@ -4767,7 +6058,7 @@ footer {
                     
                     <div class="contact-item">
                         <div class="contact-icon">✉️</div>
-                        <div class="contact-details">
+                        <div class="contact-details centered-text">
                             <h3 data-translate="contact_email_title">Email</h3>
                             <p><a href="mailto:jaimebermudes@projectobdn.com">jaimebermudes@projectobdn.com</a></p>
                             <p><a href="mailto:joaobermudes@projectobdn.com">joaobermudes@projectobdn.com</a></p>
@@ -4857,21 +6148,6 @@ footer {
                         </div>
                     </div>
                 </div>
-                
-                <div class="footer-section footer-contact">
-                    <h4 data-translate="footer_contact_title">Contactos</h4>
-                    <div class="contact-info">
-                        <p><i class="contact-icon">✉</i> <a href="mailto:geral@bdn.pt">jaimebermudes@projectobdn.com</a></p>
-                        <p><i class="contact-icon">☎</i> <a href="tel:+351912345678">+351 911 504 793</a></p>
-                        <p><i class="contact-icon">☏</i> <a href="tel:+351123456789">+351 253 131 797</a></p>
-                        <p><i class="contact-icon">⌖</i> Av. Comendador Francisco Alves Quintas<br>
-                            Zona Industrial de Gandra
-4740-010 Esposende</p>
-                    </div>
-                </div>
-                
-                
-
             </div>
             
             <div class="footer-bottom">
@@ -4882,6 +6158,180 @@ footer {
     </footer>
 
     <script>
+        // ===== LOADING SCREEN FUNCTIONALITY =====
+        class LoadingScreen {
+            constructor() {
+                this.loadingScreen = document.getElementById('loading-screen');
+                this.loadingFill = document.getElementById('loading-fill');
+                this.loadingPercentage = document.getElementById('loading-percentage');
+                this.progress = 0;
+                this.isComplete = false;
+                this.minLoadingTime = 2000; // Tempo mínimo de carregamento (2 segundos)
+                this.startTime = Date.now();
+                
+                this.init();
+            }
+            
+            init() {
+                // Simular progresso de carregamento
+                this.simulateProgress();
+                
+                // Verificar quando o conteúdo está realmente carregado
+                this.checkContentLoaded();
+                
+                // Preload critical images
+                this.preloadImages();
+            }
+            
+            simulateProgress() {
+                const interval = setInterval(() => {
+                    if (this.progress < 90) {
+                        // Progresso mais rápido no início
+                        const increment = this.progress < 30 ? 8 : 
+                                        this.progress < 60 ? 4 : 2;
+                        this.progress += increment;
+                        this.updateProgress();
+                    } else {
+                        clearInterval(interval);
+                        // Aguardar o carregamento real antes de completar
+                        this.waitForRealCompletion();
+                    }
+                }, 150);
+            }
+            
+            waitForRealCompletion() {
+                const checkCompletion = () => {
+                    const elapsedTime = Date.now() - this.startTime;
+                    const minTimeReached = elapsedTime >= this.minLoadingTime;
+                    const contentLoaded = document.readyState === 'complete';
+                    
+                    if (minTimeReached && contentLoaded && !this.isComplete) {
+                        this.completeLoading();
+                    } else {
+                        setTimeout(checkCompletion, 100);
+                    }
+                };
+                checkCompletion();
+            }
+            
+            preloadImages() {
+                const imagesToPreload = [
+                    'BDN_logo.png',
+                    'bdn_fabicon.png'
+                ];
+                
+                imagesToPreload.forEach(src => {
+                    const img = new Image();
+                    img.src = src;
+                });
+                
+                // Preload work gallery images
+                const workImages = document.querySelectorAll('.work-image');
+                let loadedImages = 0;
+                const totalImages = workImages.length;
+                
+                if (totalImages > 0) {
+                    workImages.forEach(img => {
+                        if (img.complete) {
+                            loadedImages++;
+                        } else {
+                            img.addEventListener('load', () => {
+                                loadedImages++;
+                                const imageProgress = Math.floor((loadedImages / totalImages) * 10);
+                                this.progress = Math.min(85, this.progress + imageProgress);
+                                this.updateProgress();
+                            });
+                        }
+                    });
+                }
+            }
+            
+            checkContentLoaded() {
+                if (document.readyState === 'complete') {
+                    this.progress = Math.max(this.progress, 95);
+                    this.updateProgress();
+                } else {
+                    window.addEventListener('load', () => {
+                        this.progress = Math.max(this.progress, 95);
+                        this.updateProgress();
+                    });
+                }
+            }
+            
+            updateProgress() {
+                this.progress = Math.min(100, this.progress);
+                this.loadingFill.style.width = this.progress + '%';
+                this.loadingPercentage.textContent = this.progress + '%';
+                
+                if (this.progress >= 100 && !this.isComplete) {
+                    setTimeout(() => this.completeLoading(), 500);
+                }
+            }
+            
+            completeLoading() {
+                if (this.isComplete) return;
+                
+                this.isComplete = true;
+                this.progress = 100;
+                this.updateProgress();
+                
+                // Fade out animation
+                setTimeout(() => {
+                    this.loadingScreen.classList.add('fade-out');
+                    
+                    // Remove from DOM after animation
+                    setTimeout(() => {
+                        this.loadingScreen.remove();
+                        
+                        // Enable scroll and interactions
+                        document.body.style.overflow = '';
+                        document.body.style.pointerEvents = '';
+                        
+                        // Trigger any post-load animations
+                        this.triggerPostLoadAnimations();
+                    }, 800);
+                }, 300);
+            }
+            
+            triggerPostLoadAnimations() {
+                // Animate hero section
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    hero.style.opacity = '0';
+                    hero.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        hero.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        hero.style.opacity = '1';
+                        hero.style.transform = 'translateY(0)';
+                    }, 200);
+                }
+                
+                // Animate work items with stagger
+                const workItems = document.querySelectorAll('.work-item');
+                workItems.forEach((item, index) => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(50px) scale(0.9)';
+                    
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0) scale(1)';
+                    }, 500 + (index * 100));
+                });
+            }
+        }
+        
+        // Initialize loading screen when DOM starts loading
+        document.addEventListener('DOMContentLoaded', () => {
+            // Prevent scroll during loading
+            document.body.style.overflow = 'hidden';
+            document.body.style.pointerEvents = 'none';
+            
+            // Start loading screen
+            new LoadingScreen();
+        });
+
         // Sistema de Alternância de Tema
         function initThemeToggle() {
             const themeToggle = document.getElementById('theme-toggle');
@@ -5068,36 +6518,45 @@ footer {
             if (this.value.trim()) validateForm();
         });
 
-        // Cursor personalizado - bola amarelada com efeitos
+        // Cursor personalizado - apenas para dispositivos desktop
         const customCursor = document.getElementById('customCursor');
+        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                        ('ontouchstart' in window) || 
+                        (navigator.maxTouchPoints > 0);
         
-        // Atualizar posição do cursor
-        document.addEventListener('mousemove', (e) => {
-            customCursor.style.left = e.clientX - 10 + 'px';
-            customCursor.style.top = e.clientY - 10 + 'px';
-        });
-        
-        // Efeito hover em elementos clicáveis
-        const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .work-item, .work-cta, .lightbox-close');
-        
-        hoverElements.forEach(element => {
-            element.addEventListener('mouseenter', () => {
-                customCursor.classList.add('hover');
+        // Só ativar cursor personalizado em desktop
+        if (!isMobile && customCursor) {
+            // Atualizar posição do cursor
+            document.addEventListener('mousemove', (e) => {
+                customCursor.style.left = e.clientX - 10 + 'px';
+                customCursor.style.top = e.clientY - 10 + 'px';
             });
             
-            element.addEventListener('mouseleave', () => {
-                customCursor.classList.remove('hover');
+            // Efeito hover em elementos clicáveis
+            const hoverElements = document.querySelectorAll('a, button, .contact-btn, .logo, .hamburger, .nav-tab, .work-item, .work-cta, .lightbox-close');
+            
+            hoverElements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    customCursor.classList.add('hover');
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    customCursor.classList.remove('hover');
+                });
             });
-        });
-        
-        // Esconder cursor quando sair da página
-        document.addEventListener('mouseleave', () => {
-            customCursor.style.opacity = '0';
-        });
-        
-        document.addEventListener('mouseenter', () => {
-            customCursor.style.opacity = '1';
-        });
+            
+            // Esconder cursor quando sair da página
+            document.addEventListener('mouseleave', () => {
+                customCursor.style.opacity = '0';
+            });
+            
+            document.addEventListener('mouseenter', () => {
+                customCursor.style.opacity = '1';
+            });
+        } else if (customCursor) {
+            // Esconder cursor personalizado em dispositivos móveis
+            customCursor.style.display = 'none';
+        }
 
         // Função para inicializar eventos do cursor personalizado
         function initCustomCursor() {
@@ -5192,56 +6651,250 @@ footer {
             initLightbox();
         });
 
-        // Função para inicializar animações de entrada das imagens
+        // Função para inicializar animações de entrada das imagens - VERSÃO PROFISSIONAL
         function initImageAnimations() {
-            // Configurar Intersection Observer para animar imagens assim que entrarem na viewport
+            // Remover todas as classes de animação iniciais
+            const workItems = document.querySelectorAll('.work-item');
+            workItems.forEach(item => {
+                // Reset initial state - todas as imagens começam invisíveis
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(60px) scale(0.9)';
+                item.style.filter = 'blur(5px)';
+                item.style.transition = 'none';
+                item.classList.remove('animate-in');
+            });
+
+            // Configuração avançada do Intersection Observer
             const observerOptions = {
-                threshold: 0.05, // Animar quando apenas 5% da imagem estiver visível
-                rootMargin: '100px 0px 0px 0px' // Começar animação 100px antes da imagem entrar na viewport
+                threshold: [0, 0.1, 0.2, 0.3], // Múltiplos thresholds para animação progressiva
+                rootMargin: '50px 0px -50px 0px' // Começar animação 50px antes de entrar na viewport
             };
+
+            // Array de diferentes tipos de animação para variedade
+            const animationTypes = [
+                'slideUp',
+                'slideLeft', 
+                'slideRight',
+                'zoomIn',
+                'rotateIn',
+                'slideUpLeft',
+                'slideUpRight',
+                'fadeScale',
+                'flipIn',
+                'elasticIn'
+            ];
+
+            // Delays escalonados para efeito cascata
+            const staggerDelays = [0, 100, 200, 150, 250, 300, 100, 200, 350, 180, 280, 400, 320, 450, 380];
 
             const imageObserver = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        // Animar imediatamente quando entrar na viewport
-                        entry.target.classList.add('animate-in');
-                        // Parar de observar esta imagem após animar (one-time animation)
-                        imageObserver.unobserve(entry.target);
+                    if (entry.isIntersecting && entry.intersectionRatio > 0.1) {
+                        const workItem = entry.target;
+                        const index = Array.from(workItems).indexOf(workItem);
+                        
+                        // Selecionar tipo de animação baseado no índice
+                        const animationType = animationTypes[index % animationTypes.length];
+                        const delay = staggerDelays[index] || 0;
+                        
+                        // Aplicar animação com delay
+                        setTimeout(() => {
+                            animateWorkItem(workItem, animationType);
+                        }, delay);
+                        
+                        // Parar de observar esta imagem após animar
+                        imageObserver.unobserve(workItem);
                     }
                 });
             }, observerOptions);
 
+            // Função para animar cada item individualmente
+            function animateWorkItem(item, animationType) {
+                // Configurar transição suave
+                item.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                
+                // Aplicar animação baseada no tipo
+                switch(animationType) {
+                    case 'slideUp':
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0) scale(1)';
+                        item.style.filter = 'blur(0px)';
+                        break;
+                        
+                    case 'slideLeft':
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateX(0) scale(1)';
+                        item.style.filter = 'blur(0px)';
+                        // Estado inicial para slideLeft
+                        item.style.transform = 'translateX(-60px) scale(0.9)';
+                        setTimeout(() => {
+                            item.style.transform = 'translateX(0) scale(1)';
+                        }, 50);
+                        break;
+                        
+                    case 'slideRight':
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateX(0) scale(1)';
+                        item.style.filter = 'blur(0px)';
+                        // Estado inicial para slideRight
+                        item.style.transform = 'translateX(60px) scale(0.9)';
+                        setTimeout(() => {
+                            item.style.transform = 'translateX(0) scale(1)';
+                        }, 50);
+                        break;
+                        
+                    case 'zoomIn':
+                        item.style.transition = 'all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0) scale(1)';
+                        item.style.filter = 'blur(0px)';
+                        // Estado inicial para zoom
+                        item.style.transform = 'translateY(30px) scale(0.6)';
+                        setTimeout(() => {
+                            item.style.transform = 'translateY(0) scale(1)';
+                        }, 50);
+                        break;
+                        
+                    case 'rotateIn':
+                        item.style.transition = 'all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+                        item.style.filter = 'blur(0px)';
+                        // Estado inicial para rotate
+                        item.style.transform = 'translateY(40px) scale(0.8) rotate(-15deg)';
+                        setTimeout(() => {
+                            item.style.transform = 'translateY(0) scale(1) rotate(0deg)';
+                        }, 50);
+                        break;
+                        
+                    case 'slideUpLeft':
+                        item.style.opacity = '1';
+                        item.style.transform = 'translate(0, 0) scale(1)';
+                        item.style.filter = 'blur(0px)';
+                        // Estado inicial
+                        item.style.transform = 'translate(-40px, 40px) scale(0.9)';
+                        setTimeout(() => {
+                            item.style.transform = 'translate(0, 0) scale(1)';
+                        }, 50);
+                        break;
+                        
+                    case 'slideUpRight':
+                        item.style.opacity = '1';
+                        item.style.transform = 'translate(0, 0) scale(1)';
+                        item.style.filter = 'blur(0px)';
+                        // Estado inicial
+                        item.style.transform = 'translate(40px, 40px) scale(0.9)';
+                        setTimeout(() => {
+                            item.style.transform = 'translate(0, 0) scale(1)';
+                        }, 50);
+                        break;
+                        
+                    case 'fadeScale':
+                        item.style.transition = 'all 0.7s ease-out';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0) scale(1)';
+                        item.style.filter = 'blur(0px)';
+                        break;
+                        
+                    case 'flipIn':
+                        item.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0) rotateY(0deg) scale(1)';
+                        item.style.filter = 'blur(0px)';
+                        // Estado inicial para flip
+                        item.style.transform = 'translateY(30px) rotateY(45deg) scale(0.9)';
+                        setTimeout(() => {
+                            item.style.transform = 'translateY(0) rotateY(0deg) scale(1)';
+                        }, 50);
+                        break;
+                        
+                    case 'elasticIn':
+                        item.style.transition = 'all 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0) scale(1)';
+                        item.style.filter = 'blur(0px)';
+                        // Estado inicial para elastic
+                        item.style.transform = 'translateY(50px) scale(0.7)';
+                        setTimeout(() => {
+                            item.style.transform = 'translateY(0) scale(1)';
+                        }, 50);
+                        break;
+                }
+                
+                // Adicionar classe para indicar que foi animado
+                item.classList.add('animate-in');
+                
+                // Efeito adicional: hover melhorado após animação
+                setTimeout(() => {
+                    item.addEventListener('mouseenter', function() {
+                        if (!this.classList.contains('hover-active')) {
+                            this.style.transform = this.style.transform.replace('scale(1)', 'scale(1.02)');
+                            this.style.boxShadow = '0 20px 60px rgba(255, 215, 0, 0.2)';
+                            this.classList.add('hover-active');
+                        }
+                    });
+                    
+                    item.addEventListener('mouseleave', function() {
+                        this.style.transform = this.style.transform.replace('scale(1.02)', 'scale(1)');
+                        this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+                        this.classList.remove('hover-active');
+                    });
+                }, 800);
+            }
+
             // Observar todas as imagens do portfólio
-            const workItems = document.querySelectorAll('.work-item');
-            workItems.forEach((item, index) => {
-                // Remover delay inicial para animação mais imediata
-                item.style.transitionDelay = '0s';
+            workItems.forEach((item) => {
                 imageObserver.observe(item);
             });
 
-            // Observer adicional para detectar quando o usuário entra na seção das imagens
+            // Observer especial para seções - trigger de animação em lote
             const sectionObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Quando a seção de imagens entra na viewport, aplicar delays em cascata
-                        const visibleItems = document.querySelectorAll('.work-item.animate-in');
-                        visibleItems.forEach((item, index) => {
-                            item.style.transitionDelay = `${index * 0.05}s`; // Delay muito pequeno para efeito cascata rápido
-                        });
+                        const section = entry.target;
+                        const sectionItems = section.querySelectorAll('.work-item:not(.animate-in)');
+                        
+                        // Se a seção tem muitos itens não animados, trigger em lote com delays
+                        if (sectionItems.length > 3) {
+                            sectionItems.forEach((item, index) => {
+                                if (index < 3) { // Animar apenas os 3 primeiros por vez
+                                    setTimeout(() => {
+                                        if (!item.classList.contains('animate-in')) {
+                                            const animationType = animationTypes[index % animationTypes.length];
+                                            animateWorkItem(item, animationType);
+                                        }
+                                    }, index * 150);
+                                }
+                            });
+                        }
                     }
                 });
             }, {
-                threshold: 0.1,
-                rootMargin: '50px 0px 0px 0px'
+                threshold: 0.2,
+                rootMargin: '100px 0px 0px 0px'
             });
 
-            // Observar a seção do portfólio
-            const portfolioSection = document.querySelector('#empresa1');
-            if (portfolioSection) {
-                sectionObserver.observe(portfolioSection);
+            // Observar seções principais
+            const portfolioSections = document.querySelectorAll('#empresa1, #galeria-inversa');
+            portfolioSections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            // Performance: Cleanup observers when all items are animated
+            function checkAllAnimated() {
+                const unanimatedItems = document.querySelectorAll('.work-item:not(.animate-in)');
+                if (unanimatedItems.length === 0) {
+                    imageObserver.disconnect();
+                    sectionObserver.disconnect();
+                    console.log('Todas as animações de imagem foram concluídas. Observers desconectados.');
+                }
             }
 
-            console.log(`Inicializadas animações de scroll otimizadas para ${workItems.length} imagens do portfólio`);
+            // Check periodically
+            setTimeout(checkAllAnimated, 10000); // Check after 10 seconds
+
+            console.log(`Sistema de animações profissionais inicializado para ${workItems.length} imagens`);
+            console.log('Tipos de animação disponíveis:', animationTypes);
         }
 
         // Portfolio Skylab Filter System
@@ -5438,90 +7091,174 @@ footer {
             });
         });
 
-        // Mobile menu functionality (simplificada)
+        // Mobile menu functionality (enhanced for mobile)
         function toggleMobileMenu() {
-            const hamburger = document.getElementById('hamburger');
             const navMenu = document.getElementById('nav-menu');
             const navOverlay = document.getElementById('nav-overlay');
+            const body = document.body;
             
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            navOverlay.classList.toggle('active');
+            // No mobile, apenas controlar o menu sem hamburger
+            if (navMenu) {
+                navMenu.classList.toggle('active');
+            }
+            
+            if (navOverlay) {
+                navOverlay.classList.toggle('active');
+            }
+            
+            // Prevent body scroll when menu is open
+            if (navMenu && navMenu.classList.contains('active')) {
+                body.style.overflow = 'hidden';
+                body.style.position = 'fixed';
+                body.style.width = '100%';
+            } else {
+                body.style.overflow = '';
+                body.style.position = '';
+                body.style.width = '';
+            }
         }
+
+        // Enhanced mobile detection and responsive features
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   ('ontouchstart' in window) || 
+                   (navigator.maxTouchPoints > 0) ||
+                   window.innerWidth <= 768;
+        }
+
+        // Touch-friendly enhancements
+        function enhanceTouchExperience() {
+            if (isMobileDevice()) {
+                // Add touch feedback to interactive elements
+                const touchElements = document.querySelectorAll('a, button, .work-item, .nav-menu a');
+                touchElements.forEach(element => {
+                    element.style.webkitTapHighlightColor = 'rgba(255, 215, 0, 0.3)';
+                    element.style.tapHighlightColor = 'rgba(255, 215, 0, 0.3)';
+                    // Add touch start and end events for better feedback
+                    element.addEventListener('touchstart', function() {
+                        this.style.transform = 'scale(0.98)';
+                        this.style.transition = 'transform 0.1s ease';
+                    });
+                    element.addEventListener('touchend', function() {
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 100);
+                    });
+                });
+                // Enhance form inputs for mobile
+                const inputs = document.querySelectorAll('input, textarea');
+                inputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        // Scroll to input on focus (helps with virtual keyboard)
+                        setTimeout(() => {
+                            this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 300);
+                    });
+                });
+            }
+        }
+
+        // Remover espaço extra entre a segunda galeria de imagens e a secção sobre BDN
+        document.addEventListener('DOMContentLoaded', function() {
+            // Seleciona a última galeria de imagens (ajuste o seletor conforme necessário)
+            var galeria2 = document.querySelector('#galeria-inversa');
+            var secaoSobre = document.querySelector('#sobre-bdn, .sobre-bdn, section.sobre-bdn');
+            // Tenta encontrar a secção sobre BDN por id ou classe
+            if (!secaoSobre) {
+                secaoSobre = document.querySelector('section[id*="sobre"]');
+            }
+            if (galeria2 && secaoSobre) {
+                // Remove margem inferior da galeria e margem/padding superior da secção sobre BDN
+                galeria2.style.marginBottom = '0';
+                galeria2.style.paddingBottom = '0';
+                secaoSobre.style.marginTop = '0';
+                secaoSobre.style.paddingTop = '0';
+            }
+        });
 
         // Event listeners para o menu mobile
         document.addEventListener('DOMContentLoaded', function() {
             // Inicializar sistema de tema
             initThemeToggle();
-            
-            const hamburger = document.getElementById('hamburger');
-            const navOverlay = document.getElementById('nav-overlay');
-            const navLinks = document.querySelectorAll('.nav-menu a');
-            
-            if (hamburger) {
-                hamburger.addEventListener('click', toggleMobileMenu);
+
+            // Enhance touch experience para mobile
+            enhanceTouchExperience();
+
+            // Dropdown do logo funciona em todos os dispositivos (SEM DUPLICAÇÃO)
+            const logoElement = document.querySelector('.logo');
+            const logoDropdown = document.getElementById('logo-dropdown');
+            if (logoElement && logoDropdown) {
+                logoElement.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    logoDropdown.classList.toggle('show');
+                });
+                // Fechar dropdown ao clicar fora
+                document.addEventListener('click', function(e) {
+                    if (!logoElement.contains(e.target)) {
+                        logoDropdown.classList.remove('show');
+                    }
+                });
+                // Fechar dropdown ao clicar em um link
+                logoDropdown.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function() {
+                        logoDropdown.classList.remove('show');
+                    });
+                });
             }
             
             if (navOverlay) {
                 navOverlay.addEventListener('click', toggleMobileMenu);
+                navOverlay.addEventListener('touchstart', toggleMobileMenu);
             }
             
             // Fechar menu quando clicar em um link
             navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    // Fechar menu mobile sempre que clicar em um link
-                    toggleMobileMenu();
+                link.addEventListener('click', (e) => {
+                    if (isMobileDevice()) {
+                        // Small delay to see the click feedback before closing
+                        setTimeout(() => {
+                            toggleMobileMenu();
+                        }, 150);
+                    }
                 });
+            });
+            
+            // Close menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const navMenu = document.getElementById('nav-menu');
+                    if (navMenu && navMenu.classList.contains('active')) {
+                        toggleMobileMenu();
+                    }
+                }
+            });
+            
+            // Handle window resize for responsive behavior
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    // Close mobile menu if window becomes desktop size
+                    if (window.innerWidth > 768) {
+                        const navMenu = document.getElementById('nav-menu');
+                        const navOverlay = document.getElementById('nav-overlay');
+                        
+                        if (navMenu && navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            if (navOverlay) {
+                                navOverlay.classList.remove('active');
+                            }
+                            document.body.style.overflow = '';
+                            document.body.style.position = '';
+                            document.body.style.width = '';
+                        }
+                    }
+                }, 250);
             });
 
             // Funcionalidade do dropdown do logo
-            const logo = document.getElementById('logo');
-            const logoDropdown = document.getElementById('logo-dropdown');
-            const desktopNav = document.querySelector('.desktop-nav');
-            let isScrolled = false;
-
-            // Detectar scroll para mostrar/esconder navbar links
-            window.addEventListener('scroll', function() {
-                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                
-                if (scrollTop > 50 && !isScrolled) {
-                    isScrolled = true;
-                    desktopNav.classList.add('hidden');
-                } else if (scrollTop <= 50 && isScrolled) {
-                    isScrolled = false;
-                    desktopNav.classList.remove('hidden');
-                    // Esconder dropdown quando volta ao topo
-                    logoDropdown.classList.remove('show');
-                }
-            });
-
-            // Toggle dropdown do logo
-            if (logo) {
-                logo.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    // Só mostrar dropdown se estiver com scroll
-                    if (isScrolled) {
-                        logoDropdown.classList.toggle('show');
-                    }
-                });
-            }
-
-            // Fechar dropdown quando clicar fora
-            document.addEventListener('click', function(e) {
-                if (!logo.contains(e.target)) {
-                    logoDropdown.classList.remove('show');
-                }
-            });
-
-            // Fechar dropdown quando clicar em um link do dropdown
-            const logoDropdownLinks = logoDropdown.querySelectorAll('a');
-            logoDropdownLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    logoDropdown.classList.remove('show');
-                });
-            });
+            // (Removido: toda a lógica duplicada e conflitos do dropdown do logo)
         });
 
         // Sistema avançado de animação da seção divisória - Inspirado em Archipelago
@@ -6044,6 +7781,80 @@ footer {
         // Inicializar sistema de tradução quando o DOM estiver carregado
         document.addEventListener('DOMContentLoaded', function() {
             new LanguageSystem();
+            
+            // Enhanced mobile optimizations
+            initMobileOptimizations();
+        });
+        
+        // Mobile-specific optimizations
+        function initMobileOptimizations() {
+            if (isMobileDevice()) {
+                // Prevent zoom on input focus (iOS Safari)
+                const inputs = document.querySelectorAll('input, textarea, select');
+                inputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        if (input.type !== 'email' && input.type !== 'tel') {
+                            document.querySelector('meta[name=viewport]').setAttribute('content', 
+                                'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+                        }
+                    });
+                    
+                    input.addEventListener('blur', function() {
+                        document.querySelector('meta[name=viewport]').setAttribute('content', 
+                            'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
+                    });
+                });
+                
+                // Optimize scroll performance
+                document.body.style.webkitOverflowScrolling = 'touch';
+                document.body.style.overflowScrolling = 'touch';
+                
+                // Add safe area support for newer phones
+                document.documentElement.style.setProperty('--safe-area-top', 'env(safe-area-inset-top)');
+                document.documentElement.style.setProperty('--safe-area-bottom', 'env(safe-area-inset-bottom)');
+                document.documentElement.style.setProperty('--safe-area-left', 'env(safe-area-inset-left)');
+                document.documentElement.style.setProperty('--safe-area-right', 'env(safe-area-inset-right)');
+                
+                // Optimize image loading for mobile
+                const images = document.querySelectorAll('img');
+                images.forEach(img => {
+                    img.loading = 'lazy';
+                    img.addEventListener('error', function() {
+                        this.style.display = 'none';
+                    });
+                });
+                
+                // Add smooth scroll behavior
+                document.documentElement.style.scrollBehavior = 'smooth';
+                
+                // Improve font rendering on mobile
+                document.body.style.webkitFontSmoothing = 'antialiased';
+                document.body.style.mozOsxFontSmoothing = 'grayscale';
+                
+                // Add haptic feedback support if available
+                if ('vibrate' in navigator) {
+                    const buttons = document.querySelectorAll('button, .contact-btn, .nav-menu a');
+                    buttons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            navigator.vibrate(50); // Light haptic feedback
+                        });
+                    });
+                }
+            }
+        }
+        
+        // Enhanced performance monitoring for mobile
+        window.addEventListener('load', function() {
+            // Basic performance monitoring
+            if ('performance' in window) {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+                
+                // Log slow loads for mobile debugging
+                if (loadTime > 3000 && isMobileDevice()) {
+                    console.log('Slow mobile load detected:', loadTime + 'ms');
+                }
+            }
         });
     </script>
 
