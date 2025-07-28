@@ -3707,6 +3707,46 @@ footer a:hover {
         overflow-x: hidden;
     }
     
+    /* Garantir ordem das seções no mobile igual ao desktop */
+    main.container {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    #home {
+        order: 1;
+    }
+    
+    #sobre-bdn {
+        order: 2;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+    
+    #empresa1 {
+        order: 3;
+    }
+    
+    .unique-client-section {
+        order: 4;
+    }
+    
+    #galeria-inversa {
+        order: 5;
+    }
+    
+    #contato {
+        order: 6;
+    }
+    
+    /* Melhorias estéticas para a seção sobre-bdn no mobile */
+    .sobre-bdn-section {
+        padding: 2rem 1rem;
+        border-radius: 15px;
+        margin: 0 0.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    
     /* Primeira linha - 3 imagens escalonadas */
     .work-item:nth-child(1) {
         left: 5% !important;
@@ -5034,6 +5074,7 @@ footer a:hover {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    text-align: center; /* Centralizar todo o texto */
 }
 
 .sobre-bdn-header {
@@ -5101,17 +5142,20 @@ footer a:hover {
 .values-grid {
     display: grid;
     gap: 2rem;
+    justify-content: center; /* Centralizar o grid */
 }
 
 .value-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: column; /* Organizar itens em coluna */
     gap: 1.5rem;
     padding: 0;
     background: transparent;
     border: none;
     transition: all 0.3s ease;
     position: relative;
+    text-align: center; /* Garantir alinhamento centralizado */
 }
 
 .value-item::before {
@@ -5137,6 +5181,14 @@ footer a:hover {
     font-size: 1.2rem;
     min-width: 30px;
     opacity: 0.8;
+    background: rgba(255, 215, 0, 0.1);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem; /* Centralizar e adicionar espaço abaixo */
 }
 
 .value-item h4 {
@@ -5242,7 +5294,7 @@ footer a:hover {
     margin-top: 4rem;
     padding: 3rem 2rem;
     border-top: 1px solid rgba(205, 133, 106, 0.3);
-    text-align: center;
+    text-align: center; /* Já está centralizado, mas garantir que permanece */
     background: linear-gradient(135deg, rgba(205, 133, 106, 0.08) 0%, rgba(218, 165, 132, 0.05) 100%);
     box-shadow: none;
     border-radius: 16px;
@@ -5379,9 +5431,119 @@ footer a:hover {
     .sobre-bdn-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
+        text-align: center; /* Garantir que o texto está centralizado */
+        justify-items: center; /* Centralizar itens horizontalmente */
     }
     
-    .stats-grid {
+    /* Animações para Sobre BDN em mobile */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    .sobre-bdn-section .container {
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+    
+    .sobre-bdn-title {
+        animation: scaleIn 0.8s ease-out 0.2s both;
+    }
+    
+    .sobre-bdn-intro {
+        animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+    
+    .value-item:nth-child(1) {
+        animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+    
+    .value-item:nth-child(2) {
+        animation: fadeInUp 0.8s ease-out 0.8s both;
+    }
+    
+    .value-item:nth-child(3) {
+        animation: fadeInUp 0.8s ease-out 1s both;
+    }
+    
+    .partnership-info {
+        animation: fadeInUp 0.8s ease-out 1.2s both;
+    }
+    
+    /* Adicionar destaque suave ao toque em dispositivos móveis */
+    .value-item:active {
+        background: rgba(255,255,255,0.1);
+        transform: scale(0.98);
+    }
+    
+    .sobre-bdn-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        position: relative;
+    }
+    
+    .sobre-bdn-title {
+        font-size: 2.2rem;
+        margin-bottom: 0.8rem;
+        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .sobre-bdn-title::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: var(--accent-primary);
+        border-radius: 3px;
+    }
+    
+    .sobre-bdn-subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        margin-top: 1.2rem;
+        color: var(--text-secondary);
+    }
+    
+    .sobre-bdn-intro p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        text-align: center;
+        padding: 0 0.5rem;
+    }
+    
+    .sobre-bdn-values h3 {
+        text-align: center;
+        font-size: 1.6rem;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+    
+    .values-grid {
+        display: grid;
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
@@ -5389,16 +5551,127 @@ footer a:hover {
     .value-item {
         flex-direction: column;
         text-align: center;
-        gap: 0.5rem;
+        gap: 0.8rem;
+        background: rgba(255,255,255,0.05);
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .value-item:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--accent-primary);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
+    
+    .value-item:hover:before {
+        transform: scaleX(1);
+    }
+    
+    .value-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    
+    .value-icon {
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+        background: rgba(255,255,255,0.1);
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    
+    .value-item h4 {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        color: var(--accent-primary);
+    }
+    
+    .value-item p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        margin: 0;
     }
     
     .partnership-info {
-        padding: 2rem 0;
+        background: rgba(255,255,255,0.05);
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+        margin-top: 2rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        border: 1px solid rgba(255,255,255,0.1);
     }
     
-    .sobre-bdn-grid {
+    .partnership-main h4 {
+        font-size: 1.3rem;
+        color: var(--accent-primary);
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    
+    .partnership-description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    
+    .partnership-services h5 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        position: relative;
+        display: inline-block;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .partnership-services h5::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--accent-primary);
+        border-radius: 2px;
+    }
+    
+    .services-list li {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        position: relative;
+        padding-left: 1.2rem;
+    }
+    
+    .services-list li::before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        color: var(--accent-primary);
+    }
+    
+    .stats-grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 1.5rem;
     }
     
     .color-palette {
@@ -5408,6 +5681,17 @@ footer a:hover {
     .color-swatch {
         width: 40px;
         height: 40px;
+    }
+    
+    /* Melhorias estéticas para mobile */
+    .sobre-bdn-section {
+        padding: 3rem 1.5rem 4rem;
+        background: linear-gradient(170deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+        border-radius: 30px 30px 0 0;
+        margin-top: -20px !important;
+        position: relative;
+        z-index: 2;
     }
 }
 
@@ -6050,7 +6334,7 @@ footer a:hover {
                     </div>
 
                     <!-- Projeto Adicional 4 - Primeira imagem em baixo -->
-                    <div class="work-item size-vertical slide-in-bottom" data-category="featured">
+                    <div class="work-item size-medium slide-in-bottom" data-category="featured">
                         <div class="work-image-container">
                             <img src="imagens/img9.png" alt="Projeto Arquitetónico Inferior" class="work-image">
                         </div>
