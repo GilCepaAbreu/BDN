@@ -463,6 +463,41 @@ header:after {
         border-color: rgba(255, 215, 0, 0.7);
         background: linear-gradient(135deg, rgba(0, 0, 0, 0.99) 0%, rgba(10, 10, 10, 0.99) 100%);
     }
+
+    /* Reordenação das seções apenas para desktop */
+    main.container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Definir ordem específica das seções para desktop */
+    #home {
+        order: 1;
+    }
+
+    #sobre-bdn {
+        order: 2;
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+    }
+
+    #empresa1 {
+        order: 3;
+    }
+
+    .unique-client-section {
+        order: 4;
+    }
+
+    #galeria-inversa {
+
+        order: 5;
+    }
+
+    #contato {
+        order: 6;
+        margin-top: 5rem !important; /* Exatamente 5rem de espaçamento */
+    }
 }
 
 /* Dropdown Menu */
@@ -1229,7 +1264,7 @@ main {
 /* REMOVER COMPLETAMENTE o espaçamento superior da seção de contactos */
 #contato.section {
     padding-top: 0 !important;
-    margin-top: 0 !important;
+    margin-top: 5rem !important; /* Garantir 5rem de espaçamento */
     /* Aceitar o movimento para cima da seção anterior */
     position: relative;
     z-index: 1;
@@ -1243,7 +1278,7 @@ main {
 
 /* Forçar conexão direta entre título único e contactos */
 .unique-client-section + #contato {
-    margin-top: 0 !important;
+    margin-top: 5rem !important; /* Manter espaçamento consistente */
     padding-top: 0 !important;
 }
 
@@ -1252,11 +1287,42 @@ main {
     margin-top: clamp(2rem, 4vw, 3rem) !important;
 }
 
-/* FORÇAR PROXIMIDADE EXTREMA entre galeria inversa e contactos */
+/* ESPAÇAMENTO PADRÃO ENTRE GALERIA-INVERSA E CONTACTOS - 5REM */
 #galeria-inversa + #contato {
+    margin-top: 5rem !important;
+    padding-top: 0 !important;
+    transform: none !important; /* Garantir que não há transforms */
+}
+
+/* Reset completo de qualquer espaçamento negativo no contato */
+#contato {
     margin-top: 0 !important;
     padding-top: 0 !important;
-    transform: translateY(-10px) !important; /* Puxar para cima */
+    transform: none !important;
+}
+
+/* FORÇAR PROXIMIDADE EXTREMA entre seções apenas em mobile */
+@media (max-width: 768px) {
+    /* FORÇAR PROXIMIDADE EXTREMA entre galeria inversa e sobre-bdn */
+    #galeria-inversa + #sobre-bdn {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        transform: translateY(-20px) !important; /* Puxar para cima */
+    }
+
+    /* Espaçamento correto entre galeria inversa e contactos - 5rem */
+    #galeria-inversa + #contato {
+        margin-top: 5rem !important;
+        padding-top: 0 !important;
+        transform: none !important; /* Remover transforms desnecessários */
+    }
+
+    /* Garantir que a seção de contato não seja sobrescrita */
+    #contato.section {
+        margin-top: 5rem !important;
+        padding-top: 0 !important;
+        transform: none !important;
+    }
 }
 
 #galeria-inversa .container {
@@ -1264,10 +1330,34 @@ main {
     margin-bottom: 0 !important;
 }
 
+/* Garantir que a galeria inversa não tenha espaçamento inferior excessivo */
+#galeria-inversa {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Garantir que os contactos tenham o espaçamento correto */
+#contato {
+    margin-top: 5rem !important;
+    padding-top: 0 !important;
+    transform: none !important;
+}
+
+/* REGRA SUPER ESPECÍFICA PARA GARANTIR 5REM DE ESPAÇAMENTO */
+main.container #galeria-inversa + #contato,
+main.container #galeria-inversa ~ #contato,
+#galeria-inversa + #contato.section,
+#galeria-inversa ~ #contato.section {
+    margin-top: 5rem !important;
+    padding-top: 0 !important;
+    transform: none !important;
+}
+
 /* Remover TODO o espaçamento do work-grid na galeria inversa */
 #galeria-inversa .work-grid {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
+    min-height: 4500px !important; /* Aumentar mais a altura da segunda seção */
 }
 
 /* Garantir que não há espaçamento adicional nos work-items da galeria inversa */
@@ -2601,7 +2691,7 @@ footer a:hover {
     width: 100vw;
     margin: 0;
     padding: 0;
-    min-height: 3600px; /* Reduzir altura para otimizar espaço */
+    min-height: 3700px; /* Diminuir um pouco para 3700px */
     left: 50%;
     transform: translateX(-50%);
     overflow: hidden; /* Garantir que elementos não ultrapassem */
@@ -2902,7 +2992,7 @@ footer a:hover {
 /* Última imagem (Projeto 14) - lado esquerdo, antes dos contactos */
 .work-item:nth-child(14) {
     left: 5%; /* Lado esquerdo */
-    top: 3500px; /* Mais abaixo da 13ª imagem */
+    top: 3600px; /* Reduzir de 3500px para 3600px */
     transform: none;
     width: 480px; /* Tamanho large */
     max-width: calc(40vw);
@@ -2912,7 +3002,7 @@ footer a:hover {
 /* Imagem paralela (Projeto 15) - lado direito, paralela à 14ª */
 .work-item:nth-child(15) {
     right: 5%; /* Lado direito */
-    top: 3500px; /* Mesma altura da 14ª imagem para ficarem paralelas */
+    top: 3600px; /* Reduzir de 3500px para 3600px - mesma altura da 14ª imagem para ficarem paralelas */
     transform: none;
     width: 480px; /* Tamanho large igual à 14ª */
     max-width: calc(40vw);
@@ -3232,7 +3322,12 @@ footer a:hover {
 /* Masonry-like layout for larger screens */
 @media (min-width: 1200px) {
     .work-grid {
-        min-height: 4300px; /* Aumentar para acomodar a nova imagem (Projeto 15) */
+        min-height: 4200px; /* Diminuir um pouco para 4200px */
+    }
+    
+    /* Altura específica para galeria-inversa em desktop */
+    #galeria-inversa .work-grid {
+        min-height: 3000px !important; /* Aumentar mais para desktop */
     }
     
     .work-item.size-small {
@@ -3397,16 +3492,9 @@ footer a:hover {
         max-width: calc(40vw);
     }
     
-    /* PROXIMIDADE EXTREMA entre galeria-inversa e contactos em desktop */
-    #galeria-inversa + #contato {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-        transform: translateY(-20px) !important; /* Puxar ainda mais para cima em desktop */
-    }
-    
     #contato.section {
         padding-top: 0 !important;
-        margin-top: 0 !important;
+        margin-top: 5rem !important; /* Garantir espaçamento de 5rem */
     }
     
     #contato .hero {
@@ -3428,8 +3516,13 @@ footer a:hover {
 
 @media (min-width: 768px) and (max-width: 1199px) {
     .work-grid {
-        min-height: 4100px; /* Aumentar para tablets com nova imagem (Projeto 15) */
+        min-height: 4000px; /* Diminuir um pouco para 4000px */
         width: 100vw;
+    }
+    
+    /* Altura específica para galeria-inversa em tablets */
+    #galeria-inversa .work-grid {
+        min-height: 2800px !important; /* Aumentar mais para tablets */
     }
     
     .work-item.size-small {
@@ -3608,7 +3701,7 @@ footer a:hover {
     /* Layout mobile otimizado - todas as imagens visíveis */
     .work-grid {
         position: relative;
-        min-height: 1420px; /* Reduzir altura para eliminar espaço vazio */
+        min-height: 1500px; /* Diminuir um pouco para 1500px */
         padding: 1rem 0.5rem;
         width: 100%;
         overflow-x: hidden;
@@ -3775,16 +3868,24 @@ footer a:hover {
         padding-bottom: 0 !important;
     }
     
-    /* PROXIMIDADE EXTREMA entre galeria-inversa e contactos em mobile */
-    #galeria-inversa + #contato {
+    /* PROXIMIDADE EXTREMA entre galeria-inversa e sobre-bdn em mobile */
+    #galeria-inversa + #sobre-bdn {
         margin-top: 0 !important;
         padding-top: 0 !important;
-        transform: translateY(-15px) !important; /* Puxar para cima também em mobile */
+        transform: translateY(-20px) !important; /* Puxar para cima também em mobile */
+    }
+    
+    /* Espaçamento correto entre galeria-inversa e contactos em mobile - 5rem */
+    #galeria-inversa + #contato {
+        margin-top: 5rem !important;
+        padding-top: 0 !important;
+        transform: none !important; /* Remover transforms desnecessários */
     }
     
     #contato.section {
+        margin-top: 5rem !important;
         padding-top: 0 !important;
-        margin-top: 0 !important;
+        transform: none !important;
     }
     
     #contato .hero {
@@ -3801,7 +3902,7 @@ footer a:hover {
     /* Aplicar posicionamento absoluto também para galeria inversa no mobile */
     #galeria-inversa .work-grid.inverse-layout {
         position: relative !important;
-        min-height: 800px !important; /* Altura muito menor para segunda seção */
+        min-height: 900px !important; /* Aumentar mais para mobile */
         padding: 0.5rem !important;
     }
 
@@ -4907,10 +5008,11 @@ footer a:hover {
 
 /* ===== SECÇÃO SOBRE BDN ===== */
 .sobre-bdn-section {
-    padding: clamp(6rem, 10vw, 8rem) 0;
+    padding: 0 0 clamp(6rem, 10vw, 8rem) 0; /* Remove padding superior completamente */
     background: var(--bg-primary);
     position: relative;
     overflow: hidden;
+    margin-top: 0 !important; /* Força margin-top zero */
 }
 
 .sobre-bdn-section::before {
@@ -7158,21 +7260,47 @@ footer a:hover {
             }
         }
 
-        // Remover espaço extra entre a segunda galeria de imagens e a secção sobre BDN
+        // Remover completamente o espaço entre galeria-inversa e sobre-bdn (apenas em mobile)
         document.addEventListener('DOMContentLoaded', function() {
-            // Seleciona a última galeria de imagens (ajuste o seletor conforme necessário)
-            var galeria2 = document.querySelector('#galeria-inversa');
-            var secaoSobre = document.querySelector('#sobre-bdn, .sobre-bdn, section.sobre-bdn');
-            // Tenta encontrar a secção sobre BDN por id ou classe
-            if (!secaoSobre) {
-                secaoSobre = document.querySelector('section[id*="sobre"]');
+            // Verificar se é dispositivo móvel
+            function isMobileDevice() {
+                return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             }
-            if (galeria2 && secaoSobre) {
-                // Remove margem inferior da galeria e margem/padding superior da secção sobre BDN
-                galeria2.style.marginBottom = '0';
-                galeria2.style.paddingBottom = '0';
-                secaoSobre.style.marginTop = '0';
-                secaoSobre.style.paddingTop = '0';
+            
+            // Só aplicar proximidade em dispositivos móveis
+            if (isMobileDevice()) {
+                // Seleciona especificamente a galeria inversa e a seção sobre BDN
+                var galeriaInversa = document.querySelector('#galeria-inversa');
+                var sobreBdn = document.querySelector('#sobre-bdn');
+                
+                if (galeriaInversa && sobreBdn) {
+                    // Remove completamente qualquer espaçamento
+                    galeriaInversa.style.marginBottom = '0';
+                    galeriaInversa.style.paddingBottom = '0';
+                    sobreBdn.style.marginTop = '0';
+                    sobreBdn.style.paddingTop = '0';
+                    
+                    // Força a proximidade extrema
+                    sobreBdn.style.transform = 'translateY(-30px)';
+                    
+                    // Remove espaçamento de todos os elementos filhos no final da galeria
+                    var ultimoWorkItem = galeriaInversa.querySelector('.work-item:last-child');
+                    if (ultimoWorkItem) {
+                        ultimoWorkItem.style.marginBottom = '0';
+                        ultimoWorkItem.style.paddingBottom = '0';
+                    }
+                    
+                    // Remove espaçamento do container da galeria
+                    var container = galeriaInversa.querySelector('.container');
+                    if (container) {
+                        container.style.marginBottom = '0';
+                        container.style.paddingBottom = '0';
+                    }
+                    
+                    console.log('Espaçamento entre galeria-inversa e sobre-bdn removido completamente (mobile)');
+                }
+            } else {
+                console.log('Desktop detectado - mantendo ordem de seções reconfigurada');
             }
         });
 
