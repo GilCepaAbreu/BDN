@@ -5369,15 +5369,12 @@ footer a:hover {
     text-align: center;
 }
 
-.services-list {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 0.8rem;
-}
-
-.services-list li {
+    .services-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+    }.services-list li {
     background: rgba(205, 133, 106, 0.1);
     padding: 1rem 1.5rem;
     border-radius: 12px;
@@ -5435,6 +5432,24 @@ footer a:hover {
         justify-items: center; /* Centralizar itens horizontalmente */
     }
     
+    .sobre-bdn-stats {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    /* Garantir que a lista de serviços está centralizada no mobile */
+    .services-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 0;
+        margin: 0 auto;
+    }
+    
     /* Animações para Sobre BDN em mobile */
     @keyframes fadeInUp {
         from {
@@ -5460,10 +5475,28 @@ footer a:hover {
     
     .sobre-bdn-section .container {
         animation: fadeInUp 0.8s ease-out forwards;
+        margin: 0 auto;
+        text-align: center;
+    }
+    
+    .sobre-bdn-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        text-align: center;
     }
     
     .sobre-bdn-title {
         animation: scaleIn 0.8s ease-out 0.2s both;
+    }
+    
+    .sobre-bdn-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
     }
     
     .sobre-bdn-intro {
@@ -5618,6 +5651,7 @@ footer a:hover {
         margin-top: 2rem;
         box-shadow: 0 4px 20px rgba(0,0,0,0.04);
         border: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
     }
     
     .partnership-main h4 {
@@ -5655,17 +5689,30 @@ footer a:hover {
         border-radius: 2px;
     }
     
+    .partnership-services {
+        text-align: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
     .services-list li {
         font-size: 0.9rem;
         line-height: 1.5;
         position: relative;
-        padding-left: 1.2rem;
+        padding: 0.8rem;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        margin: 0 auto;
     }
     
     .services-list li::before {
         content: '→';
-        position: absolute;
-        left: 0;
+        margin-right: 0.5rem;
         color: var(--accent-primary);
     }
     
@@ -6400,11 +6447,11 @@ footer a:hover {
                                 <div class="partnership-services">
                                     <h5 data-translate="partnership_specialties">Especialidades</h5>
                                     <ul class="services-list">
-                                        <li>Design de Interiores Residencial</li>
-                                        <li>Arquitetura Comercial de Interiores</li>
-                                        <li>Consultoria em Decoração</li>
-                                        <li>Projeto de Mobiliário Personalizado</li>
-                                        <li>Seleção de Materiais e Acabamentos</li>
+                                        <li data-translate="specialty_residential">Design de Interiores Residencial</li>
+                                        <li data-translate="specialty_commercial">Arquitetura Comercial de Interiores</li>
+                                        <li data-translate="specialty_consulting">Consultoria em Decoração</li>
+                                        <li data-translate="specialty_furniture">Projeto de Mobiliário Personalizado</li>
+                                        <li data-translate="specialty_materials">Seleção de Materiais e Acabamentos</li>
                                     </ul>
                                 </div>
                             </div>
@@ -8029,6 +8076,11 @@ footer a:hover {
                 partnership_title: "Ana Duarte Arquitetura de Interiores",
                 partnership_description: "Especializada em design de interiores sofisticado e funcional, a Ana Duarte Arquitetura de Interiores complementa perfeitamente os projetos da BDN, criando espaços que harmonizam arquitetura e decoração.",
                 partnership_specialties: "Especialidades",
+                specialty_residential: "Design de Interiores Residencial",
+                specialty_commercial: "Arquitetura Comercial de Interiores",
+                specialty_consulting: "Consultoria em Decoração",
+                specialty_furniture: "Projeto de Mobiliário Personalizado",
+                specialty_materials: "Seleção de Materiais e Acabamentos",
                 contact_title: "Contacto",
                 contact_motto: "PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS",
                 contact_description: "Entre em contacto connosco para dar vida ao seu projeto",
@@ -8079,6 +8131,11 @@ footer a:hover {
                 partnership_title: "Ana Duarte Interior Architecture",
                 partnership_description: "Specialized in sophisticated and functional interior design, Ana Duarte Interior Architecture perfectly complements BDN's projects, creating spaces that harmonize architecture and decoration.",
                 partnership_specialties: "Specialties",
+                specialty_residential: "Residential Interior Design",
+                specialty_commercial: "Commercial Interior Architecture",
+                specialty_consulting: "Decoration Consulting",
+                specialty_furniture: "Custom Furniture Design",
+                specialty_materials: "Materials and Finishes Selection",
                 contact_title: "Contact",
                 contact_motto: "WE DESIGN | WE ARCHITECT | WE BUILD",
                 contact_description: "Get in touch with us to bring your project to life",
