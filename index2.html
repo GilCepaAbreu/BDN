@@ -463,6 +463,41 @@ header:after {
         border-color: rgba(255, 215, 0, 0.7);
         background: linear-gradient(135deg, rgba(0, 0, 0, 0.99) 0%, rgba(10, 10, 10, 0.99) 100%);
     }
+
+    /* Reordenação das seções apenas para desktop */
+    main.container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Definir ordem específica das seções para desktop */
+    #home {
+        order: 1;
+    }
+
+    #sobre-bdn {
+        order: 2;
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+    }
+
+    #empresa1 {
+        order: 3;
+    }
+
+    .unique-client-section {
+        order: 4;
+    }
+
+    #galeria-inversa {
+
+        order: 5;
+    }
+
+    #contato {
+        order: 6;
+        margin-top: 5rem !important; /* Exatamente 5rem de espaçamento */
+    }
 }
 
 /* Dropdown Menu */
@@ -1229,7 +1264,7 @@ main {
 /* REMOVER COMPLETAMENTE o espaçamento superior da seção de contactos */
 #contato.section {
     padding-top: 0 !important;
-    margin-top: 0 !important;
+    margin-top: 5rem !important; /* Garantir 5rem de espaçamento */
     /* Aceitar o movimento para cima da seção anterior */
     position: relative;
     z-index: 1;
@@ -1243,7 +1278,7 @@ main {
 
 /* Forçar conexão direta entre título único e contactos */
 .unique-client-section + #contato {
-    margin-top: 0 !important;
+    margin-top: 5rem !important; /* Manter espaçamento consistente */
     padding-top: 0 !important;
 }
 
@@ -1252,11 +1287,42 @@ main {
     margin-top: clamp(2rem, 4vw, 3rem) !important;
 }
 
-/* FORÇAR PROXIMIDADE EXTREMA entre galeria inversa e contactos */
+/* ESPAÇAMENTO PADRÃO ENTRE GALERIA-INVERSA E CONTACTOS - 5REM */
 #galeria-inversa + #contato {
+    margin-top: 5rem !important;
+    padding-top: 0 !important;
+    transform: none !important; /* Garantir que não há transforms */
+}
+
+/* Reset completo de qualquer espaçamento negativo no contato */
+#contato {
     margin-top: 0 !important;
     padding-top: 0 !important;
-    transform: translateY(-10px) !important; /* Puxar para cima */
+    transform: none !important;
+}
+
+/* FORÇAR PROXIMIDADE EXTREMA entre seções apenas em mobile */
+@media (max-width: 768px) {
+    /* FORÇAR PROXIMIDADE EXTREMA entre galeria inversa e sobre-bdn */
+    #galeria-inversa + #sobre-bdn {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        transform: translateY(-20px) !important; /* Puxar para cima */
+    }
+
+    /* Espaçamento correto entre galeria inversa e contactos - 5rem */
+    #galeria-inversa + #contato {
+        margin-top: 5rem !important;
+        padding-top: 0 !important;
+        transform: none !important; /* Remover transforms desnecessários */
+    }
+
+    /* Garantir que a seção de contato não seja sobrescrita */
+    #contato.section {
+        margin-top: 5rem !important;
+        padding-top: 0 !important;
+        transform: none !important;
+    }
 }
 
 #galeria-inversa .container {
@@ -1264,10 +1330,34 @@ main {
     margin-bottom: 0 !important;
 }
 
+/* Garantir que a galeria inversa não tenha espaçamento inferior excessivo */
+#galeria-inversa {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Garantir que os contactos tenham o espaçamento correto */
+#contato {
+    margin-top: 5rem !important;
+    padding-top: 0 !important;
+    transform: none !important;
+}
+
+/* REGRA SUPER ESPECÍFICA PARA GARANTIR 5REM DE ESPAÇAMENTO */
+main.container #galeria-inversa + #contato,
+main.container #galeria-inversa ~ #contato,
+#galeria-inversa + #contato.section,
+#galeria-inversa ~ #contato.section {
+    margin-top: 5rem !important;
+    padding-top: 0 !important;
+    transform: none !important;
+}
+
 /* Remover TODO o espaçamento do work-grid na galeria inversa */
 #galeria-inversa .work-grid {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
+    min-height: 4500px !important; /* Aumentar mais a altura da segunda seção */
 }
 
 /* Garantir que não há espaçamento adicional nos work-items da galeria inversa */
@@ -2601,7 +2691,7 @@ footer a:hover {
     width: 100vw;
     margin: 0;
     padding: 0;
-    min-height: 3600px; /* Reduzir altura para otimizar espaço */
+    min-height: 3700px; /* Diminuir um pouco para 3700px */
     left: 50%;
     transform: translateX(-50%);
     overflow: hidden; /* Garantir que elementos não ultrapassem */
@@ -2902,7 +2992,7 @@ footer a:hover {
 /* Última imagem (Projeto 14) - lado esquerdo, antes dos contactos */
 .work-item:nth-child(14) {
     left: 5%; /* Lado esquerdo */
-    top: 3500px; /* Mais abaixo da 13ª imagem */
+    top: 3600px; /* Reduzir de 3500px para 3600px */
     transform: none;
     width: 480px; /* Tamanho large */
     max-width: calc(40vw);
@@ -2912,7 +3002,7 @@ footer a:hover {
 /* Imagem paralela (Projeto 15) - lado direito, paralela à 14ª */
 .work-item:nth-child(15) {
     right: 5%; /* Lado direito */
-    top: 3500px; /* Mesma altura da 14ª imagem para ficarem paralelas */
+    top: 3600px; /* Reduzir de 3500px para 3600px - mesma altura da 14ª imagem para ficarem paralelas */
     transform: none;
     width: 480px; /* Tamanho large igual à 14ª */
     max-width: calc(40vw);
@@ -3232,7 +3322,12 @@ footer a:hover {
 /* Masonry-like layout for larger screens */
 @media (min-width: 1200px) {
     .work-grid {
-        min-height: 4300px; /* Aumentar para acomodar a nova imagem (Projeto 15) */
+        min-height: 4200px; /* Diminuir um pouco para 4200px */
+    }
+    
+    /* Altura específica para galeria-inversa em desktop */
+    #galeria-inversa .work-grid {
+        min-height: 3000px !important; /* Aumentar mais para desktop */
     }
     
     .work-item.size-small {
@@ -3397,16 +3492,9 @@ footer a:hover {
         max-width: calc(40vw);
     }
     
-    /* PROXIMIDADE EXTREMA entre galeria-inversa e contactos em desktop */
-    #galeria-inversa + #contato {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-        transform: translateY(-20px) !important; /* Puxar ainda mais para cima em desktop */
-    }
-    
     #contato.section {
         padding-top: 0 !important;
-        margin-top: 0 !important;
+        margin-top: 5rem !important; /* Garantir espaçamento de 5rem */
     }
     
     #contato .hero {
@@ -3428,8 +3516,13 @@ footer a:hover {
 
 @media (min-width: 768px) and (max-width: 1199px) {
     .work-grid {
-        min-height: 4100px; /* Aumentar para tablets com nova imagem (Projeto 15) */
+        min-height: 4000px; /* Diminuir um pouco para 4000px */
         width: 100vw;
+    }
+    
+    /* Altura específica para galeria-inversa em tablets */
+    #galeria-inversa .work-grid {
+        min-height: 2800px !important; /* Aumentar mais para tablets */
     }
     
     .work-item.size-small {
@@ -3605,296 +3698,190 @@ footer a:hover {
 }
 
 @media (max-width: 767px) {
-    /* Layout mobile otimizado - todas as imagens visíveis */
+    /* Layout mobile com imagens centradas uma a uma */
     .work-grid {
         position: relative;
-        min-height: 1420px; /* Reduzir altura para eliminar espaço vazio */
-        padding: 1rem 0.5rem;
         width: 100%;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        min-height: auto;
         overflow-x: hidden;
     }
     
-    /* Primeira linha - 3 imagens escalonadas */
-    .work-item:nth-child(1) {
-        left: 5% !important;
-        top: 0 !important;
-        width: 40vw !important; /* ~150px em 375px de largura */
-        max-width: 150px !important;
+    /* Reset posicionamento absoluto para mobile */
+    .work-item {
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        transform: none !important;
+        width: 80vw !important;
+        max-width: 300px !important;
+        margin: 0 auto !important;
+        display: block !important;
     }
-
-    .work-item:nth-child(2) {
-        right: 5% !important; /* Lado direito */
-        top: 30px !important; 
-        width: 30vw !important; /* ~112px em 375px */
-        max-width: 112px !important;
+    
+    /* Garantir que todas as imagens tenham tamanho consistente */
+    .work-item.size-1,
+    .work-item.size-2,
+    .work-item.size-3,
+    .work-item.size-4,
+    .work-item.size-5,
+    .work-item.size-small,
+    .work-item.size-medium,
+    .work-item.size-large,
+    .work-item.size-xlarge,
+    .work-item.size-xxlarge,
+    .work-item.size-vertical,
+    .work-item.size-double-large {
+        width: 80vw !important;
+        max-width: 300px !important;
+        height: auto !important;
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        transform: none !important;
+        margin: 0 auto 2rem auto !important;
+        display: block !important;
     }
-
-    .work-item:nth-child(3) {
-        left: 50% !important; /* Centro */
-        top: 80px !important;
-        width: 35vw !important; /* ~131px em 375px */
-        max-width: 131px !important;
-        transform: translateX(-50%) !important; /* Centralizar */
-    }
-
-    /* Segunda linha - 3 imagens em disposição triangular inversa */
-    .work-item:nth-child(4) {
-        right: 5% !important;
-        top: 220px !important; 
-        width: 42vw !important; /* ~157px em 375px */
-        max-width: 157px !important;
-    }
-
-    .work-item:nth-child(5) {
-        left: 5% !important;
-        top: 270px !important; 
-        width: 28vw !important; /* ~105px em 375px */
-        max-width: 105px !important;
-    }
-
-    .work-item:nth-child(6) {
-        left: 50% !important; /* Centro */
-        top: 320px !important;
-        width: 38vw !important; /* ~142px em 375px */
-        max-width: 142px !important;
-        transform: translateX(-50%) !important;
-    }
-
-    /* Terceira linha - 2 imagens lado a lado */
-    .work-item:nth-child(7) {
-        left: 8% !important;
-        top: 480px !important; 
-        width: 38vw !important; /* ~142px em 375px */
-        max-width: 142px !important;
-    }
-
-    .work-item:nth-child(8) {
-        right: 8% !important;
-        top: 460px !important; 
-        width: 40vw !important; /* ~150px em 375px */
-        max-width: 150px !important;
-    }
-
-    /* Quarta linha - 2 imagens escalonadas */
-    .work-item:nth-child(9) {
-        left: 5% !important;
-        top: 640px !important;
-        width: 44vw !important; /* ~165px em 375px */
-        max-width: 165px !important;
-    }
-
-    .work-item:nth-child(10) {
-        right: 5% !important;
-        top: 720px !important; 
-        width: 38vw !important; /* ~142px em 375px */
-        max-width: 142px !important;
-    }
-
-    /* Quinta linha - 2 imagens centralizadas */
-    .work-item:nth-child(11) {
-        left: 50% !important;
-        top: 880px !important;
-        width: 32vw !important; /* ~120px em 375px */
-        max-width: 120px !important;
-        transform: translateX(-80%) !important; /* Offset à esquerda */
-    }
-
-    .work-item:nth-child(12) {
-        left: 50% !important;
-        top: 960px !important;
-        width: 44vw !important; /* ~165px em 375px */
-        max-width: 165px !important;
-        transform: translateX(-20%) !important; /* Offset à direita */
-    }
-
-    /* Sexta linha - últimas imagens */
-    .work-item:nth-child(13) {
-        right: 8% !important;
-        top: 1140px !important;
-        width: 35vw !important; /* ~131px em 375px */
-        max-width: 131px !important;
-    }
-
-    .work-item:nth-child(14) {
-        left: 5% !important;
-        top: 1280px !important;
-        width: 38vw !important; /* ~142px em 375px */
-        max-width: 142px !important;
-    }
-
-    .work-item:nth-child(15) {
-        right: 5% !important;
-        top: 1280px !important; /* Mesma altura da 14ª */
-        width: 38vw !important; /* ~142px em 375px */
-        max-width: 142px !important;
-    }
-
-    /* Ajustar containers das imagens para mobile */
+    
+    /* Container de imagem padronizado */
     .work-image-container {
-        height: 100px !important; /* Altura uniforme menor */
-        border-radius: 6px;
+        height: 200px !important;
+        width: 100% !important;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
     }
-
-    /* Altura específica para algumas imagens principais */
-    .work-item:nth-child(1) .work-image-container,
-    .work-item:nth-child(4) .work-image-container,
-    .work-item:nth-child(8) .work-image-container,
-    .work-item:nth-child(9) .work-image-container,
-    .work-item:nth-child(12) .work-image-container {
-        height: 120px !important; /* Ligeiramente maior para imagens principais */
+    
+    /* Imagem responsiva centrada */
+    .work-image {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
     }
-
-    /* Reduzir efeitos de hover no mobile */
+    
+    /* Efeitos hover suaves para mobile */
     .work-item:hover .work-image-container {
-        transform: translateY(-1px); /* Movimento muito sutil */
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     }
-
+    
     .work-item:hover .work-image {
-        transform: scale(1.01); /* Zoom muito sutil */
+        transform: scale(1.02);
     }
-
-    /* Simplificar hover effects específicos */
-    .work-item:nth-child(1):hover .work-image,
-    .work-item:nth-child(3):hover .work-image {
-        transform: scale(1.01); /* Uniformizar */
-        filter: brightness(1.05);
+    
+    /* Garantir ordem das seções no mobile */
+    main.container {
+        display: flex;
+        flex-direction: column;
     }
-
+    
+    #home {
+        order: 1;
+    }
+    
+    #sobre-bdn {
+        order: 2;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+    
+    #empresa1 {
+        order: 3;
+    }
+    
+    .unique-client-section {
+        order: 4;
+    }
+    
+    #galeria-inversa {
+        order: 5;
+    }
+    
+    #contato {
+        order: 6;
+    }
+    
+    /* Melhorias estéticas para a seção sobre-bdn no mobile */
+    .sobre-bdn-section {
+        padding: 2rem 1rem;
+        border-radius: 15px;
+        margin: 0 0.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    
+    /* Galeria inversa também com layout centrado */
+    #galeria-inversa .work-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 2rem !important;
+        min-height: auto !important;
+        padding: 1rem !important;
+    }
+    
+    #galeria-inversa .work-item {
+        position: static !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        transform: none !important;
+        width: 80vw !important;
+        max-width: 300px !important;
+        margin: 0 auto !important;
+    }
+    
     /* Reduzir espaçamentos das seções no mobile */
     #empresa1 {
-        margin-top: 2rem !important; /* Reduzir margem superior */
-        margin-bottom: 1rem !important; /* Reduzir margem inferior */
-        padding-bottom: 0 !important;
-    }
-
-    #galeria-inversa {
-        margin-top: 1rem !important; /* Reduzir margem superior */
-        margin-bottom: 0 !important;
-        padding-top: 1rem !important; /* Reduzir padding superior */
+        margin-top: 2rem !important;
+        margin-bottom: 1rem !important;
         padding-bottom: 0 !important;
     }
     
-    /* PROXIMIDADE EXTREMA entre galeria-inversa e contactos em mobile */
-    #galeria-inversa + #contato {
+    #galeria-inversa {
+        margin-top: 1rem !important;
+        margin-bottom: 0 !important;
+        padding-top: 1rem !important;
+        padding-bottom: 0 !important;
+    }
+    
+    #galeria-inversa + #sobre-bdn {
         margin-top: 0 !important;
         padding-top: 0 !important;
-        transform: translateY(-15px) !important; /* Puxar para cima também em mobile */
+        transform: translateY(-20px) !important;
+    }
+    
+    #galeria-inversa + #contato {
+        margin-top: 5rem !important;
+        padding-top: 0 !important;
+        transform: none !important;
     }
     
     #contato.section {
+        margin-top: 5rem !important;
         padding-top: 0 !important;
-        margin-top: 0 !important;
+        transform: none !important;
     }
     
     #contato .hero {
         padding-top: 0 !important;
         margin-top: 0 !important;
     }
-
-    /* Reduzir altura do work-grid da segunda seção também */
-    #galeria-inversa .work-grid {
-        min-height: auto !important; /* Permitir altura automática */
-        padding-bottom: 0 !important;
-    }
-
-    /* Aplicar posicionamento absoluto também para galeria inversa no mobile */
-    #galeria-inversa .work-grid.inverse-layout {
-        position: relative !important;
-        min-height: 800px !important; /* Altura muito menor para segunda seção */
-        padding: 0.5rem !important;
-    }
-
-    /* Posições específicas para imagens da galeria inversa no mobile */
-    #galeria-inversa .work-item:nth-child(1) {
-        left: 5% !important;
-        top: 0 !important;
-        width: 35vw !important;
-        max-width: 130px !important;
-        position: absolute !important;
-    }
-
-    #galeria-inversa .work-item:nth-child(2) {
-        right: 5% !important;
-        top: 40px !important;
-        width: 28vw !important;
-        max-width: 105px !important;
-        position: absolute !important;
-    }
-
-    #galeria-inversa .work-item:nth-child(3) {
-        left: 50% !important;
-        top: 100px !important;
-        width: 32vw !important;
-        max-width: 120px !important;
-        transform: translateX(-50%) !important;
-        position: absolute !important;
-    }
-
-    #galeria-inversa .work-item:nth-child(4) {
-        right: 8% !important;
-        top: 200px !important;
-        width: 30vw !important;
-        max-width: 115px !important;
-        position: absolute !important;
-    }
-
-    #galeria-inversa .work-item:nth-child(5) {
-        left: 8% !important;
-        top: 260px !important;
-        width: 26vw !important;
-        max-width: 100px !important;
-        position: absolute !important;
-    }
-
-    #galeria-inversa .work-item:nth-child(6) {
-        left: 50% !important;
-        top: 340px !important;
-        width: 38vw !important;
-        max-width: 145px !important;
-        transform: translateX(-50%) !important;
-        position: absolute !important;
-    }
-
-    #galeria-inversa .work-item:nth-child(7) {
-        left: 10% !important;
-        top: 480px !important;
-        width: 30vw !important;
-        max-width: 115px !important;
-        position: absolute !important;
-    }
-
-    #galeria-inversa .work-item:nth-child(8) {
-        right: 10% !important;
-        top: 460px !important;
-        width: 32vw !important;
-        max-width: 120px !important;
-        position: absolute !important;
-    }
-
-    #galeria-inversa .work-item:nth-child(9) {
-        left: 50% !important;
-        top: 580px !important;
-        width: 28vw !important;
-        max-width: 105px !important;
-        transform: translateX(-80%) !important;
-        position: absolute !important;
-    }
-
-    #galeria-inversa .work-item:nth-child(10) {
-        right: 8% !important;
-        top: 640px !important;
-        width: 34vw !important;
-        max-width: 130px !important;
-        position: absolute !important;
-    }
-
+    
     /* Remover espaçamentos extras de seções */
     section {
         margin-bottom: 0 !important;
         padding-bottom: 0 !important;
     }
 }
+
 
 /* Estilos gerais para trabalhos */
 .work-overlay {
@@ -4907,10 +4894,11 @@ footer a:hover {
 
 /* ===== SECÇÃO SOBRE BDN ===== */
 .sobre-bdn-section {
-    padding: clamp(6rem, 10vw, 8rem) 0;
+    padding: 0 0 clamp(6rem, 10vw, 8rem) 0; /* Remove padding superior completamente */
     background: var(--bg-primary);
     position: relative;
     overflow: hidden;
+    margin-top: 0 !important; /* Força margin-top zero */
 }
 
 .sobre-bdn-section::before {
@@ -4932,6 +4920,7 @@ footer a:hover {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    text-align: center; /* Centralizar todo o texto */
 }
 
 .sobre-bdn-header {
@@ -4999,17 +4988,20 @@ footer a:hover {
 .values-grid {
     display: grid;
     gap: 2rem;
+    justify-content: center; /* Centralizar o grid */
 }
 
 .value-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    flex-direction: column; /* Organizar itens em coluna */
     gap: 1.5rem;
     padding: 0;
     background: transparent;
     border: none;
     transition: all 0.3s ease;
     position: relative;
+    text-align: center; /* Garantir alinhamento centralizado */
 }
 
 .value-item::before {
@@ -5035,6 +5027,14 @@ footer a:hover {
     font-size: 1.2rem;
     min-width: 30px;
     opacity: 0.8;
+    background: rgba(255, 215, 0, 0.1);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem; /* Centralizar e adicionar espaço abaixo */
 }
 
 .value-item h4 {
@@ -5140,7 +5140,7 @@ footer a:hover {
     margin-top: 4rem;
     padding: 3rem 2rem;
     border-top: 1px solid rgba(205, 133, 106, 0.3);
-    text-align: center;
+    text-align: center; /* Já está centralizado, mas garantir que permanece */
     background: linear-gradient(135deg, rgba(205, 133, 106, 0.08) 0%, rgba(218, 165, 132, 0.05) 100%);
     box-shadow: none;
     border-radius: 16px;
@@ -5215,15 +5215,12 @@ footer a:hover {
     text-align: center;
 }
 
-.services-list {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 0.8rem;
-}
-
-.services-list li {
+    .services-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+    }.services-list li {
     background: rgba(205, 133, 106, 0.1);
     padding: 1rem 1.5rem;
     border-radius: 12px;
@@ -5277,9 +5274,155 @@ footer a:hover {
     .sobre-bdn-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
+        text-align: center; /* Garantir que o texto está centralizado */
+        justify-items: center; /* Centralizar itens horizontalmente */
     }
     
-    .stats-grid {
+    .sobre-bdn-stats {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    /* Garantir que a lista de serviços está centralizada no mobile */
+    .services-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 0;
+        margin: 0 auto;
+    }
+    
+    /* Animações para Sobre BDN em mobile */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    
+    .sobre-bdn-section .container {
+        animation: fadeInUp 0.8s ease-out forwards;
+        margin: 0 auto;
+        text-align: center;
+    }
+    
+    .sobre-bdn-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .sobre-bdn-title {
+        animation: scaleIn 0.8s ease-out 0.2s both;
+    }
+    
+    .sobre-bdn-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .sobre-bdn-intro {
+        animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+    
+    .value-item:nth-child(1) {
+        animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+    
+    .value-item:nth-child(2) {
+        animation: fadeInUp 0.8s ease-out 0.8s both;
+    }
+    
+    .value-item:nth-child(3) {
+        animation: fadeInUp 0.8s ease-out 1s both;
+    }
+    
+    .partnership-info {
+        animation: fadeInUp 0.8s ease-out 1.2s both;
+    }
+    
+    /* Adicionar destaque suave ao toque em dispositivos móveis */
+    .value-item:active {
+        background: rgba(255,255,255,0.1);
+        transform: scale(0.98);
+    }
+    
+    .sobre-bdn-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        position: relative;
+    }
+    
+    .sobre-bdn-title {
+        font-size: 2.2rem;
+        margin-bottom: 0.8rem;
+        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .sobre-bdn-title::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: var(--accent-primary);
+        border-radius: 3px;
+    }
+    
+    .sobre-bdn-subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        margin-top: 1.2rem;
+        color: var(--text-secondary);
+    }
+    
+    .sobre-bdn-intro p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        text-align: center;
+        padding: 0 0.5rem;
+    }
+    
+    .sobre-bdn-values h3 {
+        text-align: center;
+        font-size: 1.6rem;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+    
+    .values-grid {
+        display: grid;
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
@@ -5287,16 +5430,141 @@ footer a:hover {
     .value-item {
         flex-direction: column;
         text-align: center;
-        gap: 0.5rem;
+        gap: 0.8rem;
+        background: rgba(255,255,255,0.05);
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .value-item:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--accent-primary);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
+    
+    .value-item:hover:before {
+        transform: scaleX(1);
+    }
+    
+    .value-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    
+    .value-icon {
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+        background: rgba(255,255,255,0.1);
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    
+    .value-item h4 {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        color: var(--accent-primary);
+    }
+    
+    .value-item p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        margin: 0;
     }
     
     .partnership-info {
-        padding: 2rem 0;
+        background: rgba(255,255,255,0.05);
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+        margin-top: 2rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        border: 1px solid rgba(255,255,255,0.1);
+        text-align: center;
     }
     
-    .sobre-bdn-grid {
+    .partnership-main h4 {
+        font-size: 1.3rem;
+        color: var(--accent-primary);
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    
+    .partnership-description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+    
+    .partnership-services h5 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        position: relative;
+        display: inline-block;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .partnership-services h5::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--accent-primary);
+        border-radius: 2px;
+    }
+    
+    .partnership-services {
+        text-align: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .services-list li {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        position: relative;
+        padding: 0.8rem;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        margin: 0 auto;
+    }
+    
+    .services-list li::before {
+        content: '→';
+        margin-right: 0.5rem;
+        color: var(--accent-primary);
+    }
+    
+    .stats-grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 1.5rem;
     }
     
     .color-palette {
@@ -5306,6 +5574,17 @@ footer a:hover {
     .color-swatch {
         width: 40px;
         height: 40px;
+    }
+    
+    /* Melhorias estéticas para mobile */
+    .sobre-bdn-section {
+        padding: 3rem 1.5rem 4rem;
+        background: linear-gradient(170deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
+        border-radius: 30px 30px 0 0;
+        margin-top: -20px !important;
+        position: relative;
+        z-index: 2;
     }
 }
 
@@ -5709,8 +5988,8 @@ footer a:hover {
                     <div class="logo-dropdown" id="logo-dropdown">
                         <ul>
                             <li><a href="#home">Início</a></li>
-                            <li><a href="#empresa1">BDN - Projetos</a></li>
                             <li><a href="#sobre-bdn">Sobre BDN</a></li>
+                            <li><a href="#empresa1">BDN - Projetos</a></li>
                             <li><a href="#contato">Contacto</a></li>
                         </ul>
                     </div>
@@ -5948,7 +6227,7 @@ footer a:hover {
                     </div>
 
                     <!-- Projeto Adicional 4 - Primeira imagem em baixo -->
-                    <div class="work-item size-vertical slide-in-bottom" data-category="featured">
+                    <div class="work-item size-medium slide-in-bottom" data-category="featured">
                         <div class="work-image-container">
                             <img src="imagens/img9.png" alt="Projeto Arquitetónico Inferior" class="work-image">
                         </div>
@@ -6014,11 +6293,11 @@ footer a:hover {
                                 <div class="partnership-services">
                                     <h5 data-translate="partnership_specialties">Especialidades</h5>
                                     <ul class="services-list">
-                                        <li>Design de Interiores Residencial</li>
-                                        <li>Arquitetura Comercial de Interiores</li>
-                                        <li>Consultoria em Decoração</li>
-                                        <li>Projeto de Mobiliário Personalizado</li>
-                                        <li>Seleção de Materiais e Acabamentos</li>
+                                        <li data-translate="specialty_residential">Design de Interiores Residencial</li>
+                                        <li data-translate="specialty_commercial">Arquitetura Comercial de Interiores</li>
+                                        <li data-translate="specialty_consulting">Consultoria em Decoração</li>
+                                        <li data-translate="specialty_furniture">Projeto de Mobiliário Personalizado</li>
+                                        <li data-translate="specialty_materials">Seleção de Materiais e Acabamentos</li>
                                     </ul>
                                 </div>
                             </div>
@@ -7134,20 +7413,17 @@ footer a:hover {
                 touchElements.forEach(element => {
                     element.style.webkitTapHighlightColor = 'rgba(255, 215, 0, 0.3)';
                     element.style.tapHighlightColor = 'rgba(255, 215, 0, 0.3)';
-                    
                     // Add touch start and end events for better feedback
                     element.addEventListener('touchstart', function() {
                         this.style.transform = 'scale(0.98)';
                         this.style.transition = 'transform 0.1s ease';
                     });
-                    
                     element.addEventListener('touchend', function() {
                         setTimeout(() => {
                             this.style.transform = '';
                         }, 100);
                     });
                 });
-                
                 // Enhance form inputs for mobile
                 const inputs = document.querySelectorAll('input, textarea');
                 inputs.forEach(input => {
@@ -7160,6 +7436,50 @@ footer a:hover {
                 });
             }
         }
+
+        // Remover completamente o espaço entre galeria-inversa e sobre-bdn (apenas em mobile)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se é dispositivo móvel
+            function isMobileDevice() {
+                return window.innerWidth <= 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            }
+            
+            // Só aplicar proximidade em dispositivos móveis
+            if (isMobileDevice()) {
+                // Seleciona especificamente a galeria inversa e a seção sobre BDN
+                var galeriaInversa = document.querySelector('#galeria-inversa');
+                var sobreBdn = document.querySelector('#sobre-bdn');
+                
+                if (galeriaInversa && sobreBdn) {
+                    // Remove completamente qualquer espaçamento
+                    galeriaInversa.style.marginBottom = '0';
+                    galeriaInversa.style.paddingBottom = '0';
+                    sobreBdn.style.marginTop = '0';
+                    sobreBdn.style.paddingTop = '0';
+                    
+                    // Força a proximidade extrema
+                    sobreBdn.style.transform = 'translateY(-30px)';
+                    
+                    // Remove espaçamento de todos os elementos filhos no final da galeria
+                    var ultimoWorkItem = galeriaInversa.querySelector('.work-item:last-child');
+                    if (ultimoWorkItem) {
+                        ultimoWorkItem.style.marginBottom = '0';
+                        ultimoWorkItem.style.paddingBottom = '0';
+                    }
+                    
+                    // Remove espaçamento do container da galeria
+                    var container = galeriaInversa.querySelector('.container');
+                    if (container) {
+                        container.style.marginBottom = '0';
+                        container.style.paddingBottom = '0';
+                    }
+                    
+                    console.log('Espaçamento entre galeria-inversa e sobre-bdn removido completamente (mobile)');
+                }
+            } else {
+                console.log('Desktop detectado - mantendo ordem de seções reconfigurada');
+            }
+        });
 
         // Event listeners para o menu mobile
         document.addEventListener('DOMContentLoaded', function() {
@@ -7602,6 +7922,11 @@ footer a:hover {
                 partnership_title: "Ana Duarte Arquitetura de Interiores",
                 partnership_description: "Especializada em design de interiores sofisticado e funcional, a Ana Duarte Arquitetura de Interiores complementa perfeitamente os projetos da BDN, criando espaços que harmonizam arquitetura e decoração.",
                 partnership_specialties: "Especialidades",
+                specialty_residential: "Design de Interiores Residencial",
+                specialty_commercial: "Arquitetura Comercial de Interiores",
+                specialty_consulting: "Consultoria em Decoração",
+                specialty_furniture: "Projeto de Mobiliário Personalizado",
+                specialty_materials: "Seleção de Materiais e Acabamentos",
                 contact_title: "Contacto",
                 contact_motto: "PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS",
                 contact_description: "Entre em contacto connosco para dar vida ao seu projeto",
@@ -7652,6 +7977,11 @@ footer a:hover {
                 partnership_title: "Ana Duarte Interior Architecture",
                 partnership_description: "Specialized in sophisticated and functional interior design, Ana Duarte Interior Architecture perfectly complements BDN's projects, creating spaces that harmonize architecture and decoration.",
                 partnership_specialties: "Specialties",
+                specialty_residential: "Residential Interior Design",
+                specialty_commercial: "Commercial Interior Architecture",
+                specialty_consulting: "Decoration Consulting",
+                specialty_furniture: "Custom Furniture Design",
+                specialty_materials: "Materials and Finishes Selection",
                 contact_title: "Contact",
                 contact_motto: "WE DESIGN | WE ARCHITECT | WE BUILD",
                 contact_description: "Get in touch with us to bring your project to life",
