@@ -1357,7 +1357,7 @@ main.container #galeria-inversa ~ #contato,
 #galeria-inversa .work-grid {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
-    min-height: 4500px !important; /* Aumentar mais a altura da segunda seção */
+    min-height: 3000px !important; /* Aumentar mais a altura da segunda seção */
 }
 
 /* Garantir que não há espaçamento adicional nos work-items da galeria inversa */
@@ -2731,7 +2731,7 @@ footer a:hover {
 /* Animação de hover melhorada para itens animados */
 .work-item.animate-in:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+    box-shadow: none; /* Removido: 0 20px 60px rgba(255, 215, 0, 0.2); */
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -2794,13 +2794,169 @@ footer a:hover {
 
 /* Optimização para mobile - animações mais simples */
 @media (max-width: 768px) {
+    /* Manter apenas as transições para animações de entrada */
     .work-item {
-        transition: all 0.6s ease-out;
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
     
+    /* REMOVER COMPLETAMENTE todos os efeitos hover no mobile */
+    .work-item:hover {
+        transform: none !important;
+        box-shadow: none !important;
+        border-color: initial !important;
+    }
+    
+    .work-item:hover .work-image-container {
+        transform: none !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+    }
+    
+    .work-item:hover .work-image {
+        transform: none !important;
+        filter: none !important;
+        animation: none !important;
+    }
+    
+    /* Remover TODOS os overlays e pseudo-elementos no mobile */
+    .work-image-container::before,
+    .work-image-container::after {
+        display: none !important;
+        opacity: 0 !important;
+        content: none !important;
+    }
+    
+    .work-item::before,
+    .work-item::after {
+        display: none !important;
+        opacity: 0 !important;
+        content: none !important;
+    }
+    
+    /* Remover efeitos especiais específicos no mobile */
+    .work-item:nth-child(1):hover .work-image,
+    .work-item:nth-child(2):hover .work-image,
+    .work-item:nth-child(3):hover .work-image,
+    .work-item:nth-child(4):hover .work-image,
+    .work-item:nth-child(5):hover .work-image,
+    .work-item:nth-child(6):hover .work-image,
+    .work-item:nth-child(7):hover .work-image,
+    .work-item:nth-child(8):hover .work-image,
+    .work-item:nth-child(9):hover .work-image,
+    .work-item:nth-child(10):hover .work-image,
+    .work-item:nth-child(11):hover .work-image,
+    .work-item:nth-child(12):hover .work-image,
+    .work-item:nth-child(13):hover .work-image,
+    .work-item:nth-child(14):hover .work-image,
+    .work-item:nth-child(15):hover .work-image {
+        transform: none !important;
+        filter: none !important;
+        animation: none !important;
+    }
+    
+    /* Remover efeitos de container específicos no mobile */
+    .work-item:nth-child(1):hover .work-image-container,
+    .work-item:nth-child(2):hover .work-image-container,
+    .work-item:nth-child(3):hover .work-image-container,
+    .work-item:nth-child(4):hover .work-image-container,
+    .work-item:nth-child(5):hover .work-image-container,
+    .work-item:nth-child(6):hover .work-image-container,
+    .work-item:nth-child(7):hover .work-image-container,
+    .work-item:nth-child(8):hover .work-image-container,
+    .work-item:nth-child(9):hover .work-image-container,
+    .work-item:nth-child(10):hover .work-image-container,
+    .work-item:nth-child(11):hover .work-image-container,
+    .work-item:nth-child(12):hover .work-image-container,
+    .work-item:nth-child(13):hover .work-image-container,
+    .work-item:nth-child(14):hover .work-image-container,
+    .work-item:nth-child(15):hover .work-image-container {
+        transform: none !important;
+        backdrop-filter: none !important;
+    }
+    
+    /* Remover todas as animações específicas no mobile */
     .work-item.animate-in:hover {
-        transform: translateY(-4px) scale(1.01);
-        box-shadow: 0 15px 40px rgba(255, 215, 0, 0.15);
+        transform: translateY(0) !important;
+        box-shadow: none !important;
+    }
+    
+    /* Container de imagem simplificado SEM EFEITOS */
+    .work-image-container {
+        height: 200px !important;
+        width: 100% !important;
+        border-radius: 8px !important;
+        overflow: hidden !important;
+        box-shadow: none !important;
+        transition: none !important;
+        transform: none !important;
+        backdrop-filter: none !important;
+        background: none !important;
+        border: none !important;
+        position: relative !important;
+    }
+    
+    /* Imagem estática SEM EFEITOS */
+    .work-image {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+        transition: none !important;
+        transform: none !important;
+        filter: brightness(1) contrast(1) saturate(1) !important;
+        animation: none !important;
+    }
+    
+    /* Remover bordas decorativas específicas no mobile */
+    .work-item:nth-child(odd) .work-image-container {
+        background: none !important;
+        border: none !important;
+    }
+    
+    /* Remover todos os efeitos de cristal no mobile */
+    .work-item:nth-child(2) .work-image-container,
+    .work-item:nth-child(8) .work-image-container {
+        backdrop-filter: none !important;
+    }
+    
+    /* Garantir que tags não têm hover no mobile */
+    .work-tag:hover {
+        background: #f5f5f5 !important;
+        color: #555 !important;
+        transform: none !important;
+    }
+    
+    /* Remover todos os efeitos de galeria inversa no mobile */
+    .inverse-layout .work-item:hover {
+        transform: none !important;
+    }
+    
+    .inverse-layout .work-item:hover .work-image {
+        filter: none !important;
+    }
+    
+    /* Forçar estado estático para TODOS os elementos relacionados às imagens */
+    .work-item,
+    .work-item *,
+    .work-image-container,
+    .work-image-container *,
+    .work-image {
+        animation: none !important;
+    }
+    
+    /* Forçar remoção de transições exceto para entrada */
+    .work-item:not(.animate-in),
+    .work-item:not(.animate-in) *,
+    .work-image-container:not(.animate-in),
+    .work-image:not(.animate-in) {
+        transition: none !important;
+    }
+    
+    /* Garantir que não há transforms exceto para entrada */
+    .work-item:not(.transitioning),
+    .work-image-container:not(.transitioning),
+    .work-image:not(.transitioning) {
+        transform: none !important;
     }
 }
 
@@ -3014,7 +3170,7 @@ footer a:hover {
     height: 250px;
     overflow: hidden;
     border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: none; /* Removido: 0 8px 25px rgba(0, 0, 0, 0.15); */
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -3023,10 +3179,10 @@ footer a:hover {
     height: 350px; /* Significativamente mais alta que as outras */
 }
 
-/* Efeitos de hover para o container da imagem */
+/* Efeitos de hover para o container da imagem - sem sombra */
 .work-item:hover .work-image-container {
     transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    box-shadow: none; /* Removido: 0 20px 40px rgba(0, 0, 0, 0.25); */
 }
 
 /* Alturas específicas para a primeira linha de imagens */
@@ -3155,7 +3311,7 @@ footer a:hover {
     transition: all 0.5s ease;
     pointer-events: none;
     z-index: 3;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    box-shadow: none; /* Removido: 0 0 15px rgba(255, 255, 255, 0.5); */
 }
 
 .work-item:nth-child(14):hover .work-image-container::after,
@@ -3171,15 +3327,18 @@ footer a:hover {
     50% { transform: translateY(-5px); }
 }
 
-/* Efeito de pulso suave em todas as imagens */
+/* Remover efeito de pulso suave com sombra */
 .work-image-container {
-    animation: subtle-pulse 4s ease-in-out infinite;
+    animation: none; /* Removido: subtle-pulse 4s ease-in-out infinite; */
 }
 
+/* Comentar ou remover a animação subtle-pulse */
+/*
 @keyframes subtle-pulse {
     0%, 100% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); }
     50% { box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2); }
 }
+*/
 
 /* Efeito de reflexo nas bordas */
 .work-image-container {
@@ -4163,22 +4322,73 @@ footer a:hover {
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
-    /* Remove hover effects on touch devices */
+    /* Remove TODOS os hover effects em touch devices */
     .work-item:hover {
-        transform: none;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        border-color: rgba(255, 215, 0, 0.2);
+        transform: none !important;
+        box-shadow: none !important;
+        border-color: initial !important;
+        filter: none !important;
     }
     
     .work-item:hover .work-image {
-        transform: none;
+        transform: none !important;
+        filter: brightness(1) contrast(1) saturate(1) !important;
+        animation: none !important;
+    }
+    
+    .work-item:hover .work-image-container {
+        transform: none !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
     }
     
     .work-item:hover .work-overlay {
         transform: translateY(0);
     }
     
-    /* Enhance touch targets */
+    /* Remover TODOS os pseudo-elementos em touch devices */
+    .work-image-container::before,
+    .work-image-container::after {
+        display: none !important;
+        opacity: 0 !important;
+        content: none !important;
+    }
+    
+    .work-item::before,
+    .work-item::after {
+        display: none !important;
+        opacity: 0 !important;
+        content: none !important;
+    }
+    
+    /* Remover efeitos específicos para cada imagem em touch */
+    .work-item:nth-child(1):hover .work-image,
+    .work-item:nth-child(2):hover .work-image,
+    .work-item:nth-child(3):hover .work-image,
+    .work-item:nth-child(4):hover .work-image,
+    .work-item:nth-child(5):hover .work-image,
+    .work-item:nth-child(6):hover .work-image,
+    .work-item:nth-child(7):hover .work-image,
+    .work-item:nth-child(8):hover .work-image,
+    .work-item:nth-child(9):hover .work-image,
+    .work-item:nth-child(10):hover .work-image,
+    .work-item:nth-child(11):hover .work-image,
+    .work-item:nth-child(12):hover .work-image,
+    .work-item:nth-child(13):hover .work-image,
+    .work-item:nth-child(14):hover .work-image,
+    .work-item:nth-child(15):hover .work-image {
+        transform: none !important;
+        filter: brightness(1) contrast(1) saturate(1) !important;
+        animation: none !important;
+    }
+    
+    /* Remover animações de hover específicas em touch */
+    .work-item.animate-in:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    /* Enhanced touch targets */
     .nav-menu a {
         min-height: 48px;
         display: flex;
@@ -4343,7 +4553,7 @@ footer a:hover {
     min-height: 300px;  /* Aumentado de 200px para 300px */
     object-fit: contain;
     border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    box-shadow: none; /* Removido: 0 10px 30px rgba(255, 215, 0, 0.3); */
     transition: transform 0.3s ease;
     position: relative;
     cursor: default;
@@ -6310,7 +6520,6 @@ footer a:hover {
         <section id="contato" class="section">
             <div class="hero">
                 <h1 data-translate="contact_title">Contacto</h1>
-                <p><strong data-translate="contact_motto">PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS</strong></p>
                 <p data-translate="contact_description">Entre em contacto connosco para dar vida ao seu projeto</p>
             </div>
 
