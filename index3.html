@@ -114,6 +114,66 @@ body, html {
     }
 }
 
+/* Animações sutis para lightbox mobile */
+@keyframes subtleBreath {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+        transform: scale(1.02);
+    }
+}
+
+@keyframes softGlow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+}
+
+@keyframes gentlePulse {
+    0%, 100% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes subtleBorderShine {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes subtleVibration {
+    0%, 100% {
+        transform: scale(0.95) translateX(0);
+    }
+    25% {
+        transform: scale(0.95) translateX(-1px);
+    }
+    75% {
+        transform: scale(0.95) translateX(1px);
+    }
+}
+
+@keyframes currentNumberGlow {
+    0% {
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    }
+    100% {
+        text-shadow: 0 0 12px rgba(255, 215, 0, 0.9), 0 0 20px rgba(255, 215, 0, 0.4);
+    }
+}
+
 a, button, .contact-btn, .logo, .hamburger, .nav-tab {
     cursor: none !important;
 }
@@ -4810,7 +4870,7 @@ footer a:hover {
     object-fit: contain;
     border-radius: 8px;
     box-shadow: none; /* Removido: 0 10px 30px rgba(255, 215, 0, 0.3); */
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
     position: relative;
     cursor: default;
 }
@@ -4886,13 +4946,18 @@ footer a:hover {
     bottom: -60px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.8);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.95));
     color: #ffd700;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 2px solid rgba(255, 215, 0, 0.4);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+    animation: gentlePulse 4s ease-in-out infinite;
 }
 
 /* Responsive Lightbox */
@@ -4910,6 +4975,26 @@ footer a:hover {
         min-width: 250px;
         min-height: 180px;
         border-radius: 4px;
+        position: relative;
+    }
+    
+    .lightbox-image::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, 
+            transparent 0%, 
+            rgba(255, 215, 0, 0.1) 25%, 
+            transparent 50%, 
+            rgba(255, 215, 0, 0.1) 75%, 
+            transparent 100%);
+        border-radius: 6px;
+        z-index: -1;
+        animation: subtleBorderShine 8s linear infinite;
+        opacity: 0.3;
     }
     
     .lightbox-close {
@@ -4920,12 +5005,37 @@ footer a:hover {
         font-size: 32px;
         background: rgba(0, 0, 0, 0.9);
         border: 2px solid #ffd700;
+        animation: subtleBreath 3s ease-in-out infinite;
     }
     
     .lightbox-counter {
         bottom: -50px;
-        font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        animation: gentlePulse 4s ease-in-out infinite;
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(20, 20, 20, 0.95));
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 2px solid rgba(255, 215, 0, 0.5);
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+        letter-spacing: 0.5px;
+    }
+    
+    /* Destaque para números do contador */
+    .lightbox-counter #lightbox-current {
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.1em;
+        text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+        animation: currentNumberGlow 2s ease-in-out infinite alternate;
+        transition: transform 0.2s ease, opacity 0.2s ease;
+        display: inline-block;
+    }
+    
+    .lightbox-counter #lightbox-total {
+        opacity: 0.8;
+        font-weight: 500;
     }
     
     /* Disable cursor navigation on mobile */
@@ -4961,12 +5071,16 @@ footer a:hover {
         touch-action: manipulation;
         -webkit-tap-highlight-color: transparent;
         transition: all 0.3s ease;
+        animation: softGlow 5s ease-in-out infinite;
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
     }
     
     .lightbox-mobile-prev:active,
     .lightbox-mobile-next:active {
         transform: scale(0.95);
         background: rgba(255, 215, 0, 0.2);
+        animation: subtleVibration 0.2s ease-in-out;
     }
 }
 
@@ -5000,8 +5114,14 @@ footer a:hover {
     
     .lightbox-counter {
         bottom: -45px;
-        font-size: 0.75rem;
-        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+        border: 1px solid rgba(255, 215, 0, 0.6);
+    }
+    
+    .lightbox-counter #lightbox-current {
+        font-size: 1em;
+        text-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
     }
 }
 
@@ -8292,14 +8412,47 @@ footer a:hover {
             // Garantir visibilidade do cursor ao abrir lightbox
             function showImage(index) {
                 currentIndex = index;
-                lightboxImage.src = galleryImages[index].src;
-                lightboxImage.alt = galleryImages[index].alt;
-                lightboxCaption.textContent = galleryImages[index].caption;
-                lightboxCurrent.textContent = index + 1;
+                
+                // Adicionar efeito sutil de carregamento
+                lightboxImage.style.filter = 'blur(1px)';
+                lightboxImage.style.opacity = '0.7';
+                lightboxImage.style.transform = 'scale(0.98)';
+                
+                // Precarregar imagem para transição suave
+                const newImage = new Image();
+                newImage.onload = function() {
+                    lightboxImage.src = galleryImages[index].src;
+                    lightboxImage.alt = galleryImages[index].alt;
+                    lightboxCaption.textContent = galleryImages[index].caption;
+                    
+                    // Atualizar numeração com animação sutil
+                    updatePageNumber(index + 1);
+                    
+                    // Remover efeito de carregamento com transição suave
+                    setTimeout(() => {
+                        lightboxImage.style.filter = 'blur(0px)';
+                        lightboxImage.style.opacity = '1';
+                        lightboxImage.style.transform = 'scale(1)';
+                    }, 50);
+                };
+                newImage.src = galleryImages[index].src;
                 
                 // Mostrar lightbox
                 lightbox.classList.add('show');
                 document.body.style.overflow = 'hidden';
+            }
+            
+            // Função para atualizar numeração com animação
+            function updatePageNumber(newNumber) {
+                // Animação sutil de mudança de número
+                lightboxCurrent.style.transform = 'scale(1.2)';
+                lightboxCurrent.style.opacity = '0.6';
+                
+                setTimeout(() => {
+                    lightboxCurrent.textContent = newNumber;
+                    lightboxCurrent.style.transform = 'scale(1)';
+                    lightboxCurrent.style.opacity = '1';
+                }, 100);
             }
             
             // Função para fechar lightbox
