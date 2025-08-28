@@ -6,17 +6,21 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>BDN</title>
+    <title>BDN - Projectamos | Arquitectamos | Construímos</title>
     <link rel="icon" type="image/png" href="bdn_fabicon.png">
     <link rel="shortcut icon" type="image/png" href="bdn_fabicon.png">
     <link rel="apple-touch-icon" href="bdn_fabicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&family=Michroma&family=Oswald:wght@200..700&display=swap" rel="stylesheet">
     <style>
  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     cursor: none;
+    font-family: 'Oswald', 'Montserrat', sans-serif;
 }
 
 /* Sistema de Cores - Tema Padrão e Inverso */
@@ -183,10 +187,10 @@ input, textarea, select {
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Oswald', 'Montserrat', sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
-    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+    background: var(--bg-primary);
     min-height: 100vh;
     padding-top: 80px; /* Espaço para a navbar fixa */
     overflow-x: hidden; /* Prevenir scroll horizontal */
@@ -298,6 +302,26 @@ header:after {
     padding-left: 0;
 }
 
+.header-favicon {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    z-index: 10;
+}
+
+.favicon-img {
+    width: clamp(2rem, 3vw, 3rem);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: all 0.3s ease;
+}
+
+.favicon-img:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
 .logo {
     font-family: 'Playfair Display', serif;
     font-size: clamp(1.5rem, 3vw, 2rem);
@@ -316,24 +340,57 @@ header:after {
 }
 
 .logo-img {
-    width: clamp(30px, 6vw, 40px);
-    height: clamp(30px, 6vw, 40px);
+    width: clamp(135px, 27vw, 180px);
+    height: clamp(100px, 20vw, 135px);
     object-fit: contain;
     cursor: url('bdn_fabicon.png') 16 16, pointer;
     transition: all 0.3s ease;
     border-radius: 6px;
 }
 
-/* Fundo opaco para logos no tema inverso */
+/* No tema inverso, logo sem fundo por padrão (quando sobre áreas amarelas) */
 [data-theme="inverted"] .logo-img {
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(10px);
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 215, 0, 0.2);
+    background: none;
+    backdrop-filter: none;
+    padding: 0;
+    border-radius: 6px;
+    border: none;
+    box-shadow: none;
+}
+
+/* No tema invertido, mostrar fundo quando sobre áreas pretas */
+[data-theme="inverted"] .logo-img.on-yellow-section {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: none;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Fundo preto para logo quando sobre seções amarelas */
+.logo-img.on-yellow-section {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(15px);
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
     box-shadow: 
-        0 4px 20px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 215, 0, 0.1);
+        0 6px 25px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* No tema amarelo, remover todos os efeitos quando o logo tem fundo preto */
+[data-theme="inverted"] .logo-img.on-yellow-section {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: none;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .logo:hover .logo-img {
@@ -359,8 +416,8 @@ header:after {
 }
 
 .desktop-logo .logo-img {
-    width: clamp(30px, 6vw, 40px);
-    height: clamp(30px, 6vw, 40px);
+    width: clamp(135px, 27vw, 180px);
+    height: clamp(100px, 20vw, 135px);
     object-fit: contain;
     cursor: url('bdn_fabicon.png') 16 16, pointer;
     transition: all 0.3s ease;
@@ -372,103 +429,136 @@ header:after {
     letter-spacing: 2px;
 }
 
-/* Desktop Dropdown */
+/* ===== DESKTOP DROPDOWN - DESIGN MINIMALISTA ===== */
 .desktop-dropdown {
     position: absolute;
     top: 100%;
-    left: 0;
-    transform: translateY(10px);
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
-    border: 2px solid var(--accent-primary);
-    border-radius: 15px;
-    padding: 2rem;
-    min-width: 280px;
+    left: 100%;
+    margin-left: 190px;
+    margin-top: 25px;
+    min-width: 380px;
+    max-width: 450px;
     opacity: 0;
     visibility: hidden;
     z-index: 1000;
-    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 215, 0, 0.1),
-        inset 0 1px 0 rgba(255, 215, 0, 0.2);
-    margin-top: 10px;
-    /* Garantir que não saia do ecrã */
-    right: auto;
-    max-width: calc(100vw - 40px);
+    transform: translateY(-10px) scale(0.98);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .desktop-dropdown.show {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
-/* Desktop Dropdown Navigation List */
-.desktop-nav-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+/* Background com blur e tom escuro 50% transparente */
+.dropdown-blur-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Navegação minimalista */
+.dropdown-nav {
+    position: relative;
+    padding: 16px 0;
     display: flex;
     flex-direction: column;
-    gap: 0;
 }
 
-.desktop-nav-item {
-    transform: translateY(20px);
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.desktop-dropdown.show .desktop-nav-item {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.desktop-nav-item:nth-child(1) { transition-delay: 0.1s; }
-.desktop-nav-item:nth-child(2) { transition-delay: 0.15s; }
-.desktop-nav-item:nth-child(3) { transition-delay: 0.2s; }
-.desktop-nav-item:nth-child(4) { transition-delay: 0.25s; }
-
-.desktop-nav-link {
+.dropdown-link {
     display: block;
-    padding: 12px 20px;
-    color: var(--text-primary);
+    padding: 14px 32px;
+    color: #ffffff;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
     position: relative;
-    overflow: hidden;
+    margin: 0;
 }
 
-.desktop-nav-link:hover,
-.desktop-nav-link.active {
-    color: var(--accent-primary);
-    background: rgba(255, 215, 0, 0.1);
-    transform: translateX(5px);
-}
-
-.desktop-nav-link::before {
+.dropdown-link::before {
     content: '';
     position: absolute;
     left: 0;
     top: 0;
-    height: 100%;
-    width: 3px;
-    background: var(--accent-primary);
-    transform: scaleY(0);
-    transition: transform 0.3s ease;
-    transform-origin: bottom;
+    bottom: 0;
+    width: 0;
+    background: rgba(255, 215, 0, 0.1);
+    transition: width 0.2s ease;
 }
 
-.desktop-nav-link:hover::before,
-.desktop-nav-link.active::before {
-    transform: scaleY(1);
+.dropdown-link:hover {
+    color: #ffffff;
+    border-left-color: #ffd700;
+    background: rgba(255, 215, 0, 0.15);
+    font-weight: 500;
+}
+
+.dropdown-link:hover::before {
+    width: 100%;
+}
+
+.dropdown-link.active {
+    color: #000000;
+    background: rgba(255, 215, 0, 0.9);
+    border-left-color: #ffd700;
+    font-weight: 600;
+}
+
+.dropdown-link.active::before {
+    width: 100%;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+/* Separador visual sutil */
+.dropdown-link:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 32px;
+    right: 32px;
+    bottom: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Tema escuro/inverso */
+[data-theme="inverted"] .dropdown-blur-bg {
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="inverted"] .dropdown-link {
+    color: #e0e0e0;
+}
+
+[data-theme="inverted"] .dropdown-link::before {
+    background: rgba(255, 215, 0, 0.1);
+}
+
+[data-theme="inverted"] .dropdown-link:hover {
+    color: #ffffff;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+[data-theme="inverted"] .dropdown-link.active {
+    color: #1a1a1a;
+    background: rgba(255, 215, 0, 0.9);
+}
+
+[data-theme="inverted"] .dropdown-link:not(:last-child)::after {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /* Close button for dropdown */
@@ -780,40 +870,37 @@ header:after {
     }
 }
 
-    /* Reordenação das seções apenas para desktop */
-    main.container {
-        display: flex;
-        flex-direction: column;
-    }
+/* ==== SEÇÕES PRINCIPAIS - ORDEM NATURAL DO HTML ==== */
+/* Removido sistema de flexbox e order para usar ordem natural do HTML */
 
-    /* Definir ordem específica das seções para desktop */
-    #home {
-        order: 1;
-    }
+/* Espaçamentos das seções */
+#sobre-bdn {
+    margin-top: 4rem;
+    margin-bottom: 0;
+}
 
-    #sobre-bdn {
-        order: 2;
-        margin-top: 4rem;
-        margin-bottom: 4rem;
-    }
+#contato {
+    margin-top: 5rem !important;
+}
 
-    #empresa1 {
-        order: 3;
-    }
+/* Garantir transições suaves entre todas as seções */
+.fullscreen-section + .unique-client-section,
+.unique-client-section + .fullscreen-section,
+.fullscreen-section + .fullscreen-section {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
 
-    .unique-client-section {
-        order: 4;
-    }
-
-    #galeria-inversa {
-
-        order: 5;
-    }
-
-    #contato {
-        order: 6;
-        margin-top: 5rem !important; /* Exatamente 5rem de espaçamento */
-    }
+/* REMOVER todas as propriedades order para usar ordem natural do HTML */
+/* As seções devem aparecer na ordem: 
+   1. Home
+   2. Sobre BDN  
+   3. PROJETAMOS (fullscreen)
+   4. EACH CLIENT IS UNIQUE
+   5. ARQUITETAMOS (fullscreen)
+   6. CONSTRUÍMOS (fullscreen)
+   7. Contacto
+*/
 
 /* Dropdown Menu */
 .dropdown-menu {
@@ -1265,8 +1352,8 @@ nav a.active {
     }
     
     .logo-img {
-        width: 32px;
-        height: 32px;
+        width: 144px;
+        height: 144px;
     }
     
     /* Language selector mobile */
@@ -1321,7 +1408,11 @@ nav a.active {
     
     /* Hero section mobile */
     .hero {
-        padding: 2rem 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         margin-bottom: 2rem;
         text-align: center;
     }
@@ -1398,16 +1489,62 @@ nav a.active {
 }
 
 main {
+    margin-top: 0;
+    padding: 0;
+}
+
+/* Ajuste para secções após a hero */
+main > section:not(#home) {
     margin-top: clamp(80px, 15vw, 100px);
     padding: clamp(1rem, 3vw, 2rem) 0;
 }
 
 .hero {
     text-align: center;
-    padding: clamp(3rem, 10vw, 6rem) 0;
+    height: 85vh;
+    min-height: 85vh;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: transparent;
-    margin-bottom: clamp(3rem, 8vw, 5rem);
+    margin-bottom: 0;
     color: var(--text-primary);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Imagem de fundo para a secção inicial */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    /*background-image: url('imagens/inicial.png'); */
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    opacity: 0.2;
+    z-index: -2;
+}
+
+/* Overlay para melhor contraste do texto */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background: var(--bg-primary);
+    opacity: 0.75;
+    z-index: -1;
 }
 
 .hero h1 {
@@ -1471,6 +1608,16 @@ main {
         inset 0 1px 0 rgba(255, 215, 0, 0.2),
         0 0 30px rgba(255, 215, 0, 0.4);
     filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.5));
+}
+
+/* Ajustes da imagem de fundo no tema invertido */
+[data-theme="inverted"] .hero::before {
+    opacity: 0.15;
+}
+
+[data-theme="inverted"] .hero::after {
+    background: var(--bg-primary);
+    opacity: 0.8;
 }
 
 .companies-grid {
@@ -1598,6 +1745,12 @@ main {
     padding-top: 0 !important;
 }
 
+/* Conexão direta entre título único e a nova secção fullscreen */
+.unique-client-section + .fullscreen-section {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
 /* Reduzir espaçamento específico entre título único e galeria inversa */
 .unique-client-section + #galeria-inversa {
     margin-top: clamp(2rem, 4vw, 3rem) !important;
@@ -1673,7 +1826,7 @@ main.container #galeria-inversa ~ #contato,
 #galeria-inversa .work-grid {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
-    min-height: 3000px !important; /* Aumentar mais a altura da segunda seção */
+    min-height: 2500px !important; /* Diminuir ligeiramente a altura da segunda seção */
 }
 
 /* Garantir que não há espaçamento adicional nos work-items da galeria inversa */
@@ -1868,93 +2021,6 @@ main.container #galeria-inversa ~ #contato,
     grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: clamp(1rem, 3vw, 2rem);
     margin-top: clamp(1.5rem, 3vw, 2rem);
-}
-
-.project-card {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 215, 0, 0.2);
-    border-radius: 8px;
-    padding: clamp(1.5rem, 3vw, 2rem);
-    position: relative;
-}
-
-.project-card h4 {
-    font-family: 'Playfair Display', serif;
-    color: #ffd700;
-    font-size: clamp(1.1rem, 2vw, 1.3rem);
-    margin-bottom: 1rem;
-    font-weight: 400;
-}
-
-.project-card p {
-    color: #aaa;
-    font-size: clamp(0.85rem, 1.5vw, 0.9rem);
-    margin-bottom: 1rem;
-    line-height: 1.6;
-}
-
-.project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-}
-
-.tag {
-    background: transparent;
-    color: #ffd700;
-    padding: 0.2rem 0.8rem;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 400;
-}
-
-.gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
-    gap: clamp(1rem, 2vw, 1.5rem);
-    margin-top: clamp(1.5rem, 3vw, 2rem);
-}
-
-.gallery-item {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 215, 0, 0.2);
-    border-radius: 8px;
-    padding: 0;
-    text-align: center;
-    height: clamp(150px, 30vw, 200px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-    cursor: url('bdn_fabicon.png') 16 16, pointer;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.gallery-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.8);
-    color: #ffd700;
-    padding: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 400;
-    backdrop-filter: blur(5px);
-}
-
-.gallery-placeholder {
-    color: #ffd700;
-    font-size: 1rem;
-    font-weight: 400;
 }
 
 footer {
@@ -2459,31 +2525,627 @@ footer a:hover {
 
 /* Estilos específicos para formulários no tema invertido (amarelo) */
 [data-theme="inverted"] .contact-form {
-    background: rgba(70, 70, 70, 0.95) !important;
-    border: 1px solid rgba(255, 215, 0, 0.3);
+    background: transparent !important;
+    border: none;
+}
+
+/* ===== SECÇÃO FULLSCREEN COM IMAGEM E TEXTO ===== */
+.fullscreen-section {
+    height: 110vh; /* Reduzir altura para 100% da viewport */
+    width: 100vw;
+    margin: 0 !important; /* Remove todas as margens */
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
+    padding: 0; /* Remove todo o padding */
+    display: flex;
+    align-items: center;
+    background: var(--bg-primary);
+    position: relative;
+    overflow: hidden;
+    /* Garantir que a secção aparece corretamente após sobre-bdn */
+    clear: both;
+    z-index: 1;
+}
+
+.fullscreen-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.fullscreen-content {
+    display: grid;
+    grid-template-columns: 30% 70%; /* Texto 30%, Imagem 70% */
+    width: 100%;
+    height: 100%;
+}
+
+/* Layout invertido - Imagem à esquerda, Texto à direita */
+.reverse-layout .fullscreen-content {
+    grid-template-columns: 70% 30%; /* Imagem 70%, Texto 30% */
+}
+
+/* Ajustar título para layout invertido */
+.reverse-layout .fullscreen-title {
+    font-size: clamp(1.5rem, 3vw, 2.2rem); /* Tamanho menor para coluna de 30% */
+    line-height: 1.1;
+    word-break: break-word; /* Quebrar palavras longas se necessário */
+}
+
+/* Ajustar padding do texto para layout invertido */
+.reverse-layout .fullscreen-text {
+    padding: clamp(1rem, 2vw, 1.5rem); /* Padding menor para coluna de 30% */
+}
+
+.fullscreen-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.5rem, 3vw, 2.5rem); /* Reduzir padding para área menor */
+}
+
+.text-content {
+    max-width: 100%; /* Usar toda a largura disponível dos 30% */
+    width: 100%;
+}
+
+.fullscreen-title {
+    font-family: 'Michroma', 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem); /* Reduzir tamanho para área de 30% */
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.fullscreen-description {
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem); /* Ajustar para área menor */
+    color: var(--text-secondary);
+    line-height: 1.5; /* Reduzir line-height ligeiramente */
+    margin-bottom: 2rem; /* Reduzir margem inferior */
+}
+
+.fullscreen-features {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem; /* Reduzir gap entre features */
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.feature-icon {
+    font-size: 1.8rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.feature-content h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+}
+
+.feature-content p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.fullscreen-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(2rem, 4vw, 3rem);
+    position: relative;
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 80%;
+    background: linear-gradient(135deg, 
+        rgba(255, 215, 0, 0.1) 0%, 
+        rgba(255, 215, 0, 0.05) 100%);
+    border: 2px dashed rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.image-placeholder:hover {
+    background: linear-gradient(135deg, 
+        rgba(255, 215, 0, 0.15) 0%, 
+        rgba(255, 215, 0, 0.08) 100%);
+    border-color: rgba(255, 215, 0, 0.4);
+}
+
+.placeholder-text {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+}
+
+.placeholder-icon {
+    font-size: 3rem;
+    opacity: 0.5;
+}
+
+/* Estilos para a imagem real - Sem Moldura */
+.fullscreen-img {
+    width: 100%;
+    height: 70%; /* Manter altura para aspecto horizontal */
+    object-fit: cover;
+    border-radius: 8px; /* Bordas simples e sutis */
+    transition: all 0.3s ease;
+}
+
+.fullscreen-img:hover {
+    transform: scale(1.01); /* Efeito hover muito sutil */
+}
+
+/* Botão Ver mais Projetos */
+.projects-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background: transparent;
+    border: 2px solid var(--text-primary);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 30px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.projects-button:hover {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    transform: translateY(-2px);
+}
+
+/* Tema invertido */
+[data-theme="inverted"] .fullscreen-section {
+    background: #ffd700;
+}
+
+/* ==== SEÇÃO COM TEMA OPOSTO ==== */
+/* Quando tema padrão (preto), a seção opposite-theme fica amarela */
+.fullscreen-section.opposite-theme {
+    background: #ffd700 !important;
+}
+
+.fullscreen-section.opposite-theme .fullscreen-text h2 {
+    color: #1a1a1a !important;
+}
+
+.fullscreen-section.opposite-theme .fullscreen-text p {
+    color: #333 !important;
+}
+
+.fullscreen-section.opposite-theme .fullscreen-features .feature-content h4 {
+    color: #1a1a1a !important;
+}
+
+.fullscreen-section.opposite-theme .fullscreen-features .feature-content p {
+    color: #333 !important;
+}
+
+.fullscreen-section.opposite-theme .feature-icon {
+    background: rgba(26, 26, 26, 0.1) !important;
+}
+
+/* Quando tema invertido (amarelo), a seção opposite-theme fica preta */
+[data-theme="inverted"] .fullscreen-section.opposite-theme {
+    background: #000000 !important;
+}
+
+[data-theme="inverted"] .fullscreen-section.opposite-theme .fullscreen-text h2 {
+    color: #ffffff !important;
+}
+
+[data-theme="inverted"] .fullscreen-section.opposite-theme .fullscreen-text p {
+    color: #cccccc !important;
+}
+
+[data-theme="inverted"] .fullscreen-section.opposite-theme .fullscreen-features .feature-content h4 {
+    color: #ffffff !important;
+}
+
+[data-theme="inverted"] .fullscreen-section.opposite-theme .fullscreen-features .feature-content p {
+    color: #cccccc !important;
+}
+
+[data-theme="inverted"] .fullscreen-section.opposite-theme .feature-icon {
+    background: rgba(255, 215, 0, 0.1) !important;
+}
+
+[data-theme="inverted"] .fullscreen-text h2 {
+    color: #1a1a1a;
+}
+
+[data-theme="inverted"] .fullscreen-text p {
+    color: #333;
+}
+
+[data-theme="inverted"] .fullscreen-text .highlight {
+    color: #1a1a1a;
+    font-weight: 700;
+}
+
+[data-theme="inverted"] .image-placeholder {
+    background: linear-gradient(135deg, 
+        rgba(26, 26, 26, 0.15) 0%, 
+        rgba(26, 26, 26, 0.08) 100%);
+    border-color: rgba(26, 26, 26, 0.4);
+}
+
+[data-theme="inverted"] .image-placeholder:hover {
+    background: linear-gradient(135deg, 
+        rgba(26, 26, 26, 0.2) 0%, 
+        rgba(26, 26, 26, 0.12) 100%);
+    border-color: rgba(26, 26, 26, 0.5);
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+    .fullscreen-content {
+        grid-template-columns: 35% 65%; /* Ajustar proporção para tablets */
+    }
+    
+    .fullscreen-text {
+        padding: clamp(1.2rem, 2.5vw, 2rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .fullscreen-section {
+        height: auto; /* Permitir altura automática em mobile */
+        min-height: 110vh; /* Aumentar altura mínima em mobile também */
+        margin-left: calc(-50vw + 50%) !important;
+        margin-right: calc(-50vw + 50%) !important;
+    }
+    
+    .fullscreen-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto; /* Altura automática para as linhas */
+        min-height: 110vh; /* Ajustar altura mínima do conteúdo */
+    }
+    
+    .fullscreen-text {
+        order: 2;
+        padding: 2rem 1rem;
+    }
+    
+    .fullscreen-image {
+        order: 1;
+        min-height: 40vh; /* Altura mínima para a imagem */
+    }
+    
+    .fullscreen-title {
+        text-align: center;
+    }
+    
+    .fullscreen-description {
+        text-align: center;
+    }
+    
+    .fullscreen-features {
+        align-items: center;
+    }
+    
+    .feature-item {
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .fullscreen-section {
+        margin-left: calc(-50vw + 50%) !important;
+        margin-right: calc(-50vw + 50%) !important;
+        height: auto;
+        min-height: 100vh; /* Manter altura mínima razoável em telas pequenas */
+    }
+    
+    .fullscreen-text {
+        padding: 1.5rem 1rem;
+    }
+    
+    .fullscreen-image {
+        min-height: 35vh; /* Altura mínima menor para a imagem */
+    }
+    
+    .image-container {
+        padding: 1rem;
+    }
+    
+    .image-placeholder {
+        height: 70%;
+    }
+    
+    .fullscreen-title {
+        font-size: clamp(2rem, 6vw, 2.5rem); /* Título menor em mobile */
+    }
+}
+
+/* ===== ESPAÇAMENTO ENTRE SECÇÕES ===== */
+/* Garantir transição suave entre sobre-bdn e fullscreen */
+.sobre-bdn-section + .fullscreen-section {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Garantir transição suave entre a nova fullscreen e sobre-bdn */
+.fullscreen-section + .sobre-bdn-section {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Garantir que a secção sobre-bdn não tenha espaçamento inferior */
+.sobre-bdn-section {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Garantir que fullscreen section não herda espaçamentos indesejados */
+.fullscreen-section {
+    box-sizing: border-box;
+    margin-top: 0 !important;
+}
+
+/* Corrigir qualquer overflow ou posicionamento problemático */
+.sobre-bdn-section + .fullscreen-section,
+section.fullscreen-section {
+    position: relative;
+    display: block;
+    clear: both;
+}
+
+/* Design minimalista para contactos */
+.contact-form.minimal {
+    background: transparent;
+    border: none;
+    padding: 0;
+    max-width: 1200px;
+    margin: clamp(4rem, 8vw, 6rem) auto;
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+    width: 100%;
+}
+
+.contact-form-section {
+    background: transparent;
+    border: none;
+    padding: clamp(2rem, 5vw, 3rem);
+}
+
+.contact-info-section {
+    background: transparent;
+    border: none;
+    padding: clamp(2rem, 5vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100%;
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.contact-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.contact-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    margin: 0;
+}
+
+.contact-info-minimal {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    height: 100%;
+    justify-content: center;
+}
+
+.contact-info-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.contact-info-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.contact-info-header p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    margin: 0;
+}
+
+.contact-item-minimal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: transparent;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.contact-item-minimal:hover {
+    background: transparent;
+    border: none;
+    transform: translateY(-2px);
+}
+
+.contact-label {
+    font-weight: 600;
+    color: var(--accent-primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.contact-value {
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.contact-item-minimal a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-item-minimal a:hover {
+    color: var(--accent-primary);
+}
+
+/* Tema invertido para design minimalista */
+[data-theme="inverted"] .contact-form-section,
+[data-theme="inverted"] .contact-info-section {
+    background: transparent;
+    border: none;
+}
+
+[data-theme="inverted"] .contact-item-minimal {
+    background: transparent;
+    border: none;
+}
+
+[data-theme="inverted"] .contact-item-minimal:hover {
+    background: transparent;
+    border: none;
+}
+
+/* Responsividade para contactos minimalistas */
+@media (max-width: 768px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .contact-info-minimal {
+        gap: 1.5rem;
+    }
+    
+    .contact-item-minimal {
+        padding: 1rem;
+    }
+    
+    .contact-label {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-form.minimal {
+        margin: 2rem auto;
+    }
+    
+    .contact-form-section,
+    .contact-info-section {
+        padding: 1.5rem;
+    }
 }
 
 [data-theme="inverted"] .form-group input,
 [data-theme="inverted"] .form-group textarea {
-    background: rgba(50, 50, 50, 0.9) !important;
-    border: 1px solid rgba(255, 215, 0, 0.4);
-    color: #fff !important;
+    background: transparent !important;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    color: #000000 !important;
 }
 
 [data-theme="inverted"] .form-group input:focus,
 [data-theme="inverted"] .form-group textarea:focus {
-    background: rgba(60, 60, 60, 0.95) !important;
-    border-color: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    background: transparent !important;
+    border-color: #000000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme="inverted"] .form-group input::placeholder,
 [data-theme="inverted"] .form-group textarea::placeholder {
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: rgba(0, 0, 0, 0.6) !important;
 }
 
 [data-theme="inverted"] .form-group label {
-    color: #ffd700 !important;
+    color: #000000 !important;
+}
+
+/* Títulos e textos da seção de contatos no tema invertido */
+[data-theme="inverted"] .contact-header h3,
+[data-theme="inverted"] .contact-info-header h3 {
+    color: #000000 !important;
+}
+
+[data-theme="inverted"] .contact-subtitle,
+[data-theme="inverted"] .contact-info-header p {
+    color: #000000 !important;
+}
+
+[data-theme="inverted"] .contact-label {
+    color: #000000 !important;
+}
+
+[data-theme="inverted"] .contact-value,
+[data-theme="inverted"] .contact-item-minimal a {
+    color: #000000 !important;
+}
+
+[data-theme="inverted"] .contact-item-minimal a:hover {
+    color: #333333 !important;
 }
 
 /* Professional Work Portfolio Styles - Skylab Inspired */
@@ -4262,10 +4924,16 @@ footer a:hover {
     }
     
     /* Garantir ordem das seções no mobile */
+    /* COMENTADO: Flexbox para mobile também removido */
+    /* 
     main.container {
         display: flex;
         flex-direction: column;
     }
+    */
+    
+    /* 
+    COMENTADO: Propriedades order para usar ordem natural do HTML
     
     #home {
         order: 1;
@@ -4277,28 +4945,31 @@ footer a:hover {
         margin-bottom: 3rem;
     }
     
-    #empresa1 {
+    .fullscreen-section {
         order: 3;
     }
     
-    .unique-client-section {
+    #empresa1 {
         order: 4;
     }
     
-    #galeria-inversa {
+    .unique-client-section {
         order: 5;
     }
     
-    #contato {
+    #galeria-inversa {
         order: 6;
     }
     
-    /* Melhorias estéticas para a seção sobre-bdn no mobile */
-    .sobre-bdn-section {
-        padding: 2rem 1rem;
-        border-radius: 15px;
-        margin: 0 0.5rem;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    #contato {
+        order: 7;
+    }
+    */
+    
+    /* Espaçamentos naturais */
+    #sobre-bdn {
+        margin-top: 3rem;
+        margin-bottom: 3rem;
     }
     
     /* Galeria inversa também com layout centrado */
@@ -5172,13 +5843,17 @@ footer a:hover {
 
 /* ===== SECÇÃO TÍTULO ÚNICO ===== */
 .unique-client-section {
-    padding: 15px 0 10px 0;
-    background: linear-gradient(135deg, 
-        var(--bg-primary) 0%, 
-        var(--bg-secondary) 50%, 
-        var(--bg-tertiary) 100%);
+    padding: 0px 0 0px 0;
+    background: #ffd700;
     position: relative;
     overflow: hidden;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
 }
 
 .unique-client-section::before {
@@ -5189,7 +5864,7 @@ footer a:hover {
     right: 0;
     bottom: 0;
     background: radial-gradient(circle at 50% 50%, 
-        rgba(212, 175, 55, 0.1) 0%, 
+        rgba(0, 0, 0, 0.1) 0%, 
         transparent 70%);
     pointer-events: none;
 }
@@ -5198,6 +5873,7 @@ footer a:hover {
     text-align: center;
     position: relative;
     z-index: 2;
+    width: 100%;
 }
 
 .unique-client-title {
@@ -5206,7 +5882,7 @@ footer a:hover {
     letter-spacing: 0.1em;
     margin: 0;
     line-height: 1.1;
-    color: var(--text-primary);
+    color: #ffffff; /* Texto branco para fundo amarelo */
     text-transform: uppercase;
     position: relative;
     display: flex;
@@ -5222,7 +5898,7 @@ footer a:hover {
     opacity: 0;
     transform: translateY(50px) rotateX(-30deg);
     animation: wordReveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Sombra escura para fundo amarelo */
     perspective: 1000px;
 }
 
@@ -5233,9 +5909,9 @@ footer a:hover {
 
 .highlight-word {
     background: linear-gradient(45deg, 
-        var(--accent-primary), 
-        #f4d03f, 
-        var(--accent-primary));
+        #ffffff, 
+        #f0f0f0, 
+        #ffffff);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -5383,6 +6059,9 @@ footer a:hover {
 @media (max-width: 768px) {
     .unique-client-section {
         padding: 10px 0 5px 0;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
     }
     
     .unique-client-title {
@@ -5398,6 +6077,9 @@ footer a:hover {
 @media (max-width: 480px) {
     .unique-client-section {
         padding: 8px 0 5px 0;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
     }
     
     .title-underline {
@@ -5407,20 +6089,32 @@ footer a:hover {
 
 /* Tema Inverso */
 [data-theme="inverted"] .unique-client-section {
-    background: linear-gradient(135deg, 
-        var(--bg-primary) 0%, 
-        var(--bg-secondary) 50%, 
-        var(--bg-tertiary) 100%);
+    background: #000000;
 }
 
 [data-theme="inverted"] .unique-client-section::before {
     background: radial-gradient(circle at 50% 50%, 
-        rgba(26, 26, 26, 0.2) 0%, 
+        rgba(255, 215, 0, 0.1) 0%, 
         transparent 70%);
 }
 
 [data-theme="inverted"] .word-animation {
-    text-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+    text-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+}
+
+[data-theme="inverted"] .unique-client-title {
+    color: #ffd700;
+}
+
+[data-theme="inverted"] .highlight-word {
+    background: linear-gradient(45deg, 
+        #ffd700, 
+        #ffed4e, 
+        #ffd700);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* ===== GALERIA INVERSA ===== */
@@ -5489,11 +6183,13 @@ footer a:hover {
 
 /* ===== SECÇÃO SOBRE BDN ===== */
 .sobre-bdn-section {
-    padding: 0 0 clamp(6rem, 10vw, 8rem) 0; /* Remove padding superior completamente */
-    background: var(--bg-primary);
+    padding: 0; /* Remove todo o padding */
+    background: #ffd700; /* Background amarelo para tema de dia */
     position: relative;
     overflow: hidden;
-    margin-top: 0 !important; /* Força margin-top zero */
+    margin: 0 !important; /* Remove todas as margens */
+    width: 100vw;
+    margin-left: calc(-50vw + 50%) !important;
 }
 
 .sobre-bdn-section::before {
@@ -5509,6 +6205,15 @@ footer a:hover {
     pointer-events: none;
 }
 
+/* Background preto para tema de noite */
+[data-theme="inverted"] .sobre-bdn-section {
+    background: #000000 !important;
+}
+
+[data-theme="inverted"] .sobre-bdn-section::before {
+    background: transparent !important;
+}
+
 .sobre-bdn-content {
     position: relative;
     z-index: 2;
@@ -5516,6 +6221,12 @@ footer a:hover {
     margin: 0 auto;
     padding: 0 2rem;
     text-align: center; /* Centralizar todo o texto */
+    /* Aumentar altura especialmente na parte de baixo */
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+    min-height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .sobre-bdn-header {
@@ -5525,7 +6236,7 @@ footer a:hover {
 }
 
 .sobre-bdn-title {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Michroma', 'Playfair Display', serif;
     font-size: clamp(3rem, 8vw, 5rem);
     font-weight: 300;
     color: var(--text-primary);
@@ -5864,8 +6575,121 @@ footer a:hover {
     color: rgba(255,255,255,0.9);
 }
 
+/* Estilos para tema escuro/noite */
+[data-theme="inverted"] .sobre-bdn-title {
+    color: #ffffff !important;
+}
+
+[data-theme="inverted"] .sobre-bdn-subtitle {
+    color: #ffd700 !important;
+    font-weight: 500;
+}
+
+[data-theme="inverted"] .sobre-bdn-intro p {
+    color: #e0e0e0 !important;
+}
+
+[data-theme="inverted"] .sobre-bdn-intro strong {
+    color: #ffd700 !important;
+    font-weight: 600;
+}
+
+[data-theme="inverted"] .sobre-bdn-values h3 {
+    color: #ffffff !important;
+}
+
+/* Ajustes para value-items em tema de dia */
+.value-item h4 {
+    color: #1a1a1a !important;
+}
+
+.value-item p {
+    color: #2c2c2c !important;
+}
+
+/* Ajustes para value-items em tema escuro */
+[data-theme="inverted"] .value-item h4 {
+    color: #ffffff !important;
+}
+
+[data-theme="inverted"] .value-item p {
+    color: #e0e0e0 !important;
+}
+
+/* Ajustes para elementos de parceria em tema de dia */
+.partnership-main h4 {
+    color: #1a1a1a !important;
+}
+
+.partnership-description {
+    color: #2c2c2c !important;
+}
+
+/* Ajustes para elementos de parceria em tema escuro */
+[data-theme="inverted"] .partnership-main h4 {
+    color: #ffffff !important;
+}
+
+[data-theme="inverted"] .partnership-description {
+    color: #e0e0e0 !important;
+}
+
+/* Ajustes para elementos de serviços em tema de dia */
+.partnership-services h5, .partnership-palette h5 {
+    color: #1a1a1a !important;
+}
+
+.services-list li {
+    color: #1a1a1a !important;
+}
+
+/* Ajustes para elementos de serviços em tema escuro */
+[data-theme="inverted"] .partnership-services h5, 
+[data-theme="inverted"] .partnership-palette h5 {
+    color: #ffffff !important;
+}
+
+[data-theme="inverted"] .services-list li {
+    color: #e0e0e0 !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Estilos para tema de dia (background amarelo) */
+.sobre-bdn-title {
+    color: #1a1a1a !important;
+}
+
+.sobre-bdn-subtitle {
+    color: #2c2c2c !important;
+}
+
+.sobre-bdn-intro p {
+    color: #2c2c2c !important;
+}
+
+.sobre-bdn-intro strong {
+    color: #1a1a1a !important;
+    font-weight: 600;
+}
+
+.sobre-bdn-values h3 {
+    color: #1a1a1a !important;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
+    /* Ajustes para altura aumentada da secção sobre-bdn em mobile */
+    .sobre-bdn-content {
+        min-height: calc(100vh - 80px); /* Menor altura mínima em mobile */
+        padding-bottom: clamp(2rem, 5vw, 4rem); /* Padding bottom responsivo */
+        padding-top: clamp(1rem, 3vw, 2rem); /* Adicionar padding top */
+    }
+    
+    .sobre-bdn-header {
+        margin-bottom: clamp(3rem, 6vw, 5rem); /* Reduzir margem em mobile */
+    }
+    
     .sobre-bdn-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
@@ -6170,32 +6994,9 @@ footer a:hover {
         width: 40px;
         height: 40px;
     }
-    
-    /* Melhorias estéticas para mobile */
-    .sobre-bdn-section {
-        padding: 3rem 1.5rem 4rem;
-        background: linear-gradient(170deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.05);
-        border-radius: 30px 30px 0 0;
-        margin-top: -20px !important;
-        position: relative;
-        z-index: 2;
-    }
 }
 
-/* Tema Inverso */
-[data-theme="inverted"] .sobre-bdn-section {
-    background: linear-gradient(135deg, 
-        var(--bg-primary) 0%, 
-        var(--bg-secondary) 50%, 
-        var(--bg-primary) 100%);
-}
-
-[data-theme="inverted"] .sobre-bdn-section::before {
-    background: radial-gradient(circle at 30% 70%, 
-        rgba(26, 26, 26, 0.1) 0%, 
-        transparent 50%);
-}
+/* [CSS duplicado removido - mantendo apenas a definição principal] */
 
 [data-theme="inverted"] .value-item {
     background: rgba(26, 26, 26, 0.1);
@@ -6384,7 +7185,7 @@ footer a:hover {
 
 /* Texto de progresso elegante */
 .progress-text {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Oswald', 'Montserrat', sans-serif;
     font-size: 1rem;
     color: var(--accent-primary);
     font-weight: 500;
@@ -6666,7 +7467,7 @@ footer a:hover {
         text-decoration: none;
         font-size: 1.1rem;
         font-weight: 400;
-        font-family: 'Montserrat', sans-serif;
+        font-family: 'Oswald', 'Montserrat', sans-serif;
         letter-spacing: 0.5px;
         position: relative;
         transition: all 0.3s ease;
@@ -7207,22 +8008,23 @@ footer a:hover {
             <div class="header-content">
                 <div class="logo desktop-logo" id="desktop-logo">
                     <img src="BDN_logo.png" alt="BDN Arquitectura" class="logo-img">
+                    <!-- Desktop Dropdown Navigation - Design Minimalista -->
                     <div class="desktop-dropdown" id="desktop-dropdown">
-                        <ul class="desktop-nav-list">
-                            <li class="desktop-nav-item">
-                                <a href="#home" class="desktop-nav-link active" data-translate="nav_home">Início</a>
-                            </li>
-                            <li class="desktop-nav-item">
-                                <a href="#sobre-bdn" class="desktop-nav-link" data-translate="nav_about">Sobre BDN</a>
-                            </li>
-                            <li class="desktop-nav-item">
-                                <a href="#empresa1" class="desktop-nav-link" data-translate="nav_projects">BDN - Projetos</a>
-                            </li>
-                            <li class="desktop-nav-item">
-                                <a href="#contato" class="desktop-nav-link" data-translate="nav_contact">Contacto</a>
-                            </li>
-                        </ul>
+                        <div class="dropdown-blur-bg"></div>
+                        <nav class="dropdown-nav">
+                            <a href="#home" class="dropdown-link active" data-translate="nav_home">Início</a>
+                            <a href="#sobre-bdn" class="dropdown-link" data-translate="nav_about">Sobre BDN</a>
+                            <a href="#projetamos" class="dropdown-link" data-translate="nav_projects1">Projetamos</a>
+                            <a href="#arquitetamos" class="dropdown-link" data-translate="nav_projects2">Arquitetamos</a>
+                            <a href="#construimos" class="dropdown-link" data-translate="nav_projects3">Construímos</a>
+                            <a href="#contato" class="dropdown-link" data-translate="nav_contact">Contacto</a>
+                        </nav>
                     </div>
+                </div>
+                
+                <!-- Favicon no canto direito superior -->
+                <div class="header-favicon">
+                    <img src="bdn_fabicon.png" alt="BDN Favicon" class="favicon-img">
                 </div>
                 
                 <!-- Mobile Navigation -->
@@ -7246,7 +8048,13 @@ footer a:hover {
                     <a href="#sobre-bdn" class="mobile-nav-link" data-translate="nav_about">Sobre BDN</a>
                 </li>
                 <li class="mobile-nav-item">
-                    <a href="#empresa1" class="mobile-nav-link" data-translate="nav_projects">BDN - Projetos</a>
+                    <a href="#projetamos" class="mobile-nav-link" data-translate="nav_projects1">Projetamos</a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="#arquitetamos" class="mobile-nav-link" data-translate="nav_projects2">Arquitetamos</a>
+                </li>
+                <li class="mobile-nav-item">
+                    <a href="#construimos" class="mobile-nav-link" data-translate="nav_projects3">Construímos</a>
                 </li>
                 <li class="mobile-nav-item">
                     <a href="#contato" class="mobile-nav-link" data-translate="nav_contact">Contacto</a>
@@ -7271,240 +8079,12 @@ footer a:hover {
             </div>
         </section>
 
-        <!-- Secção BDN Arquitectura -->
-        <section id="empresa1">
-            <!-- Header da Seção -->
-            <div class="work-header">
-                <div class="work-hero">
-                    <div class="professional-title-container">
-                        <div class="brand-section">
-                            <span class="brand-name">BDN</span>
-                            <div class="brand-divider"></div>
-                            <span class="brand-tagline" data-translate="projects_title">PROJETOS</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br><br>
-            <!-- Portfolio Grid Profissional -->
-            <div class="work-grid">
-                <!-- Projecto 1 -->
-                <div class="work-item size-xlarge bounce-in" data-category="residential">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao1.png" alt="Vila Contemporânea" class="work-image">
-                    </div>
-                </div>
-
-                <!-- Projecto 2 -->
-                <div class="work-item size-medium slide-left" data-category="commercial">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao15.png" alt="Centro Empresarial" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projeto 3 -->
-                <div class="work-item size-xlarge flip-in" data-category="workspace">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao14.png" alt="Sede Corporativa" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projeto 4 -->
-                <div class="work-item size-medium zoom-rotate" data-category="residential">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao13.png" alt="Casa da Ria" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projeto 5 -->
-                <div class="work-item size-medium elastic-in" data-category="hospitality">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao11.png" alt="Hotel Quinta do Vale" class="work-image" >
-                    </div>
-                </div>
-                
-                <!-- Projeto 6 -->
-                <div class="work-item size-xlarge slide-right" data-category="retail">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao10.png" alt="Espaço Comercial" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projeto 7 -->
-                <div class="work-item size-xlarge bounce-in" data-category="residential">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao9.png" alt="Moradia Atlântico" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projeto 8 -->
-                <div class="work-item size-xxlarge flip-in" data-category="commercial">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao8.png" alt="Torre Moderna" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projeto 9 -->
-                <div class="work-item size-xxlarge zoom-rotate" data-category="cultural">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao7.png" alt="Centro Cultural" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projeto 10 -->
-                <div class="work-item size-xlarge elastic-in" data-category="hospitality">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao5.png" alt="Resort Costeiro" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projeto 11 - Quinta linha, primeira imagem (alinhada com meio da imagem 10) -->
-                <div class="work-item size-large elastic-in" data-category="residential">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao4.png" alt="Moradia do Minho" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projeto 12 - Quinta linha, segunda imagem (centralizada na página) -->
-                <div class="work-item size-xxlarge bounce-in" data-category="commercial">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao3.png" alt="Edifício Moderno" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projecto 13 - Nova imagem no lado direito, alinhada com eixo esquerdo da penúltima -->
-                <div class="work-item size-large bounce-in" data-category="residential">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao2.png" alt="Casa Moderna" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projecto 14 - Última imagem antes dos contactos, posicionada no lado esquerdo -->
-                <div class="work-item size-medium slide-left" data-category="residential">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao6.png" alt="Projeto Final" class="work-image" >
-                    </div>
-                </div>
-
-                <!-- Projecto 15 - Imagem paralela à última, posicionada no lado direito -->
-                <div class="work-item size-large slide-right" data-category="commercial">
-                    <div class="work-image-container">
-                        <img src="imagens/habitacao7.png" alt="Projeto Paralelo" class="work-image" >
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- Secção Título Único -->
-        <section class="unique-client-section">
-            <div class="container">
-                <div class="unique-title-wrapper">
-                    <h2 class="unique-client-title">
-                        <span class="word-animation" data-word="EACH">EACH</span>
-                        <span class="word-animation" data-word="CLIENT">CLIENT</span>
-                        <span class="word-animation" data-word="IS">IS</span>
-                        <span class="word-animation highlight-word" data-word="UNIQUE">UNIQUE</span>
-                    </h2>
-                    <div class="title-underline"></div>
-                    <div class="floating-particles">
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                        <div class="particle"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-
-
-
-
-        <!-- Secção Galeria Inversa -->
-        <section id="galeria-inversa" class="section">
-            <div class="container">
-                <div class="work-grid inverse-layout">
-                    
-                    <!-- Projeto 1 - Primeira linha da galeria original -->
-                    <div class="work-item size-xlarge bounce-in" data-category="residential">
-                        <div class="work-image-container">
-                            <img src="imagens/img1.png" alt="Vila Contemporânea" class="work-image">
-                        </div>
-                    </div>
-
-                    <!-- Projeto 2 - Primeira linha da galeria original -->
-                    <div class="work-item size-medium slide-left" data-category="commercial">
-                        <div class="work-image-container">
-                            <img src="imagens/img2.png" alt="Centro Empresarial" class="work-image">
-                        </div>
-                    </div>
-
-                    <!-- Projeto 3 - Primeira linha da galeria original -->
-                    <div class="work-item size-xlarge flip-in" data-category="workspace">
-                        <div class="work-image-container">
-                            <img src="imagens/img3.png" alt="Sede Corporativa" class="work-image">
-                        </div>
-                    </div>
-
-                    <!-- Projeto 4 - Primeira linha da galeria original -->
-                    <div class="work-item size-medium zoom-rotate" data-category="residential">
-                        <div class="work-image-container">
-                            <img src="imagens/img4.png" alt="Casa da Ria" class="work-image">
-                        </div>
-                    </div>
-
-                    <!-- Projeto 5 - Primeira linha da galeria original -->
-                    <div class="work-item size-medium elastic-in" data-category="hospitality">
-                        <div class="work-image-container">
-                            <img src="imagens/img5.png" alt="Hotel Quinta do Vale" class="work-image">
-                        </div>
-                    </div>
-
-                    <!-- Projeto Adicional 1 - Imagem Grande (2x maior) -->
-                    <div class="work-item size-double-large slide-up" data-category="featured">
-                        <div class="work-image-container">
-                            <img src="imagens/img6.png" alt="Projeto Arquitetónico Principal" class="work-image">
-                        </div>
-                    </div>
-
-                    <!-- Projeto Adicional 2 - Imagem Pequena -->
-                    <div class="work-item size-small fade-in" data-category="featured">
-                        <div class="work-image-container">
-                            <img src="imagens/img7.png" alt="Projeto Complementar" class="work-image">
-                        </div>
-                    </div>
-
-                    <!-- Projeto Adicional 3 - Imagem do Lado Direito -->
-                    <div class="work-item size-medium slide-in-right" data-category="featured">
-                        <div class="work-image-container">
-                            <img src="imagens/img8.png" alt="Projeto Lateral" class="work-image">
-                        </div>
-                    </div>
-
-                    <!-- Projeto Adicional 4 - Primeira imagem em baixo -->
-                    <div class="work-item size-medium slide-in-bottom" data-category="featured">
-                        <div class="work-image-container">
-                            <img src="imagens/img9.png" alt="Projeto Arquitetónico Inferior" class="work-image">
-                        </div>
-                    </div>
-
-                    <!-- Projeto Adicional 5 - Segunda imagem em baixo -->
-                    <div class="work-item size-medium rotate-in" data-category="featured">
-                        <div class="work-image-container">
-                            <img src="imagens/img10.png" alt="Projeto Final Complementar" class="work-image">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Secção Sobre BDN -->
         <section id="sobre-bdn" class="section sobre-bdn-section">
             <div class="container">
                 <div class="sobre-bdn-content">
                     <div class="sobre-bdn-header">
+                        <br><br><br>
                         <h2 class="sobre-bdn-title" data-translate="about_title">Sobre BDN</h2>
                         <p class="sobre-bdn-subtitle" data-translate="about_subtitle">PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS</p>
                     </div>
@@ -7563,109 +8143,255 @@ footer a:hover {
                 </div>
             </div>
         </section>
+
+        <!-- Primeira Secção Fullscreen com Imagem e Texto -->
+        <section id="projetamos" class="fullscreen-section">
+            <div class="fullscreen-container">
+                <div class="fullscreen-content">
+                    <!-- Lado Esquerdo - Texto -->
+                    <div class="fullscreen-text">
+                        <div class="text-content">
+                            <h2 class="fullscreen-title" data-translate="section_projetamos_title">PROJETAMOS</h2>
+                            <p class="fullscreen-description" data-translate="section_projetamos_desc">
+                                Com mais de uma década de experiência no mercado, somos especialistas em criar projetos 
+                                únicos que combinam funcionalidade, estética e inovação. Cada projeto é uma oportunidade 
+                                de superar expectativas e criar espaços que inspiram.
+                            </p>
+                            <div class="fullscreen-features">
+                                <div class="feature-item">
+                                    <div class="feature-content">
+                                        <h4 data-translate="projetamos_feature1_title">Arquitetura Moderna</h4>
+                                        <p data-translate="projetamos_feature1_desc">Projetos contemporâneos com as mais recentes tendências</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-content">
+                                        <h4 data-translate="projetamos_feature2_title">Design Personalizado</h4>
+                                        <p data-translate="projetamos_feature2_desc">Soluções únicas adaptadas às suas necessidades</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-content">
+                                        <h4 data-translate="projetamos_feature3_title">Soluções Inovadoras</h4>
+                                        <p data-translate="projetamos_feature3_desc">Tecnologia de ponta em todos os nossos projetos</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="projects-button" data-translate="ver_mais_projetos">Ver mais Projetos</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Lado Direito - Imagem -->
+                    <div class="fullscreen-image">
+                        <div class="image-container">
+                            <img src="imagens/projetamos.png" alt="Projeto BDN - Habitação Moderna" class="fullscreen-img projetamos-gallery-trigger" style="cursor: pointer;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Secção Título Único -->
+        <section class="unique-client-section">
+            <div class="container">
+                <div class="unique-title-wrapper">
+                    <h2 class="unique-client-title">
+                        <span class="word-animation" data-word="EACH" data-translate="unique_each">EACH</span>
+                        <span class="word-animation" data-word="CLIENT" data-translate="unique_client">CLIENT</span>
+                        <span class="word-animation" data-word="IS" data-translate="unique_is">IS</span>
+                        <span class="word-animation highlight-word" data-word="UNIQUE" data-translate="unique_unique">UNIQUE</span>
+                    </h2>
+                    <div class="title-underline"></div>
+                    <div class="floating-particles">
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Segunda Secção Fullscreen com Imagem e Texto - ARQUITETAMOS -->
+        <!-- Segunda Secção Fullscreen com Imagem e Texto - ARQUITETAMOS -->
+        <section id="arquitetamos" class="fullscreen-section reverse-layout">
+            <div class="fullscreen-container">
+                <div class="fullscreen-content">
+                    <!-- Lado Esquerdo - Imagem -->
+                    <div class="fullscreen-image">
+                        <div class="image-container">
+                            <img src="imagens/arquitetamos.png" alt="Projeto BDN - Arquitetura Moderna" class="fullscreen-img arquitetamos-gallery-trigger" style="cursor: pointer;">
+                        </div>
+                    </div>
+                    
+                    <!-- Lado Direito - Texto -->
+                    <div class="fullscreen-text">
+                        <div class="text-content">
+                            <h2 class="fullscreen-title" data-translate="section_arquitetamos_title">ARQUITETAMOS</h2>
+                            <p class="fullscreen-description" data-translate="section_arquitetamos_desc">
+                                Transformamos conceitos em projetos arquitetónicos excepcionais através da nossa experiência 
+                                e criatividade. Cada detalhe é pensado e desenhado para criar espaços únicos que refletem 
+                                a personalidade e necessidades dos nossos clientes.
+                            </p>
+                            <div class="fullscreen-features">
+                                <div class="feature-item">
+                                    <div class="feature-content">
+                                        <h4 data-translate="arquitetamos_feature1_title">Design Arquitetónico</h4>
+                                        <p data-translate="arquitetamos_feature1_desc">Criação de projetos únicos e funcionais</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-content">
+                                        <h4 data-translate="arquitetamos_feature2_title">Planeamento Espacial</h4>
+                                        <p data-translate="arquitetamos_feature2_desc">Optimização inteligente de todos os espaços</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-content">
+                                        <h4 data-translate="arquitetamos_feature3_title">Sustentabilidade</h4>
+                                        <p data-translate="arquitetamos_feature3_desc">Soluções eco-friendly em todos os projetos</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="projects-button" data-translate="ver_mais_projetos">Ver mais Projetos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terceira Secção Fullscreen com Imagem e Texto - CONSTRUÍMOS -->
+        <section id="construimos" class="fullscreen-section opposite-theme">
+            <div class="fullscreen-container">
+                <div class="fullscreen-content">
+                    <!-- Lado Esquerdo - Texto -->
+                    <div class="fullscreen-text">
+                        <div class="text-content">
+                            <h2 class="fullscreen-title" data-translate="section_construimos_title">CONSTRUÍMOS</h2>
+                            <p class="fullscreen-description" data-translate="section_construimos_desc">
+                                Transformamos sonhos em realidade através da nossa experiência em construção de alta qualidade. 
+                                Desde as fundações até aos acabamentos finais, cada detalhe é cuidadosamente executado para 
+                                garantir a máxima qualidade e durabilidade.
+                            </p>
+                            <div class="fullscreen-features">
+                                <div class="feature-item">
+                                    <div class="feature-content">
+                                        <h4 data-translate="construimos_feature1_title">Construção Sustentável</h4>
+                                        <p data-translate="construimos_feature1_desc">Materiais ecológicos e técnicas sustentáveis</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-content">
+                                        <h4 data-translate="construimos_feature2_title">Gestão de Obra</h4>
+                                        <p data-translate="construimos_feature2_desc">Acompanhamento total do projeto desde o início</p>
+                                    </div>
+                                </div>
+                                <div class="feature-item">
+                                    <div class="feature-content">
+                                        <h4 data-translate="construimos_feature3_title">Qualidade Garantida</h4>
+                                        <p data-translate="construimos_feature3_desc">Standards elevados em todos os processos</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" class="projects-button" data-translate="ver_mais_projetos">Ver mais Projetos</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Lado Direito - Imagem -->
+                    <div class="fullscreen-image">
+                        <div class="image-container">
+                            <img src="imagens/img6.png" alt="Projeto BDN - Construção de Qualidade" class="fullscreen-img construimos-gallery-trigger" style="cursor: pointer;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Secção Contacto -->
         <section id="contato" class="section">
-            <div class="hero">
-                <h1 data-translate="contact_title">Contacto</h1>
-                <p data-translate="contact_description">Entre em contacto connosco para dar vida ao seu projeto</p>
-            </div>
+            <!-- Formulário de Contacto Minimalista -->
+            <div class="contact-form minimal">
+                <div class="contact-container">
+                    <!-- Lado Esquerdo - Formulário -->
+                    <div class="contact-form-section">
+                        <div class="contact-header">
+                            <h3 data-translate="contact_form_title">Envie-nos uma Mensagem</h3>
+                            <p class="contact-subtitle" data-translate="contact_subtitle">Estamos aqui para transformar as suas ideias em realidade</p>
+                        </div>
+                        
+                        <form id="contactForm" novalidate>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName" data-translate="form_first_name">Primeiro Nome *</label>
+                                    <input type="text" id="firstName" name="firstName" required>
+                                    <div class="error-message" data-translate="form_first_name_error">Por favor, insira o seu primeiro nome.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName" data-translate="form_last_name">Último Nome *</label>
+                                    <input type="text" id="lastName" name="lastName" required>
+                                    <div class="error-message" data-translate="form_last_name_error">Por favor, insira o seu último nome.</div>
+                                </div>
+                            </div>
 
-            <div class="contact-info">
-                <div class="contact-grid">
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div class="contact-details centered-text">
-                            <h3 data-translate="contact_address_title">Morada</h3>
-                            <p data-translate="contact_address">Av. Comendador Francisco Alves Quintas<br>
-                            Zona Industrial de Gandra<br>
-                            4740-010 Esposende</p>
-                        </div>
+                            <div class="form-group">
+                                <label for="email" data-translate="form_email">Email *</label>
+                                <input type="email" id="email" name="email" required>
+                                <div class="error-message" data-translate="form_email_error">Por favor, insira um email válido.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" data-translate="form_phone">Contacto Telefónico *</label>
+                                <input type="tel" id="phone" name="phone" placeholder="+351 XXX XXX XXX" required>
+                                <div class="error-message" data-translate="form_phone_error">Por favor, insira um número de telefone válido.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message" data-translate="form_message">Mensagem *</label>
+                                <textarea id="message" name="message" placeholder="" data-translate-placeholder="form_message_placeholder" required></textarea>
+                                <div class="error-message" data-translate="form_message_error">Por favor, escreva uma mensagem.</div>
+                            </div>
+
+                            <button type="submit" class="submit-btn" data-translate="form_submit">Enviar Mensagem</button>
+                            
+                            <div class="success-message" id="successMessage" data-translate="form_success">
+                                Mensagem enviada com sucesso! Entraremos em contacto consigo brevemente.
+                            </div>
+                        </form>
                     </div>
                     
-                    <div class="contact-item">
-                        <div class="contact-icon">📞</div>
-                        <div class="contact-details centered-text">
-                            <h3 data-translate="contact_phone_title">Contactos Telefónicos</h3>
-                            <p><a href="tel:+351911504793">911 504 793</a></p>
-                            <p><a href="tel:+351253131797">253 131 797</a></p>
+                    <!-- Lado Direito - Informações de Contacto -->
+                    <div class="contact-info-section">
+                        <div class="contact-info-header">
+                            <h3 data-translate="contact_info_title">Contacto</h3>
+                            <p data-translate="contact_info_subtitle">Entre em contacto connosco através dos seguintes meios</p>
                         </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">✉️</div>
-                        <div class="contact-details centered-text">
-                            <h3 data-translate="contact_email_title">Email</h3>
-                            <p><a href="mailto:jaimebermudes@projectobdn.com">jaimebermudes@projectobdn.com</a></p>
-                            <p><a href="mailto:joaobermudes@projectobdn.com">joaobermudes@projectobdn.com</a></p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">🌐</div>
-                        <div class="contact-details centered-text">
-                            <h3 data-translate="contact_social_title">Redes Sociais</h3>
-                            <p><a href="https://www.facebook.com/projectoBDN/?fref=ts" target="_blank">Facebook</a></p>
-                            <p><a href="https://www.google.pt/maps/place/BDN/@41.5320682,-8.7647711,17z/data=!3m1!4b1!4m2!3m1!1s0xd244b916d62e69f:0x6aa246b2fb81a52c" target="_blank" data-translate="contact_maps_link">Ver no Google Maps</a></p>
+                        
+                        <div class="contact-info-minimal">
+                            <div class="contact-item-minimal">
+                                <div class="contact-label" data-translate="contact_email_label">Email</div>
+                                <div class="contact-value">
+                                    <a href="mailto:jaimebermudes@projectobdn.com">jaimebermudes@projectobdn.com</a>
+                                </div>
+                            </div>
+                            <div class="contact-item-minimal">
+                                <div class="contact-label" data-translate="contact_phone_label">Telefone</div>
+                                <div class="contact-value">
+                                    <a href="tel:+351911504793">911 504 793</a>
+                                </div>
+                            </div>
+                            <div class="contact-item-minimal">
+                                <div class="contact-label" data-translate="contact_address_label">Morada</div>
+                                <div class="contact-value">
+                                    <span>Av. Comendador Francisco Alves Quintas<br>
+                                    Zona Ind. Gandra<br>
+                                    Edifício Bouro Nascente 671<br>
+                                    4740-010 Esposende</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Mapa de Localização -->
-            <div class="contact-map">
-                <div class="map-container">
-                    <h3 data-translate="contact_location_title">A Nossa Localização</h3>
-                    <iframe class="map-embed" 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2975.9286897662397!2d-8.767251!3d41.532068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd244b916d62e69f%3A0x6aa246b2fb81a52c!2sBDN!5e0!3m2!1spt!2spt!4v1642098765432!5m2!1spt!2spt"
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade"
-                            title="Localização BDN Arquitectura - Av. Comendador Francisco Alves Quintas, Zona Industrial de Gandra, 4740-010 Esposende">
-                    </iframe>
-                </div>
-            </div>
-
-            <!-- Formulário de Contacto -->
-            <div class="contact-form">
-                <h3 data-translate="contact_form_title">Envie-nos uma Mensagem</h3>
-                <form id="contactForm" novalidate>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName" data-translate="form_first_name">Primeiro Nome *</label>
-                            <input type="text" id="firstName" name="firstName" required>
-                            <div class="error-message" data-translate="form_first_name_error">Por favor, insira o seu primeiro nome.</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName" data-translate="form_last_name">Último Nome *</label>
-                            <input type="text" id="lastName" name="lastName" required>
-                            <div class="error-message" data-translate="form_last_name_error">Por favor, insira o seu último nome.</div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email" data-translate="form_email">Email *</label>
-                        <input type="email" id="email" name="email" required>
-                        <div class="error-message" data-translate="form_email_error">Por favor, insira um email válido.</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="phone" data-translate="form_phone">Contacto Telefónico *</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+351 XXX XXX XXX" required>
-                        <div class="error-message" data-translate="form_phone_error">Por favor, insira um número de telefone válido.</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="message" data-translate="form_message">Mensagem *</label>
-                        <textarea id="message" name="message" placeholder="" data-translate-placeholder="form_message_placeholder" required></textarea>
-                        <div class="error-message" data-translate="form_message_error">Por favor, escreva uma mensagem.</div>
-                    </div>
-
-                    <button type="submit" class="submit-btn" data-translate="form_submit">Enviar Mensagem</button>
-                    
-                    <div class="success-message" id="successMessage" data-translate="form_success">
-                        Mensagem enviada com sucesso! Entraremos em contacto consigo brevemente.
-                    </div>
-                </form>
             </div>
         </section>
     </main>
@@ -7864,7 +8590,140 @@ footer a:hover {
             
             // Start logo integrated loading screen
             new LogoLoadingScreen();
+            
+            // Start logo background system
+            new LogoBackgroundController();
         });
+
+        // ===== LOGO BACKGROUND CONTROLLER =====
+        class LogoBackgroundController {
+            constructor() {
+                this.logoImg = document.querySelector('.logo-img');
+                this.yellowSections = [
+                    '.unique-client-section',
+                    '.fullscreen-section.opposite-theme',
+                    '.sobre-bdn-section'
+                ];
+                this.blackSections = [
+                    '.fullscreen-section:not(.opposite-theme)',
+                    '.hero-section',
+                    '#contato',
+                    '#home'
+                ];
+                this.init();
+            }
+
+            init() {
+                if (!this.logoImg) return;
+
+                // Criar observer para detectar seções amarelas
+                this.createScrollObserver();
+                
+                // Listener para scroll para verificação contínua
+                window.addEventListener('scroll', this.checkLogoPosition.bind(this));
+                
+                // Verificação inicial
+                this.checkLogoPosition();
+            }
+
+            createScrollObserver() {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                };
+
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.checkLogoPosition();
+                        }
+                    });
+                }, observerOptions);
+
+                // Observar todas as seções amarelas
+                this.yellowSections.forEach(selector => {
+                    const sections = document.querySelectorAll(selector);
+                    sections.forEach(section => {
+                        this.observer.observe(section);
+                    });
+                });
+
+                // Observar todas as seções pretas
+                this.blackSections.forEach(selector => {
+                    const sections = document.querySelectorAll(selector);
+                    sections.forEach(section => {
+                        this.observer.observe(section);
+                    });
+                });
+            }
+
+            checkLogoPosition() {
+                if (!this.logoImg) return;
+
+                const logoRect = this.logoImg.getBoundingClientRect();
+                const currentTheme = document.body.getAttribute('data-theme');
+                let shouldShowBackground = false;
+                let shouldRemoveBackground = false;
+
+                if (currentTheme === 'inverted') {
+                    // No tema invertido (amarelo), mostrar fundo preto quando sobre seções PRETAS
+                    this.blackSections.forEach(selector => {
+                        const sections = document.querySelectorAll(selector);
+                        sections.forEach(section => {
+                            const sectionRect = section.getBoundingClientRect();
+                            
+                            // Verificar se o logo está sobreposto à seção
+                            if (logoRect.bottom > sectionRect.top && 
+                                logoRect.top < sectionRect.bottom) {
+                                shouldShowBackground = true;
+                            }
+                        });
+                    });
+                } else {
+                    // No tema padrão (preto), mostrar fundo quando over seções amarelas
+                    this.yellowSections.forEach(selector => {
+                        const sections = document.querySelectorAll(selector);
+                        sections.forEach(section => {
+                            const sectionRect = section.getBoundingClientRect();
+                            
+                            // Verificar se o logo está sobreposto à seção
+                            if (logoRect.bottom > sectionRect.top && 
+                                logoRect.top < sectionRect.bottom) {
+                                
+                                // Verificar se a seção tem fundo amarelo no tema atual
+                                const isYellowBackground = 
+                                    // Seção única (sempre amarela)
+                                    section.classList.contains('unique-client-section') ||
+                                    // Seção sobre BDN (amarela no tema padrão)
+                                    section.classList.contains('sobre-bdn-section') ||
+                                    // Seção opposite-theme (amarela no tema padrão)
+                                    section.classList.contains('opposite-theme');
+                                
+                                if (isYellowBackground) {
+                                    shouldShowBackground = true;
+                                }
+                            }
+                        });
+                    });
+                }
+
+                // Aplicar ou remover classes de fundo
+                if (currentTheme === 'inverted') {
+                    if (shouldShowBackground) {
+                        this.logoImg.classList.add('on-yellow-section');
+                    } else {
+                        this.logoImg.classList.remove('on-yellow-section');
+                    }
+                } else {
+                    if (shouldShowBackground) {
+                        this.logoImg.classList.add('on-yellow-section');
+                    } else {
+                        this.logoImg.classList.remove('on-yellow-section');
+                    }
+                }
+            }
+        }
 
         // Sistema de Alternância de Tema
         function initThemeToggle() {
@@ -8150,9 +9009,9 @@ footer a:hover {
             // Inicializar animações de entrada das imagens
             initImageAnimations();
             
-            // Funcionalidade para destacar seção ativa (melhorada para mobile)
+            // Funcionalidade para destacar seção ativa (incluindo dropdown desktop)
             const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('nav a[href^="#"], .logo-dropdown a[href^="#"]');
+            const navLinks = document.querySelectorAll('nav a[href^="#"], .logo-dropdown a[href^="#"], .dropdown-link[href^="#"], .mobile-nav-link[href^="#"]');
             
             function updateActiveLink() {
                 const scrollPosition = window.scrollY + 100; // Offset para header
@@ -8167,7 +9026,7 @@ footer a:hover {
                         navLinks.forEach(link => link.classList.remove('active'));
                         
                         // Adiciona active ao link correspondente
-                        const activeLink = document.querySelector(`nav a[href="#${id}"], .logo-dropdown a[href="#${id}"]`);
+                        const activeLink = document.querySelector(`nav a[href="#${id}"], .logo-dropdown a[href="#${id}"], .dropdown-link[href="#${id}"], .mobile-nav-link[href="#${id}"]`);
                         if (activeLink) {
                             activeLink.classList.add('active');
                         }
@@ -8471,47 +9330,6 @@ footer a:hover {
             console.log(`Sistema de animações profissionais inicializado para ${workItems.length} imagens`);
             console.log('Tipos de animação disponíveis:', animationTypes);
         }
-
-        // Portfolio Skylab Filter System
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const projects = document.querySelectorAll('.skylab-project');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const filterValue = this.getAttribute('data-filter');
-                    
-                    // Update active button
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    // Filter projects with smooth animation
-                    projects.forEach(project => {
-                        const category = project.getAttribute('data-category');
-                        
-                        if (filterValue === 'all' || category === filterValue) {
-                            project.style.display = 'block';
-                            project.classList.remove('fade-out');
-                            project.classList.add('fade-in');
-                        } else {
-                            project.classList.remove('fade-in');
-                            project.classList.add('fade-out');
-                            setTimeout(() => {
-                                if (project.classList.contains('fade-out')) {
-                                    project.style.display = 'none';
-                                }
-                            }, 300);
-                        }
-                    });
-                });
-            });
-
-            // Initialize all projects as visible
-            projects.forEach(project => {
-                project.classList.add('fade-in');
-            });
-        });
-
         // Lightbox functionality
         function initLightbox() {
             const lightbox = document.getElementById('lightbox');
@@ -8536,7 +9354,38 @@ footer a:hover {
                 caption: item.querySelector('img').alt
             }));
             
+            // Galeria específica do "Projetamos" 
+            const projetamosImages = [
+                { src: 'imagens/projetamos/habitacao1.png', alt: 'Projeto Habitação 1 - Arquitetura Moderna', caption: 'Projeto Habitação 1 - Arquitetura Moderna' },
+                { src: 'imagens/projetamos/habitacao2.png', alt: 'Projeto Habitação 2 - Design Personalizado', caption: 'Projeto Habitação 2 - Design Personalizado' },
+                { src: 'imagens/projetamos/habitacao3.png', alt: 'Projeto Habitação 3 - Soluções Inovadoras', caption: 'Projeto Habitação 3 - Soluções Inovadoras' },
+                { src: 'imagens/projetamos/habitacao4.png', alt: 'Projeto Habitação 4 - Casa Moderna', caption: 'Projeto Habitação 4 - Casa Moderna' },
+                { src: 'imagens/projetamos/habitacao5.png', alt: 'Projeto Habitação 5 - Habitação Contemporânea', caption: 'Projeto Habitação 5 - Habitação Contemporânea' }
+            ];
+            
+            // Galeria específica do "Arquitetamos"
+            const arquitetamosImages = [
+                { src: 'imagens/arquitetamos/habitacao2.png', alt: 'Arquitetura Habitação 2 - Design Espacial', caption: 'Arquitetura Habitação 2 - Design Espacial' },
+                { src: 'imagens/arquitetamos/habitacao3.png', alt: 'Arquitetura Habitação 3 - Planeamento Moderno', caption: 'Arquitetura Habitação 3 - Planeamento Moderno' },
+                { src: 'imagens/arquitetamos/habitacao4.png', alt: 'Arquitetura Habitação 4 - Sustentabilidade', caption: 'Arquitetura Habitação 4 - Sustentabilidade' },
+                { src: 'imagens/arquitetamos/habitacao5.png', alt: 'Arquitetura Habitação 5 - Design Funcional', caption: 'Arquitetura Habitação 5 - Design Funcional' },
+                { src: 'imagens/arquitetamos/habitacao6.png', alt: 'Arquitetura Habitação 6 - Espaços Únicos', caption: 'Arquitetura Habitação 6 - Espaços Únicos' },
+                { src: 'imagens/arquitetamos/habitacao7.png', alt: 'Arquitetura Habitação 7 - Projeto Personalizado', caption: 'Arquitetura Habitação 7 - Projeto Personalizado' },
+                { src: 'imagens/arquitetamos/habitacao8.png', alt: 'Arquitetura Habitação 8 - Inovação Arquitetónica', caption: 'Arquitetura Habitação 8 - Inovação Arquitetónica' },
+                { src: 'imagens/arquitetamos/habitacao9.png', alt: 'Arquitetura Habitação 9 - Conceito Moderno', caption: 'Arquitetura Habitação 9 - Conceito Moderno' }
+            ];
+            
+            // Galeria específica do "Construímos"
+            const construimosImages = [
+                { src: 'imagens/construimos/img6.png', alt: 'Construção 6 - Qualidade Garantida', caption: 'Construção 6 - Qualidade Garantida' },
+                { src: 'imagens/construimos/img7.png', alt: 'Construção 7 - Materiais Sustentáveis', caption: 'Construção 7 - Materiais Sustentáveis' },
+                { src: 'imagens/construimos/img8.png', alt: 'Construção 8 - Gestão de Obra', caption: 'Construção 8 - Gestão de Obra' },
+                { src: 'imagens/construimos/img9.png', alt: 'Construção 9 - Acabamentos Finais', caption: 'Construção 9 - Acabamentos Finais' },
+                { src: 'imagens/construimos/img10.png', alt: 'Construção 10 - Projeto Concluído', caption: 'Construção 10 - Projeto Concluído' }
+            ];
+            
             let currentIndex = 0;
+            let currentGallery = []; // Galeria ativa atual
             
             // Atualizar total de imagens
             lightboxTotal.textContent = galleryImages.length;
@@ -8574,6 +9423,47 @@ footer a:hover {
                 document.body.style.overflow = 'hidden';
             }
             
+            // Função para definir e mostrar galeria específica
+            function showGallery(gallery, startIndex = 0) {
+                currentGallery = gallery;
+                currentIndex = startIndex;
+                lightboxTotal.textContent = currentGallery.length;
+                showImageFromGallery(startIndex);
+            }
+            
+            // Função para mostrar imagem da galeria ativa
+            function showImageFromGallery(index) {
+                currentIndex = index;
+                
+                // Adicionar efeito sutil de carregamento
+                lightboxImage.style.filter = 'blur(1px)';
+                lightboxImage.style.opacity = '0.7';
+                lightboxImage.style.transform = 'scale(0.98)';
+                
+                // Precarregar imagem para transição suave
+                const newImage = new Image();
+                newImage.onload = function() {
+                    lightboxImage.src = currentGallery[index].src;
+                    lightboxImage.alt = currentGallery[index].alt;
+                    lightboxCaption.textContent = currentGallery[index].caption;
+                    
+                    // Atualizar numeração com animação sutil
+                    updatePageNumber(index + 1);
+                    
+                    // Remover efeito de carregamento com transição suave
+                    setTimeout(() => {
+                        lightboxImage.style.filter = 'blur(0px)';
+                        lightboxImage.style.opacity = '1';
+                        lightboxImage.style.transform = 'scale(1)';
+                    }, 50);
+                };
+                newImage.src = currentGallery[index].src;
+                
+                // Mostrar lightbox
+                lightbox.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+            
             // Função para atualizar numeração com animação
             function updatePageNumber(newNumber) {
                 // Animação sutil de mudança de número
@@ -8595,14 +9485,24 @@ footer a:hover {
             
             // Função para próxima imagem
             function nextImage() {
-                currentIndex = (currentIndex + 1) % galleryImages.length;
-                showImage(currentIndex);
+                if (currentGallery.length > 0) {
+                    currentIndex = (currentIndex + 1) % currentGallery.length;
+                    showImageFromGallery(currentIndex);
+                } else {
+                    currentIndex = (currentIndex + 1) % galleryImages.length;
+                    showImage(currentIndex);
+                }
             }
             
             // Função para imagem anterior
             function prevImage() {
-                currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-                showImage(currentIndex);
+                if (currentGallery.length > 0) {
+                    currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+                    showImageFromGallery(currentIndex);
+                } else {
+                    currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+                    showImage(currentIndex);
+                }
             }
             
             // Event listeners para itens de ambas as galerias
@@ -8677,18 +9577,49 @@ footer a:hover {
             });
 
             // Tracking adicional para a imagem - removido para evitar conflitos
+            
+            // Event listener para a galeria do "Projetamos"
+            const projetamosGalleryTrigger = document.querySelector('.projetamos-gallery-trigger');
+            if (projetamosGalleryTrigger) {
+                projetamosGalleryTrigger.addEventListener('click', () => {
+                    showGallery(projetamosImages, 0);
+                });
+            }
+
+            // Event listener para a galeria do "Arquitetamos"
+            const arquitetamosGalleryTrigger = document.querySelector('.arquitetamos-gallery-trigger');
+            if (arquitetamosGalleryTrigger) {
+                arquitetamosGalleryTrigger.addEventListener('click', () => {
+                    showGallery(arquitetamosImages, 0);
+                });
+            }
+
+            // Event listener para a galeria do "Construímos"
+            const construimosGalleryTrigger = document.querySelector('.construimos-gallery-trigger');
+            if (construimosGalleryTrigger) {
+                construimosGalleryTrigger.addEventListener('click', () => {
+                    showGallery(construimosImages, 0);
+                });
+            }
 
         }
 
-        // Scroll suave para elementos internos
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        // Scroll suave para elementos internos - incluindo dropdown desktop
+        document.querySelectorAll('a[href^="#"], .dropdown-link[href^="#"], .mobile-nav-link[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     // Ajustar para a altura da navbar
                     const headerHeight = document.querySelector('header').offsetHeight;
-                    const targetPosition = target.offsetTop - headerHeight - 20;
+                    let targetPosition = target.offsetTop - headerHeight - 20;
+                    
+                    // Para secções fullscreen, posicionar no meio
+                    const targetId = this.getAttribute('href').substring(1);
+                    if (['projetamos', 'arquitetamos', 'construimos'].includes(targetId)) {
+                        const sectionHeight = target.offsetHeight;
+                        targetPosition = target.offsetTop + (sectionHeight / 2) - (window.innerHeight / 2);
+                    }
                     
                     // Scroll suave
                     window.scrollTo({
@@ -8842,66 +9773,6 @@ footer a:hover {
                    window.innerWidth <= 768;
         }
 
-        // Touch-friendly enhancements com melhorias modernas
-        function enhanceTouchExperience() {
-            if (isMobileDevice()) {
-                // Add modern touch feedback to interactive elements
-                const touchElements = document.querySelectorAll('a, button, .work-item, .nav-menu a, .contact-btn');
-                touchElements.forEach(element => {
-                    element.style.webkitTapHighlightColor = 'rgba(255, 215, 0, 0.2)';
-                    
-                    // Feedback tátil moderno
-                    element.addEventListener('touchstart', function(e) {
-                        this.style.transform = this.style.transform.includes('scale') ? 
-                            this.style.transform.replace(/scale\([^)]*\)/, 'scale(0.95)') : 
-                            'scale(0.95)';
-                        this.style.transition = 'transform 0.1s cubic-bezier(0.4, 0, 0.2, 1)';
-                        
-                        // Vibração sutil se disponível
-                        if (navigator.vibrate) {
-                            navigator.vibrate(10);
-                        }
-                    }, { passive: true });
-                    
-                    element.addEventListener('touchend', function() {
-                        setTimeout(() => {
-                            this.style.transform = this.style.transform.replace(/scale\([^)]*\)/, 'scale(1)');
-                        }, 50);
-                    }, { passive: true });
-                    
-                    element.addEventListener('touchcancel', function() {
-                        this.style.transform = this.style.transform.replace(/scale\([^)]*\)/, 'scale(1)');
-                    }, { passive: true });
-                });
-                
-                // Enhanced form inputs for mobile
-                const inputs = document.querySelectorAll('input, textarea');
-                inputs.forEach(input => {
-                    input.addEventListener('focus', function() {
-                        // Smooth scroll to input on focus (helps with virtual keyboard)
-                        this.style.transform = 'scale(1.02)';
-                        this.style.transition = 'transform 0.2s ease';
-                        
-                        setTimeout(() => {
-                            this.scrollIntoView({ 
-                                behavior: 'smooth', 
-                                block: 'center',
-                                inline: 'nearest'
-                            });
-                        }, 300);
-                    });
-                    
-                    input.addEventListener('blur', function() {
-                        this.style.transform = 'scale(1)';
-                    });
-                });
-                
-                // Otimizar scroll para mobile
-                document.body.style.webkitOverflowScrolling = 'touch';
-                document.body.style.overflowScrolling = 'touch';
-            }
-        }
-
         // Remover completamente o espaço entre galeria-inversa e sobre-bdn (apenas em mobile)
         document.addEventListener('DOMContentLoaded', function() {
             // Verificar se é dispositivo móvel
@@ -8951,9 +9822,6 @@ footer a:hover {
             // Inicializar sistema de tema
             initThemeToggle();
 
-            // Enhance touch experience para mobile
-            enhanceTouchExperience();
-            
             // Otimizar imagens para mobile
             optimizeMobileImages();
             
@@ -9423,9 +10291,12 @@ footer a:hover {
         const translations = {
             pt: {
                 nav_home: "Início",
-                nav_projects: "BDN - Projectos",
+                nav_projects1: "Projetamos",
+                nav_projects2: "Arquitetamos",
+                nav_projects3: "Construímos",
                 nav_about: "Sobre BDN",
                 nav_contact: "Contacto",
+                dropdown_tagline: "Projetamos | Arquitetamos | Construímos",
                 hero_motto: "PROJETAMOS | ARQUITETAMOS | CONSTRUÍMOS",
                 hero_description1: "Grupo empresarial dedicado à criação de espaços únicos que inspiram e transformam",
                 hero_description2: "Descubra como podemos dar vida aos seus projectos",
@@ -9474,13 +10345,51 @@ footer a:hover {
                 form_success: "Mensagem enviada com sucesso! Entraremos em contacto consigo brevemente.",
                 footer_motto: "PROJECTAMOS | ARQUITECTAMOS | CONSTRUÍMOS",
                 footer_description: "Transformamos sonhos em realidade através de projectos inovadores.",
-                footer_contact_title: "Contactos"
+                footer_contact_title: "Contactos",
+                unique_each: "CADA",
+                unique_client: "CLIENTE",
+                unique_is: "É",
+                unique_unique: "ÚNICO",
+                ver_mais_projetos: "Ver mais Projetos",
+                
+                // Seções Fullscreen
+                section_projetamos_title: "PROJETAMOS",
+                section_projetamos_desc: "Com mais de uma década de experiência no mercado, somos especialistas em criar projetos únicos que combinam funcionalidade, estética e inovação. Cada projeto é uma oportunidade de superar expectativas e criar espaços que inspiram.",
+                projetamos_feature1_title: "Arquitetura Moderna",
+                projetamos_feature1_desc: "Projetos contemporâneos com as mais recentes tendências",
+                projetamos_feature2_title: "Design Personalizado", 
+                projetamos_feature2_desc: "Soluções únicas adaptadas às suas necessidades",
+                projetamos_feature3_title: "Soluções Inovadoras",
+                projetamos_feature3_desc: "Tecnologia de ponta em todos os nossos projetos",
+                
+                section_arquitetamos_title: "ARQUITETAMOS",
+                section_arquitetamos_desc: "Transformamos conceitos em projetos arquitetónicos excepcionais através da nossa experiência e criatividade. Cada detalhe é pensado e desenhado para criar espaços únicos que refletem a personalidade e necessidades dos nossos clientes.",
+                arquitetamos_feature1_title: "Design Arquitetónico",
+                arquitetamos_feature1_desc: "Criação de projetos únicos e funcionais",
+                arquitetamos_feature2_title: "Planeamento Espacial",
+                arquitetamos_feature2_desc: "Optimização inteligente de todos os espaços",
+                arquitetamos_feature3_title: "Sustentabilidade",
+                arquitetamos_feature3_desc: "Soluções eco-friendly em todos os projetos",
+                
+                section_construimos_title: "CONSTRUÍMOS",
+                section_construimos_desc: "Transformamos sonhos em realidade através da nossa experiência em construção de alta qualidade. Desde as fundações até aos acabamentos finais, cada detalhe é cuidadosamente executado para garantir a máxima qualidade e durabilidade.",
+                construimos_feature1_title: "Construção Sustentável",
+                construimos_feature1_desc: "Materiais ecológicos e técnicas sustentáveis",
+                construimos_feature2_title: "Gestão de Obra",
+                construimos_feature2_desc: "Acompanhamento total do projeto desde o início",
+                construimos_feature3_title: "Qualidade Garantida",
+                construimos_feature3_desc: "Standards elevados em todos os processos",
+                
+                contact_subtitle: "Estamos aqui para transformar as suas ideias em realidade"
             },
             en: {
                 nav_home: "Home",
-                nav_projects: "BDN - Projects",
+                nav_projects1: "We design",
+                nav_projects2: "We architect",
+                nav_projects3: "We build",
                 nav_about: "About BDN",
                 nav_contact: "Contact",
+                dropdown_tagline: "We Design | We Architect | We Build",
                 hero_motto: "WE DESIGN | WE ARCHITECT | WE BUILD",
                 hero_description1: "Business group dedicated to creating unique spaces that inspire and transform",
                 hero_description2: "Discover how we can bring your projects to life",
@@ -9529,7 +10438,42 @@ footer a:hover {
                 form_success: "Message sent successfully! We will contact you shortly.",
                 footer_motto: "WE DESIGN | WE ARCHITECT | WE BUILD",
                 footer_description: "We transform dreams into reality through innovative projects.",
-                footer_contact_title: "Contacts"
+                footer_contact_title: "Contacts",
+                unique_each: "EACH",
+                unique_client: "CLIENT",
+                unique_is: "IS",
+                unique_unique: "UNIQUE",
+                ver_mais_projetos: "View More Projects",
+                
+                // Fullscreen Sections
+                section_projetamos_title: "WE DESIGN",
+                section_projetamos_desc: "With more than a decade of experience in the market, we are specialists in creating unique projects that combine functionality, aesthetics and innovation. Each project is an opportunity to exceed expectations and create spaces that inspire.",
+                projetamos_feature1_title: "Modern Architecture",
+                projetamos_feature1_desc: "Contemporary projects with the latest trends",
+                projetamos_feature2_title: "Personalized Design",
+                projetamos_feature2_desc: "Unique solutions adapted to your needs",
+                projetamos_feature3_title: "Innovative Solutions",
+                projetamos_feature3_desc: "Cutting-edge technology in all our projects",
+                
+                section_arquitetamos_title: "WE ARCHITECT",
+                section_arquitetamos_desc: "We transform concepts into exceptional architectural projects through our experience and creativity. Every detail is thought out and designed to create unique spaces that reflect the personality and needs of our clients.",
+                arquitetamos_feature1_title: "Architectural Design",
+                arquitetamos_feature1_desc: "Creation of unique and functional projects",
+                arquitetamos_feature2_title: "Spatial Planning",
+                arquitetamos_feature2_desc: "Intelligent optimization of all spaces",
+                arquitetamos_feature3_title: "Sustainability",
+                arquitetamos_feature3_desc: "Eco-friendly solutions in all projects",
+                
+                section_construimos_title: "WE BUILD",
+                section_construimos_desc: "We transform dreams into reality through our experience in high-quality construction. From foundations to final finishes, every detail is carefully executed to ensure maximum quality and durability.",
+                construimos_feature1_title: "Sustainable Construction",
+                construimos_feature1_desc: "Ecological materials and sustainable techniques",
+                construimos_feature2_title: "Project Management",
+                construimos_feature2_desc: "Complete project monitoring from the beginning",
+                construimos_feature3_title: "Guaranteed Quality",
+                construimos_feature3_desc: "High standards in all processes",
+                
+                contact_subtitle: "We are here to transform your ideas into reality"
             }
         };
 
@@ -9783,7 +10727,7 @@ footer a:hover {
             const desktopLogo = document.getElementById('desktop-logo');
             const desktopDropdown = document.getElementById('desktop-dropdown');
             const dropdownClose = document.getElementById('dropdown-close');
-            const desktopNavLinks = document.querySelectorAll('.desktop-nav-link');
+            const dropdownLinks = document.querySelectorAll('.dropdown-link');
             
             if (!desktopLogo || !desktopDropdown) return;
             
@@ -9871,10 +10815,10 @@ footer a:hover {
             });
             
             // Navigation links
-            desktopNavLinks.forEach(link => {
+            dropdownLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     // Remove active class from all links
-                    desktopNavLinks.forEach(l => l.classList.remove('active'));
+                    dropdownLinks.forEach(l => l.classList.remove('active'));
                     // Add active class to clicked link
                     this.classList.add('active');
                     
@@ -9897,17 +10841,12 @@ footer a:hover {
         
         // Initialize desktop navigation when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            // Only initialize on desktop
-            if (window.innerWidth > 768) {
-                initDesktopNavigation();
-            }
+            initDesktopNavigation(); // Inicializar sempre, independente da tela
         });
         
         // Reinitialize on window resize
         window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                initDesktopNavigation();
-            }
+            initDesktopNavigation(); // Reinicializar sempre no resize
         });
     </script>
 
